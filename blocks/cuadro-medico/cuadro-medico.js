@@ -11,13 +11,13 @@
  */
 
 function getProviderType(p) {
-  if (p.doctorType === '1') return { label: 'MÉDICO / PROFESIONAL', cls: 'type-doctor' };
-  if (p.providerType === '3') return { label: 'HOSPITAL', cls: 'type-hospital' };
-  if (p.providerType === '4') return { label: 'CENTRO MÉDICO', cls: 'type-centro' };
-  if (p.providerType === '8') return { label: 'LABORATORIO', cls: 'type-lab' };
-  if (p.providerType === '2') return { label: 'TRANSPORTE SANITARIO', cls: 'type-transport' };
-  if (p.providerType === '9') return { label: 'OXIGENOTERAPIA', cls: 'type-oxygen' };
-  return { label: 'PROVEEDOR', cls: 'type-default' };
+  if (p.doctorType === '1') return { label: 'MÉDICO / PROFESIONAL', cls: 'cmp-tag-template--blue' };
+  if (p.providerType === '3') return { label: 'HOSPITAL', cls: 'cmp-tag-template--blue' };
+  if (p.providerType === '4') return { label: 'CENTRO MÉDICO', cls: 'cmp-tag-template--blue' };
+  if (p.providerType === '8') return { label: 'LABORATORIO', cls: 'cmp-tag-template--blue' };
+  if (p.providerType === '2') return { label: 'TRANSPORTE SANITARIO', cls: 'cmp-tag-template--blue' };
+  if (p.providerType === '9') return { label: 'OXIGENOTERAPIA', cls: 'cmp-tag-template--blue' };
+  return { label: 'PROVEEDOR', cls: 'type-cmp-tag-template--blue' };
 }
 
 function renderCard(p) {
@@ -28,32 +28,45 @@ function renderCard(p) {
     : '';
   const langTags = p.languages.map((l) => `<span class="cm-tag tag-lang">${l}</span>`).join('');
 
-  return `<div class="cm-card">
-    <div class="cm-card-top">
-      <div class="cm-card-badges">
-        <span class="cm-card-type ${type.cls}">${type.label}</span>
-        ${p.businessGroup ? '<span class="cm-card-asisa">Centro de ASISA</span>' : ''}
+  return `<div class="cmp-medical-detail__first-block">
+
+    
+    <div class="cmp-medical-detail__title-block">
+      <div class="cmp-medical-detail__title-block__tags">
+       <div class="cmp-medical-detail__title-block__tags--item ${type.cls}">
+        <div class="cmp-tag-template__text">
+            ${type.label}
+        </div>
+       </div>
+       ${p.businessGroup ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Centro de ASISA</div></div>' : ''}
+        
+       <div class="cmp-medical-detail__title-block__tags--item">
+          ${p.ePrescription ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Receta electrónica</div></div>' : ''}
+          ${langTags}
+          ${p.onlineAppointment ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Cita online</div></div>' : ''}
+        </div>
       </div>
-      <div class="cm-card-tags">
-        ${p.ePrescription ? '<span class="cm-tag tag-prescription">Receta electrónica</span>' : ''}
-        ${langTags}
-        ${p.onlineAppointment ? '<span class="cm-tag tag-online">Cita online</span>' : ''}
+      <div class="cmp-title">
+          <h3 class="cmp-title__text">${p.name}</h3>
       </div>
+       ${p.collegiateCode ? `<p class="cmp-medical-detail__title-block--num-member"><em>Núm. Colegiado – ${p.collegiateCode}</em></p>` : ''}
+        <p class="cmp-medical-picture-result__info-container__contact-data--speciality">${p.speciality}</p>
     </div>
-    <p class="cm-card-spec">${p.speciality}</p>
-    <h3 class="cm-card-name">${p.name}</h3>
-    ${p.collegiateCode ? `<p class="cm-card-collegiate"><em>Núm. Colegiado – ${p.collegiateCode}</em></p>` : ''}
-    ${p.parentDescription ? `<p class="cm-card-parent">${p.parentDescription}</p>` : ''}
-    <div class="cm-card-info">
-      ${fullAddress ? `<p class="cm-card-address"><span class="icon-pin"></span>${fullAddress}</p>` : ''}
-      <div class="cm-card-contact">
-        ${mapsUrl ? `<a href="${mapsUrl}" target="_blank" rel="noopener" class="cm-link link-directions"><span class="icon-map"></span>Cómo llegar</a>` : ''}
-        ${p.phone ? `<a href="tel:${p.phone}" class="cm-link link-phone"><span class="icon-phone"></span>${p.phone}</a>` : ''}
-      </div>
+    <div class="cmp-medical-detail__address-block">
+      ${p.parentDescription ? `<div class="cmp-medical-detail__address-block--center">${p.parentDescription}</div>` : ''}
+      ${fullAddress ? `<div class="cmp-medical-detail__address-block--name"><i class="icon-marker-02"></i>${fullAddress}</div>` : ''}
+      
+      <div class="cmp-medical-detail__address-block__location">
+
+
+          ${mapsUrl ? `<div class="cmp-medical-detail__address-block__location--reach"><div class="button-cmp"><a href="${mapsUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--link button-location"><i class="icon-map-04 icon-large"></i>Cómo llegar</a></div></div>` : ''}
+          ${p.phone ? `<div class="cmp-medical-detail__address-block__location--reach"><div class="button-cmp"><a href="tel:${p.phone}" class="btn button-cmp__text button-cmp__text--link button-location"><i class="icon-phone"></i>${p.phone}</a></div></div>` : ''}
     </div>
-    <div class="cm-card-actions">
-      <button class="cm-btn btn-detail">Ver Detalle</button>
-      ${p.onlineAppointment ? '<button class="cm-btn btn-appointment">Pedir Cita</button>' : ''}
+    </div>
+
+    <div class="cmp-medical-picture-result__info-container__buttons">
+      <div class="button-cmp"><button class="btn button-cmp__text button-cmp__text--tertiary">Ver Detalle</button></div>
+      ${p.onlineAppointment ? '<div class="button-cmp"><button class="btn button-cmp__text button-cmp__text--primary">Pedir Cita</button></div>' : ''}
     </div>
   </div>`;
 }
@@ -95,12 +108,13 @@ export default function decorate(block) {
     groups.get(spec).push(p);
   });
 
-  let html = `<p class="cm-count">${providers.length} resultados en ${locationName}</p>`;
+  let html = `<div class="cmp-medical-picture-result__header"><div class="cmp-medical-picture-result__header--share-title-block"><div class="cmp-medical-picture-result__header--title">${providers.length} resultados en <strong>${locationName}</strong></div></div></div>`;
 
   groups.forEach((specProviders, specName) => {
-    html += `<h2 class="cm-spec-header">${specName}</h2>`;
-    html += `<div class="cm-grid">${specProviders.map(renderCard).join('')}</div>`;
+    html += `<h2 class="cmp-medical-detail__subtitle">${specName}</h2>`;
+    html += `<div class="cmp-medical-detail">${specProviders.map(renderCard).join('')}</div>`;
   });
 
   block.innerHTML = html;
 }
+

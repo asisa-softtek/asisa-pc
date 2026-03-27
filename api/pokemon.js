@@ -145,8 +145,9 @@ export default async function handler(req, res) {
 <head>
   <meta charset="UTF-8">
   <title>${title} | Pokédex Asisa</title>
-  <link rel="stylesheet" href="https://www.asisa.es/etc.clientlibs/wasisa/clientlibs/clientlib-generic.min.css" type="text/css">
-  <link rel="stylesheet" href="https://www.asisa.es/etc.clientlibs/wasisa/clientlibs/clientlib-site.min.css" type="text/css">
+<link rel="stylesheet" href="https://www.asisa.es/etc.clientlibs/wasisa/clientlibs/clientlib-generic.min.css?v=1.0" type="text/css"/>
+<link rel="stylesheet" href="https://www.asisa.es/etc.clientlibs/wasisa/clientlibs/clientlib-iconslib.min.css?v=1.0" type="text/css"/>
+<link rel="stylesheet" href="https://www.asisa.es/etc.clientlibs/wasisa/clientlibs/clientlib-site.min.css?v=1.0" type="text/css"/>
 </head>
 <body>
   <header></header>
