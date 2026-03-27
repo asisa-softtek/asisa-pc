@@ -1,0 +1,101 @@
+.pokemon-card-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.pokemon-card {
+  background: rgb(255 255 255 / 60%);
+  border: 1px solid rgb(255 255 255 / 60%);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-top: 1.5rem;
+  backdrop-filter: blur(8px);
+}
+
+.pokemon-card-layout {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+/* Media (imagen + tipos) */
+.pokemon-card-media {
+  flex: 0 0 auto;
+}
+
+.pokemon-card-media img {
+  max-width: 220px;
+  display: block;
+}
+
+.pokemon-card-types {
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.pokemon-card-type-badge {
+  background: #0f172a;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+/* Info (id, medidas, stats) */
+.pokemon-card-info {
+  flex: 1 1 240px;
+}
+
+.pokemon-card-name {
+  margin: 0 0 0.25rem;
+  font-size: 1.5rem;
+}
+
+.pokemon-card-id {
+  color: #94a3b8;
+  margin: 0 0 0.25rem;
+  font-size: 0.9rem;
+}
+
+.pokemon-card-measures {
+  margin: 0 0 1rem;
+}
+
+/* Barras de stats */
+.pokemon-card-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.pokemon-card-stat-name {
+  display: inline-block;
+  width: 130px;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.pokemon-card-stat-bar {
+  flex: 1;
+  background: #e2e8f0;
+  border-radius: 4px;
+  height: 8px;
+}
+
+.pokemon-card-stat-fill {
+  background: #10b981;
+  height: 8px;
+  border-radius: 4px;
+}
+
+.pokemon-card-stat-value {
+  font-weight: bold;
+  font-size: 0.85rem;
+  width: 32px;
+  text-align: right;
+}

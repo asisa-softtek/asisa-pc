@@ -1,0 +1,68 @@
+{
+  "rewrites": [
+    {
+      "source": "/cuadro-medico/salud/(.*)",
+      "destination": "/api/cuadro-medico?slug=$1"
+    },
+    {
+      "source": "/cuadro-medico/salud",
+      "destination": "/api/cuadro-medico"
+    },
+    {
+      "source": "/pokemon/(.*)",
+      "destination": "/api/pokemon?name=$1"
+    },
+    {
+      "source": "/api/pokemon/(.*)",
+      "destination": "/api/pokemon?name=$1"
+    },
+    {
+      "source": "/dynamic-pokemon/(.*)",
+      "destination": "/api/pokemon?name=$1"
+    },
+    {
+      "source": "/proxy-pokemon/(.*)",
+      "destination": "/api/pokemon?name=$1"
+    },
+    {
+      "source": "/pokemon",
+      "destination": "/api/pokemon"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/sitemap"
+    },
+    {
+      "source": "/sitemap-pokemon.xml",
+      "destination": "/api/sitemap-pokemon"
+    },
+    {
+      "source": "/sitemap-cuadro-medico-provincias.xml",
+      "destination": "/api/sitemap-cuadro-medico?type=provincias"
+    },
+    {
+      "source": "/sitemap-cuadro-medico-municipios.xml",
+      "destination": "/api/sitemap-cuadro-medico?type=municipios"
+    },
+    {
+      "source": "/sitemap-cuadro-medico-provincia-specs.xml",
+      "destination": "/api/sitemap-cuadro-medico?type=provincia-specs"
+    },
+    {
+      "source": "/sitemap-cuadro-medico-municipio-specs.xml",
+      "destination": "/api/sitemap-cuadro-medico?type=municipio-specs"
+    },
+    {
+      "source": "/sitemap-cuadro-medico-general-specs.xml",
+      "destination": "/api/sitemap-cuadro-medico?type=general-specs"
+    },
+    {
+      "source": "/sitemap-cuadro-medico-centros.xml",
+      "destination": "/api/sitemap-cuadro-medico?type=centros"
+    },
+    {
+      "source": "/sitemap-cuadro-medico-especialistas.xml",
+      "destination": "/api/sitemap-cuadro-medico?type=especialistas"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+.cuadro-medico-top-especialidades {
+  max-width: 1200px;
+  margin: 3rem auto 0;
+  padding: 2rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+}
+
+.cm-top-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #004f8b;
+  margin: 0 0 1.25rem;
+}
+
+.cm-top-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.5rem;
+}
+
+.cm-top-item {
+  padding: 0.5rem 0.75rem;
+  border-left: 3px solid #004f8b;
+  background: white;
+}
+
+.cm-top-item a {
+  font-size: 0.85rem;
+  color: #004f8b;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.cm-top-item a:hover {
+  text-decoration: underline;
+}
+
+.cm-top-loading {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}

@@ -1,0 +1,23 @@
+mountpoints:
+  /sitemap.xml:
+    url: "https://asisa-pc.vercel.app/sitemap.xml"
+    type: "markup"
+  /sitemap-pokemon.xml:
+    url: "https://asisa-pc.vercel.app/sitemap-pokemon.xml"
+    type: "markup"
+  /sitemap-cuadro-medico-provincias.xml:
+    url: "https://asisa-pc.vercel.app/sitemap-cuadro-medico-provincias.xml"
+    type: "markup"
+  /sitemap-cuadro-medico-municipios.xml:
+    url: "https://asisa-pc.vercel.app/sitemap-cuadro-medico-municipios.xml"
+    type: "markup"
+  /:
+    url: "https://author-p133185-e1320482.adobeaemcloud.com/bin/franklin.delivery/asisa-softtek/asisa-pc/main"
+    type: "markup"
+    suffix: ".html"
+  /pokemon:
+    url: "https://asisa-pc.vercel.app/pokemon"
+    type: "markup"
+  /cuadro-medico/salud:
+    url: "https://asisa-pc.vercel.app/cuadro-medico/salud"
+    type: "markup"
