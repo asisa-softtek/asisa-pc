@@ -24,7 +24,7 @@ function normalize(str) {
 }
 
 function toSlug(str) {
-  return normalize(str).replace(/\s+/g, '-');
+  return normalize(str).replace(/\./g, '').replace(/\s+/g, '-');
 }
 
 async function asisaFetch(url) {
