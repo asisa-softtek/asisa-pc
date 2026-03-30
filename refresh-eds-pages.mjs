@@ -16,8 +16,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const ADMIN_BASE = 'https://admin.hlx.page';
 const REPO = 'asisa-softtek/asisa-pc/main';
-const CONCURRENCY = 20;
-const DELAY_MS = 0;
+const CONCURRENCY = 10;
+const DELAY_MS = 100;
 
 function toSlug(str) {
   return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, '-');
@@ -27,21 +27,30 @@ function sleep(ms) {
   return new Promise((resolve) => { setTimeout(resolve, ms); });
 }
 
-async function refreshUrl(action, path) {
+async function refreshUrl(action, path, retries = 3) {
   const url = `${ADMIN_BASE}/${action}/${REPO}${path}`;
-  try {
-    const resp = await fetch(url, { method: 'POST' });
-    const { status } = resp;
-    if (status === 200) {
-      console.log(`  OK ${action} ${path}`);
-    } else {
-      console.log(`  ${status} ${action} ${path}`);
+  for (let attempt = 1; attempt <= retries; attempt += 1) {
+    try {
+      // eslint-disable-next-line no-await-in-loop
+      const resp = await fetch(url, { method: 'POST' });
+      const { status } = resp;
+      if (status === 200) {
+        console.log(`  OK ${action} ${path}`);
+        return status;
+      }
+      if (status === 401 || status === 404) {
+        console.log(`  ${status} ${action} ${path}`);
+        return status;
+      }
+      console.log(`  ${status} ${action} ${path} (attempt ${attempt}/${retries})`);
+      if (attempt < retries) await sleep(500 * attempt);
+    } catch (e) {
+      console.log(`  ERROR ${action} ${path}: ${e.message} (attempt ${attempt}/${retries})`);
+      if (attempt < retries) await sleep(500 * attempt);
     }
-    return status;
-  } catch (e) {
-    console.log(`  ERROR ${action} ${path}: ${e.message}`);
-    return 0;
   }
+  console.log(`  FAILED ${action} ${path} after ${retries} attempts`);
+  return 0;
 }
 
 async function refreshPage(path) {
