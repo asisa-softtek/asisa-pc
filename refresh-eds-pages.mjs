@@ -20,7 +20,7 @@ const CONCURRENCY = 10;
 const DELAY_MS = 100;
 
 function toSlug(str) {
-  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, '-');
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\./g, '').replace(/\s+/g, '-');
 }
 
 function sleep(ms) {
