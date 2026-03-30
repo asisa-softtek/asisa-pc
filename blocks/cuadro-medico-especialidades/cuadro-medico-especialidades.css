@@ -1,4 +1,3 @@
-
 .eds-md-esp-title {
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-500);
@@ -40,9 +39,9 @@
   width: 4rem;
   height: 4rem;
   margin: 0 auto var(--spacing-xl) auto;
-  background: var(--color-blue-400);
   border-radius: var(--b-radius-50p);
-  border: 1px solid var(--color-brand-200);
+  background: var(--color-blue-400);
+  border: 1px solid var(--color-brand-400);
 }
 .eds-md-esp-item span i {
   font-size: var(--font-size-xl-01);
