@@ -16,8 +16,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const ADMIN_BASE = 'https://admin.hlx.page';
 const REPO = 'asisa-softtek/asisa-pc/main';
-const CONCURRENCY = 3;
-const DELAY_MS = 500;
+const CONCURRENCY = 20;
+const DELAY_MS = 0;
 
 function toSlug(str) {
   return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, '-');
