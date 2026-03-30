@@ -1,0 +1,32 @@
+ul li {
+  margin: 0;
+  padding: 0;
+}
+
+ul li.loading {
+  margin: auto 0 var(--spacing-4xl) 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-44);
+  justify-content: center;
+}
+
+ul li.loading p {
+  width: 100%;
+  color: var(--color-acento-azul-oscuro-500);
+  font-size: var(--font-size-xl-01);
+  font-weight: var(--font-weight-700);
+  letter-spacing: var(--letter-spacing-1);
+  line-height: var(--line-height-42);
+  margin: 0;
+  text-align: center;
+}
+ul li.loading .spinner {
+  display: block;
+  margin: 0 auto;
+}
+
+
+.cuadro-medico-especialidades, .cuadro-medico-provincias{
+   margin: 0 0 var(--spacing-4xl) 0;
+}
