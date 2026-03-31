@@ -4,7 +4,7 @@ import { join } from 'path';
 const BASE = 'https://main--asisa-pc--asisa-softtek.aem.live';
 
 function toSlug(str) {
-  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, '-');
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\./g, '').replace(/\s+/g, '-');
 }
 
 function readJsonFile(filename) {
