@@ -26,7 +26,7 @@ function normalize(str) {
 }
 
 function toSlug(str) {
-  return normalize(str).replace(/\./g, '').replace(/\s+/g, '-');
+  return normalize(str).replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
 }
 
 function sleep(ms) {
