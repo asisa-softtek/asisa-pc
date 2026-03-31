@@ -26,7 +26,9 @@ ul li.loading .spinner {
   margin: 0 auto;
 }
 
-
-.cuadro-medico-especialidades, .cuadro-medico-provincias{
-   margin: 0 0 var(--spacing-4xl) 0;
+.cuadro-medico-especialidades,
+.cuadro-medico-provincias,
+.cuadro-medico-localidades,
+.cuadro-medico-top-especialidades {
+  margin: 0 0 var(--spacing-4xl) 0;
 }

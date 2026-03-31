@@ -1,46 +1,64 @@
-.cuadro-medico-top-especialidades {
-  max-width: 1200px;
-  margin: 3rem auto 0;
-  padding: 2rem;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 4px;
+.eds-md-esp-top-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-500);
+  line-height: var(--line-height-140p);
+  letter-spacing: 0;
+  margin: 0 0 var(--spacing-4xl) 0;
+  color: var(--color-brand-100);
 }
 
-.cm-top-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #004f8b;
-  margin: 0 0 1.25rem;
-}
-
-.cm-top-list {
+.eds-md-esp-top-list {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap-xl);
 }
 
-.cm-top-item {
-  padding: 0.5rem 0.75rem;
-  border-left: 3px solid #004f8b;
-  background: white;
-}
-
-.cm-top-item a {
-  font-size: 0.85rem;
-  color: #004f8b;
+.eds-md-esp-top-item a {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 17.5rem;
+  border: 1px solid var(--color-blue-400);
+  background: var(--color-white);
   text-decoration: none;
-  font-weight: 500;
+  padding: var(--spacing-xl);
+}
+.eds-md-esp-top-item a:hover {
+  box-shadow: 0px 10px 30px 0px #2f55971a;
+  backdrop-filter: blur(10px);
 }
 
-.cm-top-item a:hover {
-  text-decoration: underline;
+.eds-md-esp-top-item span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 4rem;
+  height: 4rem;
+  margin: 0 auto var(--spacing-xl) auto;
+  border-radius: var(--b-radius-50p);
+  border: 1px solid var(--color-brand-100);
+  background: var( --color-brand-100);
+}
+.eds-md-esp-top-item span i {
+  font-size: var(--font-size-xl-01);
+  display: block;
+  overflow: hidden;
 }
 
-.cm-top-loading {
-  color: #94a3b8;
-  font-size: 0.9rem;
+.eds-md-esp-top-item span i::before{
+  color: var(--color-white);
+}
+
+.eds-md-esp-top-item p {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-700);
+  line-height: var(--line-height-140p);
+  letter-spacing: 0;
+  text-align: center;
+  width: 100%;
+  color: var(--color-brand-700);
 }
