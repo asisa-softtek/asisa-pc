@@ -93,12 +93,6 @@ async function main() {
   const provincias = provinceCodeFilter
     ? allProvincias.filter((p) => String(p.provinceCode) === String(provinceCodeFilter))
     : allProvincias;
-  const municipios = JSON.parse(readFileSync(join(__dirname, 'data/municipios.json'), 'utf8'));
-
-  const muniMap = new Map();
-  for (const m of municipios) {
-    muniMap.set(`${normalize(m.municipio)}|${m.provinceCode}`, m.municipio);
-  }
 
   const especialistasIndex = {};
   const especialistaUrls = [];
@@ -143,8 +137,7 @@ async function main() {
 
     const getLocationSlugs = (city) => {
       const slugs = [provSlug];
-      const key = `${normalize(city)}|${prov.provinceCode}`;
-      if (muniMap.has(key)) slugs.push(toSlug(muniMap.get(key)));
+      if (city) slugs.push(toSlug(city));
       return slugs;
     };
 
