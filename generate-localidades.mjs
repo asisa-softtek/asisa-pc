@@ -96,6 +96,22 @@ async function fetchProviderCities(provinceCode, specDesc, specType) {
   return cities;
 }
 
+async function parallelLimit(tasks, limit) {
+  const results = [];
+  let index = 0;
+  async function worker() {
+    while (index < tasks.length) {
+      const i = index;
+      index += 1;
+      results[i] = await tasks[i]();
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(limit, tasks.length) }, worker));
+  return results;
+}
+
+const CONCURRENCY = 10;
+
 async function main() {
   const provincias = JSON.parse(readFileSync(join(__dirname, 'data/provincias.json'), 'utf8'));
 
@@ -103,42 +119,55 @@ async function main() {
   const provNameMap = new Map();
   for (const p of provincias) provNameMap.set(p.provinceCode, p.name);
 
-  // Collect all unique cityDescription per province
-  // Key: "CITYNAME|provinceCode" → cityDescription (original case from ASISA)
   const allCities = new Map();
-  let processed = 0;
 
-  for (const prov of provincias) {
-    processed += 1;
-    console.log(`[${processed}/${provincias.length}] ${prov.name} (${prov.provinceCode})...`);
+  console.log(`Paso 1: Obteniendo especialidades para ${provincias.length} provincias en paralelo...`);
+  const specTasks = provincias.map((prov) => async () => {
+    const specs = await fetchSpecialities(prov.provinceCode);
+    return { prov, specs };
+  });
 
-    const specialities = await fetchSpecialities(prov.provinceCode);
-    if (specialities.length === 0) {
-      console.log('  Sin especialidades');
-      continue;
+  const specsResults = await parallelLimit(specTasks, CONCURRENCY);
+
+  console.log(`Paso 2: Construyendo lista total de combinaciones Provincia + Especialidad...`);
+  const cityTasks = [];
+
+  for (const { prov, specs } of specsResults) {
+    for (const spec of specs) {
+      cityTasks.push(async () => {
+        const cities = await fetchProviderCities(
+          prov.provinceCode,
+          spec.specialityDescription,
+          spec.specialityTypeCode
+        );
+        return { provCode: prov.provinceCode, cities };
+      });
     }
+  }
 
-    const provinceCities = new Set();
+  console.log(`Se dispararán ${cityTasks.length} peticiones a /providers en lotes de ${CONCURRENCY}...`);
 
-    for (let i = 0; i < specialities.length; i += 1) {
-      const spec = specialities[i];
-      const cities = await fetchProviderCities(
-        prov.provinceCode,
-        spec.specialityDescription,
-        spec.specialityTypeCode,
-      );
-      for (const c of cities) provinceCities.add(c);
-      if (i < specialities.length - 1) await sleep(500);
+  let completed = 0;
+  // Añadir log de progreso a las tareas
+  const wrappedCityTasks = cityTasks.map((task) => async () => {
+    const result = await task();
+    completed += 1;
+    if (completed % 100 === 0 || completed === cityTasks.length) {
+      console.log(`  Progreso: ${completed} / ${cityTasks.length} completadas...`);
     }
+    return result;
+  });
 
-    for (const city of provinceCities) {
-      const key = `${city}|${prov.provinceCode}`;
+  const cityResults = await parallelLimit(wrappedCityTasks, CONCURRENCY);
+
+  console.log('Procesando datos devueltos para aislar localidades únicas...');
+  for (const { provCode, cities } of cityResults) {
+    for (const city of cities) {
+      const key = `${city}|${provCode}`;
       if (!allCities.has(key)) {
-        allCities.set(key, { cityDescription: city, provinceCode: prov.provinceCode });
+        allCities.set(key, { cityDescription: city, provinceCode: provCode });
       }
     }
-
-    console.log(`  ${provinceCities.size} localidades`);
   }
 
   // Build output array
