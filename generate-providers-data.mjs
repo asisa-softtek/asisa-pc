@@ -140,6 +140,8 @@ async function main() {
   const centroUrls = [];
   const especialistasIndex = {};
   const especialistaUrls = [];
+  const provinciaSpecs = new Set(); // "provincia-de-x/spec-slug"
+  const allSpecs = new Set();       // "spec-slug"
 
   let totalApiCalls = 0;
   let totalNewFiles = 0;
@@ -281,6 +283,12 @@ async function main() {
       }
     }
 
+    // Acumular combos provincia/especialidad
+    for (const specSlug of specsBySlug.keys()) {
+      provinciaSpecs.add(`${provSlugFull}/${specSlug}`);
+      allSpecs.add(specSlug);
+    }
+
     console.log(`  [${prov.name}] ${specs.length} especialidades, ${centros.size} centros, ${especialistas.size} especialistas`);
   }
 
@@ -324,12 +332,34 @@ async function main() {
     writeFileSync(join(__dirname, 'data/valid-especialistas.json'), JSON.stringify(espUrlList, null, 2), 'utf8');
     writeFileSync(join(__dirname, 'data/especialistas-index.json'), JSON.stringify(especialistasIndex), 'utf8');
 
+    // speciality combos (antes en generate-specialities.mjs)
+    const provSpecList = [...provinciaSpecs].sort();
+    const specList = [...allSpecs].sort();
+    const municipioSpecs = new Set();
+    for (const loc of localidades) {
+      const prov = allProvincias.find((p) => p.provinceCode === loc.provinceCode);
+      if (!prov) continue;
+      const provSlugFull = `provincia-de-${toSlug(prov.name)}`;
+      for (const combo of provinciaSpecs) {
+        if (combo.startsWith(`${provSlugFull}/`)) {
+          municipioSpecs.add(`${loc.slug}/${combo.slice(provSlugFull.length + 1)}`);
+        }
+      }
+    }
+    const muniSpecList = [...municipioSpecs].sort();
+    writeFileSync(join(__dirname, 'data/valid-provincia-specs.json'), JSON.stringify(provSpecList, null, 2), 'utf8');
+    writeFileSync(join(__dirname, 'data/valid-municipio-specs.json'), JSON.stringify(muniSpecList, null, 2), 'utf8');
+    writeFileSync(join(__dirname, 'data/valid-specialities.json'), JSON.stringify(specList, null, 2), 'utf8');
+
     console.log('\n--- Generados ---');
-    console.log(`  valid-localidades.json:   ${localidades.length} localidades`);
-    console.log(`  valid-centros.json:       ${centroUrlList.length} URLs`);
-    console.log(`  centros-index.json:       ${Object.keys(centrosIndex).length} entries`);
-    console.log(`  valid-especialistas.json: ${espUrlList.length} URLs`);
-    console.log(`  especialistas-index.json: ${Object.keys(especialistasIndex).length} entries`);
+    console.log(`  valid-localidades.json:       ${localidades.length} localidades`);
+    console.log(`  valid-centros.json:           ${centroUrlList.length} URLs`);
+    console.log(`  centros-index.json:           ${Object.keys(centrosIndex).length} entries`);
+    console.log(`  valid-especialistas.json:     ${espUrlList.length} URLs`);
+    console.log(`  especialistas-index.json:     ${Object.keys(especialistasIndex).length} entries`);
+    console.log(`  valid-provincia-specs.json:   ${provSpecList.length} combos`);
+    console.log(`  valid-municipio-specs.json:   ${muniSpecList.length} combos`);
+    console.log(`  valid-specialities.json:      ${specList.length} especialidades`);
   } else {
     console.log(`\nEjecución parcial (provincia ${provinceFilter}) - no se escriben JSONs finales`);
   }
