@@ -135,6 +135,7 @@ async function main() {
       // Guardar vacío para no reintentar en futuras ejecuciones
       writeFileSync(filePath, 'null', 'utf8');
       errorFiles += 1;
+      console.log(`  ✗ ERROR locCode=${locCode} docNum=${docNum}`);
     }
 
     completed += 1;
