@@ -1,7 +1,8 @@
 /* eslint-disable no-restricted-syntax, no-await-in-loop, no-continue */
 /* eslint-disable no-underscore-dangle, no-console */
 /**
- * Hace UN SOLO pase contra ASISA y genera:
+ * Script unificado que reemplaza generate-localidades.mjs + generate-providers.mjs.
+ * Hace UN SOLO pase contra ASISA (~3.917 peticiones) y genera:
  *  - data/valid-localidades.json          (localidades con cobertura)
  *  - data/providers/{prov}/{spec}.json    (médicos pre-cacheados por provincia/especialidad)
  *
@@ -18,7 +19,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const ASISA_API_KEY = '0908b85b9d0e4a75b2eb33048bd9fe01';
 const ASISA_BASE = 'https://ursaepre.asisa.es/ASISA/middlewasisa/public/v1/api/searchPortal';
-const CONCURRENCY = 10;
+const CONCURRENCY = 10; // Bajar a 5 si ASISA devuelve errores 429
 const FORCE = process.env.FORCE === 'true';
 
 function normalize(str) {
@@ -238,4 +239,25 @@ async function main() {
     // Informar slugs duplicados
     const slugCount = new Map();
     for (const loc of localidades) slugCount.set(loc.slug, (slugCount.get(loc.slug) || 0) + 1);
-    const duplicates
+    const duplicates = [...slugCount.entries()].filter(([, c]) => c > 1);
+        if (duplicates.length > 0) {
+            console.log(`\n⚠ ${duplicates.length} slugs duplicados (misma localidad en varias provincias):`);
+            for (const [slug, count] of duplicates.slice(0, 10)) {
+              const entries = localidades.filter((l) => l.slug === slug);
+              console.log(`  "${slug}" (${count}): ${entries.map((e) => `${e.cityDescription} [${e.provincia}]`).join(', ')}`);
+            }
+          }
+
+          writeFileSync(join(__dirname, 'data/valid-localidades.json'), JSON.stringify(localidades, null, 2), 'utf8');
+          console.log(`\nGenerado: data/valid-localidades.json → ${localidades.length} localidades`);
+        }
+
+        console.log('\n--- Resumen de peticiones ---');
+        console.log(`  Llamadas a ASISA (autocomplete): ${provincias.length}`);
+        console.log(`  Llamadas a ASISA (providers):    ${totalApiCalls - provincias.length}`);
+        console.log(`  Total llamadas a ASISA:          ${totalApiCalls}`);
+        console.log(`  Archivos providers nuevos:       ${totalProviderFiles}`);
+        console.log(`  Archivos providers desde caché:  ${totalCachedFiles}`);
+      }
+
+      main().catch((err) => { console.error('Error:', err); process.exit(1); });

@@ -11,7 +11,7 @@
  *  1-N: [providerName, speciality, address, city, phone, lat, lon]
  */
 
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 
 export const config = { maxDuration: 60 };
@@ -60,6 +60,27 @@ function getLocalidades() {
 
 function normalize(str) {
   return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+}
+
+function toSlug(str) {
+  return normalize(str).replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+}
+
+function getProvinceSlug(code) {
+  const prov = PROVINCIAS.find((p) => p.code === code);
+  return prov ? toSlug(prov.name) : null;
+}
+
+function loadPreloadedProviders(provinceCode, specSlug) {
+  try {
+    const provSlug = getProvinceSlug(provinceCode);
+    if (!provSlug) return null;
+    const filePath = join(process.cwd(), `data/providers/${provSlug}/${specSlug}.json`);
+    if (!existsSync(filePath)) return null;
+    return JSON.parse(readFileSync(filePath, 'utf8'));
+  } catch {
+    return null;
+  }
 }
 
 function findProvincia(slug) {
@@ -510,16 +531,16 @@ export default async function handler(req, res) {
       specialities = [match];
       specFilterName = match.specialityDescription;
     } else {
-      // No speciality filter: limited to 2 for Vercel Hobby
-      specialities = allSpecialities.slice(0, 2);
+      specialities = allSpecialities;
     }
 
-    // 3. Fetch providers
-    const tasks = specialities.map((spec) => () => fetchAllProvidersForSpec(
-      provinceCode,
-      spec.specialityDescription,
-      spec.specialityTypeCode,
-    ));
+    // 3. Fetch providers (from pre-generated files if available, else live)
+    const tasks = specialities.map((spec) => () => {
+      const specSlug = toSlug(spec.specialityDescription);
+      const cached = loadPreloadedProviders(provinceCode, specSlug);
+      if (cached) return Promise.resolve(cached);
+      return fetchAllProvidersForSpec(provinceCode, spec.specialityDescription, spec.specialityTypeCode);
+    });
     const providersBySpec = await parallelLimit(tasks, CONCURRENCY);
 
     // 4. Build rows, filtering by city and exact speciality match
