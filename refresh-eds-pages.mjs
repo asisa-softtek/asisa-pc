@@ -2,7 +2,7 @@
 /**
  * Refresca preview y live en EDS para todas las páginas de cuadro médico.
  * - 52 provincias
- * - Municipios válidos (si data/valid-municipios.json existe)
+ * - Localidades válidas (si data/valid-localidades.json existe)
  * - Code refresh (JS/CSS)
  *
  * Uso: node refresh-eds-pages.mjs
@@ -78,16 +78,16 @@ async function main() {
   console.log(`\nRefreshing ${provinciaPaths.length} provincias...`);
   await processInBatches(provinciaPaths, CONCURRENCY);
 
-  // Municipios válidos
-  const validPath = join(__dirname, 'data/valid-municipios.json');
+  // Localidades válidas (generadas desde ASISA)
+  const validPath = join(__dirname, 'data/valid-localidades.json');
   if (existsSync(validPath)) {
-    const municipios = JSON.parse(readFileSync(validPath, 'utf8'));
-    const muniPaths = municipios.map((m) => `/cuadro-medico/salud/${toSlug(m)}`);
+    const localidades = JSON.parse(readFileSync(validPath, 'utf8'));
+    const locPaths = localidades.map((l) => `/cuadro-medico/salud/${l.slug}`);
 
-    console.log(`\nRefreshing ${muniPaths.length} municipios...`);
-    await processInBatches(muniPaths, CONCURRENCY);
+    console.log(`\nRefreshing ${locPaths.length} localidades...`);
+    await processInBatches(locPaths, CONCURRENCY);
   } else {
-    console.log('\nNo valid-municipios.json found, skipping municipios.');
+    console.log('\nNo valid-localidades.json found, skipping localidades.');
   }
 
   // Provincia + especialidad combos

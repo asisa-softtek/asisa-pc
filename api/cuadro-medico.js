@@ -49,13 +49,13 @@ const PROVINCIAS = [
   { name: 'MELILLA', code: '52' }, { name: 'ASTURIAS', code: '57' },
 ];
 
-// Lazy-load municipios
-let municipiosCache = null;
-function getMunicipios() {
-  if (!municipiosCache) {
-    municipiosCache = JSON.parse(readFileSync(join(process.cwd(), 'data/municipios.json'), 'utf8'));
+// Lazy-load localidades (generadas desde ASISA)
+let localidadesCache = null;
+function getLocalidades() {
+  if (!localidadesCache) {
+    localidadesCache = JSON.parse(readFileSync(join(process.cwd(), 'data/valid-localidades.json'), 'utf8'));
   }
-  return municipiosCache;
+  return localidadesCache;
 }
 
 function normalize(str) {
@@ -70,17 +70,15 @@ function findProvincia(slug) {
   return PROVINCIAS.find((p) => normalize(p.name) === normalize(cleaned));
 }
 
-function findMunicipio(slug) {
-  const cleaned = slug.replace(/-/g, ' ').trim();
-  const normalizedSlug = normalize(cleaned);
-  const municipios = getMunicipios();
-  return municipios.find((m) => normalize(m.municipio) === normalizedSlug);
+function findLocalidad(slug) {
+  const localidades = getLocalidades();
+  return localidades.find((l) => l.slug === slug);
 }
 
 /**
  * Resuelve el slug a { locationName, provinceCode, cityFilter }
  *  - provincia-de-X → provincia completa (cityFilter = null)
- *  - X              → municipio (cityFilter = nombre del municipio)
+ *  - X              → localidad ASISA (cityFilter = cityDescription normalizado)
  */
 function resolveLocation(slug) {
   const cleanSlug = slug.replace('.html', '').replace('.plain', '');
@@ -91,13 +89,13 @@ function resolveLocation(slug) {
     if (prov) return { locationName: prov.name, provinceCode: prov.code, cityFilter: null };
   }
 
-  // 2. Intentar como municipio
-  const mun = findMunicipio(cleanSlug);
-  if (mun) {
+  // 2. Intentar como localidad ASISA
+  const loc = findLocalidad(cleanSlug);
+  if (loc) {
     return {
-      locationName: mun.municipio,
-      provinceCode: mun.provinceCode,
-      cityFilter: normalize(mun.municipio),
+      locationName: loc.displayName,
+      provinceCode: loc.provinceCode,
+      cityFilter: normalize(loc.cityDescription),
     };
   }
 

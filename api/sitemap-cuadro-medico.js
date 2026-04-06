@@ -34,9 +34,9 @@ function getProvincias() {
 }
 
 function getMunicipios() {
-  const municipios = readJsonFile('valid-municipios.json');
-  if (!municipios) return EMPTY;
-  const urls = municipios.map((m) => `${BASE}/cuadro-medico/salud/${toSlug(m)}`);
+  const localidades = readJsonFile('valid-localidades.json');
+  if (!localidades) return EMPTY;
+  const urls = localidades.map((l) => `${BASE}/cuadro-medico/salud/${l.slug}`);
   return buildSitemap(urls);
 }
 
