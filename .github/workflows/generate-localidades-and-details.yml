@@ -3,7 +3,12 @@ name: Daily data refresh
 on:
   schedule:
     - cron: '0 1 * * *'
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Forzar sobreescritura de caché (true/false)'
+        required: false
+        default: 'false'
 
 permissions:
   contents: write
@@ -20,9 +25,13 @@ jobs:
           node-version: '20'
 
       - name: 1. Providers — localidades + centros + especialistas
+        env:
+          FORCE: ${{ github.event.inputs.force || 'false' }}
         run: node generate-providers-data.mjs
 
       - name: 2. Provider details
+        env:
+          FORCE: ${{ github.event.inputs.force || 'false' }}
         run: node generate-provider-details.mjs
 
       - name: 3. Speciality combos (sin llamadas a ASISA)
