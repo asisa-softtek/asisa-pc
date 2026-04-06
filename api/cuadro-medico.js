@@ -351,7 +351,20 @@ function buildStaticProviderRow(entry, specName) {
   }, specName);
 }
 
-// Template 04: /cuadro-medico/salud/{localidad}/{especialidad}/{centro}
+function loadProviderDetails(locCode) {
+  if (!locCode) return null;
+  try {
+    const filePath = join(process.cwd(), `data/provider-details/${locCode}.json`);
+    if (!existsSync(filePath)) return null;
+    const raw = readFileSync(filePath, 'utf8');
+    return JSON.parse(raw); // array de entries, una por especialidad
+  } catch {
+    return null;
+  }
+}
+
+// Template 04 + 05: /cuadro-medico/salud/{localidad}/{especialidad}/{centro}
+//                   /cuadro-medico/salud/{localidad}/especialidades/{centro}
 function handleCentro(res, locationSlug, specSlug, centroSlug) {
   const centros = getCentrosIndex();
   const key = `${locationSlug}/${specSlug}/${centroSlug}`;
@@ -363,8 +376,14 @@ function handleCentro(res, locationSlug, specSlug, centroSlug) {
 <body><header></header><main><div><h1>Centro no encontrado</h1></div></main><footer></footer></body></html>`);
   }
 
-  const featuredSpec = centro.featuredSpec || centro.specialities[0] || '';
-  const cardRow = buildStaticProviderRow(centro, featuredSpec || centro.specialities[0] || '');
+  // Cargar detalle completo desde provider-details si está disponible
+  const details = loadProviderDetails(centro.providerLocalicationCode);
+  const allSpecialities = details
+    ? [...new Set(details.map((d) => d.specialityInfo?.specialityDescription).filter(Boolean))].sort()
+    : centro.specialities;
+
+  const featuredSpec = centro.featuredSpec || allSpecialities[0] || '';
+  const cardRow = buildStaticProviderRow(centro, featuredSpec);
   const specSuffix = featuredSpec ? ` – ${featuredSpec}` : '';
 
   const mainContent = `<div>
@@ -374,7 +393,7 @@ function handleCentro(res, locationSlug, specSlug, centroSlug) {
 ${cardRow}
   </div>
   <div class="cuadro-medico-centro-specs">
-    <div><div>${centro.specialities.join('|')}</div><div>${locationSlug}</div></div>
+    <div><div>${allSpecialities.join('|')}</div><div>${locationSlug}</div></div>
   </div>
   <div class="cuadro-medico-top-especialidades"></div>
   <div class="cuadro-medico-provincias"></div>
@@ -418,7 +437,13 @@ function handleEspecialista(res, locationSlug, espSlug) {
 <body><header></header><main><div><h1>Especialista no encontrado</h1></div></main><footer></footer></body></html>`);
   }
 
-  const mainSpec = esp.specialities[0] || '';
+  // Cargar detalle completo desde provider-details si está disponible
+  const details = loadProviderDetails(esp.providerLocalicationCode);
+  const allSpecialities = details
+    ? [...new Set(details.map((d) => d.specialityInfo?.specialityDescription).filter(Boolean))].sort()
+    : esp.specialities;
+
+  const mainSpec = allSpecialities[0] || '';
   const cardRow = buildStaticProviderRow(esp, mainSpec);
 
   const mainContent = `<div>
@@ -428,7 +453,7 @@ function handleEspecialista(res, locationSlug, espSlug) {
 ${cardRow}
   </div>
   <div class="cuadro-medico-centro-specs">
-    <div><div>${esp.specialities.join('|')}</div><div>${locationSlug}</div></div>
+    <div><div>${allSpecialities.join('|')}</div><div>${locationSlug}</div></div>
   </div>
   <div class="cuadro-medico-top-especialidades"></div>
   <div class="cuadro-medico-provincias"></div>
