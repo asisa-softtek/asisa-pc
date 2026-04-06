@@ -201,6 +201,7 @@ async function main() {
             spec.specialityDescription,
             spec.specialityTypeCode,
           );
+          if (!fetched.length) console.log(`  ✗ ERROR ${prov.name} / ${spec.specialityDescription}`);
           for (const p of fetched) {
             const id = p.providerCode
               || `${p.providerName}|${p.address?.addressDescription}|${p.address?.cityDescription}`;
