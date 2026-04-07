@@ -25,7 +25,7 @@ const FORCE = process.env.FORCE === 'true';
 
 async function asisaFetch(url) {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 15000);
+  const timeout = setTimeout(() => controller.abort(), 150000);
   try {
     const resp = await fetch(url, {
       signal: controller.signal,
