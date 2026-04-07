@@ -50,17 +50,18 @@ async function asisaFetch(url) {
       headers: { 'Ocp-Apim-Subscription-Key': ASISA_API_KEY, 'Api-Version': '1' },
     });
     clearTimeout(timeout);
-    if (!resp.ok) return null;
-    return resp.json();
-  } catch {
+    if (!resp.ok) return { error: resp.status };
+    return { data: await resp.json() };
+  } catch (e) {
     clearTimeout(timeout);
-    return null;
+    return { error: e.name === 'AbortError' ? 'TIMEOUT' : 'NETWORK' };
   }
 }
 
 async function fetchSpecialities(provinceCode) {
   const url = `${ASISA_BASE}/autocomplete/specialities?specialityDescription=&networkCode=1&provinceCode=${provinceCode}&maxResultsNumber=200`;
-  return (await asisaFetch(url)) || [];
+  const result = await asisaFetch(url);
+  return result.data || [];
 }
 
 async function fetchAllProviders(provinceCode, specDesc, specType) {
@@ -72,20 +73,21 @@ async function fetchAllProviders(provinceCode, specDesc, specType) {
     specialityType: String(specType),
   });
 
-  const firstPage = await asisaFetch(`${ASISA_BASE}/providers?${params}`);
-  if (!firstPage) return [];
+  const firstResult = await asisaFetch(`${ASISA_BASE}/providers?${params}`);
+  if (!firstResult.data) return { error: firstResult.error };
 
+  const firstPage = firstResult.data;
   const totalCount = firstPage.result?.resultCount || 0;
   let allProviders = firstPage.providerInfo || [];
 
   const totalPages = Math.ceil(totalCount / 100);
   for (let page = 2; page <= totalPages; page += 1) {
     params.set('pageNumber', String(page));
-    const pageData = await asisaFetch(`${ASISA_BASE}/providers?${params}`);
-    if (pageData?.providerInfo) allProviders = allProviders.concat(pageData.providerInfo);
+    const pageResult = await asisaFetch(`${ASISA_BASE}/providers?${params}`);
+    if (pageResult.data?.providerInfo) allProviders = allProviders.concat(pageResult.data.providerInfo);
   }
 
-  return allProviders;
+  return { data: allProviders };
 }
 
 async function parallelLimit(tasks, limit) {
@@ -198,12 +200,17 @@ async function main() {
         const seen = new Set();
         for (const spec of slugSpecs) {
           totalApiCalls += 1;
-          const fetched = await fetchAllProviders(
+          const result = await fetchAllProviders(
             prov.provinceCode,
             spec.specialityDescription,
             spec.specialityTypeCode,
           );
-          if (!fetched.length) console.log(`  ✗ ERROR ${prov.name} / ${spec.specialityDescription}`);
+          if (result.error !== undefined) {
+            console.log(`  ✗ [${result.error}] ${prov.name} / ${spec.specialityDescription}`);
+            continue;
+          }
+          const fetched = result.data;
+          if (!fetched.length) console.log(`  ✗ [EMPTY] ${prov.name} / ${spec.specialityDescription}`);
           for (const p of fetched) {
             const id = p.providerCode
               || `${p.providerName}|${p.address?.addressDescription}|${p.address?.cityDescription}`;
