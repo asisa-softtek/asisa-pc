@@ -1,1 +1,4965 @@
-[]
+[
+  {
+    "slug": "abanilla",
+    "cityDescription": "ABANILLA",
+    "displayName": "Abanilla",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "abaran",
+    "cityDescription": "ABARAN",
+    "displayName": "Abaran",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "adra",
+    "cityDescription": "ADRA",
+    "displayName": "Adra",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "agost",
+    "cityDescription": "AGOST",
+    "displayName": "Agost",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "aguadulce",
+    "cityDescription": "AGUADULCE",
+    "displayName": "Aguadulce",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "aguilar-de-campoo",
+    "cityDescription": "AGUILAR DE CAMPOO",
+    "displayName": "Aguilar De Campoo",
+    "provinceCode": "34",
+    "provincia": "PALENCIA"
+  },
+  {
+    "slug": "aguilar-de-la-frontera",
+    "cityDescription": "AGUILAR DE LA FRONTERA",
+    "displayName": "Aguilar De La Frontera",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "aguilas",
+    "cityDescription": "AGUILAS",
+    "displayName": "Aguilas",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "aguimes",
+    "cityDescription": "AGUIMES",
+    "displayName": "Aguimes",
+    "provinceCode": "35",
+    "provincia": "LAS PALMAS"
+  },
+  {
+    "slug": "aitona",
+    "cityDescription": "AITONA",
+    "displayName": "Aitona",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "ajalvir",
+    "cityDescription": "AJALVIR",
+    "displayName": "Ajalvir",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "alamo-el",
+    "cityDescription": "ALAMO (EL)",
+    "displayName": "Alamo (El)",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "albacete",
+    "cityDescription": "ALBACETE",
+    "displayName": "Albacete",
+    "provinceCode": "2",
+    "provincia": "ALBACETE"
+  },
+  {
+    "slug": "albatera",
+    "cityDescription": "ALBATERA",
+    "displayName": "Albatera",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "albolote",
+    "cityDescription": "ALBOLOTE",
+    "displayName": "Albolote",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "albox",
+    "cityDescription": "ALBOX",
+    "displayName": "Albox",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "alcala-de-henares",
+    "cityDescription": "ALCALA DE HENARES",
+    "displayName": "Alcala De Henares",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "alcala-la-real",
+    "cityDescription": "ALCALA LA REAL",
+    "displayName": "Alcala La Real",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "alcantarilla",
+    "cityDescription": "ALCANTARILLA",
+    "displayName": "Alcantarilla",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "alcarras",
+    "cityDescription": "ALCARRAS",
+    "displayName": "Alcarras",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "alcaudete",
+    "cityDescription": "ALCAUDETE",
+    "displayName": "Alcaudete",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "alcazar-de-san-juan",
+    "cityDescription": "ALCAZAR DE SAN JUAN",
+    "displayName": "Alcazar De San Juan",
+    "provinceCode": "13",
+    "provincia": "CIUDAD REAL"
+  },
+  {
+    "slug": "alcazares-los",
+    "cityDescription": "ALCAZARES (LOS)",
+    "displayName": "Alcazares (Los)",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "alcobendas",
+    "cityDescription": "ALCOBENDAS",
+    "displayName": "Alcobendas",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "alcorcon",
+    "cityDescription": "ALCORCON",
+    "displayName": "Alcorcon",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "alcoy-alcoi",
+    "cityDescription": "ALCOY/ALCOI",
+    "displayName": "Alcoy/Alcoi",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "alcudia",
+    "cityDescription": "ALCUDIA",
+    "displayName": "Alcudia",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "alcuescar",
+    "cityDescription": "ALCUESCAR",
+    "displayName": "Alcuescar",
+    "provinceCode": "10",
+    "provincia": "CÁCERES"
+  },
+  {
+    "slug": "aldea-del-fresno",
+    "cityDescription": "ALDEA DEL FRESNO",
+    "displayName": "Aldea Del Fresno",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "alella",
+    "cityDescription": "ALELLA",
+    "displayName": "Alella",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "alfarras",
+    "cityDescription": "ALFARRAS",
+    "displayName": "Alfarras",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "alfas-del-pi-l",
+    "cityDescription": "ALFAS DEL PI (L')",
+    "displayName": "Alfas Del Pi (L')",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "algeciras",
+    "cityDescription": "ALGECIRAS",
+    "displayName": "Algeciras",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "algete",
+    "cityDescription": "ALGETE",
+    "displayName": "Algete",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "algezares",
+    "cityDescription": "ALGEZARES",
+    "displayName": "Algezares",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "alguazas",
+    "cityDescription": "ALGUAZAS",
+    "displayName": "Alguazas",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "alhama-de-murcia",
+    "cityDescription": "ALHAMA DE MURCIA",
+    "displayName": "Alhama De Murcia",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "alhaurin-de-la-torre",
+    "cityDescription": "ALHAURIN DE LA TORRE",
+    "displayName": "Alhaurin De La Torre",
+    "provinceCode": "29",
+    "provincia": "MÁLAGA"
+  },
+  {
+    "slug": "alhaurin-el-grande",
+    "cityDescription": "ALHAURIN EL GRANDE",
+    "displayName": "Alhaurin El Grande",
+    "provinceCode": "29",
+    "provincia": "MÁLAGA"
+  },
+  {
+    "slug": "alicante-alacant",
+    "cityDescription": "ALICANTE/ALACANT",
+    "displayName": "Alicante/Alacant",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "aljaraque",
+    "cityDescription": "ALJARAQUE",
+    "displayName": "Aljaraque",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "almaden",
+    "cityDescription": "ALMADEN",
+    "displayName": "Almaden",
+    "provinceCode": "13",
+    "provincia": "CIUDAD REAL"
+  },
+  {
+    "slug": "almagro",
+    "cityDescription": "ALMAGRO",
+    "displayName": "Almagro",
+    "provinceCode": "13",
+    "provincia": "CIUDAD REAL"
+  },
+  {
+    "slug": "almansa",
+    "cityDescription": "ALMANSA",
+    "displayName": "Almansa",
+    "provinceCode": "2",
+    "provincia": "ALBACETE"
+  },
+  {
+    "slug": "almazora-almassora",
+    "cityDescription": "ALMAZORA/ALMASSORA",
+    "displayName": "Almazora/Almassora",
+    "provinceCode": "12",
+    "provincia": "CASTELLÓN"
+  },
+  {
+    "slug": "almenar",
+    "cityDescription": "ALMENAR",
+    "displayName": "Almenar",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "almenara",
+    "cityDescription": "ALMENARA",
+    "displayName": "Almenara",
+    "provinceCode": "12",
+    "provincia": "CASTELLÓN"
+  },
+  {
+    "slug": "almendralejo",
+    "cityDescription": "ALMENDRALEJO",
+    "displayName": "Almendralejo",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "almendro-el",
+    "cityDescription": "ALMENDRO (EL)",
+    "displayName": "Almendro (El)",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "almeria",
+    "cityDescription": "ALMERIA",
+    "displayName": "Almeria",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "almodovar-del-rio",
+    "cityDescription": "ALMODOVAR DEL RIO",
+    "displayName": "Almodovar Del Rio",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "almonte",
+    "cityDescription": "ALMONTE",
+    "displayName": "Almonte",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "almoradi",
+    "cityDescription": "ALMORADI",
+    "displayName": "Almoradi",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "almunecar",
+    "cityDescription": "ALMUÑECAR",
+    "displayName": "Almuñecar",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "alora",
+    "cityDescription": "ALORA",
+    "displayName": "Alora",
+    "provinceCode": "29",
+    "provincia": "MÁLAGA"
+  },
+  {
+    "slug": "alpedrete",
+    "cityDescription": "ALPEDRETE",
+    "displayName": "Alpedrete",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "alquerias-del-nino-perdido",
+    "cityDescription": "ALQUERIAS DEL NIÑO PERDIDO",
+    "displayName": "Alquerias Del Niño Perdido",
+    "provinceCode": "12",
+    "provincia": "CASTELLÓN"
+  },
+  {
+    "slug": "altea",
+    "cityDescription": "ALTEA",
+    "displayName": "Altea",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "amer",
+    "cityDescription": "AMER",
+    "displayName": "Amer",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "ames",
+    "cityDescription": "AMES",
+    "displayName": "Ames",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "amurrio",
+    "cityDescription": "AMURRIO",
+    "displayName": "Amurrio",
+    "provinceCode": "1",
+    "provincia": "ÁLAVA"
+  },
+  {
+    "slug": "andoain",
+    "cityDescription": "ANDOAIN",
+    "displayName": "Andoain",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  },
+  {
+    "slug": "andratx",
+    "cityDescription": "ANDRATX",
+    "displayName": "Andratx",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "andujar",
+    "cityDescription": "ANDUJAR",
+    "displayName": "Andujar",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "angles",
+    "cityDescription": "ANGLES",
+    "displayName": "Angles",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "antequera",
+    "cityDescription": "ANTEQUERA",
+    "displayName": "Antequera",
+    "provinceCode": "29",
+    "provincia": "MÁLAGA"
+  },
+  {
+    "slug": "aracena",
+    "cityDescription": "ARACENA",
+    "displayName": "Aracena",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "aranda-de-duero",
+    "cityDescription": "ARANDA DE DUERO",
+    "displayName": "Aranda De Duero",
+    "provinceCode": "9",
+    "provincia": "BURGOS"
+  },
+  {
+    "slug": "aranjuez",
+    "cityDescription": "ARANJUEZ",
+    "displayName": "Aranjuez",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "arbucies",
+    "cityDescription": "ARBUCIES",
+    "displayName": "Arbucies",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "arce",
+    "cityDescription": "ARCE",
+    "displayName": "Arce",
+    "provinceCode": "39",
+    "provincia": "CANTABRIA"
+  },
+  {
+    "slug": "archena",
+    "cityDescription": "ARCHENA",
+    "displayName": "Archena",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "arcos-de-la-frontera",
+    "cityDescription": "ARCOS DE LA FRONTERA",
+    "displayName": "Arcos De La Frontera",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "arenas-de-san-pedro",
+    "cityDescription": "ARENAS DE SAN PEDRO",
+    "displayName": "Arenas De San Pedro",
+    "provinceCode": "5",
+    "provincia": "ÁVILA"
+  },
+  {
+    "slug": "arenys-de-mar",
+    "cityDescription": "ARENYS DE MAR",
+    "displayName": "Arenys De Mar",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "arevalo",
+    "cityDescription": "AREVALO",
+    "displayName": "Arevalo",
+    "provinceCode": "5",
+    "provincia": "ÁVILA"
+  },
+  {
+    "slug": "arganda-del-rey",
+    "cityDescription": "ARGANDA DEL REY",
+    "displayName": "Arganda Del Rey",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "argentona",
+    "cityDescription": "ARGENTONA",
+    "displayName": "Argentona",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "armilla",
+    "cityDescription": "ARMILLA",
+    "displayName": "Armilla",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "arnedo",
+    "cityDescription": "ARNEDO",
+    "displayName": "Arnedo",
+    "provinceCode": "26",
+    "provincia": "LA RIOJA"
+  },
+  {
+    "slug": "arrasate-mondragon",
+    "cityDescription": "ARRASATE/MONDRAGON",
+    "displayName": "Arrasate/Mondragon",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  },
+  {
+    "slug": "arrecife",
+    "cityDescription": "ARRECIFE",
+    "displayName": "Arrecife",
+    "provinceCode": "35",
+    "provincia": "LAS PALMAS"
+  },
+  {
+    "slug": "arroyo-de-san-servan",
+    "cityDescription": "ARROYO DE SAN SERVAN",
+    "displayName": "Arroyo De San Servan",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "arroyomolinos",
+    "cityDescription": "ARROYOMOLINOS",
+    "displayName": "Arroyomolinos",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "arta",
+    "cityDescription": "ARTA",
+    "displayName": "Arta",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "arteixo",
+    "cityDescription": "ARTEIXO",
+    "displayName": "Arteixo",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "arucas",
+    "cityDescription": "ARUCAS",
+    "displayName": "Arucas",
+    "provinceCode": "35",
+    "provincia": "LAS PALMAS"
+  },
+  {
+    "slug": "aspe",
+    "cityDescription": "ASPE",
+    "displayName": "Aspe",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "astillero-el",
+    "cityDescription": "ASTILLERO (EL)",
+    "displayName": "Astillero (El)",
+    "provinceCode": "39",
+    "provincia": "CANTABRIA"
+  },
+  {
+    "slug": "astorga",
+    "cityDescription": "ASTORGA",
+    "displayName": "Astorga",
+    "provinceCode": "24",
+    "provincia": "LEÓN"
+  },
+  {
+    "slug": "atarfe",
+    "cityDescription": "ATARFE",
+    "displayName": "Atarfe",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "avila",
+    "cityDescription": "AVILA",
+    "displayName": "Avila",
+    "provinceCode": "5",
+    "provincia": "ÁVILA"
+  },
+  {
+    "slug": "ayamonte",
+    "cityDescription": "AYAMONTE",
+    "displayName": "Ayamonte",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "azpeitia",
+    "cityDescription": "AZPEITIA",
+    "displayName": "Azpeitia",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  },
+  {
+    "slug": "azuaga",
+    "cityDescription": "AZUAGA",
+    "displayName": "Azuaga",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "azuqueca-de-henares",
+    "cityDescription": "AZUQUECA DE HENARES",
+    "displayName": "Azuqueca De Henares",
+    "provinceCode": "19",
+    "provincia": "GUADALAJARA"
+  },
+  {
+    "slug": "badajoz",
+    "cityDescription": "BADAJOZ",
+    "displayName": "Badajoz",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "badalona",
+    "cityDescription": "BADALONA",
+    "displayName": "Badalona",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "badia-del-valles",
+    "cityDescription": "BADIA DEL VALLES",
+    "displayName": "Badia Del Valles",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "baena",
+    "cityDescription": "BAENA",
+    "displayName": "Baena",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "baeza",
+    "cityDescription": "BAEZA",
+    "displayName": "Baeza",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "bailen",
+    "cityDescription": "BAILEN",
+    "displayName": "Bailen",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "balaguer",
+    "cityDescription": "BALAGUER",
+    "displayName": "Balaguer",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "baneza-la",
+    "cityDescription": "BAÑEZA (LA)",
+    "displayName": "Bañeza (La)",
+    "provinceCode": "24",
+    "provincia": "LEÓN"
+  },
+  {
+    "slug": "banyoles",
+    "cityDescription": "BANYOLES",
+    "displayName": "Banyoles",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "barbastro",
+    "cityDescription": "BARBASTRO",
+    "displayName": "Barbastro",
+    "provinceCode": "22",
+    "provincia": "HUESCA"
+  },
+  {
+    "slug": "barbate",
+    "cityDescription": "BARBATE",
+    "displayName": "Barbate",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "barbera-del-valles",
+    "cityDescription": "BARBERA DEL VALLES",
+    "displayName": "Barbera Del Valles",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "barcarrota",
+    "cityDescription": "BARCARROTA",
+    "displayName": "Barcarrota",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "barcelona",
+    "cityDescription": "BARCELONA",
+    "displayName": "Barcelona",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "barco-de-avila-el",
+    "cityDescription": "BARCO DE AVILA (EL)",
+    "displayName": "Barco De Avila (El)",
+    "provinceCode": "5",
+    "provincia": "ÁVILA"
+  },
+  {
+    "slug": "barco-de-valdeorras-o",
+    "cityDescription": "BARCO DE VALDEORRAS (O)",
+    "displayName": "Barco De Valdeorras (O)",
+    "provinceCode": "32",
+    "provincia": "ORENSE"
+  },
+  {
+    "slug": "barrios-los",
+    "cityDescription": "BARRIOS (LOS)",
+    "displayName": "Barrios (Los)",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "baza",
+    "cityDescription": "BAZA",
+    "displayName": "Baza",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "beasain",
+    "cityDescription": "BEASAIN",
+    "displayName": "Beasain",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  },
+  {
+    "slug": "becerrea",
+    "cityDescription": "BECERREA",
+    "displayName": "Becerrea",
+    "provinceCode": "27",
+    "provincia": "LUGO"
+  },
+  {
+    "slug": "bellavista",
+    "cityDescription": "BELLAVISTA",
+    "displayName": "Bellavista",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "bellpuig",
+    "cityDescription": "BELLPUIG",
+    "displayName": "Bellpuig",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "belver-de-cinca",
+    "cityDescription": "BELVER DE CINCA",
+    "displayName": "Belver De Cinca",
+    "provinceCode": "22",
+    "provincia": "HUESCA"
+  },
+  {
+    "slug": "benalmadena",
+    "cityDescription": "BENALMADENA",
+    "displayName": "Benalmadena",
+    "provinceCode": "29",
+    "provincia": "MÁLAGA"
+  },
+  {
+    "slug": "benameji",
+    "cityDescription": "BENAMEJI",
+    "displayName": "Benameji",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "beniajan",
+    "cityDescription": "BENIAJAN",
+    "displayName": "Beniajan",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "benicarlo",
+    "cityDescription": "BENICARLO",
+    "displayName": "Benicarlo",
+    "provinceCode": "12",
+    "provincia": "CASTELLÓN"
+  },
+  {
+    "slug": "benicasim-benicassim",
+    "cityDescription": "BENICASIM/BENICASSIM",
+    "displayName": "Benicasim/Benicassim",
+    "provinceCode": "12",
+    "provincia": "CASTELLÓN"
+  },
+  {
+    "slug": "benidorm",
+    "cityDescription": "BENIDORM",
+    "displayName": "Benidorm",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "beniel",
+    "cityDescription": "BENIEL",
+    "displayName": "Beniel",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "benissa",
+    "cityDescription": "BENISSA",
+    "displayName": "Benissa",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "beranga",
+    "cityDescription": "BERANGA",
+    "displayName": "Beranga",
+    "provinceCode": "39",
+    "provincia": "CANTABRIA"
+  },
+  {
+    "slug": "berga",
+    "cityDescription": "BERGA",
+    "displayName": "Berga",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "bergara",
+    "cityDescription": "BERGARA",
+    "displayName": "Bergara",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  },
+  {
+    "slug": "berja",
+    "cityDescription": "BERJA",
+    "displayName": "Berja",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "betanzos",
+    "cityDescription": "BETANZOS",
+    "displayName": "Betanzos",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "biar",
+    "cityDescription": "BIAR",
+    "displayName": "Biar",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "bigastro",
+    "cityDescription": "BIGASTRO",
+    "displayName": "Bigastro",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "binefar",
+    "cityDescription": "BINEFAR",
+    "displayName": "Binefar",
+    "provinceCode": "22",
+    "provincia": "HUESCA"
+  },
+  {
+    "slug": "bisbal-d-emporda-la",
+    "cityDescription": "BISBAL D'EMPORDA (LA)",
+    "displayName": "Bisbal D'emporda (La)",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "blanca",
+    "cityDescription": "BLANCA",
+    "displayName": "Blanca",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "blanes",
+    "cityDescription": "BLANES",
+    "displayName": "Blanes",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "boadilla-del-monte",
+    "cityDescription": "BOADILLA DEL MONTE",
+    "displayName": "Boadilla Del Monte",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "boiro",
+    "cityDescription": "BOIRO",
+    "displayName": "Boiro",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "bolanos-de-calatrava",
+    "cityDescription": "BOLAÑOS DE CALATRAVA",
+    "displayName": "Bolaños De Calatrava",
+    "provinceCode": "13",
+    "provincia": "CIUDAD REAL"
+  },
+  {
+    "slug": "bollullos-par-del-condado",
+    "cityDescription": "BOLLULLOS PAR DEL CONDADO",
+    "displayName": "Bollullos Par Del Condado",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "borges-blanques-les",
+    "cityDescription": "BORGES BLANQUES (LES)",
+    "displayName": "Borges Blanques (Les)",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "borrassa",
+    "cityDescription": "BORRASSA",
+    "displayName": "Borrassa",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "bosque-el",
+    "cityDescription": "BOSQUE (EL)",
+    "displayName": "Bosque (El)",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "bossost",
+    "cityDescription": "BOSSOST",
+    "displayName": "Bossost",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "brion",
+    "cityDescription": "BRION",
+    "displayName": "Brion",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "brunete",
+    "cityDescription": "BRUNETE",
+    "displayName": "Brunete",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "bujalance",
+    "cityDescription": "BUJALANCE",
+    "displayName": "Bujalance",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "bullas",
+    "cityDescription": "BULLAS",
+    "displayName": "Bullas",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "burela",
+    "cityDescription": "BURELA",
+    "displayName": "Burela",
+    "provinceCode": "27",
+    "provincia": "LUGO"
+  },
+  {
+    "slug": "burgos",
+    "cityDescription": "BURGOS",
+    "displayName": "Burgos",
+    "provinceCode": "9",
+    "provincia": "BURGOS"
+  },
+  {
+    "slug": "burriana",
+    "cityDescription": "BURRIANA",
+    "displayName": "Burriana",
+    "provinceCode": "12",
+    "provincia": "CASTELLÓN"
+  },
+  {
+    "slug": "cabanes",
+    "cityDescription": "CABANES",
+    "displayName": "Cabanes",
+    "provinceCode": "12",
+    "provincia": "CASTELLÓN"
+  },
+  {
+    "slug": "cabezo-de-torres",
+    "cityDescription": "CABEZO DE TORRES",
+    "displayName": "Cabezo De Torres",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "cabezon-de-la-sal",
+    "cityDescription": "CABEZON DE LA SAL",
+    "displayName": "Cabezon De La Sal",
+    "provinceCode": "39",
+    "provincia": "CANTABRIA"
+  },
+  {
+    "slug": "cabra",
+    "cityDescription": "CABRA",
+    "displayName": "Cabra",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "caceres",
+    "cityDescription": "CACERES",
+    "displayName": "Caceres",
+    "provinceCode": "10",
+    "provincia": "CÁCERES"
+  },
+  {
+    "slug": "cadiz",
+    "cityDescription": "CADIZ",
+    "displayName": "Cadiz",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "cala-d-or",
+    "cityDescription": "CALA D'OR",
+    "displayName": "Cala D'or",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "cala-millor",
+    "cityDescription": "CALA MILLOR",
+    "displayName": "Cala Millor",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "cala-ratjada",
+    "cityDescription": "CALA RATJADA",
+    "displayName": "Cala Ratjada",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "calahorra",
+    "cityDescription": "CALAHORRA",
+    "displayName": "Calahorra",
+    "provinceCode": "26",
+    "provincia": "LA RIOJA"
+  },
+  {
+    "slug": "calasparra",
+    "cityDescription": "CALASPARRA",
+    "displayName": "Calasparra",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "caldes-de-malavella",
+    "cityDescription": "CALDES DE MALAVELLA",
+    "displayName": "Caldes De Malavella",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "caldes-de-montbui",
+    "cityDescription": "CALDES DE MONTBUI",
+    "displayName": "Caldes De Montbui",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "calella",
+    "cityDescription": "CALELLA",
+    "displayName": "Calella",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "callosa-d-en-sarria",
+    "cityDescription": "CALLOSA D'EN SARRIA",
+    "displayName": "Callosa D'en Sarria",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "callosa-de-segura",
+    "cityDescription": "CALLOSA DE SEGURA",
+    "displayName": "Callosa De Segura",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "calpe-calp",
+    "cityDescription": "CALPE/CALP",
+    "displayName": "Calpe/Calp",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "calvia",
+    "cityDescription": "CALVIA",
+    "displayName": "Calvia",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "camargo",
+    "cityDescription": "CAMARGO",
+    "displayName": "Camargo",
+    "provinceCode": "39",
+    "provincia": "CANTABRIA"
+  },
+  {
+    "slug": "cambre",
+    "cityDescription": "CAMBRE",
+    "displayName": "Cambre",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "campdevanol",
+    "cityDescription": "CAMPDEVANOL",
+    "displayName": "Campdevanol",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "campello-el",
+    "cityDescription": "CAMPELLO (EL)",
+    "displayName": "Campello (El)",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "campo-de-criptana",
+    "cityDescription": "CAMPO DE CRIPTANA",
+    "displayName": "Campo De Criptana",
+    "provinceCode": "13",
+    "provincia": "CIUDAD REAL"
+  },
+  {
+    "slug": "campohermoso",
+    "cityDescription": "CAMPOHERMOSO",
+    "displayName": "Campohermoso",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "campos",
+    "cityDescription": "CAMPOS",
+    "displayName": "Campos",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "can-picafort",
+    "cityDescription": "CAN PICAFORT",
+    "displayName": "Can Picafort",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "canet-de-mar",
+    "cityDescription": "CANET DE MAR",
+    "displayName": "Canet De Mar",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "capdepera",
+    "cityDescription": "CAPDEPERA",
+    "displayName": "Capdepera",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "caravaca-de-la-cruz",
+    "cityDescription": "CARAVACA DE LA CRUZ",
+    "displayName": "Caravaca De La Cruz",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "carballino-o",
+    "cityDescription": "CARBALLIÑO (O)",
+    "displayName": "Carballiño (O)",
+    "provinceCode": "32",
+    "provincia": "ORENSE"
+  },
+  {
+    "slug": "carballo",
+    "cityDescription": "CARBALLO",
+    "displayName": "Carballo",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "carboneras",
+    "cityDescription": "CARBONERAS",
+    "displayName": "Carboneras",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "cardedeu",
+    "cityDescription": "CARDEDEU",
+    "displayName": "Cardedeu",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "cardona",
+    "cityDescription": "CARDONA",
+    "displayName": "Cardona",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "carino",
+    "cityDescription": "CARIÑO",
+    "displayName": "Cariño",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "carlota-la",
+    "cityDescription": "CARLOTA (LA)",
+    "displayName": "Carlota (La)",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "carolina-la",
+    "cityDescription": "CAROLINA (LA)",
+    "displayName": "Carolina (La)",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "cartagena",
+    "cityDescription": "CARTAGENA",
+    "displayName": "Cartagena",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "cartama",
+    "cityDescription": "CARTAMA",
+    "displayName": "Cartama",
+    "provinceCode": "29",
+    "provincia": "MÁLAGA"
+  },
+  {
+    "slug": "cartaya",
+    "cityDescription": "CARTAYA",
+    "displayName": "Cartaya",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "casar-de-caceres",
+    "cityDescription": "CASAR DE CACERES",
+    "displayName": "Casar De Caceres",
+    "provinceCode": "10",
+    "provincia": "CÁCERES"
+  },
+  {
+    "slug": "casar-el",
+    "cityDescription": "CASAR (EL)",
+    "displayName": "Casar (El)",
+    "provinceCode": "19",
+    "provincia": "GUADALAJARA"
+  },
+  {
+    "slug": "casas-ibanez",
+    "cityDescription": "CASAS-IBAÑEZ",
+    "displayName": "Casas-Ibañez",
+    "provinceCode": "2",
+    "provincia": "ALBACETE"
+  },
+  {
+    "slug": "castell-platja-d-aro",
+    "cityDescription": "CASTELL-PLATJA D'ARO",
+    "displayName": "Castell-Platja D'aro",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "castellbisbal",
+    "cityDescription": "CASTELLBISBAL",
+    "displayName": "Castellbisbal",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "castelldefels",
+    "cityDescription": "CASTELLDEFELS",
+    "displayName": "Castelldefels",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "castellon-de-la-plana-castello-de-la-pla",
+    "cityDescription": "CASTELLON DE LA PLANA/CASTELLO DE LA PLA",
+    "displayName": "Castellon De La Plana/Castello De La Pla",
+    "provinceCode": "12",
+    "provincia": "CASTELLÓN"
+  },
+  {
+    "slug": "castro-del-rio",
+    "cityDescription": "CASTRO DEL RIO",
+    "displayName": "Castro Del Rio",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "castro-urdiales",
+    "cityDescription": "CASTRO-URDIALES",
+    "displayName": "Castro-Urdiales",
+    "provinceCode": "39",
+    "provincia": "CANTABRIA"
+  },
+  {
+    "slug": "castuera",
+    "cityDescription": "CASTUERA",
+    "displayName": "Castuera",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "caudete",
+    "cityDescription": "CAUDETE",
+    "displayName": "Caudete",
+    "provinceCode": "2",
+    "provincia": "ALBACETE"
+  },
+  {
+    "slug": "cazorla",
+    "cityDescription": "CAZORLA",
+    "displayName": "Cazorla",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "cehegin",
+    "cityDescription": "CEHEGIN",
+    "displayName": "Cehegin",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "celanova",
+    "cityDescription": "CELANOVA",
+    "displayName": "Celanova",
+    "provinceCode": "32",
+    "provincia": "ORENSE"
+  },
+  {
+    "slug": "cerdanyola-del-valles",
+    "cityDescription": "CERDANYOLA DEL VALLES",
+    "displayName": "Cerdanyola Del Valles",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "cerro-muriano",
+    "cityDescription": "CERRO MURIANO",
+    "displayName": "Cerro Muriano",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "cervera",
+    "cityDescription": "CERVERA",
+    "displayName": "Cervera",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "cervia-de-ter",
+    "cityDescription": "CERVIA DE TER",
+    "displayName": "Cervia De Ter",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "ceuta",
+    "cityDescription": "CEUTA",
+    "displayName": "Ceuta",
+    "provinceCode": "51",
+    "provincia": "CEUTA"
+  },
+  {
+    "slug": "ceuti",
+    "cityDescription": "CEUTI",
+    "displayName": "Ceuti",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "chiclana-de-la-frontera",
+    "cityDescription": "CHICLANA DE LA FRONTERA",
+    "displayName": "Chiclana De La Frontera",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "chipiona",
+    "cityDescription": "CHIPIONA",
+    "displayName": "Chipiona",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "churriana-de-la-vega",
+    "cityDescription": "CHURRIANA DE LA VEGA",
+    "displayName": "Churriana De La Vega",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "ciempozuelos",
+    "cityDescription": "CIEMPOZUELOS",
+    "displayName": "Ciempozuelos",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "cieza",
+    "cityDescription": "CIEZA",
+    "displayName": "Cieza",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "ciudad-real",
+    "cityDescription": "CIUDAD REAL",
+    "displayName": "Ciudad Real",
+    "provinceCode": "13",
+    "provincia": "CIUDAD REAL"
+  },
+  {
+    "slug": "ciudad-santo-domingo",
+    "cityDescription": "CIUDAD SANTO DOMINGO",
+    "displayName": "Ciudad Santo Domingo",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "coin",
+    "cityDescription": "COIN",
+    "displayName": "Coin",
+    "provinceCode": "29",
+    "provincia": "MÁLAGA"
+  },
+  {
+    "slug": "colindres",
+    "cityDescription": "COLINDRES",
+    "displayName": "Colindres",
+    "provinceCode": "39",
+    "provincia": "CANTABRIA"
+  },
+  {
+    "slug": "coll-de-nargo",
+    "cityDescription": "COLL DE NARGO",
+    "displayName": "Coll De Nargo",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "collado-villalba",
+    "cityDescription": "COLLADO VILLALBA",
+    "displayName": "Collado Villalba",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "colmenar-viejo",
+    "cityDescription": "COLMENAR VIEJO",
+    "displayName": "Colmenar Viejo",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "conil-de-la-frontera",
+    "cityDescription": "CONIL DE LA FRONTERA",
+    "displayName": "Conil De La Frontera",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "consell",
+    "cityDescription": "CONSELL",
+    "displayName": "Consell",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "cordoba",
+    "cityDescription": "CORDOBA",
+    "displayName": "Cordoba",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "coria",
+    "cityDescription": "CORIA",
+    "displayName": "Coria",
+    "provinceCode": "10",
+    "provincia": "CÁCERES"
+  },
+  {
+    "slug": "cornella-de-llobregat",
+    "cityDescription": "CORNELLA DE LLOBREGAT",
+    "displayName": "Cornella De Llobregat",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "corrales",
+    "cityDescription": "CORRALES",
+    "displayName": "Corrales",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "corrales-de-buelna-los",
+    "cityDescription": "CORRALES DE BUELNA (LOS)",
+    "displayName": "Corrales De Buelna (Los)",
+    "provinceCode": "39",
+    "provincia": "CANTABRIA"
+  },
+  {
+    "slug": "cortegana",
+    "cityDescription": "CORTEGANA",
+    "displayName": "Cortegana",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "coruna-a",
+    "cityDescription": "CORUÑA (A)",
+    "displayName": "Coruña (A)",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "coslada",
+    "cityDescription": "COSLADA",
+    "displayName": "Coslada",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "cox",
+    "cityDescription": "COX",
+    "displayName": "Cox",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "crevillente",
+    "cityDescription": "CREVILLENTE",
+    "displayName": "Crevillente",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "cuenca",
+    "cityDescription": "CUENCA",
+    "displayName": "Cuenca",
+    "provinceCode": "16",
+    "provincia": "CUENCA"
+  },
+  {
+    "slug": "cuevas-del-almanzora",
+    "cityDescription": "CUEVAS DEL ALMANZORA",
+    "displayName": "Cuevas Del Almanzora",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "culleredo",
+    "cityDescription": "CULLEREDO",
+    "displayName": "Culleredo",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "daganzo-de-arriba",
+    "cityDescription": "DAGANZO DE ARRIBA",
+    "displayName": "Daganzo De Arriba",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "daimiel",
+    "cityDescription": "DAIMIEL",
+    "displayName": "Daimiel",
+    "provinceCode": "13",
+    "provincia": "CIUDAD REAL"
+  },
+  {
+    "slug": "deba",
+    "cityDescription": "DEBA",
+    "displayName": "Deba",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  },
+  {
+    "slug": "denia",
+    "cityDescription": "DENIA",
+    "displayName": "Denia",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "dolores",
+    "cityDescription": "DOLORES",
+    "displayName": "Dolores",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "don-benito",
+    "cityDescription": "DON BENITO",
+    "displayName": "Don Benito",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "donostia-san-sebastian",
+    "cityDescription": "DONOSTIA-SAN SEBASTIAN",
+    "displayName": "Donostia-San Sebastian",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  },
+  {
+    "slug": "durcal",
+    "cityDescription": "DURCAL",
+    "displayName": "Durcal",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "eibar",
+    "cityDescription": "EIBAR",
+    "displayName": "Eibar",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  },
+  {
+    "slug": "eivissa",
+    "cityDescription": "EIVISSA",
+    "displayName": "Eivissa",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "ejido-el",
+    "cityDescription": "EJIDO (EL)",
+    "displayName": "Ejido (El)",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "el-alquian",
+    "cityDescription": "EL ALQUIAN",
+    "displayName": "El Alquian",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "el-palmar",
+    "cityDescription": "EL PALMAR",
+    "displayName": "El Palmar",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "elche-elx",
+    "cityDescription": "ELCHE/ELX",
+    "displayName": "Elche/Elx",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "elda",
+    "cityDescription": "ELDA",
+    "displayName": "Elda",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "era-alta",
+    "cityDescription": "ERA ALTA",
+    "displayName": "Era Alta",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "escala-l",
+    "cityDescription": "ESCALA (L')",
+    "displayName": "Escala (L')",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "esparreguera",
+    "cityDescription": "ESPARREGUERA",
+    "displayName": "Esparreguera",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "esplugues-de-llobregat",
+    "cityDescription": "ESPLUGUES DE LLOBREGAT",
+    "displayName": "Esplugues De Llobregat",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "espot",
+    "cityDescription": "ESPOT",
+    "displayName": "Espot",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "estepona",
+    "cityDescription": "ESTEPONA",
+    "displayName": "Estepona",
+    "provinceCode": "29",
+    "provincia": "MÁLAGA"
+  },
+  {
+    "slug": "felanitx",
+    "cityDescription": "FELANITX",
+    "displayName": "Felanitx",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "fene",
+    "cityDescription": "FENE",
+    "displayName": "Fene",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "fernan-nunez",
+    "cityDescription": "FERNAN NUÑEZ",
+    "displayName": "Fernan Nuñez",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "ferrol",
+    "cityDescription": "FERROL",
+    "displayName": "Ferrol",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "figueres",
+    "cityDescription": "FIGUERES",
+    "displayName": "Figueres",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "formentera-del-segura",
+    "cityDescription": "FORMENTERA DEL SEGURA",
+    "displayName": "Formentera Del Segura",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "fortuna",
+    "cityDescription": "FORTUNA",
+    "displayName": "Fortuna",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "fraga",
+    "cityDescription": "FRAGA",
+    "displayName": "Fraga",
+    "provinceCode": "22",
+    "provincia": "HUESCA"
+  },
+  {
+    "slug": "franqueses-del-valles-les",
+    "cityDescription": "FRANQUESES DEL VALLES (LES)",
+    "displayName": "Franqueses Del Valles (Les)",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "fregenal-de-la-sierra",
+    "cityDescription": "FREGENAL DE LA SIERRA",
+    "displayName": "Fregenal De La Sierra",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "fuengirola",
+    "cityDescription": "FUENGIROLA",
+    "displayName": "Fuengirola",
+    "provinceCode": "29",
+    "provincia": "MÁLAGA"
+  },
+  {
+    "slug": "fuenlabrada",
+    "cityDescription": "FUENLABRADA",
+    "displayName": "Fuenlabrada",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "fuente-alamo-de-murcia",
+    "cityDescription": "FUENTE ALAMO DE MURCIA",
+    "displayName": "Fuente Alamo De Murcia",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "fuente-de-cantos",
+    "cityDescription": "FUENTE DE CANTOS",
+    "displayName": "Fuente De Cantos",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "fuente-del-maestre",
+    "cityDescription": "FUENTE DEL MAESTRE",
+    "displayName": "Fuente Del Maestre",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "fuente-el-saz-de-jarama",
+    "cityDescription": "FUENTE EL SAZ DE JARAMA",
+    "displayName": "Fuente El Saz De Jarama",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "fuente-vaqueros",
+    "cityDescription": "FUENTE VAQUEROS",
+    "displayName": "Fuente Vaqueros",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "gador",
+    "cityDescription": "GADOR",
+    "displayName": "Gador",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "galapagar",
+    "cityDescription": "GALAPAGAR",
+    "displayName": "Galapagar",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "galdar",
+    "cityDescription": "GALDAR",
+    "displayName": "Galdar",
+    "provinceCode": "35",
+    "provincia": "LAS PALMAS"
+  },
+  {
+    "slug": "garrucha",
+    "cityDescription": "GARRUCHA",
+    "displayName": "Garrucha",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "gava",
+    "cityDescription": "GAVA",
+    "displayName": "Gava",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "gelida",
+    "cityDescription": "GELIDA",
+    "displayName": "Gelida",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "getafe",
+    "cityDescription": "GETAFE",
+    "displayName": "Getafe",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "gibraleon",
+    "cityDescription": "GIBRALEON",
+    "displayName": "Gibraleon",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "girona",
+    "cityDescription": "GIRONA",
+    "displayName": "Girona",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "gironella",
+    "cityDescription": "GIRONELLA",
+    "displayName": "Gironella",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "granada",
+    "cityDescription": "GRANADA",
+    "displayName": "Granada",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "granollers",
+    "cityDescription": "GRANOLLERS",
+    "displayName": "Granollers",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "graus",
+    "cityDescription": "GRAUS",
+    "displayName": "Graus",
+    "provinceCode": "22",
+    "provincia": "HUESCA"
+  },
+  {
+    "slug": "grinon",
+    "cityDescription": "GRIÑON",
+    "displayName": "Griñon",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "guadalajara",
+    "cityDescription": "GUADALAJARA",
+    "displayName": "Guadalajara",
+    "provinceCode": "19",
+    "provincia": "GUADALAJARA"
+  },
+  {
+    "slug": "guadarrama",
+    "cityDescription": "GUADARRAMA",
+    "displayName": "Guadarrama",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "guadix",
+    "cityDescription": "GUADIX",
+    "displayName": "Guadix",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "guardamar-del-segura",
+    "cityDescription": "GUARDAMAR DEL SEGURA",
+    "displayName": "Guardamar Del Segura",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "guardia-de-jaen-la",
+    "cityDescription": "GUARDIA DE JAEN (LA)",
+    "displayName": "Guardia De Jaen (La)",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "guardo",
+    "cityDescription": "GUARDO",
+    "displayName": "Guardo",
+    "provinceCode": "34",
+    "provincia": "PALENCIA"
+  },
+  {
+    "slug": "guarena",
+    "cityDescription": "GUAREÑA",
+    "displayName": "Guareña",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "guissona",
+    "cityDescription": "GUISSONA",
+    "displayName": "Guissona",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "haro",
+    "cityDescription": "HARO",
+    "displayName": "Haro",
+    "provinceCode": "26",
+    "provincia": "LA RIOJA"
+  },
+  {
+    "slug": "hellin",
+    "cityDescription": "HELLIN",
+    "displayName": "Hellin",
+    "provinceCode": "2",
+    "provincia": "ALBACETE"
+  },
+  {
+    "slug": "hernani",
+    "cityDescription": "HERNANI",
+    "displayName": "Hernani",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  },
+  {
+    "slug": "herrera-del-duque",
+    "cityDescription": "HERRERA DEL DUQUE",
+    "displayName": "Herrera Del Duque",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "hondarribia",
+    "cityDescription": "HONDARRIBIA",
+    "displayName": "Hondarribia",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  },
+  {
+    "slug": "hornachuelos",
+    "cityDescription": "HORNACHUELOS",
+    "displayName": "Hornachuelos",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "hospitalet-de-llobregat-l",
+    "cityDescription": "HOSPITALET DE LLOBREGAT (L')",
+    "displayName": "Hospitalet De Llobregat (L')",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "huelva",
+    "cityDescription": "HUELVA",
+    "displayName": "Huelva",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "huercal-de-almeria",
+    "cityDescription": "HUERCAL DE ALMERIA",
+    "displayName": "Huercal De Almeria",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "huercal-overa",
+    "cityDescription": "HUERCAL-OVERA",
+    "displayName": "Huercal-Overa",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "huesca",
+    "cityDescription": "HUESCA",
+    "displayName": "Huesca",
+    "provinceCode": "22",
+    "provincia": "HUESCA"
+  },
+  {
+    "slug": "huetor-santillan",
+    "cityDescription": "HUETOR SANTILLAN",
+    "displayName": "Huetor Santillan",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "huetor-tajar",
+    "cityDescription": "HUETOR TAJAR",
+    "displayName": "Huetor Tajar",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "huetor-vega",
+    "cityDescription": "HUETOR VEGA",
+    "displayName": "Huetor Vega",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "ibi",
+    "cityDescription": "IBI",
+    "displayName": "Ibi",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "igualada",
+    "cityDescription": "IGUALADA",
+    "displayName": "Igualada",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "illora",
+    "cityDescription": "ILLORA",
+    "displayName": "Illora",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "inca",
+    "cityDescription": "INCA",
+    "displayName": "Inca",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "ingenio",
+    "cityDescription": "INGENIO",
+    "displayName": "Ingenio",
+    "provinceCode": "35",
+    "provincia": "LAS PALMAS"
+  },
+  {
+    "slug": "irun",
+    "cityDescription": "IRUN",
+    "displayName": "Irun",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  },
+  {
+    "slug": "isla-cristina",
+    "cityDescription": "ISLA CRISTINA",
+    "displayName": "Isla Cristina",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "iznajar",
+    "cityDescription": "IZNAJAR",
+    "displayName": "Iznajar",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "jaca",
+    "cityDescription": "JACA",
+    "displayName": "Jaca",
+    "provinceCode": "22",
+    "provincia": "HUESCA"
+  },
+  {
+    "slug": "jaen",
+    "cityDescription": "JAEN",
+    "displayName": "Jaen",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "javali-nuevo",
+    "cityDescription": "JAVALI NUEVO",
+    "displayName": "Javali Nuevo",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "javea-xabia",
+    "cityDescription": "JAVEA/XABIA",
+    "displayName": "Javea/Xabia",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "jerez-de-la-frontera",
+    "cityDescription": "JEREZ DE LA FRONTERA",
+    "displayName": "Jerez De La Frontera",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "jerez-de-los-caballeros",
+    "cityDescription": "JEREZ DE LOS CABALLEROS",
+    "displayName": "Jerez De Los Caballeros",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "jimena-de-la-frontera",
+    "cityDescription": "JIMENA DE LA FRONTERA",
+    "displayName": "Jimena De La Frontera",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "jodar",
+    "cityDescription": "JODAR",
+    "displayName": "Jodar",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "jumilla",
+    "cityDescription": "JUMILLA",
+    "displayName": "Jumilla",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "juneda",
+    "cityDescription": "JUNEDA",
+    "displayName": "Juneda",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "la-alberca",
+    "cityDescription": "LA ALBERCA",
+    "displayName": "La Alberca",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "la-barca-de-la-florida",
+    "cityDescription": "LA BARCA DE LA FLORIDA",
+    "displayName": "La Barca De La Florida",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "la-manga",
+    "cityDescription": "LA MANGA",
+    "displayName": "La Manga",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "lardero",
+    "cityDescription": "LARDERO",
+    "displayName": "Lardero",
+    "provinceCode": "26",
+    "provincia": "LA RIOJA"
+  },
+  {
+    "slug": "laredo",
+    "cityDescription": "LAREDO",
+    "displayName": "Laredo",
+    "provinceCode": "39",
+    "provincia": "CANTABRIA"
+  },
+  {
+    "slug": "lasarte-oria",
+    "cityDescription": "LASARTE-ORIA",
+    "displayName": "Lasarte-Oria",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  },
+  {
+    "slug": "leganes",
+    "cityDescription": "LEGANES",
+    "displayName": "Leganes",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "legazpi",
+    "cityDescription": "LEGAZPI",
+    "displayName": "Legazpi",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  },
+  {
+    "slug": "leon",
+    "cityDescription": "LEON",
+    "displayName": "Leon",
+    "provinceCode": "24",
+    "provincia": "LEÓN"
+  },
+  {
+    "slug": "lepe",
+    "cityDescription": "LEPE",
+    "displayName": "Lepe",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "linares",
+    "cityDescription": "LINARES",
+    "displayName": "Linares",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "linea-de-la-concepcion-la",
+    "cityDescription": "LINEA DE LA CONCEPCION (LA)",
+    "displayName": "Linea De La Concepcion (La)",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "llano-de-brujas",
+    "cityDescription": "LLANO DE BRUJAS",
+    "displayName": "Llano De Brujas",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "lleida",
+    "cityDescription": "LLEIDA",
+    "displayName": "Lleida",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "llerena",
+    "cityDescription": "LLERENA",
+    "displayName": "Llerena",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "llinars-del-valles",
+    "cityDescription": "LLINARS DEL VALLES",
+    "displayName": "Llinars Del Valles",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "llodio",
+    "cityDescription": "LLODIO",
+    "displayName": "Llodio",
+    "provinceCode": "1",
+    "provincia": "ÁLAVA"
+  },
+  {
+    "slug": "lloret-de-mar",
+    "cityDescription": "LLORET DE MAR",
+    "displayName": "Lloret De Mar",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "llucmajor",
+    "cityDescription": "LLUCMAJOR",
+    "displayName": "Llucmajor",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "logrono",
+    "cityDescription": "LOGROÑO",
+    "displayName": "Logroño",
+    "provinceCode": "26",
+    "provincia": "LA RIOJA"
+  },
+  {
+    "slug": "logrosan",
+    "cityDescription": "LOGROSAN",
+    "displayName": "Logrosan",
+    "provinceCode": "10",
+    "provincia": "CÁCERES"
+  },
+  {
+    "slug": "loja",
+    "cityDescription": "LOJA",
+    "displayName": "Loja",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "lorca",
+    "cityDescription": "LORCA",
+    "displayName": "Lorca",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "lorqui",
+    "cityDescription": "LORQUI",
+    "displayName": "Lorqui",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "lucena",
+    "cityDescription": "LUCENA",
+    "displayName": "Lucena",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "lugo",
+    "cityDescription": "LUGO",
+    "displayName": "Lugo",
+    "provinceCode": "27",
+    "provincia": "LUGO"
+  },
+  {
+    "slug": "macael",
+    "cityDescription": "MACAEL",
+    "displayName": "Macael",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "macanet-de-la-selva",
+    "cityDescription": "MACANET DE LA SELVA",
+    "displayName": "Macanet De La Selva",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "maceda",
+    "cityDescription": "MACEDA",
+    "displayName": "Maceda",
+    "provinceCode": "32",
+    "provincia": "ORENSE"
+  },
+  {
+    "slug": "madrid",
+    "cityDescription": "MADRID",
+    "displayName": "Madrid",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "madrigueras",
+    "cityDescription": "MADRIGUERAS",
+    "displayName": "Madrigueras",
+    "provinceCode": "2",
+    "provincia": "ALBACETE"
+  },
+  {
+    "slug": "magaluf",
+    "cityDescription": "MAGALUF",
+    "displayName": "Magaluf",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "majadahonda",
+    "cityDescription": "MAJADAHONDA",
+    "displayName": "Majadahonda",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "malaga",
+    "cityDescription": "MALAGA",
+    "displayName": "Malaga",
+    "provinceCode": "29",
+    "provincia": "MÁLAGA"
+  },
+  {
+    "slug": "malgrat-de-mar",
+    "cityDescription": "MALGRAT DE MAR",
+    "displayName": "Malgrat De Mar",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "manacor",
+    "cityDescription": "MANACOR",
+    "displayName": "Manacor",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "mancha-real",
+    "cityDescription": "MANCHA REAL",
+    "displayName": "Mancha Real",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "manlleu",
+    "cityDescription": "MANLLEU",
+    "displayName": "Manlleu",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "manresa",
+    "cityDescription": "MANRESA",
+    "displayName": "Manresa",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "manzanares",
+    "cityDescription": "MANZANARES",
+    "displayName": "Manzanares",
+    "provinceCode": "13",
+    "provincia": "CIUDAD REAL"
+  },
+  {
+    "slug": "manzanilla",
+    "cityDescription": "MANZANILLA",
+    "displayName": "Manzanilla",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "maracena",
+    "cityDescription": "MARACENA",
+    "displayName": "Maracena",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "marbella",
+    "cityDescription": "MARBELLA",
+    "displayName": "Marbella",
+    "provinceCode": "29",
+    "provincia": "MÁLAGA"
+  },
+  {
+    "slug": "marmolejo",
+    "cityDescription": "MARMOLEJO",
+    "displayName": "Marmolejo",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "marratxi",
+    "cityDescription": "MARRATXI",
+    "displayName": "Marratxi",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "martorell",
+    "cityDescription": "MARTORELL",
+    "displayName": "Martorell",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "martos",
+    "cityDescription": "MARTOS",
+    "displayName": "Martos",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "masnou-el",
+    "cityDescription": "MASNOU (EL)",
+    "displayName": "Masnou (El)",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "matalascanas",
+    "cityDescription": "MATALASCAÑAS",
+    "displayName": "Matalascañas",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "mataro",
+    "cityDescription": "MATARO",
+    "displayName": "Mataro",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "matas-las-ver-callejero-las-rozas-de-m",
+    "cityDescription": "MATAS, LAS (VER CALLEJERO LAS ROZAS DE M",
+    "displayName": "Matas, Las (Ver Callejero Las Rozas De M",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "mazagon",
+    "cityDescription": "MAZAGON",
+    "displayName": "Mazagon",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "mazarron",
+    "cityDescription": "MAZARRON",
+    "displayName": "Mazarron",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "meco",
+    "cityDescription": "MECO",
+    "displayName": "Meco",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "medina-de-pomar",
+    "cityDescription": "MEDINA DE POMAR",
+    "displayName": "Medina De Pomar",
+    "provinceCode": "9",
+    "provincia": "BURGOS"
+  },
+  {
+    "slug": "medina-sidonia",
+    "cityDescription": "MEDINA-SIDONIA",
+    "displayName": "Medina-Sidonia",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "mejorada-del-campo",
+    "cityDescription": "MEJORADA DEL CAMPO",
+    "displayName": "Mejorada Del Campo",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "melilla",
+    "cityDescription": "MELILLA",
+    "displayName": "Melilla",
+    "provinceCode": "52",
+    "provincia": "MELILLA"
+  },
+  {
+    "slug": "mengibar",
+    "cityDescription": "MENGIBAR",
+    "displayName": "Mengibar",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "merida",
+    "cityDescription": "MERIDA",
+    "displayName": "Merida",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "miajadas",
+    "cityDescription": "MIAJADAS",
+    "displayName": "Miajadas",
+    "provinceCode": "10",
+    "provincia": "CÁCERES"
+  },
+  {
+    "slug": "miguelturra",
+    "cityDescription": "MIGUELTURRA",
+    "displayName": "Miguelturra",
+    "provinceCode": "13",
+    "provincia": "CIUDAD REAL"
+  },
+  {
+    "slug": "mijas",
+    "cityDescription": "MIJAS",
+    "displayName": "Mijas",
+    "provinceCode": "29",
+    "provincia": "MÁLAGA"
+  },
+  {
+    "slug": "mino",
+    "cityDescription": "MIÑO",
+    "displayName": "Miño",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "miranda-de-ebro",
+    "cityDescription": "MIRANDA DE EBRO",
+    "displayName": "Miranda De Ebro",
+    "provinceCode": "9",
+    "provincia": "BURGOS"
+  },
+  {
+    "slug": "moguer",
+    "cityDescription": "MOGUER",
+    "displayName": "Moguer",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "molina-de-segura",
+    "cityDescription": "MOLINA DE SEGURA",
+    "displayName": "Molina De Segura",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "molins-de-rei",
+    "cityDescription": "MOLINS DE REI",
+    "displayName": "Molins De Rei",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "mollerussa",
+    "cityDescription": "MOLLERUSSA",
+    "displayName": "Mollerussa",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "mollet-del-valles",
+    "cityDescription": "MOLLET DEL VALLES",
+    "displayName": "Mollet Del Valles",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "mompia",
+    "cityDescription": "MOMPIA",
+    "displayName": "Mompia",
+    "provinceCode": "39",
+    "provincia": "CANTABRIA"
+  },
+  {
+    "slug": "monforte-de-lemos",
+    "cityDescription": "MONFORTE DE LEMOS",
+    "displayName": "Monforte De Lemos",
+    "provinceCode": "27",
+    "provincia": "LUGO"
+  },
+  {
+    "slug": "monovar-monover",
+    "cityDescription": "MONOVAR/MONOVER",
+    "displayName": "Monovar/Monover",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "montcada-i-reixac",
+    "cityDescription": "MONTCADA I REIXAC",
+    "displayName": "Montcada I Reixac",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "montehermoso",
+    "cityDescription": "MONTEHERMOSO",
+    "displayName": "Montehermoso",
+    "provinceCode": "10",
+    "provincia": "CÁCERES"
+  },
+  {
+    "slug": "monterrei",
+    "cityDescription": "MONTERREI",
+    "displayName": "Monterrei",
+    "provinceCode": "32",
+    "provincia": "ORENSE"
+  },
+  {
+    "slug": "montijo",
+    "cityDescription": "MONTIJO",
+    "displayName": "Montijo",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "montilla",
+    "cityDescription": "MONTILLA",
+    "displayName": "Montilla",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "montoro",
+    "cityDescription": "MONTORO",
+    "displayName": "Montoro",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "montuiri",
+    "cityDescription": "MONTUIRI",
+    "displayName": "Montuiri",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "monzon",
+    "cityDescription": "MONZON",
+    "displayName": "Monzon",
+    "provinceCode": "22",
+    "provincia": "HUESCA"
+  },
+  {
+    "slug": "moral-de-calatrava",
+    "cityDescription": "MORAL DE CALATRAVA",
+    "displayName": "Moral De Calatrava",
+    "provinceCode": "13",
+    "provincia": "CIUDAD REAL"
+  },
+  {
+    "slug": "moraleja",
+    "cityDescription": "MORALEJA",
+    "displayName": "Moraleja",
+    "provinceCode": "10",
+    "provincia": "CÁCERES"
+  },
+  {
+    "slug": "moralzarzal",
+    "cityDescription": "MORALZARZAL",
+    "displayName": "Moralzarzal",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "mostoles",
+    "cityDescription": "MOSTOLES",
+    "displayName": "Mostoles",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "motilla-del-palancar",
+    "cityDescription": "MOTILLA DEL PALANCAR",
+    "displayName": "Motilla Del Palancar",
+    "provinceCode": "16",
+    "provincia": "CUENCA"
+  },
+  {
+    "slug": "motril",
+    "cityDescription": "MOTRIL",
+    "displayName": "Motril",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "mula",
+    "cityDescription": "MULA",
+    "displayName": "Mula",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "murcia",
+    "cityDescription": "MURCIA",
+    "displayName": "Murcia",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "muriedas",
+    "cityDescription": "MURIEDAS",
+    "displayName": "Muriedas",
+    "provinceCode": "39",
+    "provincia": "CANTABRIA"
+  },
+  {
+    "slug": "muro",
+    "cityDescription": "MURO",
+    "displayName": "Muro",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "muro-de-alcoy",
+    "cityDescription": "MURO DE ALCOY",
+    "displayName": "Muro De Alcoy",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "mutxamel",
+    "cityDescription": "MUTXAMEL",
+    "displayName": "Mutxamel",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "muxia",
+    "cityDescription": "MUXIA",
+    "displayName": "Muxia",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "najera",
+    "cityDescription": "NAJERA",
+    "displayName": "Najera",
+    "provinceCode": "26",
+    "provincia": "LA RIOJA"
+  },
+  {
+    "slug": "naron",
+    "cityDescription": "NARON",
+    "displayName": "Naron",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "navalcarnero",
+    "cityDescription": "NAVALCARNERO",
+    "displayName": "Navalcarnero",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "navalmoral-de-la-mata",
+    "cityDescription": "NAVALMORAL DE LA MATA",
+    "displayName": "Navalmoral De La Mata",
+    "provinceCode": "10",
+    "provincia": "CÁCERES"
+  },
+  {
+    "slug": "navalvillar-de-pela",
+    "cityDescription": "NAVALVILLAR DE PELA",
+    "displayName": "Navalvillar De Pela",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "nerja",
+    "cityDescription": "NERJA",
+    "displayName": "Nerja",
+    "provinceCode": "29",
+    "provincia": "MÁLAGA"
+  },
+  {
+    "slug": "nerva",
+    "cityDescription": "NERVA",
+    "displayName": "Nerva",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "nijar",
+    "cityDescription": "NIJAR",
+    "displayName": "Nijar",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "noia",
+    "cityDescription": "NOIA",
+    "displayName": "Noia",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "nonduermas",
+    "cityDescription": "NONDUERMAS",
+    "displayName": "Nonduermas",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "novelda",
+    "cityDescription": "NOVELDA",
+    "displayName": "Novelda",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "nueva-carteya",
+    "cityDescription": "NUEVA CARTEYA",
+    "displayName": "Nueva Carteya",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "nuevo-baztan",
+    "cityDescription": "NUEVO BAZTAN",
+    "displayName": "Nuevo Baztan",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "nuevo-portil",
+    "cityDescription": "NUEVO PORTIL",
+    "displayName": "Nuevo Portil",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "nules",
+    "cityDescription": "NULES",
+    "displayName": "Nules",
+    "provinceCode": "12",
+    "provincia": "CASTELLÓN"
+  },
+  {
+    "slug": "ogijares",
+    "cityDescription": "OGIJARES",
+    "displayName": "Ogijares",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "oleiros",
+    "cityDescription": "OLEIROS",
+    "displayName": "Oleiros",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "olesa-de-montserrat",
+    "cityDescription": "OLESA DE MONTSERRAT",
+    "displayName": "Olesa De Montserrat",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "oliana",
+    "cityDescription": "OLIANA",
+    "displayName": "Oliana",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "olivenza",
+    "cityDescription": "OLIVENZA",
+    "displayName": "Olivenza",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "olot",
+    "cityDescription": "OLOT",
+    "displayName": "Olot",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "olvera",
+    "cityDescription": "OLVERA",
+    "displayName": "Olvera",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "onati",
+    "cityDescription": "OÑATI",
+    "displayName": "Oñati",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  },
+  {
+    "slug": "onda",
+    "cityDescription": "ONDA",
+    "displayName": "Onda",
+    "provinceCode": "12",
+    "provincia": "CASTELLÓN"
+  },
+  {
+    "slug": "ondara",
+    "cityDescription": "ONDARA",
+    "displayName": "Ondara",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "onil",
+    "cityDescription": "ONIL",
+    "displayName": "Onil",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "ordes",
+    "cityDescription": "ORDES",
+    "displayName": "Ordes",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "ordizia",
+    "cityDescription": "ORDIZIA",
+    "displayName": "Ordizia",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  },
+  {
+    "slug": "oria",
+    "cityDescription": "ORIA",
+    "displayName": "Oria",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "orihuela",
+    "cityDescription": "ORIHUELA",
+    "displayName": "Orihuela",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "oropesa-del-mar-orpesa",
+    "cityDescription": "OROPESA DEL MAR/ORPESA",
+    "displayName": "Oropesa Del Mar/Orpesa",
+    "provinceCode": "12",
+    "provincia": "CASTELLÓN"
+  },
+  {
+    "slug": "oroso",
+    "cityDescription": "OROSO",
+    "displayName": "Oroso",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "ourense",
+    "cityDescription": "OURENSE",
+    "displayName": "Ourense",
+    "provinceCode": "32",
+    "provincia": "ORENSE"
+  },
+  {
+    "slug": "padron",
+    "cityDescription": "PADRON",
+    "displayName": "Padron",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "padul",
+    "cityDescription": "PADUL",
+    "displayName": "Padul",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "palafrugell",
+    "cityDescription": "PALAFRUGELL",
+    "displayName": "Palafrugell",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "palamos",
+    "cityDescription": "PALAMOS",
+    "displayName": "Palamos",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "palau-de-plegamans",
+    "cityDescription": "PALAU DE PLEGAMANS",
+    "displayName": "Palau De Plegamans",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "palencia",
+    "cityDescription": "PALENCIA",
+    "displayName": "Palencia",
+    "provinceCode": "34",
+    "provincia": "PALENCIA"
+  },
+  {
+    "slug": "palma-de-mallorca",
+    "cityDescription": "PALMA DE MALLORCA",
+    "displayName": "Palma De Mallorca",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "palma-del-condado-la",
+    "cityDescription": "PALMA DEL CONDADO (LA)",
+    "displayName": "Palma Del Condado (La)",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "palma-del-rio",
+    "cityDescription": "PALMA DEL RIO",
+    "displayName": "Palma Del Rio",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "palma-la",
+    "cityDescription": "PALMA, LA",
+    "displayName": "Palma, La",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "palmas-de-gran-canaria-las",
+    "cityDescription": "PALMAS DE GRAN CANARIA (LAS)",
+    "displayName": "Palmas De Gran Canaria (Las)",
+    "provinceCode": "35",
+    "provincia": "LAS PALMAS"
+  },
+  {
+    "slug": "pals",
+    "cityDescription": "PALS",
+    "displayName": "Pals",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "paracuellos-de-jarama",
+    "cityDescription": "PARACUELLOS DE JARAMA",
+    "displayName": "Paracuellos De Jarama",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "parador-de-las-hortichuelas-el",
+    "cityDescription": "PARADOR DE LAS HORTICHUELAS, EL",
+    "displayName": "Parador De Las Hortichuelas, El",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "parets-del-valles",
+    "cityDescription": "PARETS DEL VALLES",
+    "displayName": "Parets Del Valles",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "parla",
+    "cityDescription": "PARLA",
+    "displayName": "Parla",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "pasaia",
+    "cityDescription": "PASAIA",
+    "displayName": "Pasaia",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  },
+  {
+    "slug": "pedroneras-las",
+    "cityDescription": "PEDROÑERAS (LAS)",
+    "displayName": "Pedroñeras (Las)",
+    "provinceCode": "16",
+    "provincia": "CUENCA"
+  },
+  {
+    "slug": "pego",
+    "cityDescription": "PEGO",
+    "displayName": "Pego",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "penarroya-pueblonuevo",
+    "cityDescription": "PEÑARROYA-PUEBLONUEVO",
+    "displayName": "Peñarroya-Pueblonuevo",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "peniscola",
+    "cityDescription": "PEÑISCOLA",
+    "displayName": "Peñiscola",
+    "provinceCode": "12",
+    "provincia": "CASTELLÓN"
+  },
+  {
+    "slug": "petrer",
+    "cityDescription": "PETRER",
+    "displayName": "Petrer",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "pilar-de-la-horadada",
+    "cityDescription": "PILAR DE LA HORADADA",
+    "displayName": "Pilar De La Horadada",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "pineda-de-mar",
+    "cityDescription": "PINEDA DE MAR",
+    "displayName": "Pineda De Mar",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "pino-o",
+    "cityDescription": "PINO (O)",
+    "displayName": "Pino (O)",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "pinos-puente",
+    "cityDescription": "PINOS PUENTE",
+    "displayName": "Pinos Puente",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "pinoso",
+    "cityDescription": "PINOSO",
+    "displayName": "Pinoso",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "pinto",
+    "cityDescription": "PINTO",
+    "displayName": "Pinto",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "plasencia",
+    "cityDescription": "PLASENCIA",
+    "displayName": "Plasencia",
+    "provinceCode": "10",
+    "provincia": "CÁCERES"
+  },
+  {
+    "slug": "pliego",
+    "cityDescription": "PLIEGO",
+    "displayName": "Pliego",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "pobla-de-segur-la",
+    "cityDescription": "POBLA DE SEGUR (LA)",
+    "displayName": "Pobla De Segur (La)",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "pobra-do-caraminal-a",
+    "cityDescription": "POBRA DO CARAMIÑAL (A)",
+    "displayName": "Pobra Do Caramiñal (A)",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "pola-de-gordon-la",
+    "cityDescription": "POLA DE GORDON (LA)",
+    "displayName": "Pola De Gordon (La)",
+    "provinceCode": "24",
+    "provincia": "LEÓN"
+  },
+  {
+    "slug": "pollenca",
+    "cityDescription": "POLLENCA",
+    "displayName": "Pollenca",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "ponferrada",
+    "cityDescription": "PONFERRADA",
+    "displayName": "Ponferrada",
+    "provinceCode": "24",
+    "provincia": "LEÓN"
+  },
+  {
+    "slug": "pont-de-suert-el",
+    "cityDescription": "PONT DE SUERT (EL)",
+    "displayName": "Pont De Suert (El)",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "pontedeume",
+    "cityDescription": "PONTEDEUME",
+    "displayName": "Pontedeume",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "pontes-de-garcia-rodriguez-as",
+    "cityDescription": "PONTES DE GARCIA RODRIGUEZ (AS)",
+    "displayName": "Pontes De Garcia Rodriguez (As)",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "ponts",
+    "cityDescription": "PONTS",
+    "displayName": "Ponts",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "porreres",
+    "cityDescription": "PORRERES",
+    "displayName": "Porreres",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "port-d-alcudia",
+    "cityDescription": "PORT D'ALCUDIA",
+    "displayName": "Port D'alcudia",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "port-de-pollenca",
+    "cityDescription": "PORT DE POLLENCA",
+    "displayName": "Port De Pollenca",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "porto-cristo",
+    "cityDescription": "PORTO CRISTO",
+    "displayName": "Porto Cristo",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "posadas",
+    "cityDescription": "POSADAS",
+    "displayName": "Posadas",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "pozo-alcon",
+    "cityDescription": "POZO ALCON",
+    "displayName": "Pozo Alcon",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "pozoblanco",
+    "cityDescription": "POZOBLANCO",
+    "displayName": "Pozoblanco",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "pozuelo-de-alarcon",
+    "cityDescription": "POZUELO DE ALARCON",
+    "displayName": "Pozuelo De Alarcon",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "prat-de-llobregat-el",
+    "cityDescription": "PRAT DE LLOBREGAT (EL)",
+    "displayName": "Prat De Llobregat (El)",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "premia-de-mar",
+    "cityDescription": "PREMIA DE MAR",
+    "displayName": "Premia De Mar",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "priego-de-cordoba",
+    "cityDescription": "PRIEGO DE CORDOBA",
+    "displayName": "Priego De Cordoba",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "puebla-de-la-calzada",
+    "cityDescription": "PUEBLA DE LA CALZADA",
+    "displayName": "Puebla De La Calzada",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "puente-genil",
+    "cityDescription": "PUENTE GENIL",
+    "displayName": "Puente Genil",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "puerto-de-santa-maria-el",
+    "cityDescription": "PUERTO DE SANTA MARIA (EL)",
+    "displayName": "Puerto De Santa Maria (El)",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "puerto-del-carmen",
+    "cityDescription": "PUERTO DEL CARMEN",
+    "displayName": "Puerto Del Carmen",
+    "provinceCode": "35",
+    "provincia": "LAS PALMAS"
+  },
+  {
+    "slug": "puerto-del-rosario",
+    "cityDescription": "PUERTO DEL ROSARIO",
+    "displayName": "Puerto Del Rosario",
+    "provinceCode": "35",
+    "provincia": "LAS PALMAS"
+  },
+  {
+    "slug": "puerto-lumbreras",
+    "cityDescription": "PUERTO LUMBRERAS",
+    "displayName": "Puerto Lumbreras",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "puerto-real",
+    "cityDescription": "PUERTO REAL",
+    "displayName": "Puerto Real",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "puertollano",
+    "cityDescription": "PUERTOLLANO",
+    "displayName": "Puertollano",
+    "provinceCode": "13",
+    "provincia": "CIUDAD REAL"
+  },
+  {
+    "slug": "puigcerda",
+    "cityDescription": "PUIGCERDA",
+    "displayName": "Puigcerda",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "punta-umbria",
+    "cityDescription": "PUNTA UMBRIA",
+    "displayName": "Punta Umbria",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "quintanar-del-rey",
+    "cityDescription": "QUINTANAR DEL REY",
+    "displayName": "Quintanar Del Rey",
+    "provinceCode": "16",
+    "provincia": "CUENCA"
+  },
+  {
+    "slug": "reinosa",
+    "cityDescription": "REINOSA",
+    "displayName": "Reinosa",
+    "provinceCode": "39",
+    "provincia": "CANTABRIA"
+  },
+  {
+    "slug": "renteria",
+    "cityDescription": "RENTERIA",
+    "displayName": "Renteria",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  },
+  {
+    "slug": "ribadeo",
+    "cityDescription": "RIBADEO",
+    "displayName": "Ribadeo",
+    "provinceCode": "27",
+    "provincia": "LUGO"
+  },
+  {
+    "slug": "ribeira",
+    "cityDescription": "RIBEIRA",
+    "displayName": "Ribeira",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "ribes-de-freser",
+    "cityDescription": "RIBES DE FRESER",
+    "displayName": "Ribes De Freser",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "rincon-de-la-victoria",
+    "cityDescription": "RINCON DE LA VICTORIA",
+    "displayName": "Rincon De La Victoria",
+    "provinceCode": "29",
+    "provincia": "MÁLAGA"
+  },
+  {
+    "slug": "ripoll",
+    "cityDescription": "RIPOLL",
+    "displayName": "Ripoll",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "ripollet",
+    "cityDescription": "RIPOLLET",
+    "displayName": "Ripollet",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "rivas-vaciamadrid",
+    "cityDescription": "RIVAS-VACIAMADRID",
+    "displayName": "Rivas-Vaciamadrid",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "roda-la",
+    "cityDescription": "RODA, LA",
+    "displayName": "Roda, La",
+    "provinceCode": "2",
+    "provincia": "ALBACETE"
+  },
+  {
+    "slug": "roda-la",
+    "cityDescription": "RODA (LA)",
+    "displayName": "Roda (La)",
+    "provinceCode": "2",
+    "provincia": "ALBACETE"
+  },
+  {
+    "slug": "rojales",
+    "cityDescription": "ROJALES",
+    "displayName": "Rojales",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "ronda",
+    "cityDescription": "RONDA",
+    "displayName": "Ronda",
+    "provinceCode": "29",
+    "provincia": "MÁLAGA"
+  },
+  {
+    "slug": "roquetas-de-mar",
+    "cityDescription": "ROQUETAS DE MAR",
+    "displayName": "Roquetas De Mar",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "roses",
+    "cityDescription": "ROSES",
+    "displayName": "Roses",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "rota",
+    "cityDescription": "ROTA",
+    "displayName": "Rota",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "rozas-de-madrid-las",
+    "cityDescription": "ROZAS DE MADRID (LAS)",
+    "displayName": "Rozas De Madrid (Las)",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "rubi",
+    "cityDescription": "RUBI",
+    "displayName": "Rubi",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "rute",
+    "cityDescription": "RUTE",
+    "displayName": "Rute",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "sa-pobla",
+    "cityDescription": "SA POBLA",
+    "displayName": "Sa Pobla",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "sabadell",
+    "cityDescription": "SABADELL",
+    "displayName": "Sabadell",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "sabinanigo",
+    "cityDescription": "SABIÑANIGO",
+    "displayName": "Sabiñanigo",
+    "provinceCode": "22",
+    "provincia": "HUESCA"
+  },
+  {
+    "slug": "sada",
+    "cityDescription": "SADA",
+    "displayName": "Sada",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "salines-ses",
+    "cityDescription": "SALINES (SES)",
+    "displayName": "Salines (Ses)",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "salobrena",
+    "cityDescription": "SALOBREÑA",
+    "displayName": "Salobreña",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "salt",
+    "cityDescription": "SALT",
+    "displayName": "Salt",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "san-agustin-de-guadalix",
+    "cityDescription": "SAN AGUSTIN DE GUADALIX",
+    "displayName": "San Agustin De Guadalix",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "san-agustin-del-guadalix",
+    "cityDescription": "SAN AGUSTIN DEL GUADALIX",
+    "displayName": "San Agustin Del Guadalix",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "san-bartolome-de-tirajana",
+    "cityDescription": "SAN BARTOLOME DE TIRAJANA",
+    "displayName": "San Bartolome De Tirajana",
+    "provinceCode": "35",
+    "provincia": "LAS PALMAS"
+  },
+  {
+    "slug": "san-clemente",
+    "cityDescription": "SAN CLEMENTE",
+    "displayName": "San Clemente",
+    "provinceCode": "16",
+    "provincia": "CUENCA"
+  },
+  {
+    "slug": "san-fernando",
+    "cityDescription": "SAN FERNANDO",
+    "displayName": "San Fernando",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "san-fernando-de-henares",
+    "cityDescription": "SAN FERNANDO DE HENARES",
+    "displayName": "San Fernando De Henares",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "san-javier",
+    "cityDescription": "SAN JAVIER",
+    "displayName": "San Javier",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "san-juan-de-alicante",
+    "cityDescription": "SAN JUAN DE ALICANTE",
+    "displayName": "San Juan De Alicante",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "san-juan-del-puerto",
+    "cityDescription": "SAN JUAN DEL PUERTO",
+    "displayName": "San Juan Del Puerto",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "san-lorenzo-de-el-escorial",
+    "cityDescription": "SAN LORENZO DE EL ESCORIAL",
+    "displayName": "San Lorenzo De El Escorial",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "san-martin-de-valdeiglesias",
+    "cityDescription": "SAN MARTIN DE VALDEIGLESIAS",
+    "displayName": "San Martin De Valdeiglesias",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "san-nicolas-de-tolentino",
+    "cityDescription": "SAN NICOLAS DE TOLENTINO",
+    "displayName": "San Nicolas De Tolentino",
+    "provinceCode": "35",
+    "provincia": "LAS PALMAS"
+  },
+  {
+    "slug": "san-pedro-de-alcantara",
+    "cityDescription": "SAN PEDRO DE ALCANTARA",
+    "displayName": "San Pedro De Alcantara",
+    "provinceCode": "29",
+    "provincia": "MÁLAGA"
+  },
+  {
+    "slug": "san-pedro-del-pinatar",
+    "cityDescription": "SAN PEDRO DEL PINATAR",
+    "displayName": "San Pedro Del Pinatar",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "san-roque",
+    "cityDescription": "SAN ROQUE",
+    "displayName": "San Roque",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "san-sebastian-de-los-reyes",
+    "cityDescription": "SAN SEBASTIAN DE LOS REYES",
+    "displayName": "San Sebastian De Los Reyes",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "san-vicente-de-la-barquera",
+    "cityDescription": "SAN VICENTE DE LA BARQUERA",
+    "displayName": "San Vicente De La Barquera",
+    "provinceCode": "39",
+    "provincia": "CANTABRIA"
+  },
+  {
+    "slug": "san-vicente-del-raspeig",
+    "cityDescription": "SAN VICENTE DEL RASPEIG",
+    "displayName": "San Vicente Del Raspeig",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "sanlucar-de-barrameda",
+    "cityDescription": "SANLUCAR DE BARRAMEDA",
+    "displayName": "Sanlucar De Barrameda",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "sant-adria-de-besos",
+    "cityDescription": "SANT ADRIA DE BESOS",
+    "displayName": "Sant Adria De Besos",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "sant-andreu-de-la-barca",
+    "cityDescription": "SANT ANDREU DE LA BARCA",
+    "displayName": "Sant Andreu De La Barca",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "sant-antoni-de-calonge",
+    "cityDescription": "SANT ANTONI DE CALONGE",
+    "displayName": "Sant Antoni De Calonge",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "sant-boi-de-llobregat",
+    "cityDescription": "SANT BOI DE LLOBREGAT",
+    "displayName": "Sant Boi De Llobregat",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "sant-celoni",
+    "cityDescription": "SANT CELONI",
+    "displayName": "Sant Celoni",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "sant-cugat-del-valles",
+    "cityDescription": "SANT CUGAT DEL VALLES",
+    "displayName": "Sant Cugat Del Valles",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "sant-feliu-de-guixols",
+    "cityDescription": "SANT FELIU DE GUIXOLS",
+    "displayName": "Sant Feliu De Guixols",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "sant-feliu-de-llobregat",
+    "cityDescription": "SANT FELIU DE LLOBREGAT",
+    "displayName": "Sant Feliu De Llobregat",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "sant-joan-despi",
+    "cityDescription": "SANT JOAN DESPI",
+    "displayName": "Sant Joan Despi",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "sant-llorenc-de-morunys",
+    "cityDescription": "SANT LLORENC DE MORUNYS",
+    "displayName": "Sant Llorenc De Morunys",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "sant-pere-de-ribes",
+    "cityDescription": "SANT PERE DE RIBES",
+    "displayName": "Sant Pere De Ribes",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "sant-pere-de-riudebitlles",
+    "cityDescription": "SANT PERE DE RIUDEBITLLES",
+    "displayName": "Sant Pere De Riudebitlles",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "sant-quirze-del-valles",
+    "cityDescription": "SANT QUIRZE DEL VALLES",
+    "displayName": "Sant Quirze Del Valles",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "sant-sadurni-d-anoia",
+    "cityDescription": "SANT SADURNI D'ANOIA",
+    "displayName": "Sant Sadurni D'anoia",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "sant-vicenc-de-castellet",
+    "cityDescription": "SANT VICENC DE CASTELLET",
+    "displayName": "Sant Vicenc De Castellet",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "sant-vicenc-dels-horts",
+    "cityDescription": "SANT VICENC DELS HORTS",
+    "displayName": "Sant Vicenc Dels Horts",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "santa-brigida",
+    "cityDescription": "SANTA BRIGIDA",
+    "displayName": "Santa Brigida",
+    "provinceCode": "35",
+    "provincia": "LAS PALMAS"
+  },
+  {
+    "slug": "santa-coloma-de-farners",
+    "cityDescription": "SANTA COLOMA DE FARNERS",
+    "displayName": "Santa Coloma De Farners",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "santa-coloma-de-gramenet",
+    "cityDescription": "SANTA COLOMA DE GRAMENET",
+    "displayName": "Santa Coloma De Gramenet",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "santa-cristina-d-aro",
+    "cityDescription": "SANTA CRISTINA D'ARO",
+    "displayName": "Santa Cristina D'aro",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "santa-cruz-de-bezana",
+    "cityDescription": "SANTA CRUZ DE BEZANA",
+    "displayName": "Santa Cruz De Bezana",
+    "provinceCode": "39",
+    "provincia": "CANTABRIA"
+  },
+  {
+    "slug": "santa-fe",
+    "cityDescription": "SANTA FE",
+    "displayName": "Santa Fe",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "santa-margalida",
+    "cityDescription": "SANTA MARGALIDA",
+    "displayName": "Santa Margalida",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "santa-maria-de-guia",
+    "cityDescription": "SANTA MARIA DE GUIA",
+    "displayName": "Santa Maria De Guia",
+    "provinceCode": "35",
+    "provincia": "LAS PALMAS"
+  },
+  {
+    "slug": "santa-olalla-del-cala",
+    "cityDescription": "SANTA OLALLA DEL CALA",
+    "displayName": "Santa Olalla Del Cala",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "santa-perpetua-de-mogoda",
+    "cityDescription": "SANTA PERPETUA DE MOGODA",
+    "displayName": "Santa Perpetua De Mogoda",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "santa-pola",
+    "cityDescription": "SANTA POLA",
+    "displayName": "Santa Pola",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "santa-ponsa",
+    "cityDescription": "SANTA PONSA",
+    "displayName": "Santa Ponsa",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "santander",
+    "cityDescription": "SANTANDER",
+    "displayName": "Santander",
+    "provinceCode": "39",
+    "provincia": "CANTABRIA"
+  },
+  {
+    "slug": "santanyi",
+    "cityDescription": "SANTANYI",
+    "displayName": "Santanyi",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "santiago-de-compostela",
+    "cityDescription": "SANTIAGO DE COMPOSTELA",
+    "displayName": "Santiago De Compostela",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "santiago-de-la-ribera",
+    "cityDescription": "SANTIAGO DE LA RIBERA",
+    "displayName": "Santiago De La Ribera",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "santomera",
+    "cityDescription": "SANTOMERA",
+    "displayName": "Santomera",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "santona",
+    "cityDescription": "SANTOÑA",
+    "displayName": "Santoña",
+    "provinceCode": "39",
+    "provincia": "CANTABRIA"
+  },
+  {
+    "slug": "sarria",
+    "cityDescription": "SARRIA",
+    "displayName": "Sarria",
+    "provinceCode": "27",
+    "provincia": "LUGO"
+  },
+  {
+    "slug": "segorbe",
+    "cityDescription": "SEGORBE",
+    "displayName": "Segorbe",
+    "provinceCode": "12",
+    "provincia": "CASTELLÓN"
+  },
+  {
+    "slug": "seu-d-urgell-la",
+    "cityDescription": "SEU D'URGELL (LA)",
+    "displayName": "Seu D'urgell (La)",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "sevilla-la-nueva",
+    "cityDescription": "SEVILLA LA NUEVA",
+    "displayName": "Sevilla La Nueva",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "sigueiro",
+    "cityDescription": "SIGUEIRO",
+    "displayName": "Sigueiro",
+    "provinceCode": "15",
+    "provincia": "LA CORUÑA"
+  },
+  {
+    "slug": "siguenza",
+    "cityDescription": "SIGUENZA",
+    "displayName": "Siguenza",
+    "provinceCode": "19",
+    "provincia": "GUADALAJARA"
+  },
+  {
+    "slug": "sils",
+    "cityDescription": "SILS",
+    "displayName": "Sils",
+    "provinceCode": "17",
+    "provincia": "GERONA"
+  },
+  {
+    "slug": "sineu",
+    "cityDescription": "SINEU",
+    "displayName": "Sineu",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "sitges",
+    "cityDescription": "SITGES",
+    "displayName": "Sitges",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "socuellamos",
+    "cityDescription": "SOCUELLAMOS",
+    "displayName": "Socuellamos",
+    "provinceCode": "13",
+    "provincia": "CIUDAD REAL"
+  },
+  {
+    "slug": "solana-la",
+    "cityDescription": "SOLANA (LA)",
+    "displayName": "Solana (La)",
+    "provinceCode": "13",
+    "provincia": "CIUDAD REAL"
+  },
+  {
+    "slug": "soller",
+    "cityDescription": "SOLLER",
+    "displayName": "Soller",
+    "provinceCode": "7",
+    "provincia": "BALEARES"
+  },
+  {
+    "slug": "solsona",
+    "cityDescription": "SOLSONA",
+    "displayName": "Solsona",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "sort",
+    "cityDescription": "SORT",
+    "displayName": "Sort",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "sotillo-de-la-adrada",
+    "cityDescription": "SOTILLO DE LA ADRADA",
+    "displayName": "Sotillo De La Adrada",
+    "provinceCode": "5",
+    "provincia": "ÁVILA"
+  },
+  {
+    "slug": "soto-de-la-marina",
+    "cityDescription": "SOTO DE LA MARINA",
+    "displayName": "Soto De La Marina",
+    "provinceCode": "39",
+    "provincia": "CANTABRIA"
+  },
+  {
+    "slug": "soto-del-real",
+    "cityDescription": "SOTO DEL REAL",
+    "displayName": "Soto Del Real",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "suances",
+    "cityDescription": "SUANCES",
+    "displayName": "Suances",
+    "provinceCode": "39",
+    "provincia": "CANTABRIA"
+  },
+  {
+    "slug": "suria",
+    "cityDescription": "SURIA",
+    "displayName": "Suria",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "tafira",
+    "cityDescription": "TAFIRA",
+    "displayName": "Tafira",
+    "provinceCode": "35",
+    "provincia": "LAS PALMAS"
+  },
+  {
+    "slug": "talavera-la-real",
+    "cityDescription": "TALAVERA LA REAL",
+    "displayName": "Talavera La Real",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "tarancon",
+    "cityDescription": "TARANCON",
+    "displayName": "Tarancon",
+    "provinceCode": "16",
+    "provincia": "CUENCA"
+  },
+  {
+    "slug": "tarifa",
+    "cityDescription": "TARIFA",
+    "displayName": "Tarifa",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "tarrega",
+    "cityDescription": "TARREGA",
+    "displayName": "Tarrega",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "telde",
+    "cityDescription": "TELDE",
+    "displayName": "Telde",
+    "provinceCode": "35",
+    "provincia": "LAS PALMAS"
+  },
+  {
+    "slug": "teror",
+    "cityDescription": "TEROR",
+    "displayName": "Teror",
+    "provinceCode": "35",
+    "provincia": "LAS PALMAS"
+  },
+  {
+    "slug": "terrassa",
+    "cityDescription": "TERRASSA",
+    "displayName": "Terrassa",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "teulada",
+    "cityDescription": "TEULADA",
+    "displayName": "Teulada",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "tias",
+    "cityDescription": "TIAS",
+    "displayName": "Tias",
+    "provinceCode": "35",
+    "provincia": "LAS PALMAS"
+  },
+  {
+    "slug": "tobarra",
+    "cityDescription": "TOBARRA",
+    "displayName": "Tobarra",
+    "provinceCode": "2",
+    "provincia": "ALBACETE"
+  },
+  {
+    "slug": "tolosa",
+    "cityDescription": "TOLOSA",
+    "displayName": "Tolosa",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  },
+  {
+    "slug": "tomelloso",
+    "cityDescription": "TOMELLOSO",
+    "displayName": "Tomelloso",
+    "provinceCode": "13",
+    "provincia": "CIUDAD REAL"
+  },
+  {
+    "slug": "tordera",
+    "cityDescription": "TORDERA",
+    "displayName": "Tordera",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "torre-del-mar",
+    "cityDescription": "TORRE DEL MAR",
+    "displayName": "Torre Del Mar",
+    "provinceCode": "29",
+    "provincia": "MÁLAGA"
+  },
+  {
+    "slug": "torre-pacheco",
+    "cityDescription": "TORRE-PACHECO",
+    "displayName": "Torre-Pacheco",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "torreblanca",
+    "cityDescription": "TORREBLANCA",
+    "displayName": "Torreblanca",
+    "provinceCode": "12",
+    "provincia": "CASTELLÓN"
+  },
+  {
+    "slug": "torredelcampo",
+    "cityDescription": "TORREDELCAMPO",
+    "displayName": "Torredelcampo",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "torredonjimeno",
+    "cityDescription": "TORREDONJIMENO",
+    "displayName": "Torredonjimeno",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "torrejon-de-ardoz",
+    "cityDescription": "TORREJON DE ARDOZ",
+    "displayName": "Torrejon De Ardoz",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "torrejon-de-la-calzada",
+    "cityDescription": "TORREJON DE LA CALZADA",
+    "displayName": "Torrejon De La Calzada",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "torrelavega",
+    "cityDescription": "TORRELAVEGA",
+    "displayName": "Torrelavega",
+    "provinceCode": "39",
+    "provincia": "CANTABRIA"
+  },
+  {
+    "slug": "torrelodones",
+    "cityDescription": "TORRELODONES",
+    "displayName": "Torrelodones",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "torremolinos",
+    "cityDescription": "TORREMOLINOS",
+    "displayName": "Torremolinos",
+    "provinceCode": "29",
+    "provincia": "MÁLAGA"
+  },
+  {
+    "slug": "torreperogil",
+    "cityDescription": "TORREPEROGIL",
+    "displayName": "Torreperogil",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "torres-de-cotillas-las",
+    "cityDescription": "TORRES DE COTILLAS (LAS)",
+    "displayName": "Torres De Cotillas (Las)",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "torrevieja",
+    "cityDescription": "TORREVIEJA",
+    "displayName": "Torrevieja",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "torrox",
+    "cityDescription": "TORROX",
+    "displayName": "Torrox",
+    "provinceCode": "29",
+    "provincia": "MÁLAGA"
+  },
+  {
+    "slug": "totana",
+    "cityDescription": "TOTANA",
+    "displayName": "Totana",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "trebujena",
+    "cityDescription": "TREBUJENA",
+    "displayName": "Trebujena",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "tremp",
+    "cityDescription": "TREMP",
+    "displayName": "Tremp",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "tres-cantos",
+    "cityDescription": "TRES CANTOS",
+    "displayName": "Tres Cantos",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "trujillo",
+    "cityDescription": "TRUJILLO",
+    "displayName": "Trujillo",
+    "provinceCode": "10",
+    "provincia": "CÁCERES"
+  },
+  {
+    "slug": "ubeda",
+    "cityDescription": "UBEDA",
+    "displayName": "Ubeda",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "ubrique",
+    "cityDescription": "UBRIQUE",
+    "displayName": "Ubrique",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "union-la",
+    "cityDescription": "UNION (LA)",
+    "displayName": "Union (La)",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "usurbil",
+    "cityDescription": "USURBIL",
+    "displayName": "Usurbil",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  },
+  {
+    "slug": "valdemorillo",
+    "cityDescription": "VALDEMORILLO",
+    "displayName": "Valdemorillo",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "valdemoro",
+    "cityDescription": "VALDEMORO",
+    "displayName": "Valdemoro",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "valdepenas",
+    "cityDescription": "VALDEPEÑAS",
+    "displayName": "Valdepeñas",
+    "provinceCode": "13",
+    "provincia": "CIUDAD REAL"
+  },
+  {
+    "slug": "valencia-de-alcantara",
+    "cityDescription": "VALENCIA DE ALCANTARA",
+    "displayName": "Valencia De Alcantara",
+    "provinceCode": "10",
+    "provincia": "CÁCERES"
+  },
+  {
+    "slug": "vall-d-uixo-la",
+    "cityDescription": "VALL D'UIXO (LA)",
+    "displayName": "Vall D'uixo (La)",
+    "provinceCode": "12",
+    "provincia": "CASTELLÓN"
+  },
+  {
+    "slug": "valverde-del-camino",
+    "cityDescription": "VALVERDE DEL CAMINO",
+    "displayName": "Valverde Del Camino",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "vecindario",
+    "cityDescription": "VECINDARIO",
+    "displayName": "Vecindario",
+    "provinceCode": "35",
+    "provincia": "LAS PALMAS"
+  },
+  {
+    "slug": "vega-de-san-mateo",
+    "cityDescription": "VEGA DE SAN MATEO",
+    "displayName": "Vega De San Mateo",
+    "provinceCode": "35",
+    "provincia": "LAS PALMAS"
+  },
+  {
+    "slug": "velez-malaga",
+    "cityDescription": "VELEZ-MALAGA",
+    "displayName": "Velez-Malaga",
+    "provinceCode": "29",
+    "provincia": "MÁLAGA"
+  },
+  {
+    "slug": "velez-rubio",
+    "cityDescription": "VELEZ-RUBIO",
+    "displayName": "Velez-Rubio",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "vera",
+    "cityDescription": "VERA",
+    "displayName": "Vera",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "verin",
+    "cityDescription": "VERIN",
+    "displayName": "Verin",
+    "provinceCode": "32",
+    "provincia": "ORENSE"
+  },
+  {
+    "slug": "viator",
+    "cityDescription": "VIATOR",
+    "displayName": "Viator",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "vic",
+    "cityDescription": "VIC",
+    "displayName": "Vic",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "vicar",
+    "cityDescription": "VICAR",
+    "displayName": "Vicar",
+    "provinceCode": "4",
+    "provincia": "ALMERÍA"
+  },
+  {
+    "slug": "vielha-e-mijaran",
+    "cityDescription": "VIELHA E MIJARAN",
+    "displayName": "Vielha E Mijaran",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "viladecans",
+    "cityDescription": "VILADECANS",
+    "displayName": "Viladecans",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "vilafranca-del-penedes",
+    "cityDescription": "VILAFRANCA DEL PENEDES",
+    "displayName": "Vilafranca Del Penedes",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "vilagrassa",
+    "cityDescription": "VILAGRASSA",
+    "displayName": "Vilagrassa",
+    "provinceCode": "25",
+    "provincia": "LÉRIDA"
+  },
+  {
+    "slug": "vilalba",
+    "cityDescription": "VILALBA",
+    "displayName": "Vilalba",
+    "provinceCode": "27",
+    "provincia": "LUGO"
+  },
+  {
+    "slug": "vilanova-i-la-geltru",
+    "cityDescription": "VILANOVA I LA GELTRU",
+    "displayName": "Vilanova I La Geltru",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "vilassar-de-dalt",
+    "cityDescription": "VILASSAR DE DALT",
+    "displayName": "Vilassar De Dalt",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "vilassar-de-mar",
+    "cityDescription": "VILASSAR DE MAR",
+    "displayName": "Vilassar De Mar",
+    "provinceCode": "8",
+    "provincia": "BARCELONA"
+  },
+  {
+    "slug": "villa-del-rio",
+    "cityDescription": "VILLA DEL RIO",
+    "displayName": "Villa Del Rio",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "villablino",
+    "cityDescription": "VILLABLINO",
+    "displayName": "Villablino",
+    "provinceCode": "24",
+    "provincia": "LEÓN"
+  },
+  {
+    "slug": "villacarrillo",
+    "cityDescription": "VILLACARRILLO",
+    "displayName": "Villacarrillo",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "villafranca-de-los-barros",
+    "cityDescription": "VILLAFRANCA DE LOS BARROS",
+    "displayName": "Villafranca De Los Barros",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "villajoyosa-vila-joiosa-la",
+    "cityDescription": "VILLAJOYOSA/VILA JOIOSA (LA)",
+    "displayName": "Villajoyosa/Vila Joiosa (La)",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "villamartin",
+    "cityDescription": "VILLAMARTIN",
+    "displayName": "Villamartin",
+    "provinceCode": "11",
+    "provincia": "CÁDIZ"
+  },
+  {
+    "slug": "villanueva-de-cordoba",
+    "cityDescription": "VILLANUEVA DE CORDOBA",
+    "displayName": "Villanueva De Cordoba",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "villanueva-de-la-canada",
+    "cityDescription": "VILLANUEVA DE LA CAÑADA",
+    "displayName": "Villanueva De La Cañada",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "villanueva-de-la-serena",
+    "cityDescription": "VILLANUEVA DE LA SERENA",
+    "displayName": "Villanueva De La Serena",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "villanueva-de-la-vera",
+    "cityDescription": "VILLANUEVA DE LA VERA",
+    "displayName": "Villanueva De La Vera",
+    "provinceCode": "10",
+    "provincia": "CÁCERES"
+  },
+  {
+    "slug": "villanueva-de-los-castillejos",
+    "cityDescription": "VILLANUEVA DE LOS CASTILLEJOS",
+    "displayName": "Villanueva De Los Castillejos",
+    "provinceCode": "21",
+    "provincia": "HUELVA"
+  },
+  {
+    "slug": "villanueva-de-los-infantes",
+    "cityDescription": "VILLANUEVA DE LOS INFANTES",
+    "displayName": "Villanueva De Los Infantes",
+    "provinceCode": "13",
+    "provincia": "CIUDAD REAL"
+  },
+  {
+    "slug": "villanueva-del-arzobispo",
+    "cityDescription": "VILLANUEVA DEL ARZOBISPO",
+    "displayName": "Villanueva Del Arzobispo",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "villanueva-del-pardillo",
+    "cityDescription": "VILLANUEVA DEL PARDILLO",
+    "displayName": "Villanueva Del Pardillo",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "villarcayo",
+    "cityDescription": "VILLARCAYO",
+    "displayName": "Villarcayo",
+    "provinceCode": "9",
+    "provincia": "BURGOS"
+  },
+  {
+    "slug": "villares-los",
+    "cityDescription": "VILLARES (LOS)",
+    "displayName": "Villares (Los)",
+    "provinceCode": "23",
+    "provincia": "JAÉN"
+  },
+  {
+    "slug": "villarreal-vila-real",
+    "cityDescription": "VILLARREAL/VILA-REAL",
+    "displayName": "Villarreal/Vila-Real",
+    "provinceCode": "12",
+    "provincia": "CASTELLÓN"
+  },
+  {
+    "slug": "villarrobledo",
+    "cityDescription": "VILLARROBLEDO",
+    "displayName": "Villarrobledo",
+    "provinceCode": "2",
+    "provincia": "ALBACETE"
+  },
+  {
+    "slug": "villarrubia",
+    "cityDescription": "VILLARRUBIA",
+    "displayName": "Villarrubia",
+    "provinceCode": "14",
+    "provincia": "CÓRDOBA"
+  },
+  {
+    "slug": "villarrubia-de-los-ojos",
+    "cityDescription": "VILLARRUBIA DE LOS OJOS",
+    "displayName": "Villarrubia De Los Ojos",
+    "provinceCode": "13",
+    "provincia": "CIUDAD REAL"
+  },
+  {
+    "slug": "villaviciosa-de-odon",
+    "cityDescription": "VILLAVICIOSA DE ODON",
+    "displayName": "Villaviciosa De Odon",
+    "provinceCode": "28",
+    "provincia": "MADRID"
+  },
+  {
+    "slug": "villena",
+    "cityDescription": "VILLENA",
+    "displayName": "Villena",
+    "provinceCode": "3",
+    "provincia": "ALICANTE"
+  },
+  {
+    "slug": "vinaros",
+    "cityDescription": "VINAROS",
+    "displayName": "Vinaros",
+    "provinceCode": "12",
+    "provincia": "CASTELLÓN"
+  },
+  {
+    "slug": "vitoria-gasteiz",
+    "cityDescription": "VITORIA-GASTEIZ",
+    "displayName": "Vitoria-Gasteiz",
+    "provinceCode": "1",
+    "provincia": "ÁLAVA"
+  },
+  {
+    "slug": "viveiro",
+    "cityDescription": "VIVEIRO",
+    "displayName": "Viveiro",
+    "provinceCode": "27",
+    "provincia": "LUGO"
+  },
+  {
+    "slug": "xinzo-de-limia",
+    "cityDescription": "XINZO DE LIMIA",
+    "displayName": "Xinzo De Limia",
+    "provinceCode": "32",
+    "provincia": "ORENSE"
+  },
+  {
+    "slug": "yecla",
+    "cityDescription": "YECLA",
+    "displayName": "Yecla",
+    "provinceCode": "30",
+    "provincia": "MURCIA"
+  },
+  {
+    "slug": "zafra",
+    "cityDescription": "ZAFRA",
+    "displayName": "Zafra",
+    "provinceCode": "6",
+    "provincia": "BADAJOZ"
+  },
+  {
+    "slug": "zarautz",
+    "cityDescription": "ZARAUTZ",
+    "displayName": "Zarautz",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  },
+  {
+    "slug": "zubia-la",
+    "cityDescription": "ZUBIA (LA)",
+    "displayName": "Zubia (La)",
+    "provinceCode": "18",
+    "provincia": "GRANADA"
+  },
+  {
+    "slug": "zumarraga",
+    "cityDescription": "ZUMARRAGA",
+    "displayName": "Zumarraga",
+    "provinceCode": "20",
+    "provincia": "GUIPÚZCOA"
+  }
+]
