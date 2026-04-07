@@ -16,7 +16,7 @@ permissions:
 jobs:
   generate:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4
 
@@ -26,12 +26,12 @@ jobs:
 
       - name: 1. Providers — localidades + centros + especialistas
         env:
-          FORCE: ${{ github.event.inputs.force || 'false' }}
+          FORCE: ${{ github.event_name == 'schedule' && 'true' || github.event.inputs.force || 'false' }}
         run: node generate-providers-data.mjs
 
       - name: 2. Provider details
         env:
-          FORCE: ${{ github.event.inputs.force || 'false' }}
+          FORCE: ${{ github.event_name == 'schedule' && 'true' || github.event.inputs.force || 'false' }}
         run: node generate-provider-details.mjs
 
       - name: 3. Commit data
