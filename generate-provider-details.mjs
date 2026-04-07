@@ -20,7 +20,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const ASISA_API_KEY = '0908b85b9d0e4a75b2eb33048bd9fe01';
 const ASISA_BASE = 'https://ursaepre.asisa.es/ASISA/middlewasisa/public/v1/api/searchPortal';
-const CONCURRENCY = 10; // Bajar a 5 si aparecen errores 429
+const CONCURRENCY = 25; // Bajar a 10 si aparecen errores 429
 const FORCE = process.env.FORCE === 'true';
 
 async function asisaFetch(url) {
@@ -32,11 +32,11 @@ async function asisaFetch(url) {
       headers: { 'Ocp-Apim-Subscription-Key': ASISA_API_KEY, 'Api-Version': '1' },
     });
     clearTimeout(timeout);
-    if (!resp.ok) return null;
-    return resp.json();
-  } catch {
+    if (!resp.ok) return { error: resp.status };
+    return { data: await resp.json() };
+  } catch (e) {
     clearTimeout(timeout);
-    return null;
+    return { error: e.name === 'AbortError' ? 'TIMEOUT' : 'NETWORK' };
   }
 }
 
@@ -48,6 +48,7 @@ async function fetchProviderDetails(providerLocalicationCode, documentNumber) {
   });
   return asisaFetch(`${ASISA_BASE}/providers/details?${params}`);
 }
+
 
 async function parallelLimit(tasks, limit) {
   const results = [];
@@ -126,16 +127,15 @@ async function main() {
       return;
     }
 
-    const detail = await fetchProviderDetails(locCode, docNum);
+    const result = await fetchProviderDetails(locCode, docNum);
 
-    if (detail) {
-      writeFileSync(filePath, JSON.stringify(detail), 'utf8');
+    if (result.data) {
+      writeFileSync(filePath, JSON.stringify(result.data), 'utf8');
       newFiles += 1;
     } else {
-      // Guardar vacío para no reintentar en futuras ejecuciones
       writeFileSync(filePath, 'null', 'utf8');
       errorFiles += 1;
-      console.log(`  ✗ ERROR locCode=${locCode} docNum=${docNum}`);
+      console.log(`  ✗ [${result.error}] locCode=${locCode} docNum=${docNum}`);
     }
 
     completed += 1;
