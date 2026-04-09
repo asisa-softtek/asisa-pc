@@ -1,1 +1,303 @@
-[]
+[
+  {
+    "slug": "abanto-y-ciervana-abanto-zierbena",
+    "cityDescription": "ABANTO Y CIERVANA/ABANTO ZIERBENA",
+    "displayName": "Abanto Y Ciervana/Abanto Zierbena",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "alagon",
+    "cityDescription": "ALAGON",
+    "displayName": "Alagon",
+    "provinceCode": "50",
+    "provincia": "ZARAGOZA"
+  },
+  {
+    "slug": "algorta",
+    "cityDescription": "ALGORTA",
+    "displayName": "Algorta",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "almunia-de-dona-godina-la",
+    "cityDescription": "ALMUNIA DE DOÑA GODINA (LA)",
+    "displayName": "Almunia De Doña Godina (La)",
+    "provinceCode": "50",
+    "provincia": "ZARAGOZA"
+  },
+  {
+    "slug": "amorebieta-echano",
+    "cityDescription": "AMOREBIETA-ECHANO",
+    "displayName": "Amorebieta-Echano",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "barakaldo",
+    "cityDescription": "BARAKALDO",
+    "displayName": "Barakaldo",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "basauri",
+    "cityDescription": "BASAURI",
+    "displayName": "Basauri",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "benavente",
+    "cityDescription": "BENAVENTE",
+    "displayName": "Benavente",
+    "provinceCode": "49",
+    "provincia": "ZAMORA"
+  },
+  {
+    "slug": "berango",
+    "cityDescription": "BERANGO",
+    "displayName": "Berango",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "bermeo",
+    "cityDescription": "BERMEO",
+    "displayName": "Bermeo",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "bilbao",
+    "cityDescription": "BILBAO",
+    "displayName": "Bilbao",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "calatayud",
+    "cityDescription": "CALATAYUD",
+    "displayName": "Calatayud",
+    "provinceCode": "50",
+    "provincia": "ZARAGOZA"
+  },
+  {
+    "slug": "carinena",
+    "cityDescription": "CARIÑENA",
+    "displayName": "Cariñena",
+    "provinceCode": "50",
+    "provincia": "ZARAGOZA"
+  },
+  {
+    "slug": "casetas",
+    "cityDescription": "CASETAS",
+    "displayName": "Casetas",
+    "provinceCode": "50",
+    "provincia": "ZARAGOZA"
+  },
+  {
+    "slug": "caspe",
+    "cityDescription": "CASPE",
+    "displayName": "Caspe",
+    "provinceCode": "50",
+    "provincia": "ZARAGOZA"
+  },
+  {
+    "slug": "cuarte-de-huerva",
+    "cityDescription": "CUARTE DE HUERVA",
+    "displayName": "Cuarte De Huerva",
+    "provinceCode": "50",
+    "provincia": "ZARAGOZA"
+  },
+  {
+    "slug": "durango",
+    "cityDescription": "DURANGO",
+    "displayName": "Durango",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "ejea-de-los-caballeros",
+    "cityDescription": "EJEA DE LOS CABALLEROS",
+    "displayName": "Ejea De Los Caballeros",
+    "provinceCode": "50",
+    "provincia": "ZARAGOZA"
+  },
+  {
+    "slug": "elorrio",
+    "cityDescription": "ELORRIO",
+    "displayName": "Elorrio",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "erandio",
+    "cityDescription": "ERANDIO",
+    "displayName": "Erandio",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "galdames",
+    "cityDescription": "GALDAMES",
+    "displayName": "Galdames",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "gallarta",
+    "cityDescription": "GALLARTA",
+    "displayName": "Gallarta",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "gamiz-fika",
+    "cityDescription": "GAMIZ-FIKA",
+    "displayName": "Gamiz-Fika",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "garrapinillos",
+    "cityDescription": "GARRAPINILLOS",
+    "displayName": "Garrapinillos",
+    "provinceCode": "50",
+    "provincia": "ZARAGOZA"
+  },
+  {
+    "slug": "gernika-lumo",
+    "cityDescription": "GERNIKA-LUMO",
+    "displayName": "Gernika-Lumo",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "getxo",
+    "cityDescription": "GETXO",
+    "displayName": "Getxo",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "las-arenas",
+    "cityDescription": "LAS ARENAS",
+    "displayName": "Las Arenas",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "leioa",
+    "cityDescription": "LEIOA",
+    "displayName": "Leioa",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "lekeitio",
+    "cityDescription": "LEKEITIO",
+    "displayName": "Lekeitio",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "maria-de-huerva",
+    "cityDescription": "MARIA DE HUERVA",
+    "displayName": "Maria De Huerva",
+    "provinceCode": "50",
+    "provincia": "ZARAGOZA"
+  },
+  {
+    "slug": "mungia",
+    "cityDescription": "MUNGIA",
+    "displayName": "Mungia",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "portugalete",
+    "cityDescription": "PORTUGALETE",
+    "displayName": "Portugalete",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "puebla-de-sanabria",
+    "cityDescription": "PUEBLA DE SANABRIA",
+    "displayName": "Puebla De Sanabria",
+    "provinceCode": "49",
+    "provincia": "ZAMORA"
+  },
+  {
+    "slug": "santurtzi",
+    "cityDescription": "SANTURTZI",
+    "displayName": "Santurtzi",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "sestao",
+    "cityDescription": "SESTAO",
+    "displayName": "Sestao",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "tarazona",
+    "cityDescription": "TARAZONA",
+    "displayName": "Tarazona",
+    "provinceCode": "50",
+    "provincia": "ZARAGOZA"
+  },
+  {
+    "slug": "toro",
+    "cityDescription": "TORO",
+    "displayName": "Toro",
+    "provinceCode": "49",
+    "provincia": "ZAMORA"
+  },
+  {
+    "slug": "utebo",
+    "cityDescription": "UTEBO",
+    "displayName": "Utebo",
+    "provinceCode": "50",
+    "provincia": "ZARAGOZA"
+  },
+  {
+    "slug": "valle-de-trapaga-trapagaran",
+    "cityDescription": "VALLE DE TRAPAGA-TRAPAGARAN",
+    "displayName": "Valle De Trapaga-Trapagaran",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "villalpando",
+    "cityDescription": "VILLALPANDO",
+    "displayName": "Villalpando",
+    "provinceCode": "49",
+    "provincia": "ZAMORA"
+  },
+  {
+    "slug": "zalla",
+    "cityDescription": "ZALLA",
+    "displayName": "Zalla",
+    "provinceCode": "48",
+    "provincia": "VIZCAYA"
+  },
+  {
+    "slug": "zamora",
+    "cityDescription": "ZAMORA",
+    "displayName": "Zamora",
+    "provinceCode": "49",
+    "provincia": "ZAMORA"
+  },
+  {
+    "slug": "zaragoza",
+    "cityDescription": "ZARAGOZA",
+    "displayName": "Zaragoza",
+    "provinceCode": "50",
+    "provincia": "ZARAGOZA"
+  }
+]
