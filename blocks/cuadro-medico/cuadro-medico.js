@@ -40,17 +40,16 @@ function renderCard(p) {
        </div>
        ${p.businessGroup ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Centro de ASISA</div></div>' : ''}
         
-       <div class="cmp-medical-detail__title-block__tags--item">
           ${p.ePrescription ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Receta electrónica</div></div>' : ''}
           ${langTags}
           ${p.onlineAppointment ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Cita online</div></div>' : ''}
-        </div>
+     
       </div>
       <div class="cmp-title">
           <h3 class="cmp-title__text">${p.name}</h3>
       </div>
        ${p.collegiateCode ? `<p class="cmp-medical-detail__title-block--num-member"><em>Núm. Colegiado – ${p.collegiateCode}</em></p>` : ''}
-        <p class="cmp-medical-picture-result__info-container__contact-data--speciality">${p.speciality}</p>
+        <p class="cmp-medical-detail__title-block--speciality">${p.speciality}</p>
     </div>
     <div class="cmp-medical-detail__address-block">
       ${p.parentDescription ? `<div class="cmp-medical-detail__address-block--center">${p.parentDescription}</div>` : ''}
@@ -111,10 +110,8 @@ export default function decorate(block) {
   let html = `<div class="cmp-medical-picture-result__header"><div class="cmp-medical-picture-result__header--share-title-block"><div class="cmp-medical-picture-result__header--title">${providers.length} resultados en <strong>${locationName}</strong></div></div></div>`;
 
   groups.forEach((specProviders, specName) => {
-    html += `<h2 class="cmp-medical-detail__subtitle">${specName}</h2>`;
-    html += `<div class="cmp-medical-detail">${specProviders.map(renderCard).join('')}</div>`;
+    html += `<div class="cmp-medical-detail"><h2 class="cmp-medical-detail__subtitle">${specName}</h2>${specProviders.map(renderCard).join('')}</div>`;
   });
 
   block.innerHTML = html;
 }
-
