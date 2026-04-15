@@ -64,7 +64,7 @@ function renderCard(p) {
     </div>
     </div>
 
-    <div class="cmp-medical-picture-result__info-container__buttons">
+    <div class="cmp-medical-detail__buttons-block">
       <div class="button-cmp"><button class="btn button-cmp__text button-cmp__text--tertiary">Ver Detalle</button></div>
       ${p.onlineAppointment ? '<div class="button-cmp"><button class="btn button-cmp__text button-cmp__text--primary">Pedir Cita</button></div>' : ''}
     </div>
