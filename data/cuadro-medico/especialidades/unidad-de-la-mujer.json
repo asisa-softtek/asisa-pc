@@ -1,0 +1,45 @@
+{
+  "slug": "unidad-de-la-mujer",
+  "provincias": [
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 6
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 5
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 4
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 1
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 1
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 1
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 1
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 1
+    }
+  ]
+}

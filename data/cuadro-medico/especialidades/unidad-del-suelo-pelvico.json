@@ -1,0 +1,20 @@
+{
+  "slug": "unidad-del-suelo-pelvico",
+  "provincias": [
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 4
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 3
+    },
+    {
+      "slug": "toledo",
+      "displayName": "Toledo",
+      "count": 1
+    }
+  ]
+}

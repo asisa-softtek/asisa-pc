@@ -1,0 +1,105 @@
+{
+  "slug": "medicina-nuclear",
+  "provincias": [
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 18
+    },
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 18
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 7
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 6
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 5
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 3
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 3
+    },
+    {
+      "slug": "vizcaya",
+      "displayName": "Vizcaya",
+      "count": 3
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 3
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 2
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 2
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 2
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 2
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 1
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 1
+    },
+    {
+      "slug": "gerona",
+      "displayName": "Gerona",
+      "count": 1
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 1
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 1
+    },
+    {
+      "slug": "salamanca",
+      "displayName": "Salamanca",
+      "count": 1
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 1
+    }
+  ]
+}

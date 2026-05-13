@@ -1,0 +1,80 @@
+{
+  "slug": "urgencias-traumatologicas",
+  "provincias": [
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 8
+    },
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 6
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 6
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 3
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 3
+    },
+    {
+      "slug": "alava",
+      "displayName": "Álava",
+      "count": 2
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 2
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 2
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 1
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 1
+    },
+    {
+      "slug": "jaen",
+      "displayName": "Jaén",
+      "count": 1
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 1
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 1
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 1
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 1
+    }
+  ]
+}

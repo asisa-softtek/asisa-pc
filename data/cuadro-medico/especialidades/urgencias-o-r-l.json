@@ -1,0 +1,25 @@
+{
+  "slug": "urgencias-o-r-l",
+  "provincias": [
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 6
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 2
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 1
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 1
+    }
+  ]
+}

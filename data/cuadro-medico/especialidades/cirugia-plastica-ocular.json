@@ -1,0 +1,35 @@
+{
+  "slug": "cirugia-plastica-ocular",
+  "provincias": [
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 4
+    },
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 3
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 2
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 2
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 2
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 2
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "slug": "cirugia-del-glaucoma",
+  "provincias": [
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 4
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 2
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 2
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 1
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 1
+    }
+  ]
+}

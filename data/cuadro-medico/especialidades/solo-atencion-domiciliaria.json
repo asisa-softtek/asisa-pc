@@ -1,0 +1,15 @@
+{
+  "slug": "solo-atencion-domiciliaria",
+  "provincias": [
+    {
+      "slug": "guipuzcoa",
+      "displayName": "Guipúzcoa",
+      "count": 2
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 2
+    }
+  ]
+}

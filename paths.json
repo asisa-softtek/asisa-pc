@@ -1,6 +1,5 @@
 {
   "mappings": [
-    "/pokemon/*:/content/site-pc/pokemon",
     "/content/site-pc/:/"
   ],
   "includes": [

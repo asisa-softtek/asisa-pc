@@ -1,0 +1,10 @@
+{
+  "slug": "hemoterapia-banco-de-sangre",
+  "provincias": [
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 3
+    }
+  ]
+}

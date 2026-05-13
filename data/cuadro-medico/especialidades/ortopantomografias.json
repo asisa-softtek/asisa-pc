@@ -1,0 +1,125 @@
+{
+  "slug": "ortopantomografias",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 117
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 41
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 20
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 18
+    },
+    {
+      "slug": "toledo",
+      "displayName": "Toledo",
+      "count": 16
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 14
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 12
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 12
+    },
+    {
+      "slug": "alava",
+      "displayName": "Álava",
+      "count": 11
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 11
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 11
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 11
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 11
+    },
+    {
+      "slug": "vizcaya",
+      "displayName": "Vizcaya",
+      "count": 11
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 10
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 9
+    },
+    {
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 7
+    },
+    {
+      "slug": "la-rioja",
+      "displayName": "La Rioja",
+      "count": 5
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 4
+    },
+    {
+      "slug": "ourense",
+      "displayName": "Ourense",
+      "count": 4
+    },
+    {
+      "slug": "segovia",
+      "displayName": "Segovia",
+      "count": 4
+    },
+    {
+      "slug": "soria",
+      "displayName": "Soria",
+      "count": 4
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 4
+    },
+    {
+      "slug": "cantabria",
+      "displayName": "Cantabria",
+      "count": 3
+    }
+  ]
+}

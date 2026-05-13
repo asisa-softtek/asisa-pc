@@ -1,0 +1,105 @@
+{
+  "slug": "traumatologia-infantil",
+  "provincias": [
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 15
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 14
+    },
+    {
+      "slug": "cantabria",
+      "displayName": "Cantabria",
+      "count": 8
+    },
+    {
+      "slug": "teruel",
+      "displayName": "Teruel",
+      "count": 6
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 5
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 2
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 2
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 2
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 2
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 2
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 2
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 1
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 1
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 1
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 1
+    },
+    {
+      "slug": "gerona",
+      "displayName": "Gerona",
+      "count": 1
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 1
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 1
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 1
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 1
+    }
+  ]
+}

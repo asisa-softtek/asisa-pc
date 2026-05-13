@@ -1,0 +1,20 @@
+{
+  "slug": "urgencias-ambulatorias-pediatricas",
+  "provincias": [
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 4
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 1
+    },
+    {
+      "slug": "vizcaya",
+      "displayName": "Vizcaya",
+      "count": 1
+    }
+  ]
+}

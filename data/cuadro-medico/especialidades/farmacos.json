@@ -1,0 +1,10 @@
+{
+  "slug": "farmacos",
+  "provincias": [
+    {
+      "slug": "cantabria",
+      "displayName": "Cantabria",
+      "count": 1
+    }
+  ]
+}

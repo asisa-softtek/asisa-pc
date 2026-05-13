@@ -1,0 +1,250 @@
+{
+  "slug": "fisioterapia",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 150
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 137
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 93
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 68
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 65
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 61
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 59
+    },
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 58
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 52
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 49
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 45
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 45
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 38
+    },
+    {
+      "slug": "gerona",
+      "displayName": "Gerona",
+      "count": 38
+    },
+    {
+      "slug": "jaen",
+      "displayName": "Jaén",
+      "count": 34
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 32
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 30
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 25
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 23
+    },
+    {
+      "slug": "guipuzcoa",
+      "displayName": "Guipúzcoa",
+      "count": 21
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 21
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 20
+    },
+    {
+      "slug": "cantabria",
+      "displayName": "Cantabria",
+      "count": 19
+    },
+    {
+      "slug": "vizcaya",
+      "displayName": "Vizcaya",
+      "count": 19
+    },
+    {
+      "slug": "toledo",
+      "displayName": "Toledo",
+      "count": 16
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 14
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 14
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 13
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 13
+    },
+    {
+      "slug": "teruel",
+      "displayName": "Teruel",
+      "count": 13
+    },
+    {
+      "slug": "caceres",
+      "displayName": "Cáceres",
+      "count": 11
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 11
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 11
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 9
+    },
+    {
+      "slug": "lugo",
+      "displayName": "Lugo",
+      "count": 7
+    },
+    {
+      "slug": "palencia",
+      "displayName": "Palencia",
+      "count": 7
+    },
+    {
+      "slug": "guadalajara",
+      "displayName": "Guadalajara",
+      "count": 6
+    },
+    {
+      "slug": "la-rioja",
+      "displayName": "La Rioja",
+      "count": 6
+    },
+    {
+      "slug": "cuenca",
+      "displayName": "Cuenca",
+      "count": 5
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 5
+    },
+    {
+      "slug": "melilla",
+      "displayName": "Melilla",
+      "count": 5
+    },
+    {
+      "slug": "salamanca",
+      "displayName": "Salamanca",
+      "count": 4
+    },
+    {
+      "slug": "soria",
+      "displayName": "Soria",
+      "count": 4
+    },
+    {
+      "slug": "zamora",
+      "displayName": "Zamora",
+      "count": 4
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 3
+    },
+    {
+      "slug": "segovia",
+      "displayName": "Segovia",
+      "count": 3
+    },
+    {
+      "slug": "alava",
+      "displayName": "Álava",
+      "count": 2
+    },
+    {
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 2
+    },
+    {
+      "slug": "ourense",
+      "displayName": "Ourense",
+      "count": 2
+    }
+  ]
+}

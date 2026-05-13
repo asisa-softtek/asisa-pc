@@ -1,0 +1,35 @@
+{
+  "slug": "cirugia-de-rodilla",
+  "provincias": [
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 13
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 12
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 7
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 5
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 4
+    },
+    {
+      "slug": "alava",
+      "displayName": "Álava",
+      "count": 1
+    }
+  ]
+}

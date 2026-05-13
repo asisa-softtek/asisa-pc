@@ -1,0 +1,95 @@
+{
+  "slug": "oxigenoterapia-y-ventiloterapia",
+  "provincias": [
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 1
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 1
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 1
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 1
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 1
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 1
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 1
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 1
+    },
+    {
+      "slug": "cuenca",
+      "displayName": "Cuenca",
+      "count": 1
+    },
+    {
+      "slug": "gerona",
+      "displayName": "Gerona",
+      "count": 1
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 1
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 1
+    },
+    {
+      "slug": "jaen",
+      "displayName": "Jaén",
+      "count": 1
+    },
+    {
+      "slug": "lugo",
+      "displayName": "Lugo",
+      "count": 1
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 1
+    },
+    {
+      "slug": "teruel",
+      "displayName": "Teruel",
+      "count": 1
+    },
+    {
+      "slug": "vizcaya",
+      "displayName": "Vizcaya",
+      "count": 1
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 1
+    }
+  ]
+}

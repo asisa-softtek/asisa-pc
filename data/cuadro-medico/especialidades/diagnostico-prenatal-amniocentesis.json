@@ -1,0 +1,80 @@
+{
+  "slug": "diagnostico-prenatal-amniocentesis",
+  "provincias": [
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 11
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 7
+    },
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 7
+    },
+    {
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 5
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 5
+    },
+    {
+      "slug": "salamanca",
+      "displayName": "Salamanca",
+      "count": 5
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 5
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 3
+    },
+    {
+      "slug": "caceres",
+      "displayName": "Cáceres",
+      "count": 2
+    },
+    {
+      "slug": "palencia",
+      "displayName": "Palencia",
+      "count": 2
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 2
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 2
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 1
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 1
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 1
+    }
+  ]
+}

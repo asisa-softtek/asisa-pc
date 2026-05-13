@@ -1,0 +1,30 @@
+{
+  "slug": "cirugia-de-cadera",
+  "provincias": [
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 13
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 6
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 6
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 5
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 1
+    }
+  ]
+}

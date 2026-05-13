@@ -1,0 +1,80 @@
+{
+  "slug": "radiologia-intervencionista",
+  "provincias": [
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 7
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 5
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 3
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 2
+    },
+    {
+      "slug": "segovia",
+      "displayName": "Segovia",
+      "count": 2
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 2
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 2
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 2
+    },
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 1
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 1
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 1
+    },
+    {
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 1
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 1
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 1
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 1
+    }
+  ]
+}

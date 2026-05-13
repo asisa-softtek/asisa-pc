@@ -1,0 +1,80 @@
+{
+  "slug": "oftalmologia-infantil-y-estrabismo",
+  "provincias": [
+    {
+      "slug": "teruel",
+      "displayName": "Teruel",
+      "count": 9
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 6
+    },
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 6
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 5
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 5
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 5
+    },
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 4
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 3
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 3
+    },
+    {
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 2
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 2
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 2
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 2
+    },
+    {
+      "slug": "toledo",
+      "displayName": "Toledo",
+      "count": 1
+    },
+    {
+      "slug": "zamora",
+      "displayName": "Zamora",
+      "count": 1
+    }
+  ]
+}

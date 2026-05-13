@@ -1,0 +1,105 @@
+{
+  "slug": "urgencias-pediatricas",
+  "provincias": [
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 8
+    },
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 6
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 5
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 4
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 4
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 3
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 2
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 2
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 2
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 2
+    },
+    {
+      "slug": "vizcaya",
+      "displayName": "Vizcaya",
+      "count": 2
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 1
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 1
+    },
+    {
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 1
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 1
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 1
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 1
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 1
+    },
+    {
+      "slug": "ourense",
+      "displayName": "Ourense",
+      "count": 1
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 1
+    }
+  ]
+}

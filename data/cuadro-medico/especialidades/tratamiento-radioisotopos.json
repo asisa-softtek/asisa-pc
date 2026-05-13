@@ -1,0 +1,15 @@
+{
+  "slug": "tratamiento-radioisotopos",
+  "provincias": [
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 1
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 1
+    }
+  ]
+}

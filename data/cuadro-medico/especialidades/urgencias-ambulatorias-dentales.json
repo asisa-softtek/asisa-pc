@@ -1,0 +1,15 @@
+{
+  "slug": "urgencias-ambulatorias-dentales",
+  "provincias": [
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 4
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 1
+    }
+  ]
+}

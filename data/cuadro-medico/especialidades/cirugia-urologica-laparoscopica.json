@@ -1,0 +1,40 @@
+{
+  "slug": "cirugia-urologica-laparoscopica",
+  "provincias": [
+    {
+      "slug": "jaen",
+      "displayName": "Jaén",
+      "count": 4
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 4
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 2
+    },
+    {
+      "slug": "lugo",
+      "displayName": "Lugo",
+      "count": 2
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 1
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 1
+    },
+    {
+      "slug": "soria",
+      "displayName": "Soria",
+      "count": 1
+    }
+  ]
+}

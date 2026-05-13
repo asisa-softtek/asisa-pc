@@ -1,0 +1,115 @@
+{
+  "slug": "holter",
+  "provincias": [
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 60
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 13
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 12
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 12
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 12
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 9
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 8
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 6
+    },
+    {
+      "slug": "caceres",
+      "displayName": "Cáceres",
+      "count": 5
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 5
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 4
+    },
+    {
+      "slug": "lugo",
+      "displayName": "Lugo",
+      "count": 4
+    },
+    {
+      "slug": "palencia",
+      "displayName": "Palencia",
+      "count": 4
+    },
+    {
+      "slug": "segovia",
+      "displayName": "Segovia",
+      "count": 4
+    },
+    {
+      "slug": "teruel",
+      "displayName": "Teruel",
+      "count": 4
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 3
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 3
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 3
+    },
+    {
+      "slug": "melilla",
+      "displayName": "Melilla",
+      "count": 3
+    },
+    {
+      "slug": "alava",
+      "displayName": "Álava",
+      "count": 2
+    },
+    {
+      "slug": "zamora",
+      "displayName": "Zamora",
+      "count": 2
+    },
+    {
+      "slug": "cuenca",
+      "displayName": "Cuenca",
+      "count": 1
+    }
+  ]
+}

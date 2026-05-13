@@ -1,0 +1,35 @@
+{
+  "slug": "ecografia-urologica",
+  "provincias": [
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 36
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 8
+    },
+    {
+      "slug": "jaen",
+      "displayName": "Jaén",
+      "count": 7
+    },
+    {
+      "slug": "lugo",
+      "displayName": "Lugo",
+      "count": 4
+    },
+    {
+      "slug": "cuenca",
+      "displayName": "Cuenca",
+      "count": 2
+    },
+    {
+      "slug": "soria",
+      "displayName": "Soria",
+      "count": 2
+    }
+  ]
+}

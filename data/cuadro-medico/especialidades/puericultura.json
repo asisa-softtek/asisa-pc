@@ -1,0 +1,20 @@
+{
+  "slug": "puericultura",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 17
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 1
+    },
+    {
+      "slug": "melilla",
+      "displayName": "Melilla",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "slug": "cirugia-toracica",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 39
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 9
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 9
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 8
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 8
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 8
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 5
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 4
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 4
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 4
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 3
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 3
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 3
+    },
+    {
+      "slug": "tenerife",
+      "displayName": "Tenerife",
+      "count": 2
+    },
+    {
+      "slug": "vizcaya",
+      "displayName": "Vizcaya",
+      "count": 2
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 2
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 1
+    },
+    {
+      "slug": "cantabria",
+      "displayName": "Cantabria",
+      "count": 1
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 1
+    }
+  ]
+}

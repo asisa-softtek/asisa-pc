@@ -1,0 +1,10 @@
+{
+  "slug": "cirugia-robotizada-da-vinci",
+  "provincias": [
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 1
+    }
+  ]
+}

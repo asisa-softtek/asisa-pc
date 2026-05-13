@@ -1,0 +1,10 @@
+{
+  "slug": "urgencias-neurocirugia",
+  "provincias": [
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 1
+    }
+  ]
+}

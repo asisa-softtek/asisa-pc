@@ -1,0 +1,65 @@
+{
+  "slug": "cirugia-de-la-mama",
+  "provincias": [
+    {
+      "slug": "jaen",
+      "displayName": "Jaén",
+      "count": 9
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 9
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 8
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 6
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 5
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 4
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 3
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 2
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 2
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 1
+    },
+    {
+      "slug": "guipuzcoa",
+      "displayName": "Guipúzcoa",
+      "count": 1
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 1
+    }
+  ]
+}

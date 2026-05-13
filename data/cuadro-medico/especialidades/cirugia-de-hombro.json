@@ -1,0 +1,40 @@
+{
+  "slug": "cirugia-de-hombro",
+  "provincias": [
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 15
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 13
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 11
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 8
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 5
+    },
+    {
+      "slug": "alava",
+      "displayName": "Álava",
+      "count": 2
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 2
+    }
+  ]
+}

@@ -1,0 +1,1507 @@
+[
+  {
+    "slug": "alergologia",
+    "name": "Alergología",
+    "nameApi": "ALERGOLOGÍA",
+    "professionalPlural": "Alergólogos",
+    "professionalPluralLower": "alergólogos",
+    "kind": "specialty",
+    "specialityCode": 3
+  },
+  {
+    "slug": "alergologia-infantil",
+    "name": "Alergología infantil",
+    "nameApi": "ALERGOLOGÍA INFANTIL",
+    "professionalPlural": "Alergólogos infantiles",
+    "professionalPluralLower": "alergólogos infantiles",
+    "kind": "specialty"
+  },
+  {
+    "slug": "ambulancias-y-otros-traslados-sanitarios",
+    "name": "Ambulancias y otros traslados sanitarios",
+    "nameApi": "AMBULANCIAS Y OTROS TRASLADOS SANITARIOS",
+    "professionalPlural": "Servicios de ambulancia y traslados sanitarios",
+    "professionalPluralLower": "servicios de ambulancia y traslados sanitarios",
+    "kind": "service",
+    "specialityCode": 301
+  },
+  {
+    "slug": "analisis-clinicos",
+    "name": "Análisis clínicos",
+    "nameApi": "ANÁLISIS CLÍNICOS",
+    "professionalPlural": "Especialistas en análisis clínicos",
+    "professionalPluralLower": "especialistas en análisis clínicos",
+    "kind": "specialty",
+    "specialityCode": 4
+  },
+  {
+    "slug": "anatomia-patologica",
+    "name": "Anatomía patológica",
+    "nameApi": "ANATOMÍA PATOLÓGICA",
+    "professionalPlural": "Especialistas en anatomía patológica",
+    "professionalPluralLower": "especialistas en anatomía patológica",
+    "kind": "specialty",
+    "specialityCode": 5
+  },
+  {
+    "slug": "anestesiologia-y-reanimacion",
+    "name": "Anestesiología y reanimación",
+    "nameApi": "ANESTESIOLOGÍA Y REANIMACIÓN",
+    "professionalPlural": "Anestesiólogos",
+    "professionalPluralLower": "anestesiólogos",
+    "kind": "specialty",
+    "specialityCode": 6
+  },
+  {
+    "slug": "angiologia-y-cirugia-vascular",
+    "name": "Angiología y cirugía vascular",
+    "nameApi": "ANGIOLOGÍA Y CIRUGÍA VASCULAR",
+    "professionalPlural": "Angiólogos y cirujanos vasculares",
+    "professionalPluralLower": "angiólogos y cirujanos vasculares",
+    "kind": "specialty",
+    "specialityCode": 7
+  },
+  {
+    "slug": "aparato-digestivo",
+    "name": "Aparato digestivo",
+    "nameApi": "APARATO DIGESTIVO",
+    "professionalPlural": "Especialistas en aparato digestivo",
+    "professionalPluralLower": "especialistas en aparato digestivo",
+    "kind": "specialty",
+    "specialityCode": 8
+  },
+  {
+    "slug": "aparato-digestivo-infantil",
+    "name": "Aparato digestivo infantil",
+    "nameApi": "APARATO DIGESTIVO INFANTIL",
+    "professionalPlural": "Especialistas en aparato digestivo infantil",
+    "professionalPluralLower": "especialistas en aparato digestivo infantil",
+    "kind": "specialty"
+  },
+  {
+    "slug": "atencion-temprana-a-menores-de-6-anos",
+    "name": "Atención temprana a menores de 6 años",
+    "nameApi": "ATENCIÓN TEMPRANA A MENORES DE 6 AÑOS",
+    "professionalPlural": "Profesionales de atención temprana",
+    "professionalPluralLower": "profesionales de atención temprana",
+    "kind": "service"
+  },
+  {
+    "slug": "capsula-endoscopica",
+    "name": "Cápsula endoscópica",
+    "nameApi": "CÁPSULA ENDOSCÓPICA",
+    "professionalPlural": "Centros de cápsula endoscópica",
+    "professionalPluralLower": "centros de cápsula endoscópica",
+    "kind": "technique"
+  },
+  {
+    "slug": "cardiologia",
+    "name": "Cardiología",
+    "nameApi": "CARDIOLOGÍA",
+    "professionalPlural": "Cardiólogos",
+    "professionalPluralLower": "cardiólogos",
+    "kind": "specialty",
+    "specialityCode": 9
+  },
+  {
+    "slug": "cardiologia-deportiva",
+    "name": "Cardiología deportiva",
+    "nameApi": "CARDIOLOGÍA DEPORTIVA",
+    "professionalPlural": "Cardiólogos deportivos",
+    "professionalPluralLower": "cardiólogos deportivos",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cardiologia-infantil",
+    "name": "Cardiología infantil",
+    "nameApi": "CARDIOLOGÍA INFANTIL",
+    "professionalPlural": "Cardiólogos infantiles",
+    "professionalPluralLower": "cardiólogos infantiles",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-bariatrica",
+    "name": "Cirugía bariátrica",
+    "nameApi": "CIRUGÍA BARIÁTRICA",
+    "professionalPlural": "Cirujanos bariátricos",
+    "professionalPluralLower": "cirujanos bariátricos",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-cardiovascular",
+    "name": "Cirugía cardiovascular",
+    "nameApi": "CIRUGÍA CARDIOVASCULAR",
+    "professionalPlural": "Cirujanos cardiovasculares",
+    "professionalPluralLower": "cirujanos cardiovasculares",
+    "kind": "specialty",
+    "specialityCode": 10
+  },
+  {
+    "slug": "cirugia-cardiovascular-infantil",
+    "name": "Cirugía cardiovascular infantil",
+    "nameApi": "CIRUGÍA CARDIOVASCULAR INFANTIL",
+    "professionalPlural": "Cirujanos cardiovasculares infantiles",
+    "professionalPluralLower": "cirujanos cardiovasculares infantiles",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-de-cadera",
+    "name": "Cirugía de cadera",
+    "nameApi": "CIRUGÍA DE CADERA",
+    "professionalPlural": "Cirujanos de cadera",
+    "professionalPluralLower": "cirujanos de cadera",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-de-codo",
+    "name": "Cirugía de codo",
+    "nameApi": "CIRUGÍA DE CODO",
+    "professionalPlural": "Cirujanos de codo",
+    "professionalPluralLower": "cirujanos de codo",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-de-columna-escoliosis",
+    "name": "Cirugía de columna - escoliosis",
+    "nameApi": "CIRUGÍA DE COLUMNA - ESCOLIOSIS",
+    "professionalPlural": "Cirujanos de columna y escoliosis",
+    "professionalPluralLower": "cirujanos de columna y escoliosis",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-de-grandes-reconstrucciones",
+    "name": "Cirugía de grandes reconstrucciones",
+    "nameApi": "CIRUGÍA DE GRANDES RECONSTRUCCIONES",
+    "professionalPlural": "Cirujanos de grandes reconstrucciones",
+    "professionalPluralLower": "cirujanos de grandes reconstrucciones",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-de-grandes-reconstrucciones-microcirugia",
+    "name": "Cirugía de grandes reconstrucciones - microcirugía",
+    "nameApi": "CIRUGÍA DE GRANDES RECONSTRUCCIONES - MICROCIRUGÍA",
+    "professionalPlural": "Cirujanos de grandes reconstrucciones y microcirugía",
+    "professionalPluralLower": "cirujanos de grandes reconstrucciones y microcirugía",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-de-hombro",
+    "name": "Cirugía de hombro",
+    "nameApi": "CIRUGÍA DE HOMBRO",
+    "professionalPlural": "Cirujanos de hombro",
+    "professionalPluralLower": "cirujanos de hombro",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-de-implante-coclear",
+    "name": "Cirugía de implante coclear",
+    "nameApi": "CIRUGÍA DE IMPLANTE COCLEAR",
+    "professionalPlural": "Cirujanos de implante coclear",
+    "professionalPluralLower": "cirujanos de implante coclear",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-de-la-mama",
+    "name": "Cirugía de la mama",
+    "nameApi": "CIRUGÍA DE LA MAMA",
+    "professionalPlural": "Cirujanos de la mama",
+    "professionalPluralLower": "cirujanos de la mama",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-de-mano",
+    "name": "Cirugía de mano",
+    "nameApi": "CIRUGÍA DE MANO",
+    "professionalPlural": "Cirujanos de mano",
+    "professionalPluralLower": "cirujanos de mano",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-de-mohs",
+    "name": "Cirugía de mohs",
+    "nameApi": "CIRUGÍA DE MOHS",
+    "professionalPlural": "Cirujanos de Mohs",
+    "professionalPluralLower": "cirujanos de Mohs",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-de-neurinoma-del-acustico",
+    "name": "Cirugía de neurinoma del acústico",
+    "nameApi": "CIRUGÍA DE NEURINOMA DEL ACÚSTICO",
+    "professionalPlural": "Cirujanos de neurinoma del acústico",
+    "professionalPluralLower": "cirujanos de neurinoma del acústico",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-de-pie-compleja",
+    "name": "Cirugía de pie compleja",
+    "nameApi": "CIRUGÍA DE PIE COMPLEJA",
+    "professionalPlural": "Cirujanos de pie",
+    "professionalPluralLower": "cirujanos de pie",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-de-polo-anterior-cornea-y-catarata",
+    "name": "Cirugía de polo anterior, córnea y catarata",
+    "nameApi": "CIRUGÍA DE POLO ANTERIOR, CÓRNEA Y CATARATA",
+    "professionalPlural": "Cirujanos de polo anterior, córnea y catarata",
+    "professionalPluralLower": "cirujanos de polo anterior, córnea y catarata",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-de-rodilla",
+    "name": "Cirugía de rodilla",
+    "nameApi": "CIRUGÍA DE RODILLA",
+    "professionalPlural": "Cirujanos de rodilla",
+    "professionalPluralLower": "cirujanos de rodilla",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-del-glaucoma",
+    "name": "Cirugía del glaucoma",
+    "nameApi": "CIRUGÍA DEL GLAUCOMA",
+    "professionalPlural": "Cirujanos del glaucoma",
+    "professionalPluralLower": "cirujanos del glaucoma",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-del-sistema-nervioso-central",
+    "name": "Cirugía del sistema nervioso central",
+    "nameApi": "CIRUGÍA DEL SISTEMA NERVIOSO CENTRAL",
+    "professionalPlural": "Cirujanos del sistema nervioso central",
+    "professionalPluralLower": "cirujanos del sistema nervioso central",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-extracorporea",
+    "name": "Cirugía extracorpórea",
+    "nameApi": "CIRUGÍA EXTRACORPÓREA",
+    "professionalPlural": "Especialistas en cirugía extracorpórea",
+    "professionalPluralLower": "especialistas en cirugía extracorpórea",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-general-laparoscopica",
+    "name": "Cirugía general laparoscópica",
+    "nameApi": "CIRUGÍA GENERAL LAPAROSCÓPICA",
+    "professionalPlural": "Cirujanos generales laparoscópicos",
+    "professionalPluralLower": "cirujanos generales laparoscópicos",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-general-y-del-aparato-digestivo",
+    "name": "Cirugía general y del aparato digestivo",
+    "nameApi": "CIRUGÍA GENERAL Y DEL APARATO DIGESTIVO",
+    "professionalPlural": "Cirujanos generales y del aparato digestivo",
+    "professionalPluralLower": "cirujanos generales y del aparato digestivo",
+    "kind": "specialty",
+    "specialityCode": 11
+  },
+  {
+    "slug": "cirugia-ginecologica-laparoscopica",
+    "name": "Cirugía ginecológica laparoscópica",
+    "nameApi": "CIRUGÍA GINECOLÓGICA LAPAROSCÓPICA",
+    "professionalPlural": "Cirujanos ginecológicos laparoscópicos",
+    "professionalPluralLower": "cirujanos ginecológicos laparoscópicos",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-laser-dermatologica",
+    "name": "Cirugía láser dermatológica",
+    "nameApi": "CIRUGÍA LÁSER DERMATOLÓGICA",
+    "professionalPlural": "Cirujanos láser dermatológicos",
+    "professionalPluralLower": "cirujanos láser dermatológicos",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-maxilofacial-infantil",
+    "name": "Cirugía maxilofacial infantil",
+    "nameApi": "CIRUGÍA MAXILOFACIAL INFANTIL",
+    "professionalPlural": "Cirujanos maxilofaciales infantiles",
+    "professionalPluralLower": "cirujanos maxilofaciales infantiles",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-nasal-por-radiofrecuencia",
+    "name": "Cirugía nasal por radiofrecuencia",
+    "nameApi": "CIRUGÍA NASAL POR RADIOFRECUENCIA",
+    "professionalPlural": "Cirujanos nasales por radiofrecuencia",
+    "professionalPluralLower": "cirujanos nasales por radiofrecuencia",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-oncologica-abdominal",
+    "name": "Cirugía oncológica abdominal",
+    "nameApi": "CIRUGÍA ONCOLÓGICA ABDOMINAL",
+    "professionalPlural": "Cirujanos oncológicos abdominales",
+    "professionalPluralLower": "cirujanos oncológicos abdominales",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-oncologica-o-r-l",
+    "name": "Cirugía oncológica O.R.L.",
+    "nameApi": "CIRUGÍA ONCOLÓGICA O.R.L.",
+    "professionalPlural": "Cirujanos oncológicos O.R.L.",
+    "professionalPluralLower": "cirujanos oncológicos O.R.L.",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-oral-y-maxilofacial",
+    "name": "Cirugía oral y maxilofacial",
+    "nameApi": "CIRUGÍA ORAL Y MAXILOFACIAL",
+    "professionalPlural": "Cirujanos orales y maxilofaciales",
+    "professionalPluralLower": "cirujanos orales y maxilofaciales",
+    "kind": "specialty",
+    "specialityCode": 12
+  },
+  {
+    "slug": "cirugia-ortognatica",
+    "name": "Cirugía ortognática",
+    "nameApi": "CIRUGÍA ORTOGNÁTICA",
+    "professionalPlural": "Cirujanos ortognáticos",
+    "professionalPluralLower": "cirujanos ortognáticos",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-pediatrica",
+    "name": "Cirugía pediátrica",
+    "nameApi": "CIRUGÍA PEDIÁTRICA",
+    "professionalPlural": "Cirujanos pediátricos",
+    "professionalPluralLower": "cirujanos pediátricos",
+    "kind": "specialty",
+    "specialityCode": 13
+  },
+  {
+    "slug": "cirugia-plastica-estetica-y-reparadora",
+    "name": "Cirugía plástica, estética y reparadora",
+    "nameApi": "CIRUGÍA PLÁSTICA, ESTÉTICA Y REPARADORA",
+    "professionalPlural": "Cirujanos plásticos, estéticos y reparadores",
+    "professionalPluralLower": "cirujanos plásticos, estéticos y reparadores",
+    "kind": "specialty",
+    "specialityCode": 14
+  },
+  {
+    "slug": "cirugia-plastica-ocular",
+    "name": "Cirugía plástica ocular",
+    "nameApi": "CIRUGÍA PLÁSTICA OCULAR",
+    "professionalPlural": "Cirujanos plásticos oculares",
+    "professionalPluralLower": "cirujanos plásticos oculares",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-proctologica",
+    "name": "Cirugía proctológica",
+    "nameApi": "CIRUGÍA PROCTOLÓGICA",
+    "professionalPlural": "Cirujanos proctológicos",
+    "professionalPluralLower": "cirujanos proctológicos",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-reconstructiva-de-la-mama",
+    "name": "Cirugía reconstructiva de la mama",
+    "nameApi": "CIRUGÍA RECONSTRUCTIVA DE LA MAMA",
+    "professionalPlural": "Cirujanos reconstructivos de mama",
+    "professionalPluralLower": "cirujanos reconstructivos de mama",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-refractiva-y-presbicia",
+    "name": "Cirugía refractiva y presbicia",
+    "nameApi": "CIRUGÍA REFRACTIVA Y PRESBICIA",
+    "professionalPlural": "Cirujanos refractivos y de presbicia",
+    "professionalPluralLower": "cirujanos refractivos y de presbicia",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-toracica",
+    "name": "Cirugía torácica",
+    "nameApi": "CIRUGÍA TORÁCICA",
+    "professionalPlural": "Cirujanos torácicos",
+    "professionalPluralLower": "cirujanos torácicos",
+    "kind": "specialty",
+    "specialityCode": 15
+  },
+  {
+    "slug": "cirugia-urologica-laparoscopica",
+    "name": "Cirugía urológica laparoscópica",
+    "nameApi": "CIRUGÍA UROLÓGICA LAPAROSCÓPICA",
+    "professionalPlural": "Cirujanos urológicos laparoscópicos",
+    "professionalPluralLower": "cirujanos urológicos laparoscópicos",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cirugia-vitreo-retina-y-macula",
+    "name": "Cirugía vítreo, retina y mácula",
+    "nameApi": "CIRUGÍA VÍTREO, RETINA Y MÁCULA",
+    "professionalPlural": "Cirujanos de vítreo, retina y mácula",
+    "professionalPluralLower": "cirujanos de vítreo, retina y mácula",
+    "kind": "specialty"
+  },
+  {
+    "slug": "cuidados-paliativos-domiciliarios",
+    "name": "Cuidados paliativos domiciliarios",
+    "nameApi": "CUIDADOS PALIATIVOS DOMICILIARIOS",
+    "professionalPlural": "Especialistas en cuidados paliativos domiciliarios",
+    "professionalPluralLower": "especialistas en cuidados paliativos domiciliarios",
+    "kind": "service"
+  },
+  {
+    "slug": "densitometria-osea",
+    "name": "Densitometría ósea",
+    "nameApi": "DENSITOMETRÍA ÓSEA",
+    "professionalPlural": "Centros de densitometría ósea",
+    "professionalPluralLower": "centros de densitometría ósea",
+    "kind": "technique"
+  },
+  {
+    "slug": "dermatologia-infantil",
+    "name": "Dermatología infantil",
+    "nameApi": "DERMATOLOGÍA INFANTIL",
+    "professionalPlural": "Dermatólogos infantiles",
+    "professionalPluralLower": "dermatólogos infantiles",
+    "kind": "specialty"
+  },
+  {
+    "slug": "dermatologia-medico-quirurgica-y-venereo",
+    "name": "Dermatología médico-quirúrgica y venereo",
+    "nameApi": "DERMATOLOGÍA MÉDICO-QUIRÚRGICA Y VENEREO",
+    "professionalPlural": "Dermatólogos",
+    "professionalPluralLower": "dermatólogos",
+    "kind": "specialty",
+    "specialityCode": 16
+  },
+  {
+    "slug": "dermatoscopia-digital",
+    "name": "Dermatoscopia digital",
+    "nameApi": "DERMATOSCOPIA DIGITAL",
+    "professionalPlural": "Centros de dermatoscopia digital",
+    "professionalPluralLower": "centros de dermatoscopia digital",
+    "kind": "technique"
+  },
+  {
+    "slug": "diagnostico-prenatal-amniocentesis",
+    "name": "Diagnóstico prenatal - amniocentesis",
+    "nameApi": "DIAGNÓSTICO PRENATAL - AMNIOCENTESIS",
+    "professionalPlural": "Centros de diagnóstico prenatal",
+    "professionalPluralLower": "centros de diagnóstico prenatal",
+    "kind": "technique"
+  },
+  {
+    "slug": "dialisis",
+    "name": "Diálisis",
+    "nameApi": "DIÁLISIS",
+    "professionalPlural": "Centros de diálisis",
+    "professionalPluralLower": "centros de diálisis",
+    "kind": "service"
+  },
+  {
+    "slug": "eco-doppler",
+    "name": "Eco-doppler",
+    "nameApi": "ECO-DOPPLER",
+    "professionalPlural": "Centros de eco-Doppler",
+    "professionalPluralLower": "centros de eco-Doppler",
+    "kind": "technique"
+  },
+  {
+    "slug": "eco-doppler-cardiologico",
+    "name": "Eco-doppler cardiológico",
+    "nameApi": "ECO-DOPPLER CARDIOLÓGICO",
+    "professionalPlural": "Centros de eco-Doppler cardiológico",
+    "professionalPluralLower": "centros de eco-Doppler cardiológico",
+    "kind": "technique"
+  },
+  {
+    "slug": "eco-doppler-vascular",
+    "name": "Eco-doppler vascular",
+    "nameApi": "ECO-DOPPLER VASCULAR",
+    "professionalPlural": "Centros de eco-Doppler vascular",
+    "professionalPluralLower": "centros de eco-Doppler vascular",
+    "kind": "technique"
+  },
+  {
+    "slug": "ecocardiograma",
+    "name": "Ecocardiograma",
+    "nameApi": "ECOCARDIOGRAMA",
+    "professionalPlural": "Centros de ecocardiograma",
+    "professionalPluralLower": "centros de ecocardiograma",
+    "kind": "technique"
+  },
+  {
+    "slug": "ecografia",
+    "name": "Ecografía",
+    "nameApi": "ECOGRAFÍA",
+    "professionalPlural": "Centros de ecografía",
+    "professionalPluralLower": "centros de ecografía",
+    "kind": "technique"
+  },
+  {
+    "slug": "ecografia-ginecologica",
+    "name": "Ecografía ginecológica",
+    "nameApi": "ECOGRAFÍA GINECOLÓGICA",
+    "professionalPlural": "Centros de ecografía ginecológica",
+    "professionalPluralLower": "centros de ecografía ginecológica",
+    "kind": "technique"
+  },
+  {
+    "slug": "ecografia-urologica",
+    "name": "Ecografía urológica",
+    "nameApi": "ECOGRAFÍA UROLÓGICA",
+    "professionalPlural": "Centros de ecografía urológica",
+    "professionalPluralLower": "centros de ecografía urológica",
+    "kind": "technique"
+  },
+  {
+    "slug": "electroencefalograma",
+    "name": "Electroencefalograma",
+    "nameApi": "ELECTROENCEFALOGRAMA",
+    "professionalPlural": "Centros de electroencefalograma",
+    "professionalPluralLower": "centros de electroencefalograma",
+    "kind": "technique"
+  },
+  {
+    "slug": "electrofisiologia-cardiaca",
+    "name": "Electrofisiología cardíaca",
+    "nameApi": "ELECTROFISIOLOGÍA CARDÍACA",
+    "professionalPlural": "Especialistas en electrofisiología cardíaca",
+    "professionalPluralLower": "especialistas en electrofisiología cardíaca",
+    "kind": "specialty"
+  },
+  {
+    "slug": "electromiograma",
+    "name": "Electromiograma",
+    "nameApi": "ELECTROMIOGRAMA",
+    "professionalPlural": "Centros de electromiograma",
+    "professionalPluralLower": "centros de electromiograma",
+    "kind": "technique"
+  },
+  {
+    "slug": "endocrinologia-y-nutricion",
+    "name": "Endocrinología y nutrición",
+    "nameApi": "ENDOCRINOLOGÍA Y NUTRICIÓN",
+    "professionalPlural": "Endocrinólogos y nutricionistas",
+    "professionalPluralLower": "endocrinólogos y nutricionistas",
+    "kind": "specialty",
+    "specialityCode": 18
+  },
+  {
+    "slug": "endocrinologia-y-nutricion-infantil",
+    "name": "Endocrinología y nutrición infantil",
+    "nameApi": "ENDOCRINOLOGÍA Y NUTRICIÓN INFANTIL",
+    "professionalPlural": "Endocrinólogos y nutricionistas infantiles",
+    "professionalPluralLower": "endocrinólogos y nutricionistas infantiles",
+    "kind": "specialty"
+  },
+  {
+    "slug": "endoscopia-digestiva",
+    "name": "Endoscopia digestiva",
+    "nameApi": "ENDOSCOPIA DIGESTIVA",
+    "professionalPlural": "Centros de endoscopia digestiva",
+    "professionalPluralLower": "centros de endoscopia digestiva",
+    "kind": "technique"
+  },
+  {
+    "slug": "endoscopia-respiratoria-broncoscopia",
+    "name": "Endoscopia respiratoria - broncoscopia",
+    "nameApi": "ENDOSCOPIA RESPIRATORIA - BRONCOSCOPIA",
+    "professionalPlural": "Centros de endoscopia respiratoria",
+    "professionalPluralLower": "centros de endoscopia respiratoria",
+    "kind": "technique"
+  },
+  {
+    "slug": "enfermeria",
+    "name": "Enfermería",
+    "nameApi": "ENFERMERÍA",
+    "professionalPlural": "Profesionales de enfermería",
+    "professionalPluralLower": "profesionales de enfermería",
+    "kind": "specialty",
+    "specialityCode": 96
+  },
+  {
+    "slug": "estomatologia",
+    "name": "Estomatología",
+    "nameApi": "ESTOMATOLOGÍA",
+    "professionalPlural": "Estomatólogos",
+    "professionalPluralLower": "estomatólogos",
+    "kind": "specialty",
+    "specialityCode": 19
+  },
+  {
+    "slug": "estudio-biomecanico-de-la-marcha-pisada",
+    "name": "Estudio biomecánico de la marcha / pisada",
+    "nameApi": "ESTUDIO BIOMECÁNICO DE LA MARCHA / PISADA",
+    "professionalPlural": "Centros de estudio biomecánico de la pisada",
+    "professionalPluralLower": "centros de estudio biomecánico de la pisada",
+    "kind": "technique"
+  },
+  {
+    "slug": "experto-en-ostomias",
+    "name": "Experto en ostomías",
+    "nameApi": "EXPERTO EN OSTOMÍAS",
+    "professionalPlural": "Expertos en ostomías",
+    "professionalPluralLower": "expertos en ostomías",
+    "kind": "specialty"
+  },
+  {
+    "slug": "fisioterapia",
+    "name": "Fisioterapia",
+    "nameApi": "FISIOTERAPIA",
+    "professionalPlural": "Fisioterapeutas",
+    "professionalPluralLower": "fisioterapeutas",
+    "kind": "specialty",
+    "specialityCode": 92
+  },
+  {
+    "slug": "ganglio-centinela",
+    "name": "Ganglio centinela",
+    "nameApi": "GANGLIO CENTINELA",
+    "professionalPlural": "Centros de ganglio centinela",
+    "professionalPluralLower": "centros de ganglio centinela",
+    "kind": "technique"
+  },
+  {
+    "slug": "genetica-humana",
+    "name": "Genética humana",
+    "nameApi": "GENÉTICA HUMANA",
+    "professionalPlural": "Especialistas en genética humana",
+    "professionalPluralLower": "especialistas en genética humana",
+    "kind": "specialty",
+    "specialityCode": 304
+  },
+  {
+    "slug": "geriatria",
+    "name": "Geriatría",
+    "nameApi": "GERIATRÍA",
+    "professionalPlural": "Geriatras",
+    "professionalPluralLower": "geriatras",
+    "kind": "specialty",
+    "specialityCode": 20
+  },
+  {
+    "slug": "ginecologia-oncologica",
+    "name": "Ginecología oncológica",
+    "nameApi": "GINECOLOGÍA ONCOLÓGICA",
+    "professionalPlural": "Ginecólogos oncológicos",
+    "professionalPluralLower": "ginecólogos oncológicos",
+    "kind": "specialty"
+  },
+  {
+    "slug": "ginecologia-y-obstetricia",
+    "name": "Ginecología y obstetricia",
+    "nameApi": "GINECOLOGÍA Y OBSTETRICIA",
+    "professionalPlural": "Ginecólogos y obstetras",
+    "professionalPluralLower": "ginecólogos y obstetras",
+    "kind": "specialty",
+    "specialityCode": 31
+  },
+  {
+    "slug": "hematologia-y-hemoterapia",
+    "name": "Hematología y hemoterapia",
+    "nameApi": "HEMATOLOGÍA Y HEMOTERAPIA",
+    "professionalPlural": "Hematólogos",
+    "professionalPluralLower": "hematólogos",
+    "kind": "specialty",
+    "specialityCode": 21
+  },
+  {
+    "slug": "hemodinamica",
+    "name": "Hemodinámica",
+    "nameApi": "HEMODINÁMICA",
+    "professionalPlural": "Servicios de hemodinámica",
+    "professionalPluralLower": "servicios de hemodinámica",
+    "kind": "service"
+  },
+  {
+    "slug": "hemoterapia-banco-de-sangre",
+    "name": "Hemoterapia - banco de sangre",
+    "nameApi": "HEMOTERAPIA - BANCO DE SANGRE",
+    "professionalPlural": "Servicios de hemoterapia",
+    "professionalPluralLower": "servicios de hemoterapia",
+    "kind": "service"
+  },
+  {
+    "slug": "hepatologia",
+    "name": "Hepatología",
+    "nameApi": "HEPATOLOGÍA",
+    "professionalPlural": "Hepatólogos",
+    "professionalPluralLower": "hepatólogos",
+    "kind": "specialty"
+  },
+  {
+    "slug": "holter",
+    "name": "Holter",
+    "nameApi": "HOLTER",
+    "professionalPlural": "Centros de Holter",
+    "professionalPluralLower": "centros de Holter",
+    "kind": "technique"
+  },
+  {
+    "slug": "hospital-de-dia",
+    "name": "Hospital de día",
+    "nameApi": "HOSPITAL DE DÍA",
+    "professionalPlural": "Hospitales de día",
+    "professionalPluralLower": "hospitales de día",
+    "kind": "service",
+    "specialityCode": 103
+  },
+  {
+    "slug": "hospital-general",
+    "name": "Hospital general",
+    "nameApi": "HOSPITAL GENERAL",
+    "professionalPlural": "Hospitales generales",
+    "professionalPluralLower": "hospitales generales",
+    "kind": "service",
+    "specialityCode": 101
+  },
+  {
+    "slug": "hospital-psiquiatrico",
+    "name": "Hospital psiquiátrico",
+    "nameApi": "HOSPITAL PSIQUIÁTRICO",
+    "professionalPlural": "Hospitales psiquiátricos",
+    "professionalPluralLower": "hospitales psiquiátricos",
+    "kind": "service",
+    "specialityCode": 102
+  },
+  {
+    "slug": "inmunologia",
+    "name": "Inmunología",
+    "nameApi": "INMUNOLOGÍA",
+    "professionalPlural": "Inmunólogos",
+    "professionalPluralLower": "inmunólogos",
+    "kind": "specialty",
+    "specialityCode": 22
+  },
+  {
+    "slug": "laser-prostatico",
+    "name": "Láser prostático",
+    "nameApi": "LÁSER PROSTÁTICO",
+    "professionalPlural": "Especialistas en láser prostático",
+    "professionalPluralLower": "especialistas en láser prostático",
+    "kind": "technique"
+  },
+  {
+    "slug": "litotricia",
+    "name": "Litotricia",
+    "nameApi": "LITOTRICIA",
+    "professionalPlural": "Centros de litotricia",
+    "professionalPluralLower": "centros de litotricia",
+    "kind": "technique"
+  },
+  {
+    "slug": "logopedia-infantil",
+    "name": "Logopedia infantil",
+    "nameApi": "LOGOPEDIA INFANTIL",
+    "professionalPlural": "Logopedas infantiles",
+    "professionalPluralLower": "logopedas infantiles",
+    "kind": "specialty"
+  },
+  {
+    "slug": "logopedia-y-foniatria",
+    "name": "Logopedia y foniatria",
+    "nameApi": "LOGOPEDIA Y FONIATRIA",
+    "professionalPlural": "Logopedas y foniatras",
+    "professionalPluralLower": "logopedas y foniatras",
+    "kind": "specialty",
+    "specialityCode": 350
+  },
+  {
+    "slug": "mamografia",
+    "name": "Mamografía",
+    "nameApi": "MAMOGRAFÍA",
+    "professionalPlural": "Centros de mamografía",
+    "professionalPluralLower": "centros de mamografía",
+    "kind": "technique"
+  },
+  {
+    "slug": "matrona",
+    "name": "Matrona",
+    "nameApi": "MATRONA",
+    "professionalPlural": "Matronas",
+    "professionalPluralLower": "matronas",
+    "kind": "specialty",
+    "specialityCode": 97
+  },
+  {
+    "slug": "medicina-fisica-y-rehabilitacion",
+    "name": "Medicina física y rehabilitación",
+    "nameApi": "MEDICINA FÍSICA Y REHABILITACIÓN",
+    "professionalPlural": "Médicos rehabilitadores",
+    "professionalPluralLower": "médicos rehabilitadores",
+    "kind": "specialty",
+    "specialityCode": 37
+  },
+  {
+    "slug": "medicina-general",
+    "name": "Medicina general",
+    "nameApi": "MEDICINA GENERAL",
+    "professionalPlural": "Médicos de medicina general",
+    "professionalPluralLower": "médicos de medicina general",
+    "kind": "specialty",
+    "specialityCode": 1
+  },
+  {
+    "slug": "medicina-interna",
+    "name": "Medicina interna",
+    "nameApi": "MEDICINA INTERNA",
+    "professionalPlural": "Médicos internistas",
+    "professionalPluralLower": "médicos internistas",
+    "kind": "specialty",
+    "specialityCode": 24
+  },
+  {
+    "slug": "medicina-nuclear",
+    "name": "Medicina nuclear",
+    "nameApi": "MEDICINA NUCLEAR",
+    "professionalPlural": "Especialistas en medicina nuclear",
+    "professionalPluralLower": "especialistas en medicina nuclear",
+    "kind": "specialty",
+    "specialityCode": 25
+  },
+  {
+    "slug": "nefrologia",
+    "name": "Nefrología",
+    "nameApi": "NEFROLOGÍA",
+    "professionalPlural": "Nefrólogos",
+    "professionalPluralLower": "nefrólogos",
+    "kind": "specialty",
+    "specialityCode": 26
+  },
+  {
+    "slug": "neonatologia",
+    "name": "Neonatología",
+    "nameApi": "NEONATOLOGÍA",
+    "professionalPlural": "Neonatólogos",
+    "professionalPluralLower": "neonatólogos",
+    "kind": "specialty"
+  },
+  {
+    "slug": "neumologia",
+    "name": "Neumología",
+    "nameApi": "NEUMOLOGÍA",
+    "professionalPlural": "Neumólogos",
+    "professionalPluralLower": "neumólogos",
+    "kind": "specialty",
+    "specialityCode": 27
+  },
+  {
+    "slug": "neumologia-infantil",
+    "name": "Neumología infantil",
+    "nameApi": "NEUMOLOGÍA INFANTIL",
+    "professionalPlural": "Neumólogos infantiles",
+    "professionalPluralLower": "neumólogos infantiles",
+    "kind": "specialty"
+  },
+  {
+    "slug": "neurocirugia",
+    "name": "Neurocirugía",
+    "nameApi": "NEUROCIRUGÍA",
+    "professionalPlural": "Neurocirujanos",
+    "professionalPluralLower": "neurocirujanos",
+    "kind": "specialty",
+    "specialityCode": 28
+  },
+  {
+    "slug": "neurofisiologia-clinica",
+    "name": "Neurofisiología clínica",
+    "nameApi": "NEUROFISIOLOGÍA CLÍNICA",
+    "professionalPlural": "Neurofisiólogos clínicos",
+    "professionalPluralLower": "neurofisiólogos clínicos",
+    "kind": "specialty",
+    "specialityCode": 29
+  },
+  {
+    "slug": "neurologia",
+    "name": "Neurología",
+    "nameApi": "NEUROLOGÍA",
+    "professionalPlural": "Neurólogos",
+    "professionalPluralLower": "neurólogos",
+    "kind": "specialty",
+    "specialityCode": 30
+  },
+  {
+    "slug": "neurologia-infantil",
+    "name": "Neurología infantil",
+    "nameApi": "NEUROLOGÍA INFANTIL",
+    "professionalPlural": "Neurólogos infantiles",
+    "professionalPluralLower": "neurólogos infantiles",
+    "kind": "specialty"
+  },
+  {
+    "slug": "obstetricia",
+    "name": "Obstetricia",
+    "nameApi": "OBSTETRICIA",
+    "professionalPlural": "Obstetras",
+    "professionalPluralLower": "obstetras",
+    "kind": "specialty"
+  },
+  {
+    "slug": "oftalmologia",
+    "name": "Oftalmología",
+    "nameApi": "OFTALMOLOGÍA",
+    "professionalPlural": "Oftalmólogos",
+    "professionalPluralLower": "oftalmólogos",
+    "kind": "specialty",
+    "specialityCode": 32
+  },
+  {
+    "slug": "oftalmologia-infantil-y-estrabismo",
+    "name": "Oftalmología infantil y estrabismo",
+    "nameApi": "OFTALMOLOGÍA INFANTIL Y ESTRABISMO",
+    "professionalPlural": "Oftalmólogos infantiles y de estrabismo",
+    "professionalPluralLower": "oftalmólogos infantiles y de estrabismo",
+    "kind": "specialty"
+  },
+  {
+    "slug": "oftalmologia-oncologica",
+    "name": "Oftalmología oncológica",
+    "nameApi": "OFTALMOLOGÍA ONCOLÓGICA",
+    "professionalPlural": "Oftalmólogos oncológicos",
+    "professionalPluralLower": "oftalmólogos oncológicos",
+    "kind": "specialty"
+  },
+  {
+    "slug": "oncohematologia",
+    "name": "Oncohematología",
+    "nameApi": "ONCOHEMATOLOGÍA",
+    "professionalPlural": "Oncohematólogos",
+    "professionalPluralLower": "oncohematólogos",
+    "kind": "specialty"
+  },
+  {
+    "slug": "oncologia-medica",
+    "name": "Oncología médica",
+    "nameApi": "ONCOLOGÍA MÉDICA",
+    "professionalPlural": "Oncólogos médicos",
+    "professionalPluralLower": "oncólogos médicos",
+    "kind": "specialty",
+    "specialityCode": 33
+  },
+  {
+    "slug": "oncologia-radioterapica",
+    "name": "Oncología radioterápica",
+    "nameApi": "ONCOLOGÍA RADIOTERÁPICA",
+    "professionalPlural": "Oncólogos radioterápicos",
+    "professionalPluralLower": "oncólogos radioterápicos",
+    "kind": "specialty",
+    "specialityCode": 34
+  },
+  {
+    "slug": "ortopantomografias",
+    "name": "Ortopantomografías",
+    "nameApi": "ORTOPANTOMOGRAFÍAS",
+    "professionalPlural": "Centros de ortopantomografías",
+    "professionalPluralLower": "centros de ortopantomografías",
+    "kind": "technique"
+  },
+  {
+    "slug": "otorrinolaringologia",
+    "name": "Otorrinolaringología",
+    "nameApi": "OTORRINOLARINGOLOGÍA",
+    "professionalPlural": "Otorrinolaringólogos",
+    "professionalPluralLower": "otorrinolaringólogos",
+    "kind": "specialty",
+    "specialityCode": 35
+  },
+  {
+    "slug": "otorrinolaringologia-infantil",
+    "name": "Otorrinolaringología infantil",
+    "nameApi": "OTORRINOLARINGOLOGÍA INFANTIL",
+    "professionalPlural": "Otorrinolaringólogos infantiles",
+    "professionalPluralLower": "otorrinolaringólogos infantiles",
+    "kind": "specialty"
+  },
+  {
+    "slug": "oxigenoterapia-y-ventiloterapia",
+    "name": "Oxigenoterapia y ventiloterapia",
+    "nameApi": "OXIGENOTERAPIA Y VENTILOTERAPIA",
+    "professionalPlural": "Servicios de oxigenoterapia y ventiloterapia",
+    "professionalPluralLower": "servicios de oxigenoterapia y ventiloterapia",
+    "kind": "service",
+    "specialityCode": 310
+  },
+  {
+    "slug": "p-e-t-t-a-c",
+    "name": "P.E.T-T.A.C.",
+    "nameApi": "P.E.T-T.A.C.",
+    "professionalPlural": "Centros de P.E.T-T.A.C.",
+    "professionalPluralLower": "centros de P.E.T-T.A.C.",
+    "kind": "technique"
+  },
+  {
+    "slug": "pediatria",
+    "name": "Pediatría",
+    "nameApi": "PEDIATRÍA",
+    "professionalPlural": "Pediatras",
+    "professionalPluralLower": "pediatras",
+    "kind": "specialty",
+    "specialityCode": 2
+  },
+  {
+    "slug": "podologia",
+    "name": "Podología",
+    "nameApi": "PODOLOGÍA",
+    "professionalPlural": "Podólogos",
+    "professionalPluralLower": "podólogos",
+    "kind": "specialty",
+    "specialityCode": 98
+  },
+  {
+    "slug": "potenciales-evocados",
+    "name": "Potenciales evocados",
+    "nameApi": "POTENCIALES EVOCADOS",
+    "professionalPlural": "Centros de potenciales evocados",
+    "professionalPluralLower": "centros de potenciales evocados",
+    "kind": "technique"
+  },
+  {
+    "slug": "preparacion-al-parto",
+    "name": "Preparación al parto",
+    "nameApi": "PREPARACIÓN AL PARTO",
+    "professionalPlural": "Profesionales de preparación al parto",
+    "professionalPluralLower": "profesionales de preparación al parto",
+    "kind": "service"
+  },
+  {
+    "slug": "pruebas-y-estudios-auditivos",
+    "name": "Pruebas y estudios auditivos",
+    "nameApi": "PRUEBAS Y ESTUDIOS AUDITIVOS",
+    "professionalPlural": "Centros de pruebas auditivas",
+    "professionalPluralLower": "centros de pruebas auditivas",
+    "kind": "technique"
+  },
+  {
+    "slug": "psicologia",
+    "name": "Psicología",
+    "nameApi": "PSICOLOGÍA",
+    "professionalPlural": "Psicólogos",
+    "professionalPluralLower": "psicólogos",
+    "kind": "specialty",
+    "specialityCode": 340
+  },
+  {
+    "slug": "psicologia-infantil",
+    "name": "Psicología infantil",
+    "nameApi": "PSICOLOGÍA INFANTIL",
+    "professionalPlural": "Psicólogos infantiles",
+    "professionalPluralLower": "psicólogos infantiles",
+    "kind": "specialty"
+  },
+  {
+    "slug": "psicoterapia",
+    "name": "Psicoterapia",
+    "nameApi": "PSICOTERAPIA",
+    "professionalPlural": "Psicoterapeutas",
+    "professionalPluralLower": "psicoterapeutas",
+    "kind": "specialty"
+  },
+  {
+    "slug": "psicoterapia-transtornos-de-la-alimentacion",
+    "name": "Psicoterapia - trastornos de la alimentación",
+    "nameApi": "PSICOTERAPIA - TRASTORNOS DE LA ALIMENTACIÓN",
+    "professionalPlural": "Psicoterapeutas de trastornos de la alimentación",
+    "professionalPluralLower": "psicoterapeutas de trastornos de la alimentación",
+    "kind": "specialty"
+  },
+  {
+    "slug": "psiquiatria",
+    "name": "Psiquiatría",
+    "nameApi": "PSIQUIATRÍA",
+    "professionalPlural": "Psiquiatras",
+    "professionalPluralLower": "psiquiatras",
+    "kind": "specialty",
+    "specialityCode": 36
+  },
+  {
+    "slug": "psiquiatria-infantil",
+    "name": "Psiquiatría infantil",
+    "nameApi": "PSIQUIATRÍA INFANTIL",
+    "professionalPlural": "Psiquiatras infantiles",
+    "professionalPluralLower": "psiquiatras infantiles",
+    "kind": "specialty"
+  },
+  {
+    "slug": "puericultura",
+    "name": "Puericultura",
+    "nameApi": "PUERICULTURA",
+    "professionalPlural": "Especialistas en puericultura",
+    "professionalPluralLower": "especialistas en puericultura",
+    "kind": "specialty"
+  },
+  {
+    "slug": "radiodiagnostico",
+    "name": "Radiodiagnóstico",
+    "nameApi": "RADIODIAGNÓSTICO",
+    "professionalPlural": "Especialistas en radiodiagnóstico",
+    "professionalPluralLower": "especialistas en radiodiagnóstico",
+    "kind": "specialty",
+    "specialityCode": 17
+  },
+  {
+    "slug": "radiologia-convencional",
+    "name": "Radiología convencional",
+    "nameApi": "RADIOLOGÍA CONVENCIONAL",
+    "professionalPlural": "Servicios de radiología convencional",
+    "professionalPluralLower": "servicios de radiología convencional",
+    "kind": "technique"
+  },
+  {
+    "slug": "radiologia-intervencionista",
+    "name": "Radiología intervencionista",
+    "nameApi": "RADIOLOGÍA INTERVENCIONISTA",
+    "professionalPlural": "Especialistas en radiología intervencionista",
+    "professionalPluralLower": "especialistas en radiología intervencionista",
+    "kind": "specialty",
+    "specialityCode": 317
+  },
+  {
+    "slug": "rehabilitacion-cardiaca",
+    "name": "Rehabilitación cardíaca",
+    "nameApi": "REHABILITACIÓN CARDÍACA",
+    "professionalPlural": "Especialistas en rehabilitación cardíaca",
+    "professionalPluralLower": "especialistas en rehabilitación cardíaca",
+    "kind": "service"
+  },
+  {
+    "slug": "rehabilitacion-de-ictus",
+    "name": "Rehabilitación de ictus",
+    "nameApi": "REHABILITACIÓN DE ICTUS",
+    "professionalPlural": "Especialistas en rehabilitación de ictus",
+    "professionalPluralLower": "especialistas en rehabilitación de ictus",
+    "kind": "service"
+  },
+  {
+    "slug": "rehabilitacion-del-suelo-pelvico",
+    "name": "Rehabilitación del suelo pélvico",
+    "nameApi": "REHABILITACIÓN DEL SUELO PÉLVICO",
+    "professionalPlural": "Especialistas en rehabilitación del suelo pélvico",
+    "professionalPluralLower": "especialistas en rehabilitación del suelo pélvico",
+    "kind": "service"
+  },
+  {
+    "slug": "rehabilitacion-neurologica-dano-cerebral",
+    "name": "Rehabilitación neurológica - daño cerebral",
+    "nameApi": "REHABILITACIÓN NEUROLÓGICA - DAÑO CEREBRAL",
+    "professionalPlural": "Especialistas en rehabilitación neurológica",
+    "professionalPluralLower": "especialistas en rehabilitación neurológica",
+    "kind": "service"
+  },
+  {
+    "slug": "rehabilitacion-respiratoria",
+    "name": "Rehabilitación respiratoria",
+    "nameApi": "REHABILITACIÓN RESPIRATORIA",
+    "professionalPlural": "Especialistas en rehabilitación respiratoria",
+    "professionalPluralLower": "especialistas en rehabilitación respiratoria",
+    "kind": "service"
+  },
+  {
+    "slug": "rehabilitacion-vestibular",
+    "name": "Rehabilitación vestibular",
+    "nameApi": "REHABILITACIÓN VESTIBULAR",
+    "professionalPlural": "Especialistas en rehabilitación vestibular",
+    "professionalPluralLower": "especialistas en rehabilitación vestibular",
+    "kind": "service"
+  },
+  {
+    "slug": "reproduccion-asistida",
+    "name": "Reproducción asistida",
+    "nameApi": "REPRODUCCIÓN ASISTIDA",
+    "professionalPlural": "Especialistas en reproducción asistida",
+    "professionalPluralLower": "especialistas en reproducción asistida",
+    "kind": "specialty",
+    "specialityCode": 360
+  },
+  {
+    "slug": "resonancia-magnetica",
+    "name": "Resonancia magnética",
+    "nameApi": "RESONANCIA MAGNÉTICA",
+    "professionalPlural": "Centros de resonancia magnética",
+    "professionalPluralLower": "centros de resonancia magnética",
+    "kind": "technique"
+  },
+  {
+    "slug": "resonancia-magnetica-abierta",
+    "name": "Resonancia magnética abierta",
+    "nameApi": "RESONANCIA MAGNÉTICA ABIERTA",
+    "professionalPlural": "Centros de resonancia magnética abierta",
+    "professionalPluralLower": "centros de resonancia magnética abierta",
+    "kind": "technique"
+  },
+  {
+    "slug": "reumatologia",
+    "name": "Reumatología",
+    "nameApi": "REUMATOLOGÍA",
+    "professionalPlural": "Reumatólogos",
+    "professionalPluralLower": "reumatólogos",
+    "kind": "specialty",
+    "specialityCode": 38
+  },
+  {
+    "slug": "solo-atencion-domiciliaria",
+    "name": "Sólo atención domiciliaria",
+    "nameApi": "SÓLO ATENCIÓN DOMICILIARIA",
+    "professionalPlural": "Servicios de atención domiciliaria",
+    "professionalPluralLower": "servicios de atención domiciliaria",
+    "kind": "service"
+  },
+  {
+    "slug": "t-a-c",
+    "name": "T.A.C.",
+    "nameApi": "T.A.C.",
+    "professionalPlural": "Centros de T.A.C.",
+    "professionalPluralLower": "centros de T.A.C.",
+    "kind": "technique"
+  },
+  {
+    "slug": "terapia-fotodinamica",
+    "name": "Terapia fotodinámica",
+    "nameApi": "TERAPIA FOTODINÁMICA",
+    "professionalPlural": "Especialistas en terapia fotodinámica",
+    "professionalPluralLower": "especialistas en terapia fotodinámica",
+    "kind": "technique"
+  },
+  {
+    "slug": "test-de-provocacion-a-alimentos-y-medicamentos",
+    "name": "Test de provocación a alimentos y medicamentos",
+    "nameApi": "TEST DE PROVOCACIÓN A ALIMENTOS Y MEDICAMENTOS",
+    "professionalPlural": "Centros de test de provocación a alimentos y medicamentos",
+    "professionalPluralLower": "centros de test de provocación a alimentos y medicamentos",
+    "kind": "technique"
+  },
+  {
+    "slug": "tomogammagrafia-spect",
+    "name": "Tomogammagrafía - spect",
+    "nameApi": "TOMOGAMMAGRAFÍA - SPECT",
+    "professionalPlural": "Centros de tomogammagrafía SPECT",
+    "professionalPluralLower": "centros de tomogammagrafía SPECT",
+    "kind": "technique"
+  },
+  {
+    "slug": "tratamiento-del-dolor",
+    "name": "Tratamiento del dolor",
+    "nameApi": "TRATAMIENTO DEL DOLOR",
+    "professionalPlural": "Especialistas en tratamiento del dolor",
+    "professionalPluralLower": "especialistas en tratamiento del dolor",
+    "kind": "specialty",
+    "specialityCode": 39
+  },
+  {
+    "slug": "tratamiento-laser-endovascular",
+    "name": "Tratamiento láser endovascular",
+    "nameApi": "TRATAMIENTO LÁSER ENDOVASCULAR",
+    "professionalPlural": "Especialistas en tratamiento láser endovascular",
+    "professionalPluralLower": "especialistas en tratamiento láser endovascular",
+    "kind": "technique"
+  },
+  {
+    "slug": "tratamiento-radioisotopos",
+    "name": "Tratamiento radioisótopos",
+    "nameApi": "TRATAMIENTO RADIOISÓTOPOS",
+    "professionalPlural": "Centros de tratamiento con radioisótopos",
+    "professionalPluralLower": "centros de tratamiento con radioisótopos",
+    "kind": "technique"
+  },
+  {
+    "slug": "traumatologia-infantil",
+    "name": "Traumatología infantil",
+    "nameApi": "TRAUMATOLOGÍA INFANTIL",
+    "professionalPlural": "Traumatólogos infantiles",
+    "professionalPluralLower": "traumatólogos infantiles",
+    "kind": "specialty"
+  },
+  {
+    "slug": "traumatologia-y-cirugia-ortopedica",
+    "name": "Traumatología y cirugía ortopédica",
+    "nameApi": "TRAUMATOLOGÍA Y CIRUGÍA ORTOPÉDICA",
+    "professionalPlural": "Traumatólogos y cirujanos ortopédicos",
+    "professionalPluralLower": "traumatólogos y cirujanos ortopédicos",
+    "kind": "specialty",
+    "specialityCode": 40
+  },
+  {
+    "slug": "unidad-de-la-mujer",
+    "name": "Unidad de la mujer",
+    "nameApi": "UNIDAD DE LA MUJER",
+    "professionalPlural": "Unidades de la mujer",
+    "professionalPluralLower": "unidades de la mujer",
+    "kind": "service"
+  },
+  {
+    "slug": "unidad-de-sueno-polisomnografia",
+    "name": "Unidad de sueño - polisomnografía",
+    "nameApi": "UNIDAD DE SUEÑO - POLISOMNOGRAFÍA",
+    "professionalPlural": "Unidades del sueño",
+    "professionalPluralLower": "unidades del sueño",
+    "kind": "service"
+  },
+  {
+    "slug": "unidad-del-suelo-pelvico",
+    "name": "Unidad del suelo pélvico",
+    "nameApi": "UNIDAD DEL SUELO PÉLVICO",
+    "professionalPlural": "Unidades del suelo pélvico",
+    "professionalPluralLower": "unidades del suelo pélvico",
+    "kind": "service"
+  },
+  {
+    "slug": "urgencias-a-domicilio",
+    "name": "Urgencias a domicilio",
+    "nameApi": "URGENCIAS A DOMICILIO",
+    "professionalPlural": "Servicios de urgencias a domicilio",
+    "professionalPluralLower": "servicios de urgencias a domicilio",
+    "kind": "service",
+    "specialityCode": 902
+  },
+  {
+    "slug": "urgencias-ambulatorias",
+    "name": "Urgencias ambulatorias",
+    "nameApi": "URGENCIAS AMBULATORIAS",
+    "professionalPlural": "Servicios de urgencias ambulatorias",
+    "professionalPluralLower": "servicios de urgencias ambulatorias",
+    "kind": "service",
+    "specialityCode": 903
+  },
+  {
+    "slug": "urgencias-ambulatorias-dentales",
+    "name": "Urgencias ambulatorias dentales",
+    "nameApi": "URGENCIAS AMBULATORIAS DENTALES",
+    "professionalPlural": "Servicios de urgencias dentales",
+    "professionalPluralLower": "servicios de urgencias dentales",
+    "kind": "service"
+  },
+  {
+    "slug": "urgencias-ambulatorias-o-r-l",
+    "name": "Urgencias ambulatorias O.R.L.",
+    "nameApi": "URGENCIAS AMBULATORIAS O.R.L.",
+    "professionalPlural": "Servicios de urgencias O.R.L.",
+    "professionalPluralLower": "servicios de urgencias O.R.L.",
+    "kind": "service"
+  },
+  {
+    "slug": "urgencias-ambulatorias-oftalmologia",
+    "name": "Urgencias ambulatorias oftalmología",
+    "nameApi": "URGENCIAS AMBULATORIAS OFTALMOLOGÍA",
+    "professionalPlural": "Servicios de urgencias de oftalmología",
+    "professionalPluralLower": "servicios de urgencias de oftalmología",
+    "kind": "service"
+  },
+  {
+    "slug": "urgencias-ambulatorias-pediatricas",
+    "name": "Urgencias ambulatorias pediátricas",
+    "nameApi": "URGENCIAS AMBULATORIAS PEDIÁTRICAS",
+    "professionalPlural": "Servicios de urgencias pediátricas",
+    "professionalPluralLower": "servicios de urgencias pediátricas",
+    "kind": "service"
+  },
+  {
+    "slug": "urgencias-cardiologicas",
+    "name": "Urgencias cardiológicas",
+    "nameApi": "URGENCIAS CARDIOLÓGICAS",
+    "professionalPlural": "Servicios de urgencias cardiológicas",
+    "professionalPluralLower": "servicios de urgencias cardiológicas",
+    "kind": "service"
+  },
+  {
+    "slug": "urgencias-de-cirugia-general",
+    "name": "Urgencias de cirugía general",
+    "nameApi": "URGENCIAS DE CIRUGÍA GENERAL",
+    "professionalPlural": "Servicios de urgencias de cirugía general",
+    "professionalPluralLower": "servicios de urgencias de cirugía general",
+    "kind": "service"
+  },
+  {
+    "slug": "urgencias-ginecologicas-y-o-obstetricas",
+    "name": "Urgencias ginecológicas y/o obstétricas",
+    "nameApi": "URGENCIAS GINECOLÓGICAS Y/O OBSTÉTRICAS",
+    "professionalPlural": "Servicios de urgencias ginecológicas y/o obstétricas",
+    "professionalPluralLower": "servicios de urgencias ginecológicas y/o obstétricas",
+    "kind": "service"
+  },
+  {
+    "slug": "urgencias-hospitalarias",
+    "name": "Urgencias hospitalarias",
+    "nameApi": "URGENCIAS HOSPITALARIAS",
+    "professionalPlural": "Servicios de urgencias hospitalarias",
+    "professionalPluralLower": "servicios de urgencias hospitalarias",
+    "kind": "service",
+    "specialityCode": 901
+  },
+  {
+    "slug": "urgencias-neurocirugia",
+    "name": "Urgencias neurocirugía",
+    "nameApi": "URGENCIAS NEUROCIRUGÍA",
+    "professionalPlural": "Servicios de urgencias de neurocirugía",
+    "professionalPluralLower": "servicios de urgencias de neurocirugía",
+    "kind": "service"
+  },
+  {
+    "slug": "urgencias-o-r-l",
+    "name": "Urgencias O.R.L.",
+    "nameApi": "URGENCIAS O.R.L.",
+    "professionalPlural": "Servicios de urgencias O.R.L.",
+    "professionalPluralLower": "servicios de urgencias O.R.L.",
+    "kind": "service"
+  },
+  {
+    "slug": "urgencias-oftalmologicas",
+    "name": "Urgencias oftalmológicas",
+    "nameApi": "URGENCIAS OFTALMOLÓGICAS",
+    "professionalPlural": "Servicios de urgencias oftalmológicas",
+    "professionalPluralLower": "servicios de urgencias oftalmológicas",
+    "kind": "service"
+  },
+  {
+    "slug": "urgencias-pediatricas",
+    "name": "Urgencias pediátricas",
+    "nameApi": "URGENCIAS PEDIÁTRICAS",
+    "professionalPlural": "Servicios de urgencias pediátricas",
+    "professionalPluralLower": "servicios de urgencias pediátricas",
+    "kind": "service"
+  },
+  {
+    "slug": "urgencias-psiquiatricas",
+    "name": "Urgencias psiquiátricas",
+    "nameApi": "URGENCIAS PSIQUIÁTRICAS",
+    "professionalPlural": "Servicios de urgencias psiquiátricas",
+    "professionalPluralLower": "servicios de urgencias psiquiátricas",
+    "kind": "service"
+  },
+  {
+    "slug": "urgencias-traumatologicas",
+    "name": "Urgencias traumatológicas",
+    "nameApi": "URGENCIAS TRAUMATOLÓGICAS",
+    "professionalPlural": "Servicios de urgencias traumatológicas",
+    "professionalPluralLower": "servicios de urgencias traumatológicas",
+    "kind": "service"
+  },
+  {
+    "slug": "urgencias-urologicas",
+    "name": "Urgencias urológicas",
+    "nameApi": "URGENCIAS UROLÓGICAS",
+    "professionalPlural": "Servicios de urgencias urológicas",
+    "professionalPluralLower": "servicios de urgencias urológicas",
+    "kind": "service"
+  },
+  {
+    "slug": "urologia",
+    "name": "Urología",
+    "nameApi": "UROLOGÍA",
+    "professionalPlural": "Urólogos",
+    "professionalPluralLower": "urólogos",
+    "kind": "specialty",
+    "specialityCode": 41
+  },
+  {
+    "slug": "urologia-oncologica",
+    "name": "Urología oncológica",
+    "nameApi": "UROLOGÍA ONCOLÓGICA",
+    "professionalPlural": "Urólogos oncológicos",
+    "professionalPluralLower": "urólogos oncológicos",
+    "kind": "specialty"
+  },
+  {
+    "slug": "varices-tecnicas-especiales-de-tratamiento-chiva-espuma",
+    "name": "Varices - técnicas especiales de tratamiento (chiva, espuma)",
+    "nameApi": "VARICES - TÉCNICAS ESPECIALES DE TRATAMIENTO (CHIVA, ESPUMA)",
+    "professionalPlural": "Especialistas en varices",
+    "professionalPluralLower": "especialistas en varices",
+    "kind": "technique"
+  }
+]

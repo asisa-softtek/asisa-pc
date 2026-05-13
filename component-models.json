@@ -214,17 +214,5 @@
         "valueType": "string"
       }
     ]
-  },
-  {
-    "id": "pokemon-card",
-    "fields": [
-      {
-        "component": "text",
-        "name": "pokemon",
-        "value": "",
-        "label": "Pokemon Name",
-        "valueType": "string"
-      }
-    ]
   }
 ]

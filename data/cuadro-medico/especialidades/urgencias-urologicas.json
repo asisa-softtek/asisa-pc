@@ -1,0 +1,10 @@
+{
+  "slug": "urgencias-urologicas",
+  "provincias": [
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 1
+    }
+  ]
+}

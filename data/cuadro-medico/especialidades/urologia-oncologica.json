@@ -1,0 +1,45 @@
+{
+  "slug": "urologia-oncologica",
+  "provincias": [
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 10
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 10
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 4
+    },
+    {
+      "slug": "jaen",
+      "displayName": "Jaén",
+      "count": 4
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 4
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 3
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 2
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "slug": "psicoterapia",
+  "provincias": [
+    {
+      "slug": "tenerife",
+      "displayName": "Tenerife",
+      "count": 6
+    }
+  ]
+}

@@ -1,77 +1,71 @@
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync, existsSync, readdirSync } from 'fs';
 import { join } from 'path';
 
-const BASE = 'https://main--asisa-pc--asisa-softtek.aem.live';
+const BASE = 'https://www.asisa.es';
 
-function toSlug(str) {
-  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-}
-
-function readJsonFile(filename) {
-  const filePath = join(process.cwd(), `data/${filename}`);
-  if (!existsSync(filePath)) return null;
-  return JSON.parse(readFileSync(filePath, 'utf8'));
+function readJson(path) {
+  if (!existsSync(path)) return null;
+  try { return JSON.parse(readFileSync(path, 'utf8')); } catch { return null; }
 }
 
 function buildSitemap(urls) {
+  if (!urls.length) return '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>';
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map((url) => `  <url>
-    <loc>${url}</loc>
-  </url>`).join('\n')}
+${urls.map((url) => `  <url>\n    <loc>${url}</loc>\n  </url>`).join('\n')}
 </urlset>`;
 }
 
-const EMPTY = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-</urlset>`;
-
+// /cuadro-medico/p/{slug}
 function getProvincias() {
-  const provincias = readJsonFile('provincias.json');
-  if (!provincias) return EMPTY;
-  const urls = provincias.map((p) => `${BASE}/cuadro-medico/salud/provincia-de-${toSlug(p.name)}`);
+  const dir = join(process.cwd(), 'data/cuadro-medico/provincias');
+  if (!existsSync(dir)) return buildSitemap([]);
+  const urls = readdirSync(dir)
+    .filter((f) => f.endsWith('.json'))
+    .map((f) => `${BASE}/cuadro-medico/p/${f.replace('.json', '')}`);
   return buildSitemap(urls);
 }
 
-function getMunicipios() {
-  const localidades = readJsonFile('valid-localidades.json');
-  if (!localidades) return EMPTY;
-  const urls = localidades.map((l) => `${BASE}/cuadro-medico/salud/${l.slug}`);
-  return buildSitemap(urls);
-}
-
+// /cuadro-medico/p/{prov}/pe/{spec}
 function getProvinciaSpecs() {
-  const combos = readJsonFile('valid-provincia-specs.json');
-  if (!combos) return EMPTY;
-  const urls = combos.map((c) => `${BASE}/cuadro-medico/salud/${c}`);
+  const dir = join(process.cwd(), 'data/cuadro-medico/provincias');
+  if (!existsSync(dir)) return buildSitemap([]);
+  const urls = [];
+  readdirSync(dir)
+    .filter((f) => f.endsWith('.json'))
+    .forEach((f) => {
+      const provSlug = f.replace('.json', '');
+      const data = readJson(join(dir, f));
+      (data?.especialidades || []).forEach((specSlug) => {
+        urls.push(`${BASE}/cuadro-medico/p/${provSlug}/pe/${specSlug}`);
+      });
+    });
   return buildSitemap(urls);
 }
 
-function getMunicipioSpecs() {
-  const combos = readJsonFile('valid-municipio-specs.json');
-  if (!combos) return EMPTY;
-  const urls = combos.map((c) => `${BASE}/cuadro-medico/salud/${c}`);
+// /cuadro-medico/d/{name-id}
+function getDoctores() {
+  const index = readJson(join(process.cwd(), 'data/cuadro-medico/doctores-index.json'));
+  if (!index) return buildSitemap([]);
+  const urls = Object.keys(index).map((key) => `${BASE}/cuadro-medico/d/${key}`);
   return buildSitemap(urls);
 }
 
-function getGeneralSpecs() {
-  const specs = readJsonFile('valid-specialities.json');
-  if (!specs) return EMPTY;
-  const urls = specs.map((s) => `${BASE}/cuadro-medico/salud/general/${s}`);
-  return buildSitemap(urls);
-}
-
+// /cuadro-medico/c/{name}
 function getCentros() {
-  const centros = readJsonFile('valid-centros.json');
-  if (!centros) return EMPTY;
-  const urls = centros.map((c) => `${BASE}/cuadro-medico/salud/${c}`);
+  const index = readJson(join(process.cwd(), 'data/cuadro-medico/centros-index.json'));
+  if (!index) return buildSitemap([]);
+  const urls = Object.keys(index).map((key) => `${BASE}/cuadro-medico/c/${key}`);
   return buildSitemap(urls);
 }
 
-function getEspecialistas() {
-  const especialistas = readJsonFile('valid-especialistas.json');
-  if (!especialistas) return EMPTY;
-  const urls = especialistas.map((e) => `${BASE}/cuadro-medico/salud/${e}`);
+// /cuadro-medico/e/{slug}
+function getEspecialidades() {
+  const dir = join(process.cwd(), 'data/cuadro-medico/especialidades');
+  if (!existsSync(dir)) return buildSitemap([]);
+  const urls = readdirSync(dir)
+    .filter((f) => f.endsWith('.json'))
+    .map((f) => `${BASE}/cuadro-medico/e/${f.replace('.json', '')}`);
   return buildSitemap(urls);
 }
 
@@ -80,18 +74,14 @@ export default function handler(req, res) {
 
   const generators = {
     provincias: getProvincias,
-    municipios: getMunicipios,
     'provincia-specs': getProvinciaSpecs,
-    'municipio-specs': getMunicipioSpecs,
-    'general-specs': getGeneralSpecs,
+    doctores: getDoctores,
     centros: getCentros,
-    especialistas: getEspecialistas,
+    especialidades: getEspecialidades,
   };
 
   const gen = generators[type];
-  if (!gen) {
-    return res.status(400).send('Invalid type parameter');
-  }
+  if (!gen) return res.status(400).send('type must be: provincias, provincia-specs, doctores, centros, especialidades');
 
   res.setHeader('Content-Type', 'text/xml');
   res.setHeader('Cache-Control', 'public, s-maxage=86400, stale-while-revalidate=86400');

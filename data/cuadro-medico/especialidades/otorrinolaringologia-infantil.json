@@ -1,0 +1,20 @@
+{
+  "slug": "otorrinolaringologia-infantil",
+  "provincias": [
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 3
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 2
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 1
+    }
+  ]
+}

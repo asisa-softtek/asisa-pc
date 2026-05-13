@@ -1,0 +1,195 @@
+{
+  "slug": "mamografia",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 107
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 49
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 17
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 15
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 15
+    },
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 12
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 12
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 12
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 10
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 9
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 8
+    },
+    {
+      "slug": "toledo",
+      "displayName": "Toledo",
+      "count": 8
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 6
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 6
+    },
+    {
+      "slug": "vizcaya",
+      "displayName": "Vizcaya",
+      "count": 6
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 5
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 5
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 5
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 4
+    },
+    {
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 4
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 4
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 4
+    },
+    {
+      "slug": "soria",
+      "displayName": "Soria",
+      "count": 4
+    },
+    {
+      "slug": "teruel",
+      "displayName": "Teruel",
+      "count": 4
+    },
+    {
+      "slug": "caceres",
+      "displayName": "Cáceres",
+      "count": 3
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 3
+    },
+    {
+      "slug": "alava",
+      "displayName": "Álava",
+      "count": 2
+    },
+    {
+      "slug": "cantabria",
+      "displayName": "Cantabria",
+      "count": 2
+    },
+    {
+      "slug": "la-rioja",
+      "displayName": "La Rioja",
+      "count": 2
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 2
+    },
+    {
+      "slug": "lugo",
+      "displayName": "Lugo",
+      "count": 2
+    },
+    {
+      "slug": "palencia",
+      "displayName": "Palencia",
+      "count": 2
+    },
+    {
+      "slug": "segovia",
+      "displayName": "Segovia",
+      "count": 2
+    },
+    {
+      "slug": "zamora",
+      "displayName": "Zamora",
+      "count": 2
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 1
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 1
+    },
+    {
+      "slug": "melilla",
+      "displayName": "Melilla",
+      "count": 1
+    },
+    {
+      "slug": "ourense",
+      "displayName": "Ourense",
+      "count": 1
+    }
+  ]
+}

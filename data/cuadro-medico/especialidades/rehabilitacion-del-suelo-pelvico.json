@@ -1,0 +1,55 @@
+{
+  "slug": "rehabilitacion-del-suelo-pelvico",
+  "provincias": [
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 8
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 6
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 4
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 3
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 3
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 2
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 2
+    },
+    {
+      "slug": "alava",
+      "displayName": "Álava",
+      "count": 1
+    },
+    {
+      "slug": "caceres",
+      "displayName": "Cáceres",
+      "count": 1
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 1
+    }
+  ]
+}

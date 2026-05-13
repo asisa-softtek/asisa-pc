@@ -82,7 +82,7 @@ async function main() {
   const detailsDir = join(__dirname, 'data/provider-details');
 
   if (!existsSync(providersDir)) {
-    console.error('ERROR: data/providers/ no existe. Ejecuta generate-localidades.mjs primero.');
+    console.error('ERROR: data/providers/ no existe. Ejecuta generate-providers-data.mjs primero.');
     process.exit(1);
   }
 

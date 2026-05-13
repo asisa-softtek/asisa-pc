@@ -1,0 +1,115 @@
+{
+  "slug": "obstetricia",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 130
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 27
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 24
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 12
+    },
+    {
+      "slug": "toledo",
+      "displayName": "Toledo",
+      "count": 10
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 7
+    },
+    {
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 6
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 6
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 5
+    },
+    {
+      "slug": "salamanca",
+      "displayName": "Salamanca",
+      "count": 5
+    },
+    {
+      "slug": "teruel",
+      "displayName": "Teruel",
+      "count": 5
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 4
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 4
+    },
+    {
+      "slug": "soria",
+      "displayName": "Soria",
+      "count": 4
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 3
+    },
+    {
+      "slug": "palencia",
+      "displayName": "Palencia",
+      "count": 3
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 3
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 2
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 1
+    },
+    {
+      "slug": "lugo",
+      "displayName": "Lugo",
+      "count": 1
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 1
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 1
+    }
+  ]
+}

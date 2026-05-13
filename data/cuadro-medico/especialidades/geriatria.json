@@ -1,0 +1,55 @@
+{
+  "slug": "geriatria",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 8
+    },
+    {
+      "slug": "cantabria",
+      "displayName": "Cantabria",
+      "count": 3
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 3
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 3
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 2
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 2
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 2
+    },
+    {
+      "slug": "la-rioja",
+      "displayName": "La Rioja",
+      "count": 1
+    },
+    {
+      "slug": "segovia",
+      "displayName": "Segovia",
+      "count": 1
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 1
+    }
+  ]
+}

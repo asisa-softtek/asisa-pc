@@ -1,0 +1,85 @@
+{
+  "slug": "electroencefalograma",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 29
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 7
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 5
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 3
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 3
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 3
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 3
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 3
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 2
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 2
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 2
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 1
+    },
+    {
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 1
+    },
+    {
+      "slug": "caceres",
+      "displayName": "Cáceres",
+      "count": 1
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 1
+    },
+    {
+      "slug": "jaen",
+      "displayName": "Jaén",
+      "count": 1
+    }
+  ]
+}

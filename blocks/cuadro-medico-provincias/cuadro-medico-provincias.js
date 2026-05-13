@@ -5,24 +5,20 @@
  * No necesita datos de entrada.
  */
 
-function toSlug(str) {
-  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-}
-
 export default function decorate(block) {
   block.innerHTML = `
     <h2 class="eds-md-prov-title">Provincias donde está ASISA</h2>
     <ul class="eds-md-prov-list"><li class="loading"><div class="spinner"></div><p>Cargando provincias…</p></li></ul>`;
 
-  fetch('https://asisa-pc.vercel.app/api/provincias')
+  fetch('/api/provincias')
     .then((r) => r.json())
     .then((data) => {
       const list = block.querySelector('.eds-md-prov-list');
       const titleEl = block.querySelector('.eds-md-prov-title');
-      const provs = data.sort((a, b) => a.name.localeCompare(b.name));
+      const provs = data.sort((a, b) => a.displayName.localeCompare(b.displayName));
       titleEl.textContent = `Provincias donde está ASISA (${provs.length})`;
       list.innerHTML = provs
-        .map((p) => `<li class="eds-md-prov-item"><a href="/cuadro-medico/salud/provincia-de-${toSlug(p.name)}"><span><i class="icon-localizacion"></i></span><p>${p.name}</p></a></li>`)
+        .map((p) => `<li class="eds-md-prov-item"><a href="/cuadro-medico/p/${p.slug}"><span><i class="icon-localizacion"></i></span><p>${p.displayName}</p></a></li>`)
         .join('');
     })
     .catch(() => {

@@ -1,0 +1,15 @@
+{
+  "slug": "cirugia-del-sistema-nervioso-central",
+  "provincias": [
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 6
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 2
+    }
+  ]
+}

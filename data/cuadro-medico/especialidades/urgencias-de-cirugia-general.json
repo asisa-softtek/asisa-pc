@@ -1,0 +1,15 @@
+{
+  "slug": "urgencias-de-cirugia-general",
+  "provincias": [
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 1
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 1
+    }
+  ]
+}

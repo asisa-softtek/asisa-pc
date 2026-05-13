@@ -1,0 +1,70 @@
+{
+  "slug": "estudio-biomecanico-de-la-marcha-pisada",
+  "provincias": [
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 2
+    },
+    {
+      "slug": "alava",
+      "displayName": "Álava",
+      "count": 1
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 1
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 1
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 1
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 1
+    },
+    {
+      "slug": "cantabria",
+      "displayName": "Cantabria",
+      "count": 1
+    },
+    {
+      "slug": "guipuzcoa",
+      "displayName": "Guipúzcoa",
+      "count": 1
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 1
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 1
+    },
+    {
+      "slug": "toledo",
+      "displayName": "Toledo",
+      "count": 1
+    },
+    {
+      "slug": "vizcaya",
+      "displayName": "Vizcaya",
+      "count": 1
+    },
+    {
+      "slug": "zamora",
+      "displayName": "Zamora",
+      "count": 1
+    }
+  ]
+}

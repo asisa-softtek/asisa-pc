@@ -1,0 +1,85 @@
+{
+  "slug": "eco-doppler-cardiologico",
+  "provincias": [
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 82
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 18
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 17
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 15
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 12
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 12
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 11
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 7
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 7
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 5
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 5
+    },
+    {
+      "slug": "lugo",
+      "displayName": "Lugo",
+      "count": 4
+    },
+    {
+      "slug": "segovia",
+      "displayName": "Segovia",
+      "count": 4
+    },
+    {
+      "slug": "alava",
+      "displayName": "Álava",
+      "count": 2
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 2
+    },
+    {
+      "slug": "jaen",
+      "displayName": "Jaén",
+      "count": 2
+    }
+  ]
+}

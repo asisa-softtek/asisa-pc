@@ -1,31 +1,22 @@
-const BASE = 'https://main--asisa-pc--asisa-softtek.aem.live';
+const BASE = 'https://www.asisa.es';
 
-export default function handler(req, res) {
+export default function handler(_req, res) {
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>${BASE}/sitemap-pokemon.xml</loc>
-  </sitemap>
-  <sitemap>
     <loc>${BASE}/sitemap-cuadro-medico-provincias.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>${BASE}/sitemap-cuadro-medico-municipios.xml</loc>
   </sitemap>
   <sitemap>
     <loc>${BASE}/sitemap-cuadro-medico-provincia-specs.xml</loc>
   </sitemap>
   <sitemap>
-    <loc>${BASE}/sitemap-cuadro-medico-municipio-specs.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>${BASE}/sitemap-cuadro-medico-general-specs.xml</loc>
+    <loc>${BASE}/sitemap-cuadro-medico-doctores.xml</loc>
   </sitemap>
   <sitemap>
     <loc>${BASE}/sitemap-cuadro-medico-centros.xml</loc>
   </sitemap>
   <sitemap>
-    <loc>${BASE}/sitemap-cuadro-medico-especialistas.xml</loc>
+    <loc>${BASE}/sitemap-cuadro-medico-especialidades.xml</loc>
   </sitemap>
 </sitemapindex>`;
 

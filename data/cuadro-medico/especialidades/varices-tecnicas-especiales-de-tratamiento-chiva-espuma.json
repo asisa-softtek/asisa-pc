@@ -1,0 +1,35 @@
+{
+  "slug": "varices-tecnicas-especiales-de-tratamiento-chiva-espuma",
+  "provincias": [
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 16
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 4
+    },
+    {
+      "slug": "alava",
+      "displayName": "Álava",
+      "count": 2
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 2
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 2
+    },
+    {
+      "slug": "lugo",
+      "displayName": "Lugo",
+      "count": 1
+    }
+  ]
+}

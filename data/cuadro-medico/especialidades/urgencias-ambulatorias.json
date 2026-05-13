@@ -1,0 +1,155 @@
+{
+  "slug": "urgencias-ambulatorias",
+  "provincias": [
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 20
+    },
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 12
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 11
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 11
+    },
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 10
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 8
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 8
+    },
+    {
+      "slug": "vizcaya",
+      "displayName": "Vizcaya",
+      "count": 8
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 7
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 7
+    },
+    {
+      "slug": "gerona",
+      "displayName": "Gerona",
+      "count": 6
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 4
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 4
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 4
+    },
+    {
+      "slug": "caceres",
+      "displayName": "Cáceres",
+      "count": 2
+    },
+    {
+      "slug": "cantabria",
+      "displayName": "Cantabria",
+      "count": 2
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 2
+    },
+    {
+      "slug": "lugo",
+      "displayName": "Lugo",
+      "count": 2
+    },
+    {
+      "slug": "palencia",
+      "displayName": "Palencia",
+      "count": 2
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 1
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 1
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 1
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 1
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 1
+    },
+    {
+      "slug": "melilla",
+      "displayName": "Melilla",
+      "count": 1
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 1
+    },
+    {
+      "slug": "salamanca",
+      "displayName": "Salamanca",
+      "count": 1
+    },
+    {
+      "slug": "soria",
+      "displayName": "Soria",
+      "count": 1
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 1
+    },
+    {
+      "slug": "zamora",
+      "displayName": "Zamora",
+      "count": 1
+    }
+  ]
+}

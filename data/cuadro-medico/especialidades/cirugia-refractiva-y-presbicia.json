@@ -1,0 +1,35 @@
+{
+  "slug": "cirugia-refractiva-y-presbicia",
+  "provincias": [
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 6
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 3
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 3
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 2
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 1
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "slug": "eco-doppler-vascular",
+  "provincias": [
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 14
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 13
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 11
+    },
+    {
+      "slug": "alava",
+      "displayName": "Álava",
+      "count": 2
+    }
+  ]
+}

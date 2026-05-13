@@ -1,0 +1,10 @@
+{
+  "slug": "cuidados-paliativos-domiciliarios",
+  "provincias": [
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 1
+    }
+  ]
+}

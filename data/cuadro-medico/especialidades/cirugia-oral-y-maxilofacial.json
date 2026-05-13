@@ -1,0 +1,200 @@
+{
+  "slug": "cirugia-oral-y-maxilofacial",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 90
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 53
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 28
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 16
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 15
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 14
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 12
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 10
+    },
+    {
+      "slug": "tenerife",
+      "displayName": "Tenerife",
+      "count": 9
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 8
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 7
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 7
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 7
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 6
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 6
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 6
+    },
+    {
+      "slug": "guadalajara",
+      "displayName": "Guadalajara",
+      "count": 5
+    },
+    {
+      "slug": "toledo",
+      "displayName": "Toledo",
+      "count": 5
+    },
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 4
+    },
+    {
+      "slug": "cantabria",
+      "displayName": "Cantabria",
+      "count": 4
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 4
+    },
+    {
+      "slug": "segovia",
+      "displayName": "Segovia",
+      "count": 4
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 3
+    },
+    {
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 3
+    },
+    {
+      "slug": "gerona",
+      "displayName": "Gerona",
+      "count": 3
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 3
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 2
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 2
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 2
+    },
+    {
+      "slug": "cuenca",
+      "displayName": "Cuenca",
+      "count": 2
+    },
+    {
+      "slug": "guipuzcoa",
+      "displayName": "Guipúzcoa",
+      "count": 2
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 2
+    },
+    {
+      "slug": "lugo",
+      "displayName": "Lugo",
+      "count": 2
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 2
+    },
+    {
+      "slug": "vizcaya",
+      "displayName": "Vizcaya",
+      "count": 2
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 1
+    },
+    {
+      "slug": "jaen",
+      "displayName": "Jaén",
+      "count": 1
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 1
+    },
+    {
+      "slug": "salamanca",
+      "displayName": "Salamanca",
+      "count": 1
+    }
+  ]
+}

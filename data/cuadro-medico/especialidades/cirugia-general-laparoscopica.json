@@ -1,0 +1,85 @@
+{
+  "slug": "cirugia-general-laparoscopica",
+  "provincias": [
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 20
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 14
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 11
+    },
+    {
+      "slug": "jaen",
+      "displayName": "Jaén",
+      "count": 9
+    },
+    {
+      "slug": "teruel",
+      "displayName": "Teruel",
+      "count": 8
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 5
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 5
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 4
+    },
+    {
+      "slug": "alava",
+      "displayName": "Álava",
+      "count": 3
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 3
+    },
+    {
+      "slug": "caceres",
+      "displayName": "Cáceres",
+      "count": 3
+    },
+    {
+      "slug": "soria",
+      "displayName": "Soria",
+      "count": 3
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 2
+    },
+    {
+      "slug": "la-rioja",
+      "displayName": "La Rioja",
+      "count": 2
+    },
+    {
+      "slug": "lugo",
+      "displayName": "Lugo",
+      "count": 2
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "slug": "cirugia-reconstructiva-de-la-mama",
+  "provincias": [
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 2
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 1
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 1
+    }
+  ]
+}

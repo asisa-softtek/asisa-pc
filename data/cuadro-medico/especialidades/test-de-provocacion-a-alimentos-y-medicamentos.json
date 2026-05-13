@@ -1,0 +1,65 @@
+{
+  "slug": "test-de-provocacion-a-alimentos-y-medicamentos",
+  "provincias": [
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 11
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 8
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 4
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 4
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 4
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 4
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 3
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 3
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 1
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 1
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 1
+    },
+    {
+      "slug": "segovia",
+      "displayName": "Segovia",
+      "count": 1
+    }
+  ]
+}

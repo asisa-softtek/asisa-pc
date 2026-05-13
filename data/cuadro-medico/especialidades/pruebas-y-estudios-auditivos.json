@@ -1,0 +1,15 @@
+{
+  "slug": "pruebas-y-estudios-auditivos",
+  "provincias": [
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 2
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 2
+    }
+  ]
+}

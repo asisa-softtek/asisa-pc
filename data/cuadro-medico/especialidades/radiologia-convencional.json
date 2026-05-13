@@ -1,0 +1,185 @@
+{
+  "slug": "radiologia-convencional",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 62
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 46
+    },
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 40
+    },
+    {
+      "slug": "guipuzcoa",
+      "displayName": "Guipúzcoa",
+      "count": 35
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 28
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 26
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 23
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 19
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 18
+    },
+    {
+      "slug": "gerona",
+      "displayName": "Gerona",
+      "count": 18
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 15
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 14
+    },
+    {
+      "slug": "toledo",
+      "displayName": "Toledo",
+      "count": 14
+    },
+    {
+      "slug": "vizcaya",
+      "displayName": "Vizcaya",
+      "count": 14
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 13
+    },
+    {
+      "slug": "alava",
+      "displayName": "Álava",
+      "count": 12
+    },
+    {
+      "slug": "teruel",
+      "displayName": "Teruel",
+      "count": 10
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 8
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 8
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 7
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 7
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 7
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 6
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 5
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 5
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 5
+    },
+    {
+      "slug": "cantabria",
+      "displayName": "Cantabria",
+      "count": 4
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 4
+    },
+    {
+      "slug": "soria",
+      "displayName": "Soria",
+      "count": 4
+    },
+    {
+      "slug": "zamora",
+      "displayName": "Zamora",
+      "count": 4
+    },
+    {
+      "slug": "caceres",
+      "displayName": "Cáceres",
+      "count": 3
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 3
+    },
+    {
+      "slug": "segovia",
+      "displayName": "Segovia",
+      "count": 3
+    },
+    {
+      "slug": "lugo",
+      "displayName": "Lugo",
+      "count": 2
+    },
+    {
+      "slug": "palencia",
+      "displayName": "Palencia",
+      "count": 2
+    },
+    {
+      "slug": "ourense",
+      "displayName": "Ourense",
+      "count": 1
+    }
+  ]
+}

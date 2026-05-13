@@ -1,0 +1,45 @@
+{
+  "slug": "psiquiatria-infantil",
+  "provincias": [
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 8
+    },
+    {
+      "slug": "alava",
+      "displayName": "Álava",
+      "count": 2
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 2
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 1
+    },
+    {
+      "slug": "guipuzcoa",
+      "displayName": "Guipúzcoa",
+      "count": 1
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 1
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 1
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 1
+    }
+  ]
+}

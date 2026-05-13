@@ -1,0 +1,40 @@
+{
+  "slug": "urgencias-oftalmologicas",
+  "provincias": [
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 4
+    },
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 3
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 2
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 1
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 1
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 1
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 1
+    }
+  ]
+}

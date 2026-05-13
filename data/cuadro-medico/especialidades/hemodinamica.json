@@ -1,0 +1,40 @@
+{
+  "slug": "hemodinamica",
+  "provincias": [
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 6
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 5
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 4
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 3
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 3
+    },
+    {
+      "slug": "caceres",
+      "displayName": "Cáceres",
+      "count": 1
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 1
+    }
+  ]
+}

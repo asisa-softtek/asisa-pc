@@ -3,12 +3,43 @@
  *
  * Renderiza tarjetas de proveedores agrupadas por especialidad.
  *
- * Estructura esperada (filas generadas por /api/cuadro-medico):
+ * Estructura esperada (filas de tabla AEM):
  *  Fila 0: [locationName, provinceCode, totalProviders]
  *  Filas 1-N: [name, speciality, address, city, phone, lat, lon,
  *              doctorType, providerType, businessGroup, collegiateCode,
- *              parentDescription, postalCode, ePrescription, onlineAppt, languages]
+ *              parentDescription, postalCode, ePrescription, onlineAppointment, languages]
  */
+
+const ASISA_SEARCH = 'https://www.asisa.es/cuadro-medico/resultados-cuadro-medico';
+const ASISA_SEARCH_PRIVATE = 'https://www.asisa.es/asegurado/salud/cuadro-medico/resultados-cuadro-medico';
+
+function buildShareUrl(provinceCode, locationName, speciality, lat, lon) {
+  const params = new URLSearchParams({
+    networkId: '1', networkName: 'Salud',
+    ordination: 'Relevance', ordinationName: 'Relevancia',
+    address: `${locationName}, España`,
+    provinceId: provinceCode,
+    speciality, specialityName: speciality,
+    specialityType: '1',
+  });
+  if (lat && lon) { params.set('latitude', lat); params.set('longitude', lon); }
+  return `${ASISA_SEARCH}?${params}`;
+}
+
+function buildCitaUrl(provinceCode, locationName, speciality, lat, lon, concept) {
+  const params = new URLSearchParams({
+    networkId: '1', networkName: 'Salud',
+    ordination: 'Relevance', ordinationName: 'Relevancia',
+    address: `${locationName}, España`,
+    provinceId: provinceCode,
+    speciality, specialityName: speciality,
+    specialityType: '1',
+    fromPublicArea: 'true',
+    concept,
+  });
+  if (lat && lon) { params.set('latitude', lat); params.set('longitude', lon); }
+  return `${ASISA_SEARCH_PRIVATE}?${params}`;
+}
 
 function getProviderType(p) {
   if (p.doctorType === '1') return { label: 'MÉDICO / PROFESIONAL', cls: 'cmp-tag-template--blue' };
@@ -20,17 +51,18 @@ function getProviderType(p) {
   return { label: 'PROVEEDOR', cls: 'type-cmp-tag-template--blue' };
 }
 
-function renderCard(p) {
+function renderCard(p, provinceCode, locationName) {
   const type = getProviderType(p);
   const fullAddress = [p.address, p.postalCode, p.city].filter(Boolean).join(', ');
   const mapsUrl = (p.lat && p.lon)
     ? `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}`
     : '';
   const langTags = p.languages.map((l) => `<span class="cm-tag tag-lang">${l}</span>`).join('');
+  const citaUrl = buildCitaUrl(provinceCode, locationName, p.speciality, p.lat, p.lon, p.name);
 
   return `<div class="cmp-medical-detail__first-block">
 
-    
+
     <div class="cmp-medical-detail__title-block">
       <div class="cmp-medical-detail__title-block__tags">
        <div class="cmp-medical-detail__title-block__tags--item ${type.cls}">
@@ -39,11 +71,11 @@ function renderCard(p) {
         </div>
        </div>
        ${p.businessGroup ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Centro de ASISA</div></div>' : ''}
-        
+
           ${p.ePrescription ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Receta electrónica</div></div>' : ''}
           ${langTags}
           ${p.onlineAppointment ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Cita online</div></div>' : ''}
-     
+
       </div>
       <div class="cmp-title">
           <h3 class="cmp-title__text">${p.name}</h3>
@@ -54,10 +86,8 @@ function renderCard(p) {
     <div class="cmp-medical-detail__address-block">
       ${p.parentDescription ? `<div class="cmp-medical-detail__address-block--center">${p.parentDescription}</div>` : ''}
       ${fullAddress ? `<div class="cmp-medical-detail__address-block--name"><i class="icon-marker-02"></i>${fullAddress}</div>` : ''}
-      
+
       <div class="cmp-medical-detail__address-block__location">
-
-
           ${mapsUrl ? `<div class="cmp-medical-detail__address-block__location--reach"><div class="button-cmp"><a href="${mapsUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--link button-location"><i class="icon-map-04 icon-large"></i>Cómo llegar</a></div></div>` : ''}
           ${p.phone ? `<div class="cmp-medical-detail__address-block__location--reach"><div class="button-cmp"><a href="tel:${p.phone}" class="btn button-cmp__text button-cmp__text--link button-location"><i class="icon-phone"></i>${p.phone}</a></div></div>` : ''}
     </div>
@@ -65,7 +95,7 @@ function renderCard(p) {
 
     <div class="cmp-medical-detail__buttons-block">
       <div class="button-cmp"><button class="btn button-cmp__text button-cmp__text--tertiary">Ver Detalle</button></div>
-      ${p.onlineAppointment ? '<div class="button-cmp"><button class="btn button-cmp__text button-cmp__text--primary">Pedir Cita</button></div>' : ''}
+      ${p.onlineAppointment ? `<div class="button-cmp"><a href="${citaUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--primary">Pedir Cita</a></div>` : ''}
     </div>
   </div>`;
 }
@@ -75,6 +105,7 @@ export default function decorate(block) {
   if (rows.length < 2) return;
 
   const locationName = rows[0]?.children[0]?.textContent?.trim() || '';
+  const provinceCode = rows[0]?.children[1]?.textContent?.trim() || '';
 
   const providers = [];
   for (let i = 1; i < rows.length; i += 1) {
@@ -99,6 +130,15 @@ export default function decorate(block) {
     });
   }
 
+  // Coordenadas del primer provider con datos reales para el share URL
+  const firstWithCoords = providers.find((p) => p.lat && p.lon);
+  const shareLat = firstWithCoords?.lat || '';
+  const shareLon = firstWithCoords?.lon || '';
+  const shareSpec = providers[0]?.speciality || '';
+  const shareUrl = (provinceCode && shareSpec)
+    ? buildShareUrl(provinceCode, locationName, shareSpec, shareLat, shareLon)
+    : '';
+
   // Group providers by speciality
   const groups = new Map();
   providers.forEach((p) => {
@@ -107,10 +147,14 @@ export default function decorate(block) {
     groups.get(spec).push(p);
   });
 
-  let html = `<div class="cmp-medical-picture-result__header"><div class="cmp-medical-picture-result__header--share-title-block"><div class="cmp-medical-picture-result__header--title">${providers.length} resultados en <strong>${locationName}</strong></div></div></div>`;
+  const shareBtn = shareUrl
+    ? `<div class="button-cmp"><a href="${shareUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--link"><i class="icon-share"></i>Compartir</a></div>`
+    : '';
+
+  let html = `<div class="cmp-medical-picture-result__header"><div class="cmp-medical-picture-result__header--share-title-block"><div class="cmp-medical-picture-result__header--title">${providers.length} resultados en <strong>${locationName}</strong></div>${shareBtn}</div></div>`;
 
   groups.forEach((specProviders, specName) => {
-    html += `<div class="cmp-medical-detail"><h2 class="cmp-medical-detail__subtitle">${specName}</h2>${specProviders.map(renderCard).join('')}</div>`;
+    html += `<div class="cmp-medical-detail"><h2 class="cmp-medical-detail__subtitle">${specName}</h2>${specProviders.map((p) => renderCard(p, provinceCode, locationName)).join('')}</div>`;
   });
 
   block.innerHTML = html;

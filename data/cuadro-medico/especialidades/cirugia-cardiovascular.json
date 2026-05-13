@@ -1,0 +1,105 @@
+{
+  "slug": "cirugia-cardiovascular",
+  "provincias": [
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 39
+    },
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 38
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 11
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 11
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 9
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 8
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 6
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 5
+    },
+    {
+      "slug": "vizcaya",
+      "displayName": "Vizcaya",
+      "count": 5
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 4
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 3
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 3
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 3
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 2
+    },
+    {
+      "slug": "cantabria",
+      "displayName": "Cantabria",
+      "count": 2
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 2
+    },
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 1
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 1
+    },
+    {
+      "slug": "gerona",
+      "displayName": "Gerona",
+      "count": 1
+    },
+    {
+      "slug": "guipuzcoa",
+      "displayName": "Guipúzcoa",
+      "count": 1
+    }
+  ]
+}

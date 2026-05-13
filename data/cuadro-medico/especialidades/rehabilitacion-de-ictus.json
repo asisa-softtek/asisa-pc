@@ -1,0 +1,30 @@
+{
+  "slug": "rehabilitacion-de-ictus",
+  "provincias": [
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 2
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 1
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 1
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 1
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 1
+    }
+  ]
+}

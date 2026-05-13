@@ -1,0 +1,15 @@
+{
+  "slug": "cirugia-de-mohs",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 7
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 1
+    }
+  ]
+}

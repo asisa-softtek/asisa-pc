@@ -1,0 +1,65 @@
+{
+  "slug": "cirugia-de-polo-anterior-cornea-y-catarata",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 37
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 27
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 18
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 16
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 16
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 13
+    },
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 11
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 8
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 8
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 8
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 5
+    },
+    {
+      "slug": "lugo",
+      "displayName": "Lugo",
+      "count": 2
+    }
+  ]
+}

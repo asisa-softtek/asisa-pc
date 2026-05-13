@@ -1,0 +1,30 @@
+{
+  "slug": "cirugia-oncologica-abdominal",
+  "provincias": [
+    {
+      "slug": "jaen",
+      "displayName": "Jaén",
+      "count": 9
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 4
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 2
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 1
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 1
+    }
+  ]
+}

@@ -1,14 +1,11 @@
 /* eslint-disable no-underscore-dangle, no-await-in-loop, no-console */
 /**
  * Refresca preview y live en EDS para todas las páginas de cuadro médico.
- * - 52 provincias
- * - Localidades válidas (si data/valid-localidades.json existe)
- * - Code refresh (JS/CSS)
  *
  * Uso: node refresh-eds-pages.mjs
  */
 
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync, existsSync, readdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -19,8 +16,10 @@ const REPO = 'asisa-softtek/asisa-pc/main';
 const CONCURRENCY = 10;
 const DELAY_MS = 100;
 
-function toSlug(str) {
-  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+const ADMIN_TOKEN = process.env.HLX_ADMIN_API_TOKEN;
+if (!ADMIN_TOKEN) {
+  console.error('ERROR: HLX_ADMIN_API_TOKEN env var is required');
+  process.exit(1);
 }
 
 function sleep(ms) {
@@ -32,7 +31,10 @@ async function refreshUrl(action, path, retries = 3) {
   for (let attempt = 1; attempt <= retries; attempt += 1) {
     try {
       // eslint-disable-next-line no-await-in-loop
-      const resp = await fetch(url, { method: 'POST' });
+      const resp = await fetch(url, {
+        method: 'POST',
+        headers: { 'x-auth-token': ADMIN_TOKEN },
+      });
       const { status } = resp;
       if (status === 200) {
         console.log(`  OK ${action} ${path}`);
@@ -71,63 +73,54 @@ async function main() {
   console.log('Refreshing code (JS/CSS)...');
   await refreshUrl('code', '');
 
-  // Provincias
+  // Provincias — /cuadro-medico/p/{slug}
   const provincias = JSON.parse(readFileSync(join(__dirname, 'data/provincias.json'), 'utf8'));
-  const provinciaPaths = provincias.map((p) => `/cuadro-medico/salud/provincia-de-${toSlug(p.name)}`);
+  const provinciaPaths = provincias.map((p) => `/cuadro-medico/p/${p.slug}`);
 
   console.log(`\nRefreshing ${provinciaPaths.length} provincias...`);
   await processInBatches(provinciaPaths, CONCURRENCY);
 
-  // Localidades válidas (generadas desde ASISA)
-  const validPath = join(__dirname, 'data/valid-localidades.json');
-  if (existsSync(validPath)) {
-    const localidades = JSON.parse(readFileSync(validPath, 'utf8'));
-    const locPaths = localidades.map((l) => `/cuadro-medico/salud/${l.slug}`);
-
-    console.log(`\nRefreshing ${locPaths.length} localidades...`);
-    await processInBatches(locPaths, CONCURRENCY);
-  } else {
-    console.log('\nNo valid-localidades.json found, skipping localidades.');
-  }
-
-  // Provincia + especialidad combos
-  const provSpecPath = join(__dirname, 'data/valid-provincia-specs.json');
-  if (existsSync(provSpecPath)) {
-    const provSpecs = JSON.parse(readFileSync(provSpecPath, 'utf8'));
-    const provSpecPaths = provSpecs.map((c) => `/cuadro-medico/salud/${c}`);
-
+  // Provincia + especialidad — /cuadro-medico/p/{prov}/pe/{spec}
+  const provinciasDir = join(__dirname, 'data/cuadro-medico/provincias');
+  if (existsSync(provinciasDir)) {
+    const provSpecPaths = [];
+    for (const file of readdirSync(provinciasDir).filter((f) => f.endsWith('.json'))) {
+      const provSlug = file.replace('.json', '');
+      const data = JSON.parse(readFileSync(join(provinciasDir, file), 'utf8'));
+      for (const specSlug of data.especialidades || []) {
+        provSpecPaths.push(`/cuadro-medico/p/${provSlug}/pe/${specSlug}`);
+      }
+    }
     console.log(`\nRefreshing ${provSpecPaths.length} provincia+especialidad...`);
     await processInBatches(provSpecPaths, CONCURRENCY);
   }
 
-  // Municipio + especialidad combos
-  const muniSpecPath = join(__dirname, 'data/valid-municipio-specs.json');
-  if (existsSync(muniSpecPath)) {
-    const muniSpecs = JSON.parse(readFileSync(muniSpecPath, 'utf8'));
-    const muniSpecPaths = muniSpecs.map((c) => `/cuadro-medico/salud/${c}`);
-
-    console.log(`\nRefreshing ${muniSpecPaths.length} municipio+especialidad...`);
-    await processInBatches(muniSpecPaths, CONCURRENCY);
+  // Doctores — /cuadro-medico/d/{key}
+  const doctoresPath = join(__dirname, 'data/cuadro-medico/doctores-index.json');
+  if (existsSync(doctoresPath)) {
+    const doctores = JSON.parse(readFileSync(doctoresPath, 'utf8'));
+    const doctoresPaths = Object.keys(doctores).map((k) => `/cuadro-medico/d/${k}`);
+    console.log(`\nRefreshing ${doctoresPaths.length} doctores...`);
+    await processInBatches(doctoresPaths, CONCURRENCY);
   }
 
-  // Centros
-  const centrosPath = join(__dirname, 'data/valid-centros.json');
+  // Centros — /cuadro-medico/c/{key}
+  const centrosPath = join(__dirname, 'data/cuadro-medico/centros-index.json');
   if (existsSync(centrosPath)) {
     const centros = JSON.parse(readFileSync(centrosPath, 'utf8'));
-    const centrosPaths = centros.map((c) => `/cuadro-medico/salud/${c}`);
-
+    const centrosPaths = Object.keys(centros).map((k) => `/cuadro-medico/c/${k}`);
     console.log(`\nRefreshing ${centrosPaths.length} centros...`);
     await processInBatches(centrosPaths, CONCURRENCY);
   }
 
-  // Especialistas
-  const espPath = join(__dirname, 'data/valid-especialistas.json');
-  if (existsSync(espPath)) {
-    const especialistas = JSON.parse(readFileSync(espPath, 'utf8'));
-    const espPaths = especialistas.map((e) => `/cuadro-medico/salud/${e}`);
-
-    console.log(`\nRefreshing ${espPaths.length} especialistas...`);
-    await processInBatches(espPaths, CONCURRENCY);
+  // Especialidades — /cuadro-medico/e/{slug}
+  const especDir = join(__dirname, 'data/cuadro-medico/especialidades');
+  if (existsSync(especDir)) {
+    const especPaths = readdirSync(especDir)
+      .filter((f) => f.endsWith('.json'))
+      .map((f) => `/cuadro-medico/e/${f.replace('.json', '')}`);
+    console.log(`\nRefreshing ${especPaths.length} especialidades...`);
+    await processInBatches(especPaths, CONCURRENCY);
   }
 
   console.log('\nDone!');

@@ -1,0 +1,10 @@
+{
+  "slug": "ganglio-centinela",
+  "provincias": [
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 1
+    }
+  ]
+}

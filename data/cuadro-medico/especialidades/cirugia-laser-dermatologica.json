@@ -1,0 +1,20 @@
+{
+  "slug": "cirugia-laser-dermatologica",
+  "provincias": [
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 2
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 1
+    },
+    {
+      "slug": "soria",
+      "displayName": "Soria",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "slug": "eco-doppler",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 17
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 9
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 8
+    },
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 7
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 4
+    },
+    {
+      "slug": "teruel",
+      "displayName": "Teruel",
+      "count": 4
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 3
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 3
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 2
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 2
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 1
+    },
+    {
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 1
+    },
+    {
+      "slug": "jaen",
+      "displayName": "Jaén",
+      "count": 1
+    },
+    {
+      "slug": "melilla",
+      "displayName": "Melilla",
+      "count": 1
+    },
+    {
+      "slug": "palencia",
+      "displayName": "Palencia",
+      "count": 1
+    }
+  ]
+}

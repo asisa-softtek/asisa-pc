@@ -1,0 +1,130 @@
+{
+  "slug": "ecografia-ginecologica",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 249
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 125
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 42
+    },
+    {
+      "slug": "gerona",
+      "displayName": "Gerona",
+      "count": 40
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 35
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 29
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 22
+    },
+    {
+      "slug": "toledo",
+      "displayName": "Toledo",
+      "count": 17
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 16
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 16
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 12
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 12
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 12
+    },
+    {
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 11
+    },
+    {
+      "slug": "jaen",
+      "displayName": "Jaén",
+      "count": 10
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 10
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 10
+    },
+    {
+      "slug": "salamanca",
+      "displayName": "Salamanca",
+      "count": 8
+    },
+    {
+      "slug": "teruel",
+      "displayName": "Teruel",
+      "count": 8
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 7
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 7
+    },
+    {
+      "slug": "soria",
+      "displayName": "Soria",
+      "count": 7
+    },
+    {
+      "slug": "palencia",
+      "displayName": "Palencia",
+      "count": 4
+    },
+    {
+      "slug": "zamora",
+      "displayName": "Zamora",
+      "count": 3
+    },
+    {
+      "slug": "cantabria",
+      "displayName": "Cantabria",
+      "count": 1
+    }
+  ]
+}

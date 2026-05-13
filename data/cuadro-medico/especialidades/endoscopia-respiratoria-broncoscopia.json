@@ -1,0 +1,55 @@
+{
+  "slug": "endoscopia-respiratoria-broncoscopia",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 31
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 6
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 6
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 5
+    },
+    {
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 3
+    },
+    {
+      "slug": "lugo",
+      "displayName": "Lugo",
+      "count": 2
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 2
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 1
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 1
+    },
+    {
+      "slug": "salamanca",
+      "displayName": "Salamanca",
+      "count": 1
+    }
+  ]
+}

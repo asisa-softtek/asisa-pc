@@ -1,0 +1,140 @@
+{
+  "slug": "endoscopia-digestiva",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 34
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 13
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 11
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 11
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 9
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 9
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 9
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 9
+    },
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 8
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 5
+    },
+    {
+      "slug": "guipuzcoa",
+      "displayName": "Guipúzcoa",
+      "count": 5
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 5
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 4
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 4
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 4
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 4
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 4
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 4
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 4
+    },
+    {
+      "slug": "segovia",
+      "displayName": "Segovia",
+      "count": 4
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 3
+    },
+    {
+      "slug": "palencia",
+      "displayName": "Palencia",
+      "count": 3
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 2
+    },
+    {
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 2
+    },
+    {
+      "slug": "cuenca",
+      "displayName": "Cuenca",
+      "count": 2
+    },
+    {
+      "slug": "zamora",
+      "displayName": "Zamora",
+      "count": 2
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 1
+    }
+  ]
+}

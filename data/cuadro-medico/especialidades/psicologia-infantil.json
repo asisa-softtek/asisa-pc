@@ -1,0 +1,25 @@
+{
+  "slug": "psicologia-infantil",
+  "provincias": [
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 3
+    },
+    {
+      "slug": "teruel",
+      "displayName": "Teruel",
+      "count": 3
+    },
+    {
+      "slug": "guipuzcoa",
+      "displayName": "Guipúzcoa",
+      "count": 1
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 1
+    }
+  ]
+}

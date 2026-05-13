@@ -1,0 +1,25 @@
+{
+  "slug": "neonatologia",
+  "provincias": [
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 3
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 1
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 1
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 1
+    }
+  ]
+}

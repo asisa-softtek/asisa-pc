@@ -1,0 +1,80 @@
+{
+  "slug": "alergologia-infantil",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 7
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 7
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 7
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 5
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 4
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 3
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 2
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 2
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 2
+    },
+    {
+      "slug": "alava",
+      "displayName": "Álava",
+      "count": 1
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 1
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 1
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 1
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 1
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 1
+    }
+  ]
+}

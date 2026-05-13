@@ -1,0 +1,120 @@
+{
+  "slug": "electromiograma",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 45
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 36
+    },
+    {
+      "slug": "toledo",
+      "displayName": "Toledo",
+      "count": 9
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 7
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 5
+    },
+    {
+      "slug": "guipuzcoa",
+      "displayName": "Guipúzcoa",
+      "count": 5
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 4
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 4
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 4
+    },
+    {
+      "slug": "vizcaya",
+      "displayName": "Vizcaya",
+      "count": 4
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 3
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 3
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 3
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 3
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 3
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 3
+    },
+    {
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 2
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 2
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 1
+    },
+    {
+      "slug": "jaen",
+      "displayName": "Jaén",
+      "count": 1
+    },
+    {
+      "slug": "la-rioja",
+      "displayName": "La Rioja",
+      "count": 1
+    },
+    {
+      "slug": "segovia",
+      "displayName": "Segovia",
+      "count": 1
+    },
+    {
+      "slug": "teruel",
+      "displayName": "Teruel",
+      "count": 1
+    }
+  ]
+}

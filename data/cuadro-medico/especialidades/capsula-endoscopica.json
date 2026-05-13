@@ -1,0 +1,15 @@
+{
+  "slug": "capsula-endoscopica",
+  "provincias": [
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 3
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 3
+    }
+  ]
+}
