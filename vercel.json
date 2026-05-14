@@ -1,16 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/markup/provincia/:path*",
-      "destination": "/api/markup-provincia"
+      "source": "/markup",
+      "destination": "/api/markup"
     },
     {
-      "source": "/markup/doctor/:path*",
-      "destination": "/api/markup-doctor"
-    },
-    {
-      "source": "/markup/especialidad/:path*",
-      "destination": "/api/markup-especialidad"
+      "source": "/markup/(.*)",
+      "destination": "/api/markup?path=$1"
     },
     {
       "source": "/sitemap.xml",
