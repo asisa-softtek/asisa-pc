@@ -1,13 +1,4 @@
 mountpoints:
-  /cuadro-medico/p:
-    url: "https://asisa-pc.vercel.app/markup/provincia"
-    type: "markup"
-  /cuadro-medico/d:
-    url: "https://asisa-pc.vercel.app/markup/doctor"
-    type: "markup"
-  /cuadro-medico/e:
-    url: "https://asisa-pc.vercel.app/markup/especialidad"
-    type: "markup"
   /sitemap.xml:
     url: "https://asisa-pc.vercel.app/sitemap.xml"
     type: "markup"
@@ -30,3 +21,12 @@ mountpoints:
     url: "https://author-p133185-e1320482.adobeaemcloud.com/bin/franklin.delivery/asisa-softtek/asisa-pc/main"
     type: "markup"
     suffix: ".html"
+  /cuadro-medico/p:
+    url: "https://asisa-pc.vercel.app/markup/provincia"
+    type: "markup"
+  /cuadro-medico/d:
+    url: "https://asisa-pc.vercel.app/markup/doctor"
+    type: "markup"
+  /cuadro-medico/e:
+    url: "https://asisa-pc.vercel.app/markup/especialidad"
+    type: "markup"
