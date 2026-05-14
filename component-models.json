@@ -189,6 +189,15 @@
       }
     ]
   },
+  { "id": "cuadro-medico", "fields": [] },
+  { "id": "cuadro-medico-provincias", "fields": [] },
+  { "id": "cuadro-medico-top-especialidades", "fields": [] },
+  { "id": "cuadro-medico-otras-especialidades", "fields": [] },
+  { "id": "cuadro-medico-otras-provincias", "fields": [] },
+  { "id": "cuadro-medico-ficha-doctor", "fields": [] },
+  { "id": "cuadro-medico-otros-medicos", "fields": [] },
+  { "id": "cuadro-medico-spec-localizacion", "fields": [] },
+  { "id": "cuadro-medico-centro-specs", "fields": [] },
   {
     "id": "hero",
     "fields": [

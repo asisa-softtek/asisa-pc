@@ -15,7 +15,16 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "cuadro-medico",
+      "cuadro-medico-provincias",
+      "cuadro-medico-top-especialidades",
+      "cuadro-medico-otras-especialidades",
+      "cuadro-medico-otras-provincias",
+      "cuadro-medico-ficha-doctor",
+      "cuadro-medico-otros-medicos",
+      "cuadro-medico-spec-localizacion",
+      "cuadro-medico-centro-specs"
     ]
   },
   {
