@@ -1,11 +1,11 @@
 mountpoints:
-  /cuadro-medico/p/:
+  /cuadro-medico/p:
     url: "https://asisa-pc.vercel.app/markup/provincia"
     type: "markup"
-  /cuadro-medico/d/:
+  /cuadro-medico/d:
     url: "https://asisa-pc.vercel.app/markup/doctor"
     type: "markup"
-  /cuadro-medico/e/:
+  /cuadro-medico/e:
     url: "https://asisa-pc.vercel.app/markup/especialidad"
     type: "markup"
   /sitemap.xml:
