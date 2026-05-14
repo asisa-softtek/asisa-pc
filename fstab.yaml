@@ -30,6 +30,3 @@ mountpoints:
   /cuadro-medico/e:
     url: "https://asisa-pc.vercel.app/markup/especialidad"
     type: "markup"
-  /testbyom:
-    url: "https://asisa-pc.vercel.app/markup/provincia"
-    type: "markup"
