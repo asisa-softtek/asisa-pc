@@ -18,5 +18,6 @@ mountpoints:
     url: "https://asisa-pc.vercel.app/sitemap-cuadro-medico-especialidades.xml"
     type: "markup"
   /:
-    url: "https://asisa-pc.vercel.app/markup"
+    url: "https://author-p133185-e1320482.adobeaemcloud.com/bin/franklin.delivery/asisa-softtek/asisa-pc/main"
     type: "markup"
+    suffix: ".html"
