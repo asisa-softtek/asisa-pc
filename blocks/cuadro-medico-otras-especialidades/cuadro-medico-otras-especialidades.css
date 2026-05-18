@@ -1,1 +1,55 @@
-/* cuadro-medico-otras-especialidades */
+.cuadro-medico-otras-especialidades {
+  font-family: var(--font-family-body, "Accord", sans-serif);
+  margin-top: 3rem;
+}
+
+.cuadro-medico-otras-especialidades .cm-otras-espec-title {
+  font-size: 1.5rem;
+  color: var(--color-acento-azul-oscuro-500, #1f3864);
+  font-weight: 700;
+  margin: 0 0 1.5rem 0;
+}
+
+.cuadro-medico-otras-especialidades .cm-otras-espec-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+}
+
+.cuadro-medico-otras-especialidades .cm-otras-espec-item {
+  margin: 0;
+  padding: 0;
+}
+
+.cuadro-medico-otras-especialidades .cm-otras-espec-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: #f6f8fb;
+  border: 1px solid #cdd5e0;
+  border-radius: 999px;
+  color: var(--color-acento-azul-oscuro-500, #1f3864);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.cuadro-medico-otras-especialidades .cm-otras-espec-chip:hover {
+  background: #e9eef5;
+  border-color: #1f3864;
+}
+
+.cuadro-medico-otras-especialidades .cm-otras-espec-chip--active {
+  background: var(--color-acento-azul-oscuro-500, #1f3864);
+  color: #fff;
+  border-color: var(--color-acento-azul-oscuro-500, #1f3864);
+}
+
+.cuadro-medico-otras-especialidades .cm-otras-espec-loading {
+  color: var(--color-acento-azul-oscuro-500, #1f3864);
+  padding: 1rem 0;
+}
