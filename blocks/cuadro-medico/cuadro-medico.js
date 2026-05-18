@@ -1,17 +1,31 @@
 /**
  * Bloque EDS "cuadro-medico".
  *
- * Renderiza tarjetas de proveedores agrupadas por especialidad.
+ * Render dinámico desde URL (BYOM):
+ *   /cuadro-medico/p/<prov>            → todos los providers de la provincia
+ *   /cuadro-medico/p/<prov>/pe/<spec>  → providers filtrados por especialidad
+ *   /cuadro-medico/e/<spec>            → fallback (especialidad sin provincia: oculto)
  *
- * Estructura esperada (filas de tabla AEM):
- *  Fila 0: [locationName, provinceCode, totalProviders]
- *  Filas 1-N: [name, speciality, address, city, phone, lat, lon,
- *              doctorType, providerType, businessGroup, collegiateCode,
- *              parentDescription, postalCode, ePrescription, onlineAppointment, languages]
+ * UI:
+ *  - Tabs Profesionales (N) / Centros médicos (N)
+ *  - Grid 2 columnas
+ *  - Paginación
  */
 
+const API_BASE = 'https://asisa-pc.vercel.app';
 const ASISA_SEARCH = 'https://www.asisa.es/cuadro-medico/resultados-cuadro-medico';
 const ASISA_SEARCH_PRIVATE = 'https://www.asisa.es/asegurado/salud/cuadro-medico/resultados-cuadro-medico';
+const PAGE_SIZE = 20;
+
+function getSlugsFromUrl() {
+  const parts = window.location.pathname.split('/');
+  const pIdx = parts.indexOf('p');
+  const peIdx = parts.indexOf('pe');
+  return {
+    provSlug: pIdx !== -1 ? parts[pIdx + 1] : null,
+    specSlug: peIdx !== -1 ? parts[peIdx + 1] : null,
+  };
+}
 
 function buildShareUrl(provinceCode, locationName, speciality, lat, lon) {
   const params = new URLSearchParams({
@@ -41,166 +55,203 @@ function buildCitaUrl(provinceCode, locationName, speciality, lat, lon, concept)
   return `${ASISA_SEARCH_PRIVATE}?${params}`;
 }
 
-function getProviderType(p) {
-  if (p.doctorType === '1') return { label: 'MÉDICO / PROFESIONAL', cls: 'cmp-tag-template--blue' };
-  if (p.providerType === '3') return { label: 'HOSPITAL', cls: 'cmp-tag-template--blue' };
-  if (p.providerType === '4') return { label: 'CENTRO MÉDICO', cls: 'cmp-tag-template--blue' };
-  if (p.providerType === '8') return { label: 'LABORATORIO', cls: 'cmp-tag-template--blue' };
-  if (p.providerType === '2') return { label: 'TRANSPORTE SANITARIO', cls: 'cmp-tag-template--blue' };
-  if (p.providerType === '9') return { label: 'OXIGENOTERAPIA', cls: 'cmp-tag-template--blue' };
-  return { label: 'PROVEEDOR', cls: 'type-cmp-tag-template--blue' };
+function maskPhone(phone) {
+  const digits = String(phone || '').replace(/\D/g, '');
+  if (digits.length < 4) return phone || '';
+  return `${digits.slice(0, 1)}X XXX XXX`;
 }
 
-function renderCard(p, provinceCode, locationName) {
-  const type = getProviderType(p);
+function namePrefix(name) {
+  if (!name) return '';
+  // Heuristic: if first given name (after comma) ends in 'a' or matches feminine markers → Dra.
+  // Spanish providers are typically "APELLIDOS, NOMBRE"
+  const parts = name.split(',');
+  const given = (parts[1] || parts[0] || '').trim().split(/\s+/)[0] || '';
+  const femEndings = /a$/i;
+  return femEndings.test(given) ? 'Dra.' : 'Dr.';
+}
+
+function formatName(name) {
+  if (!name) return '';
+  // Capitalise from ALL CAPS while keeping accents — title case each word.
+  return name.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function getProviderTag(p) {
+  if (String(p.doctorType) === '1') return 'MÉDICO/PROFESIONAL';
+  if (String(p.providerType) === '3') return 'HOSPITAL';
+  if (String(p.providerType) === '4') return 'CENTRO MÉDICO';
+  if (String(p.providerType) === '8') return 'LABORATORIO';
+  if (String(p.providerType) === '2') return 'TRANSPORTE SANITARIO';
+  if (String(p.providerType) === '9') return 'OXIGENOTERAPIA';
+  return 'PROVEEDOR';
+}
+
+function renderCard(p, isProfessional, provinceCode, locationName) {
+  const formatted = isProfessional ? `${namePrefix(p.name)} ${formatName(p.name.replace(/(.+),\s*(.+)/, '$2 $1'))}` : formatName(p.name);
+  const speciality = formatName(p.speciality || '');
   const fullAddress = [p.address, p.postalCode, p.city].filter(Boolean).join(', ');
-  const mapsUrl = (p.lat && p.lon)
-    ? `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}`
-    : '';
-  const langTags = p.languages.map((l) => `<span class="cm-tag tag-lang">${l}</span>`).join('');
+  const formattedAddress = formatName(fullAddress);
+  const mapsUrl = (p.lat && p.lon) ? `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}` : '';
+  const masked = maskPhone(p.phone);
+  const langTags = (p.languages || []).map((l) => `<span class="cm-lang">${l}</span>`).join('');
   const citaUrl = buildCitaUrl(provinceCode, locationName, p.speciality, p.lat, p.lon, p.name);
+  const detailUrl = p.detailUrl || '#';
+  const tag = getProviderTag(p);
+  const businessGroup = p.businessGroup ? '<span class="cm-card-chip cm-card-chip--asisa">Centro de ASISA</span>' : '';
 
-  return `<div class="cmp-medical-detail__first-block">
-
-
-    <div class="cmp-medical-detail__title-block">
-      <div class="cmp-medical-detail__title-block__tags">
-       <div class="cmp-medical-detail__title-block__tags--item ${type.cls}">
-        <div class="cmp-tag-template__text">
-            ${type.label}
-        </div>
-       </div>
-       ${p.businessGroup ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Centro de ASISA</div></div>' : ''}
-
-          ${p.ePrescription ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Receta electrónica</div></div>' : ''}
-          ${langTags}
-          ${p.onlineAppointment ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Cita online</div></div>' : ''}
-
+  return `<article class="cm-card">
+    <div class="cm-card-body">
+      <div class="cm-card-tags">
+        <span class="cm-card-tag">${tag}</span>
+        ${businessGroup}
       </div>
-      <div class="cmp-title">
-          <h3 class="cmp-title__text">${p.name}</h3>
+      <h3 class="cm-card-name">${formatted}</h3>
+      <p class="cm-card-spec">${speciality}</p>
+      ${p.parentDescription ? `<p class="cm-card-center">${formatName(p.parentDescription)}</p>` : ''}
+      ${formattedAddress ? `<p class="cm-card-addr"><i class="icon-marker-02"></i> ${formattedAddress}</p>` : ''}
+      <div class="cm-card-meta">
+        ${mapsUrl ? `<a class="cm-card-meta-link" href="${mapsUrl}" target="_blank" rel="noopener"><i class="icon-map-04"></i> Cómo llegar</a>` : ''}
+        ${p.phone ? `<a class="cm-card-meta-link" href="tel:${p.phone}"><i class="icon-phone"></i> ${masked}</a>` : ''}
       </div>
-       ${p.collegiateCode ? `<p class="cmp-medical-detail__title-block--num-member"><em>Núm. Colegiado – ${p.collegiateCode}</em></p>` : ''}
-        <p class="cmp-medical-detail__title-block--speciality">${p.speciality}</p>
     </div>
-    <div class="cmp-medical-detail__address-block">
-      ${p.parentDescription ? `<div class="cmp-medical-detail__address-block--center">${p.parentDescription}</div>` : ''}
-      ${fullAddress ? `<div class="cmp-medical-detail__address-block--name"><i class="icon-marker-02"></i>${fullAddress}</div>` : ''}
+    <div class="cm-card-side">
+      <div class="cm-card-side-tags">
+        ${p.onlineAppointment ? '<span class="cm-card-chip cm-card-chip--blank">Cita online</span>' : ''}
+        ${langTags}
+      </div>
+      <div class="cm-card-buttons">
+        ${p.onlineAppointment ? `<a class="btn btn--outline" href="${citaUrl}" target="_blank" rel="noopener">Pedir cita</a>` : ''}
+        <a class="btn btn--primary" href="${detailUrl}">Ver detalle</a>
+      </div>
+    </div>
+  </article>`;
+}
 
-      <div class="cmp-medical-detail__address-block__location">
-          ${mapsUrl ? `<div class="cmp-medical-detail__address-block__location--reach"><div class="button-cmp"><a href="${mapsUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--link button-location"><i class="icon-map-04 icon-large"></i>Cómo llegar</a></div></div>` : ''}
-          ${p.phone ? `<div class="cmp-medical-detail__address-block__location--reach"><div class="button-cmp"><a href="tel:${p.phone}" class="btn button-cmp__text button-cmp__text--link button-location"><i class="icon-phone"></i>${p.phone}</a></div></div>` : ''}
-    </div>
-    </div>
+function renderPagination(currentPage, totalPages) {
+  if (totalPages <= 1) return '';
+  const items = [];
+  const prev = currentPage > 1 ? currentPage - 1 : null;
+  const next = currentPage < totalPages ? currentPage + 1 : null;
 
-    <div class="cmp-medical-detail__buttons-block">
-      <div class="button-cmp"><button class="btn button-cmp__text button-cmp__text--tertiary">Ver Detalle</button></div>
-      ${p.onlineAppointment ? `<div class="button-cmp"><a href="${citaUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--primary">Pedir Cita</a></div>` : ''}
-    </div>
+  items.push(`<button class="cm-page cm-page--prev" data-page="${prev || ''}" ${prev ? '' : 'disabled'}>‹</button>`);
+
+  // Show first, current ±2, last
+  const pages = new Set([1, totalPages, currentPage]);
+  for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i += 1) pages.add(i);
+  const sorted = [...pages].sort((a, b) => a - b);
+  let prevNum = 0;
+  sorted.forEach((n) => {
+    if (n - prevNum > 1) items.push('<span class="cm-page-ellipsis">…</span>');
+    items.push(`<button class="cm-page${n === currentPage ? ' cm-page--current' : ''}" data-page="${n}">${n}</button>`);
+    prevNum = n;
+  });
+
+  items.push(`<button class="cm-page cm-page--next" data-page="${next || ''}" ${next ? '' : 'disabled'}>›</button>`);
+
+  return `<nav class="cm-pagination">${items.join('')}</nav>`;
+}
+
+function renderShell(state) {
+  const {
+    locationName, provinceCode, specName,
+    totalProfessionals, totalCenters,
+    tab, page, totalPages, total, results,
+    loading,
+  } = state;
+
+  const shareUrl = results[0]
+    ? buildShareUrl(provinceCode, locationName, results[0].speciality || specName || '', results[0].lat, results[0].lon)
+    : '';
+
+  const title = specName
+    ? `${total} resultados en <strong>${locationName}</strong> — ${specName}`
+    : `${total} resultados en <strong>${locationName}</strong>`;
+
+  const tabsHtml = `<div class="cm-tabs">
+    <button class="cm-tab${tab === 'professionals' ? ' cm-tab--active' : ''}" data-tab="professionals">Profesionales (${totalProfessionals})</button>
+    <button class="cm-tab${tab === 'centers' ? ' cm-tab--active' : ''}" data-tab="centers">Centros médicos (${totalCenters})</button>
   </div>`;
+
+  const header = `<div class="cm-header">
+    <div class="cm-header-title">${title}</div>
+    ${shareUrl ? `<a class="cm-share" href="${shareUrl}" target="_blank" rel="noopener"><i class="icon-share"></i> Compartir</a>` : ''}
+  </div>`;
+
+  const grid = loading
+    ? '<p class="cm-loading">Cargando…</p>'
+    : `<div class="cm-grid">${results.map((p) => renderCard(p, tab === 'professionals', provinceCode, locationName)).join('')}</div>`;
+
+  const pagination = renderPagination(page, totalPages);
+
+  return `${header}${tabsHtml}${grid}${pagination}`;
 }
 
-function renderResults(block, locationName, provinceCode, providers) {
-  const firstWithCoords = providers.find((p) => p.lat && p.lon);
-  const shareLat = firstWithCoords?.lat || '';
-  const shareLon = firstWithCoords?.lon || '';
-  const shareSpec = providers[0]?.speciality || '';
-  const shareUrl = (provinceCode && shareSpec)
-    ? buildShareUrl(provinceCode, locationName, shareSpec, shareLat, shareLon)
-    : '';
-
-  const groups = new Map();
-  providers.forEach((p) => {
-    const spec = p.speciality || 'Otros';
-    if (!groups.has(spec)) groups.set(spec, []);
-    groups.get(spec).push(p);
-  });
-
-  const shareBtn = shareUrl
-    ? `<div class="button-cmp"><a href="${shareUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--link"><i class="icon-share"></i>Compartir</a></div>`
-    : '';
-
-  let html = `<div class="cmp-medical-picture-result__header"><div class="cmp-medical-picture-result__header--share-title-block"><div class="cmp-medical-picture-result__header--title">${providers.length} resultados en <strong>${locationName}</strong></div>${shareBtn}</div></div>`;
-
-  groups.forEach((specProviders, specName) => {
-    html += `<div class="cmp-medical-detail"><h2 class="cmp-medical-detail__subtitle">${specName}</h2>${specProviders.map((p) => renderCard(p, provinceCode, locationName)).join('')}</div>`;
-  });
-
-  block.innerHTML = html;
+async function fetchPage(provSlug, specSlug, tab, page) {
+  const params = new URLSearchParams({ provinceSlug: provSlug, tab, page: String(page), limit: String(PAGE_SIZE) });
+  if (specSlug) params.set('specSlug', specSlug);
+  const [provincia, providersResp] = await Promise.all([
+    fetch(`${API_BASE}/api/provincias?slug=${provSlug}`).then((r) => r.json()),
+    fetch(`${API_BASE}/api/providers?${params}`).then((r) => r.json()),
+  ]);
+  return { provincia, providersResp };
 }
 
-function getSlugsFromUrl() {
-  const parts = window.location.pathname.split('/');
-  const pIdx = parts.indexOf('p');
-  const peIdx = parts.indexOf('pe');
-  const eIdx = parts.indexOf('e');
-  return {
-    provSlug: pIdx !== -1 ? parts[pIdx + 1] : null,
-    specSlug: peIdx !== -1 ? parts[peIdx + 1] : (eIdx !== -1 ? parts[eIdx + 1] : null),
-  };
-}
-
-async function fetchAndRender(block) {
-  const { provSlug, specSlug } = getSlugsFromUrl();
-  if (!provSlug || !specSlug) { block.hidden = true; return; }
-
-  block.innerHTML = '<p class="cm-loading">Cargando médicos…</p>';
-  try {
-    const [provincia, providersResp] = await Promise.all([
-      fetch(`https://asisa-pc.vercel.app/api/provincias?slug=${provSlug}`).then((r) => r.json()),
-      fetch(`https://asisa-pc.vercel.app/api/providers?provinceSlug=${provSlug}&specSlug=${specSlug}&limit=50`).then((r) => r.json()),
-    ]);
-    const locationName = provincia?.displayName || provSlug;
-    const provinceCode = provincia?.provinceCode || provincia?.code || '';
-    const providers = (providersResp?.results || []).map((p) => ({
-      ...p,
-      lat: p.lat ? String(p.lat) : '',
-      lon: p.lon ? String(p.lon) : '',
-      doctorType: p.doctorType != null ? String(p.doctorType) : '',
-      providerType: p.providerType != null ? String(p.providerType) : '',
-      languages: p.languages || [],
-    }));
-    if (!providers.length) { block.hidden = true; return; }
-    renderResults(block, locationName, provinceCode, providers);
-  } catch (e) {
-    block.hidden = true;
-  }
-}
-
-export default function decorate(block) {
-  const rows = [...block.children];
-
-  // BYOM / dynamic URL mode: no pre-populated rows → fetch from URL
-  if (rows.length < 2) {
-    fetchAndRender(block);
-    return;
-  }
-
-  const locationName = rows[0]?.children[0]?.textContent?.trim() || '';
-  const provinceCode = rows[0]?.children[1]?.textContent?.trim() || '';
-
-  const providers = [];
-  for (let i = 1; i < rows.length; i += 1) {
-    const cells = rows[i]?.children || [];
-    providers.push({
-      name: cells[0]?.textContent?.trim() || '',
-      speciality: cells[1]?.textContent?.trim() || '',
-      address: cells[2]?.textContent?.trim() || '',
-      city: cells[3]?.textContent?.trim() || '',
-      phone: cells[4]?.textContent?.trim() || '',
-      lat: cells[5]?.textContent?.trim() || '',
-      lon: cells[6]?.textContent?.trim() || '',
-      doctorType: cells[7]?.textContent?.trim() || '',
-      providerType: cells[8]?.textContent?.trim() || '',
-      businessGroup: cells[9]?.textContent?.trim() === '1',
-      collegiateCode: cells[10]?.textContent?.trim() || '',
-      parentDescription: cells[11]?.textContent?.trim() || '',
-      postalCode: cells[12]?.textContent?.trim() || '',
-      ePrescription: cells[13]?.textContent?.trim() === '1',
-      onlineAppointment: cells[14]?.textContent?.trim() === '1',
-      languages: (cells[15]?.textContent?.trim() || '').split(',').filter(Boolean),
+function attachListeners(block, state, refresh) {
+  block.querySelectorAll('.cm-tab').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const newTab = btn.dataset.tab;
+      if (newTab && newTab !== state.tab) refresh({ ...state, tab: newTab, page: 1 });
     });
+  });
+  block.querySelectorAll('.cm-page').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const p = parseInt(btn.dataset.page, 10);
+      if (p && p !== state.page) {
+        refresh({ ...state, page: p });
+        block.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+}
+
+async function decorate(block) {
+  const { provSlug, specSlug } = getSlugsFromUrl();
+  if (!provSlug) { block.hidden = true; return; }
+
+  let state = { tab: 'professionals', page: 1, loading: true, results: [] };
+  block.innerHTML = '<p class="cm-loading">Cargando médicos…</p>';
+
+  async function refresh(next) {
+    state = { ...state, ...next, loading: true };
+    block.innerHTML = renderShell(state);
+    try {
+      const { provincia, providersResp } = await fetchPage(provSlug, specSlug, state.tab, state.page);
+      state = {
+        ...state,
+        loading: false,
+        locationName: provincia?.displayName || provSlug,
+        provinceCode: provincia?.provinceCode || '',
+        specName: specSlug ? specSlug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) : '',
+        totalProfessionals: providersResp.totalProfessionals || 0,
+        totalCenters: providersResp.totalCenters || 0,
+        page: providersResp.page,
+        totalPages: providersResp.totalPages || 1,
+        total: providersResp.total || 0,
+        results: providersResp.results || [],
+      };
+      if (!state.total && !state.totalProfessionals && !state.totalCenters) {
+        block.hidden = true;
+        return;
+      }
+      block.innerHTML = renderShell(state);
+      attachListeners(block, state, refresh);
+    } catch (e) {
+      block.innerHTML = '<p class="cm-error">No se pudieron cargar los resultados.</p>';
+    }
   }
 
-  renderResults(block, locationName, provinceCode, providers);
+  refresh(state);
 }
+
+export default decorate;

@@ -11,7 +11,6 @@
  */
 
 const PROVINCIA_BLOCKS = `<div class="cuadro-medico"><div><div></div></div></div>
-<div class="cuadro-medico-top-especialidades"><div><div></div></div></div>
 <div class="cuadro-medico-otras-especialidades"><div><div></div></div></div>
 <div class="cuadro-medico-otras-provincias"><div><div></div></div></div>`;
 

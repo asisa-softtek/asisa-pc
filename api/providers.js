@@ -1,4 +1,4 @@
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync, existsSync, readdirSync } from 'fs';
 import { join } from 'path';
 
 const DEFAULT_LIMIT = 20;
@@ -6,6 +6,7 @@ const MAX_LIMIT = 50;
 
 let provinciasCache = null;
 let especialidadesCache = null;
+const allProvinceCache = new Map(); // provSlug → deduped flat list
 
 function getProvincias() {
   if (!provinciasCache) {
@@ -72,6 +73,28 @@ function mapProvider(p) {
   };
 }
 
+function loadAllProvincePro(provinceSlug) {
+  if (allProvinceCache.has(provinceSlug)) return allProvinceCache.get(provinceSlug);
+  const dir = join(process.cwd(), `data/providers/${provinceSlug}`);
+  if (!existsSync(dir)) return null;
+  const files = readdirSync(dir).filter((f) => f.endsWith('.json'));
+  const seen = new Map();
+  files.forEach((f) => {
+    try {
+      const arr = JSON.parse(readFileSync(join(dir, f), 'utf8'));
+      arr.forEach((p) => {
+        const key = `${p.providerCode || ''}|${p.providerLocalicationCode || ''}`;
+        if (!seen.has(key)) seen.set(key, p);
+      });
+    } catch {
+      // skip malformed
+    }
+  });
+  const list = [...seen.values()];
+  allProvinceCache.set(provinceSlug, list);
+  return list;
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Content-Type', 'application/json');
@@ -84,8 +107,8 @@ export default async function handler(req, res) {
     limit: limitParam,
   } = req.query;
 
-  if (!provinceSlug || !specSlug) {
-    return res.status(400).json({ error: 'provinceSlug and specSlug are required' });
+  if (!provinceSlug) {
+    return res.status(400).json({ error: 'provinceSlug is required' });
   }
 
   if (!['professionals', 'centers'].includes(tab)) {
@@ -96,29 +119,36 @@ export default async function handler(req, res) {
   const provincia = getProvincias().find((p) => p.slug === provinceSlug);
   if (!provincia) return res.status(404).json({ error: `Province not found: ${provinceSlug}` });
 
-  // Resolve speciality
-  const especialidad = getEspecialidades().find((e) => e.slug === specSlug);
-  if (!especialidad) return res.status(404).json({ error: `Speciality not found: ${specSlug}` });
+  // Resolve speciality (optional)
+  if (specSlug) {
+    const especialidad = getEspecialidades().find((e) => e.slug === specSlug);
+    if (!especialidad) return res.status(404).json({ error: `Speciality not found: ${specSlug}` });
+  }
 
   const limit = Math.min(parseInt(limitParam, 10) || DEFAULT_LIMIT, MAX_LIMIT);
   const pageNum = Math.max(1, parseInt(page, 10) || 1);
 
   try {
-    const cachePath = join(process.cwd(), `data/providers/${provinceSlug}/${specSlug}.json`);
-    if (!existsSync(cachePath)) {
-      return res.status(404).json({ error: `No data for ${provinceSlug}/${specSlug}` });
+    let raw;
+    if (specSlug) {
+      const cachePath = join(process.cwd(), `data/providers/${provinceSlug}/${specSlug}.json`);
+      if (!existsSync(cachePath)) {
+        return res.status(404).json({ error: `No data for ${provinceSlug}/${specSlug}` });
+      }
+      raw = JSON.parse(readFileSync(cachePath, 'utf8'));
+    } else {
+      raw = loadAllProvincePro(provinceSlug);
+      if (!raw) return res.status(404).json({ error: `No data for ${provinceSlug}` });
     }
-
-    const raw = JSON.parse(readFileSync(cachePath, 'utf8'));
 
     // Filter by tab
     const filtered = raw.filter((p) => (tab === 'professionals' ? isProfessional(p) : isCenter(p)));
 
-    // 4. Counts per tab (always return both so the UI can render both tab labels)
+    // Counts per tab (always return both so the UI can render both tab labels)
     const totalProfessionals = raw.filter(isProfessional).length;
     const totalCenters = raw.filter(isCenter).length;
 
-    // 5. Paginate
+    // Paginate
     const total = filtered.length;
     const totalPages = Math.ceil(total / limit);
     const offset = (pageNum - 1) * limit;
@@ -127,7 +157,7 @@ export default async function handler(req, res) {
     res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=3600');
     return res.status(200).json({
       provinceSlug,
-      specSlug,
+      specSlug: specSlug || null,
       tab,
       page: pageNum,
       limit,
