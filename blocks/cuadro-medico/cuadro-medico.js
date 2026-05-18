@@ -147,8 +147,8 @@ async function fetchAndRender(block) {
   block.innerHTML = '<p class="cm-loading">Cargando médicos…</p>';
   try {
     const [provincia, providersResp] = await Promise.all([
-      fetch(`/api/provincias?slug=${provSlug}`).then((r) => r.json()),
-      fetch(`/api/providers?provinceSlug=${provSlug}&specSlug=${specSlug}&limit=50`).then((r) => r.json()),
+      fetch(`https://asisa-pc.vercel.app/api/provincias?slug=${provSlug}`).then((r) => r.json()),
+      fetch(`https://asisa-pc.vercel.app/api/providers?provinceSlug=${provSlug}&specSlug=${specSlug}&limit=50`).then((r) => r.json()),
     ]);
     const locationName = provincia?.displayName || provSlug;
     const provinceCode = provincia?.provinceCode || provincia?.code || '';

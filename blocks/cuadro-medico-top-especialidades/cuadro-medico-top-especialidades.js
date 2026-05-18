@@ -10,7 +10,7 @@ export default function decorate(block) {
     <h2 class="eds-md-esp-top-title">Especialidades más buscadas</h2>
     <ul class="eds-md-esp-top-list"><li class="loading"><div class="spinner"></div><p>Cargando especialidades…</p></li></ul>`;
 
-  fetch('/api/especialidades')
+  fetch('https://asisa-pc.vercel.app/api/especialidades')
     .then((r) => r.json())
     .then((data) => {
       const list = block.querySelector('.eds-md-esp-top-list');

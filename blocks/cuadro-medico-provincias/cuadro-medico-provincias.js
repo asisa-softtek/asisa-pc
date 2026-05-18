@@ -10,7 +10,7 @@ export default function decorate(block) {
     <h2 class="eds-md-prov-title">Provincias donde está ASISA</h2>
     <ul class="eds-md-prov-list"><li class="loading"><div class="spinner"></div><p>Cargando provincias…</p></li></ul>`;
 
-  fetch('/api/provincias')
+  fetch('https://asisa-pc.vercel.app/api/provincias')
     .then((r) => r.json())
     .then((data) => {
       const list = block.querySelector('.eds-md-prov-list');

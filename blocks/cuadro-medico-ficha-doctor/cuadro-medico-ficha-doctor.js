@@ -63,8 +63,8 @@ export default function decorate(block) {
   block.innerHTML = '<p class="cm-ficha-loading">Cargando médico…</p>';
 
   Promise.all([
-    fetch(`/api/doctor?key=${key}`).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
-    fetch('/api/provincias').then((r) => r.json()),
+    fetch(`https://asisa-pc.vercel.app/api/doctor?key=${key}`).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
+    fetch('https://asisa-pc.vercel.app/api/provincias').then((r) => r.json()),
   ])
     .then(([d, provincias]) => {
       const provincia = provincias.find((p) => p.slug === d.provinceSlug);

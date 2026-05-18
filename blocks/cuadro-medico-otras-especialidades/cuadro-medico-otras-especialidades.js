@@ -23,8 +23,8 @@ export default function decorate(block) {
   block.innerHTML = '<p class="cm-otras-espec-loading">Cargando especialidades…</p>';
 
   Promise.all([
-    fetch(`/api/provincias?slug=${provSlug}`).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
-    fetch('/api/especialidades').then((r) => r.json()),
+    fetch(`https://asisa-pc.vercel.app/api/provincias?slug=${provSlug}`).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
+    fetch('https://asisa-pc.vercel.app/api/especialidades').then((r) => r.json()),
   ])
     .then(([provincia, allEspec]) => {
       const provSpecs = new Set(provincia.especialidades || []);

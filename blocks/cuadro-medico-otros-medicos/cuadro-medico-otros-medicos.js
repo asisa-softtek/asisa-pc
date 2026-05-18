@@ -18,13 +18,13 @@ export default function decorate(block) {
 
   block.innerHTML = '<p class="cm-otros-med-loading">Cargando…</p>';
 
-  fetch(`/api/doctor?key=${key}`)
+  fetch(`https://asisa-pc.vercel.app/api/doctor?key=${key}`)
     .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then((doctor) => {
       const { specSlug, provinceSlug, city, specialities } = doctor;
       const specName = (specialities[0] || specSlug).toLowerCase();
 
-      return fetch(`/api/providers?provinceSlug=${provinceSlug}&specSlug=${specSlug}&tab=professionals&limit=50`)
+      return fetch(`https://asisa-pc.vercel.app/api/providers?provinceSlug=${provinceSlug}&specSlug=${specSlug}&tab=professionals&limit=50`)
         .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
         .then(({ results = [] }) => {
           const currentUrl = `/cuadro-medico/d/${key}`;

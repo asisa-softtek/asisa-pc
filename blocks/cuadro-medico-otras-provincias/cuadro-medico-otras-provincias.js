@@ -22,7 +22,7 @@ export default function decorate(block) {
 
   block.innerHTML = '<p class="cm-otras-prov-loading">Cargando provincias…</p>';
 
-  fetch(`/api/especialidades?slug=${specSlug}`)
+  fetch(`https://asisa-pc.vercel.app/api/especialidades?slug=${specSlug}`)
     .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then((data) => {
       const provincias = (data.provincias || []).filter((p) => p.slug !== provSlug);

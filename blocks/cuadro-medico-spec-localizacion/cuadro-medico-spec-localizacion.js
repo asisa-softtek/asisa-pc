@@ -17,9 +17,9 @@ export default function decorate(block) {
 
   block.innerHTML = '<p class="cm-spec-loc-loading">Cargando…</p>';
 
-  fetch(`/api/doctor?key=${key}`)
+  fetch(`https://asisa-pc.vercel.app/api/doctor?key=${key}`)
     .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then(({ specSlug }) => fetch(`/api/especialidades?slug=${specSlug}`)
+    .then(({ specSlug }) => fetch(`https://asisa-pc.vercel.app/api/especialidades?slug=${specSlug}`)
       .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }))
     .then((data) => {
       const { slug, name, provincias = [] } = data;
