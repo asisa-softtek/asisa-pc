@@ -73,8 +73,10 @@ function namePrefix(name) {
 
 function formatName(name) {
   if (!name) return '';
-  // Capitalise from ALL CAPS while keeping accents — title case each word.
-  return name.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+  // Title case each space-separated word. Avoid regex `\w` because it
+  // doesn't match accented chars and would re-capitalise letters after
+  // an accent (e.g. "alergologÍa" → "AlergologíA").
+  return name.toLowerCase().split(/(\s+)/).map((w) => (w && /\S/.test(w) ? w.charAt(0).toUpperCase() + w.slice(1) : w)).join('');
 }
 
 function getProviderTag(p) {
