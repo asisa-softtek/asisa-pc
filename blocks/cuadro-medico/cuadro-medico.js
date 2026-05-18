@@ -100,9 +100,81 @@ function renderCard(p, provinceCode, locationName) {
   </div>`;
 }
 
+function renderResults(block, locationName, provinceCode, providers) {
+  const firstWithCoords = providers.find((p) => p.lat && p.lon);
+  const shareLat = firstWithCoords?.lat || '';
+  const shareLon = firstWithCoords?.lon || '';
+  const shareSpec = providers[0]?.speciality || '';
+  const shareUrl = (provinceCode && shareSpec)
+    ? buildShareUrl(provinceCode, locationName, shareSpec, shareLat, shareLon)
+    : '';
+
+  const groups = new Map();
+  providers.forEach((p) => {
+    const spec = p.speciality || 'Otros';
+    if (!groups.has(spec)) groups.set(spec, []);
+    groups.get(spec).push(p);
+  });
+
+  const shareBtn = shareUrl
+    ? `<div class="button-cmp"><a href="${shareUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--link"><i class="icon-share"></i>Compartir</a></div>`
+    : '';
+
+  let html = `<div class="cmp-medical-picture-result__header"><div class="cmp-medical-picture-result__header--share-title-block"><div class="cmp-medical-picture-result__header--title">${providers.length} resultados en <strong>${locationName}</strong></div>${shareBtn}</div></div>`;
+
+  groups.forEach((specProviders, specName) => {
+    html += `<div class="cmp-medical-detail"><h2 class="cmp-medical-detail__subtitle">${specName}</h2>${specProviders.map((p) => renderCard(p, provinceCode, locationName)).join('')}</div>`;
+  });
+
+  block.innerHTML = html;
+}
+
+function getSlugsFromUrl() {
+  const parts = window.location.pathname.split('/');
+  const pIdx = parts.indexOf('p');
+  const peIdx = parts.indexOf('pe');
+  const eIdx = parts.indexOf('e');
+  return {
+    provSlug: pIdx !== -1 ? parts[pIdx + 1] : null,
+    specSlug: peIdx !== -1 ? parts[peIdx + 1] : (eIdx !== -1 ? parts[eIdx + 1] : null),
+  };
+}
+
+async function fetchAndRender(block) {
+  const { provSlug, specSlug } = getSlugsFromUrl();
+  if (!provSlug || !specSlug) { block.hidden = true; return; }
+
+  block.innerHTML = '<p class="cm-loading">Cargando médicos…</p>';
+  try {
+    const [provincia, providersResp] = await Promise.all([
+      fetch(`/api/provincias?slug=${provSlug}`).then((r) => r.json()),
+      fetch(`/api/providers?provinceSlug=${provSlug}&specSlug=${specSlug}&limit=50`).then((r) => r.json()),
+    ]);
+    const locationName = provincia?.displayName || provSlug;
+    const provinceCode = provincia?.provinceCode || provincia?.code || '';
+    const providers = (providersResp?.results || []).map((p) => ({
+      ...p,
+      lat: p.lat ? String(p.lat) : '',
+      lon: p.lon ? String(p.lon) : '',
+      doctorType: p.doctorType != null ? String(p.doctorType) : '',
+      providerType: p.providerType != null ? String(p.providerType) : '',
+      languages: p.languages || [],
+    }));
+    if (!providers.length) { block.hidden = true; return; }
+    renderResults(block, locationName, provinceCode, providers);
+  } catch (e) {
+    block.hidden = true;
+  }
+}
+
 export default function decorate(block) {
   const rows = [...block.children];
-  if (rows.length < 2) return;
+
+  // BYOM / dynamic URL mode: no pre-populated rows → fetch from URL
+  if (rows.length < 2) {
+    fetchAndRender(block);
+    return;
+  }
 
   const locationName = rows[0]?.children[0]?.textContent?.trim() || '';
   const provinceCode = rows[0]?.children[1]?.textContent?.trim() || '';
@@ -130,32 +202,5 @@ export default function decorate(block) {
     });
   }
 
-  // Coordenadas del primer provider con datos reales para el share URL
-  const firstWithCoords = providers.find((p) => p.lat && p.lon);
-  const shareLat = firstWithCoords?.lat || '';
-  const shareLon = firstWithCoords?.lon || '';
-  const shareSpec = providers[0]?.speciality || '';
-  const shareUrl = (provinceCode && shareSpec)
-    ? buildShareUrl(provinceCode, locationName, shareSpec, shareLat, shareLon)
-    : '';
-
-  // Group providers by speciality
-  const groups = new Map();
-  providers.forEach((p) => {
-    const spec = p.speciality || 'Otros';
-    if (!groups.has(spec)) groups.set(spec, []);
-    groups.get(spec).push(p);
-  });
-
-  const shareBtn = shareUrl
-    ? `<div class="button-cmp"><a href="${shareUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--link"><i class="icon-share"></i>Compartir</a></div>`
-    : '';
-
-  let html = `<div class="cmp-medical-picture-result__header"><div class="cmp-medical-picture-result__header--share-title-block"><div class="cmp-medical-picture-result__header--title">${providers.length} resultados en <strong>${locationName}</strong></div>${shareBtn}</div></div>`;
-
-  groups.forEach((specProviders, specName) => {
-    html += `<div class="cmp-medical-detail"><h2 class="cmp-medical-detail__subtitle">${specName}</h2>${specProviders.map((p) => renderCard(p, provinceCode, locationName)).join('')}</div>`;
-  });
-
-  block.innerHTML = html;
+  renderResults(block, locationName, provinceCode, providers);
 }
