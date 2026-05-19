@@ -7,6 +7,16 @@
       "count": 9
     },
     {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 7
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 7
+    },
+    {
       "slug": "a-coruna",
       "displayName": "A Coruña",
       "count": 6
@@ -27,11 +37,6 @@
       "count": 5
     },
     {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
-      "count": 5
-    },
-    {
       "slug": "alicante",
       "displayName": "Alicante",
       "count": 4
@@ -39,11 +44,6 @@
     {
       "slug": "baleares",
       "displayName": "Baleares",
-      "count": 3
-    },
-    {
-      "slug": "leon",
-      "displayName": "León",
       "count": 3
     },
     {
@@ -62,9 +62,14 @@
       "count": 2
     },
     {
-      "slug": "valencia",
-      "displayName": "Valencia",
-      "count": 2
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 1
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 1
     },
     {
       "slug": "toledo",
@@ -74,6 +79,11 @@
     {
       "slug": "zamora",
       "displayName": "Zamora",
+      "count": 1
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
       "count": 1
     }
   ]

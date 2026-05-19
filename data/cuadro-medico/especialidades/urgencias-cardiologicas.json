@@ -7,9 +7,14 @@
       "count": 6
     },
     {
-      "slug": "barcelona",
-      "displayName": "Barcelona",
-      "count": 1
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 2
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 2
     },
     {
       "slug": "malaga",

@@ -52,6 +52,11 @@
       "count": 7
     },
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 6
+    },
+    {
       "slug": "albacete",
       "displayName": "Albacete",
       "count": 6
@@ -75,11 +80,6 @@
       "slug": "tarragona",
       "displayName": "Tarragona",
       "count": 6
-    },
-    {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 5
     },
     {
       "slug": "ciudad-real",

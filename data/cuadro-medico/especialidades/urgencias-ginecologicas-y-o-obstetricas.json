@@ -2,13 +2,13 @@
   "slug": "urgencias-ginecologicas-y-o-obstetricas",
   "provincias": [
     {
-      "slug": "alicante",
-      "displayName": "Alicante",
-      "count": 6
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 12
     },
     {
-      "slug": "barcelona",
-      "displayName": "Barcelona",
+      "slug": "alicante",
+      "displayName": "Alicante",
       "count": 6
     },
     {
@@ -17,19 +17,19 @@
       "count": 4
     },
     {
-      "slug": "zaragoza",
-      "displayName": "Zaragoza",
-      "count": 4
-    },
-    {
-      "slug": "cadiz",
-      "displayName": "Cádiz",
-      "count": 2
-    },
-    {
       "slug": "cordoba",
       "displayName": "Córdoba",
       "count": 2
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 2
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 1
     },
     {
       "slug": "almeria",
@@ -54,11 +54,6 @@
     {
       "slug": "malaga",
       "displayName": "Málaga",
-      "count": 1
-    },
-    {
-      "slug": "murcia",
-      "displayName": "Murcia",
       "count": 1
     },
     {

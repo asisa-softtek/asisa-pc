@@ -2,18 +2,13 @@
   "slug": "resonancia-magnetica",
   "provincias": [
     {
-      "slug": "barcelona",
-      "displayName": "Barcelona",
-      "count": 30
-    },
-    {
       "slug": "valencia",
       "displayName": "Valencia",
       "count": 17
     },
     {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
+      "slug": "malaga",
+      "displayName": "Málaga",
       "count": 16
     },
     {
@@ -32,8 +27,18 @@
       "count": 11
     },
     {
-      "slug": "murcia",
-      "displayName": "Murcia",
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 8
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 8
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
       "count": 8
     },
     {
@@ -72,6 +77,11 @@
       "count": 5
     },
     {
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 4
+    },
+    {
       "slug": "castellon",
       "displayName": "Castellón",
       "count": 4
@@ -79,6 +89,11 @@
     {
       "slug": "ceuta",
       "displayName": "Ceuta",
+      "count": 4
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
       "count": 4
     },
     {
@@ -97,9 +112,9 @@
       "count": 4
     },
     {
-      "slug": "zaragoza",
-      "displayName": "Zaragoza",
-      "count": 4
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 3
     },
     {
       "slug": "caceres",
@@ -109,11 +124,6 @@
     {
       "slug": "huesca",
       "displayName": "Huesca",
-      "count": 3
-    },
-    {
-      "slug": "lugo",
-      "displayName": "Lugo",
       "count": 3
     },
     {
@@ -127,6 +137,11 @@
       "count": 2
     },
     {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 2
+    },
+    {
       "slug": "la-rioja",
       "displayName": "La Rioja",
       "count": 2
@@ -134,6 +149,11 @@
     {
       "slug": "leon",
       "displayName": "León",
+      "count": 2
+    },
+    {
+      "slug": "ourense",
+      "displayName": "Ourense",
       "count": 2
     },
     {
@@ -152,6 +172,11 @@
       "count": 1
     },
     {
+      "slug": "jaen",
+      "displayName": "Jaén",
+      "count": 1
+    },
+    {
       "slug": "lerida",
       "displayName": "Lérida",
       "count": 1
@@ -159,11 +184,6 @@
     {
       "slug": "melilla",
       "displayName": "Melilla",
-      "count": 1
-    },
-    {
-      "slug": "ourense",
-      "displayName": "Ourense",
       "count": 1
     },
     {

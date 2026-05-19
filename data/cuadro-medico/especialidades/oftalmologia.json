@@ -59,7 +59,7 @@
     {
       "slug": "a-coruna",
       "displayName": "A Coruña",
-      "count": 48
+      "count": 50
     },
     {
       "slug": "las-palmas",
@@ -217,6 +217,11 @@
       "count": 8
     },
     {
+      "slug": "ourense",
+      "displayName": "Ourense",
+      "count": 6
+    },
+    {
       "slug": "ceuta",
       "displayName": "Ceuta",
       "count": 5
@@ -224,11 +229,6 @@
     {
       "slug": "albacete",
       "displayName": "Albacete",
-      "count": 4
-    },
-    {
-      "slug": "ourense",
-      "displayName": "Ourense",
       "count": 4
     },
     {

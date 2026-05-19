@@ -37,14 +37,14 @@
       "count": 6
     },
     {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 5
-    },
-    {
       "slug": "vizcaya",
       "displayName": "Vizcaya",
       "count": 5
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 4
     },
     {
       "slug": "zaragoza",

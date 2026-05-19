@@ -7,9 +7,19 @@
       "count": 5
     },
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 4
+    },
+    {
       "slug": "huesca",
       "displayName": "Huesca",
       "count": 4
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 3
     },
     {
       "slug": "madrid",

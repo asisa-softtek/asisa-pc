@@ -2,6 +2,11 @@
   "slug": "cuidados-paliativos-domiciliarios",
   "provincias": [
     {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 1
+    },
+    {
       "slug": "las-palmas",
       "displayName": "Las Palmas",
       "count": 1

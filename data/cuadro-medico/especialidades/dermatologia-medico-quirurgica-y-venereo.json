@@ -67,6 +67,11 @@
       "count": 22
     },
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 21
+    },
+    {
       "slug": "gerona",
       "displayName": "Gerona",
       "count": 21
@@ -85,11 +90,6 @@
       "slug": "pontevedra",
       "displayName": "Pontevedra",
       "count": 16
-    },
-    {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 15
     },
     {
       "slug": "badajoz",

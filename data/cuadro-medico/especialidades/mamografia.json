@@ -4,7 +4,7 @@
     {
       "slug": "madrid",
       "displayName": "Madrid",
-      "count": 107
+      "count": 67
     },
     {
       "slug": "barcelona",
@@ -12,9 +12,14 @@
       "count": 49
     },
     {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
-      "count": 17
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 28
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 16
     },
     {
       "slug": "tarragona",
@@ -27,9 +32,9 @@
       "count": 15
     },
     {
-      "slug": "alicante",
-      "displayName": "Alicante",
-      "count": 12
+      "slug": "gerona",
+      "displayName": "Gerona",
+      "count": 13
     },
     {
       "slug": "badajoz",
@@ -42,9 +47,9 @@
       "count": 12
     },
     {
-      "slug": "murcia",
-      "displayName": "Murcia",
-      "count": 10
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 11
     },
     {
       "slug": "valladolid",
@@ -77,11 +82,6 @@
       "count": 6
     },
     {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 5
-    },
-    {
       "slug": "almeria",
       "displayName": "Almería",
       "count": 5
@@ -92,6 +92,11 @@
       "count": 5
     },
     {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 5
+    },
+    {
       "slug": "albacete",
       "displayName": "Albacete",
       "count": 4
@@ -99,11 +104,6 @@
     {
       "slug": "burgos",
       "displayName": "Burgos",
-      "count": 4
-    },
-    {
-      "slug": "leon",
-      "displayName": "León",
       "count": 4
     },
     {
@@ -122,6 +122,11 @@
       "count": 4
     },
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 3
+    },
+    {
       "slug": "caceres",
       "displayName": "Cáceres",
       "count": 3
@@ -132,6 +137,11 @@
       "count": 3
     },
     {
+      "slug": "jaen",
+      "displayName": "Jaén",
+      "count": 3
+    },
+    {
       "slug": "alava",
       "displayName": "Álava",
       "count": 2
@@ -139,6 +149,11 @@
     {
       "slug": "cantabria",
       "displayName": "Cantabria",
+      "count": 2
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
       "count": 2
     },
     {
@@ -154,6 +169,11 @@
     {
       "slug": "lugo",
       "displayName": "Lugo",
+      "count": 2
+    },
+    {
+      "slug": "ourense",
+      "displayName": "Ourense",
       "count": 2
     },
     {
@@ -184,11 +204,6 @@
     {
       "slug": "melilla",
       "displayName": "Melilla",
-      "count": 1
-    },
-    {
-      "slug": "ourense",
-      "displayName": "Ourense",
       "count": 1
     }
   ]

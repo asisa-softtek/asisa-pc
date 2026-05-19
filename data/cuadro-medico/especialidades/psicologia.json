@@ -102,14 +102,14 @@
       "count": 14
     },
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 12
+    },
+    {
       "slug": "huelva",
       "displayName": "Huelva",
       "count": 11
-    },
-    {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 10
     },
     {
       "slug": "guadalajara",
@@ -237,13 +237,13 @@
       "count": 2
     },
     {
-      "slug": "melilla",
-      "displayName": "Melilla",
-      "count": 1
-    },
-    {
       "slug": "ourense",
       "displayName": "Ourense",
+      "count": 2
+    },
+    {
+      "slug": "melilla",
+      "displayName": "Melilla",
       "count": 1
     },
     {

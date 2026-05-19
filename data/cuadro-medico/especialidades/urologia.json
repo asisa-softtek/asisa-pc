@@ -62,6 +62,11 @@
       "count": 37
     },
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 35
+    },
+    {
       "slug": "vizcaya",
       "displayName": "Vizcaya",
       "count": 31
@@ -70,11 +75,6 @@
       "slug": "las-palmas",
       "displayName": "Las Palmas",
       "count": 27
-    },
-    {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 26
     },
     {
       "slug": "toledo",
@@ -139,6 +139,11 @@
     {
       "slug": "guadalajara",
       "displayName": "Guadalajara",
+      "count": 9
+    },
+    {
+      "slug": "guipuzcoa",
+      "displayName": "Guipúzcoa",
       "count": 9
     },
     {

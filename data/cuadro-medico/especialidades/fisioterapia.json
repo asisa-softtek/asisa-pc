@@ -227,6 +227,11 @@
       "count": 3
     },
     {
+      "slug": "ourense",
+      "displayName": "Ourense",
+      "count": 3
+    },
+    {
       "slug": "segovia",
       "displayName": "Segovia",
       "count": 3
@@ -239,11 +244,6 @@
     {
       "slug": "burgos",
       "displayName": "Burgos",
-      "count": 2
-    },
-    {
-      "slug": "ourense",
-      "displayName": "Ourense",
       "count": 2
     }
   ]

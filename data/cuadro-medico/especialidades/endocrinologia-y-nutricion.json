@@ -67,6 +67,11 @@
       "count": 15
     },
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 14
+    },
+    {
       "slug": "murcia",
       "displayName": "Murcia",
       "count": 14
@@ -80,11 +85,6 @@
       "slug": "pontevedra",
       "displayName": "Pontevedra",
       "count": 13
-    },
-    {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 10
     },
     {
       "slug": "lerida",
@@ -187,6 +187,11 @@
       "count": 3
     },
     {
+      "slug": "ourense",
+      "displayName": "Ourense",
+      "count": 3
+    },
+    {
       "slug": "salamanca",
       "displayName": "Salamanca",
       "count": 3
@@ -224,11 +229,6 @@
     {
       "slug": "ceuta",
       "displayName": "Ceuta",
-      "count": 1
-    },
-    {
-      "slug": "ourense",
-      "displayName": "Ourense",
       "count": 1
     }
   ]

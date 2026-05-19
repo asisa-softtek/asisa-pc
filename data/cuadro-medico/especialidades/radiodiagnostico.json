@@ -117,14 +117,14 @@
       "count": 12
     },
     {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 10
-    },
-    {
       "slug": "castellon",
       "displayName": "Castellón",
       "count": 10
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 9
     },
     {
       "slug": "albacete",
@@ -212,6 +212,11 @@
       "count": 4
     },
     {
+      "slug": "ourense",
+      "displayName": "Ourense",
+      "count": 3
+    },
+    {
       "slug": "segovia",
       "displayName": "Segovia",
       "count": 3
@@ -244,11 +249,6 @@
     {
       "slug": "cuenca",
       "displayName": "Cuenca",
-      "count": 1
-    },
-    {
-      "slug": "ourense",
-      "displayName": "Ourense",
       "count": 1
     }
   ]

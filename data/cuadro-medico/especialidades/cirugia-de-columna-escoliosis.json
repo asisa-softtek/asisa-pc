@@ -2,11 +2,6 @@
   "slug": "cirugia-de-columna-escoliosis",
   "provincias": [
     {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
-      "count": 16
-    },
-    {
       "slug": "barcelona",
       "displayName": "Barcelona",
       "count": 13
@@ -15,11 +10,6 @@
       "slug": "cadiz",
       "displayName": "Cádiz",
       "count": 5
-    },
-    {
-      "slug": "granada",
-      "displayName": "Granada",
-      "count": 3
     },
     {
       "slug": "almeria",

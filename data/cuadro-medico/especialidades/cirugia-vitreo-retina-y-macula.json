@@ -2,6 +2,11 @@
   "slug": "cirugia-vitreo-retina-y-macula",
   "provincias": [
     {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 33
+    },
+    {
       "slug": "barcelona",
       "displayName": "Barcelona",
       "count": 10
@@ -20,6 +25,11 @@
       "slug": "murcia",
       "displayName": "Murcia",
       "count": 7
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 6
     },
     {
       "slug": "valencia",

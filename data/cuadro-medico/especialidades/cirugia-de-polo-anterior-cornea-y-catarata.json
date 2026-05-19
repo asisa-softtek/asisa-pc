@@ -22,11 +22,6 @@
       "count": 16
     },
     {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
-      "count": 16
-    },
-    {
       "slug": "malaga",
       "displayName": "Málaga",
       "count": 13
@@ -39,7 +34,7 @@
     {
       "slug": "a-coruna",
       "displayName": "A Coruña",
-      "count": 8
+      "count": 10
     },
     {
       "slug": "baleares",
@@ -55,6 +50,16 @@
       "slug": "huesca",
       "displayName": "Huesca",
       "count": 5
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 5
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 3
     },
     {
       "slug": "lugo",

@@ -2,11 +2,6 @@
   "slug": "laser-prostatico",
   "provincias": [
     {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
-      "count": 8
-    },
-    {
       "slug": "baleares",
       "displayName": "Baleares",
       "count": 6
@@ -15,6 +10,11 @@
       "slug": "a-coruna",
       "displayName": "A Coruña",
       "count": 3
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 1
     }
   ]
 }

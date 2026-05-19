@@ -2,6 +2,11 @@
   "slug": "cirugia-urologica-laparoscopica",
   "provincias": [
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 7
+    },
+    {
       "slug": "jaen",
       "displayName": "Jaén",
       "count": 4
@@ -29,6 +34,11 @@
     {
       "slug": "las-palmas",
       "displayName": "Las Palmas",
+      "count": 1
+    },
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
       "count": 1
     },
     {

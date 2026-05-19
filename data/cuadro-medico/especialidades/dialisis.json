@@ -2,6 +2,11 @@
   "slug": "dialisis",
   "provincias": [
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 1
+    },
+    {
       "slug": "albacete",
       "displayName": "Albacete",
       "count": 1

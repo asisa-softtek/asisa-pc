@@ -2,13 +2,18 @@
   "slug": "puericultura",
   "provincias": [
     {
-      "slug": "madrid",
-      "displayName": "Madrid",
-      "count": 17
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 5
     },
     {
       "slug": "badajoz",
       "displayName": "Badajoz",
+      "count": 1
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
       "count": 1
     },
     {

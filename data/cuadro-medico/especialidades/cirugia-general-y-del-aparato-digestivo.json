@@ -57,14 +57,14 @@
       "count": 46
     },
     {
-      "slug": "gerona",
-      "displayName": "Gerona",
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
       "count": 39
     },
     {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 32
+      "slug": "gerona",
+      "displayName": "Gerona",
+      "count": 39
     },
     {
       "slug": "cadiz",
@@ -212,6 +212,11 @@
       "count": 4
     },
     {
+      "slug": "ourense",
+      "displayName": "Ourense",
+      "count": 4
+    },
+    {
       "slug": "salamanca",
       "displayName": "Salamanca",
       "count": 4
@@ -234,11 +239,6 @@
     {
       "slug": "melilla",
       "displayName": "Melilla",
-      "count": 2
-    },
-    {
-      "slug": "ourense",
-      "displayName": "Ourense",
       "count": 2
     },
     {

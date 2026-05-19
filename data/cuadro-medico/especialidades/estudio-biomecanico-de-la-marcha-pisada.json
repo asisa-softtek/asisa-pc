@@ -2,6 +2,11 @@
   "slug": "estudio-biomecanico-de-la-marcha-pisada",
   "provincias": [
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 2
+    },
+    {
       "slug": "castellon",
       "displayName": "Castellón",
       "count": 2
@@ -32,11 +37,6 @@
       "count": 1
     },
     {
-      "slug": "cantabria",
-      "displayName": "Cantabria",
-      "count": 1
-    },
-    {
       "slug": "guipuzcoa",
       "displayName": "Guipúzcoa",
       "count": 1
@@ -64,6 +64,11 @@
     {
       "slug": "zamora",
       "displayName": "Zamora",
+      "count": 1
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
       "count": 1
     }
   ]

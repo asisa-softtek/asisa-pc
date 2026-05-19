@@ -7,16 +7,6 @@
       "count": 20
     },
     {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
-      "count": 14
-    },
-    {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 11
-    },
-    {
       "slug": "jaen",
       "displayName": "Jaén",
       "count": 9
@@ -27,6 +17,11 @@
       "count": 8
     },
     {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 5
+    },
+    {
       "slug": "leon",
       "displayName": "León",
       "count": 5
@@ -35,6 +30,11 @@
       "slug": "lerida",
       "displayName": "Lérida",
       "count": 5
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 4
     },
     {
       "slug": "pontevedra",

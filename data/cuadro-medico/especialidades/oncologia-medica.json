@@ -42,6 +42,11 @@
       "count": 6
     },
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 5
+    },
+    {
       "slug": "baleares",
       "displayName": "Baleares",
       "count": 5
@@ -95,11 +100,6 @@
       "slug": "tenerife",
       "displayName": "Tenerife",
       "count": 4
-    },
-    {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 3
     },
     {
       "slug": "caceres",

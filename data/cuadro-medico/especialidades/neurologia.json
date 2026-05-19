@@ -72,14 +72,14 @@
       "count": 12
     },
     {
-      "slug": "ciudad-real",
-      "displayName": "Ciudad Real",
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
       "count": 11
     },
     {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 10
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 11
     },
     {
       "slug": "badajoz",
@@ -172,6 +172,11 @@
       "count": 3
     },
     {
+      "slug": "ourense",
+      "displayName": "Ourense",
+      "count": 3
+    },
+    {
       "slug": "avila",
       "displayName": "Ávila",
       "count": 2
@@ -209,11 +214,6 @@
     {
       "slug": "caceres",
       "displayName": "Cáceres",
-      "count": 1
-    },
-    {
-      "slug": "ourense",
-      "displayName": "Ourense",
       "count": 1
     },
     {

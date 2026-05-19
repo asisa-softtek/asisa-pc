@@ -30,6 +30,11 @@
       "slug": "valencia",
       "displayName": "Valencia",
       "count": 1
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 1
     }
   ]
 }

@@ -2,11 +2,6 @@
   "slug": "aparato-digestivo-infantil",
   "provincias": [
     {
-      "slug": "madrid",
-      "displayName": "Madrid",
-      "count": 6
-    },
-    {
       "slug": "ceuta",
       "displayName": "Ceuta",
       "count": 3
@@ -29,16 +24,6 @@
     {
       "slug": "barcelona",
       "displayName": "Barcelona",
-      "count": 1
-    },
-    {
-      "slug": "granada",
-      "displayName": "Granada",
-      "count": 1
-    },
-    {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
       "count": 1
     },
     {

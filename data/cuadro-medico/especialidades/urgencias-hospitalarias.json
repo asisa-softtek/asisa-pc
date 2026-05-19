@@ -12,6 +12,11 @@
       "count": 51
     },
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 36
+    },
+    {
       "slug": "barcelona",
       "displayName": "Barcelona",
       "count": 15
@@ -65,11 +70,6 @@
       "slug": "sevilla",
       "displayName": "Sevilla",
       "count": 7
-    },
-    {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 6
     },
     {
       "slug": "murcia",
@@ -134,6 +134,11 @@
     {
       "slug": "guadalajara",
       "displayName": "Guadalajara",
+      "count": 2
+    },
+    {
+      "slug": "guipuzcoa",
+      "displayName": "Guipúzcoa",
       "count": 2
     },
     {

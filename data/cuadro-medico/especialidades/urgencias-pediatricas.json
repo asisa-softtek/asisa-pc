@@ -2,9 +2,9 @@
   "slug": "urgencias-pediatricas",
   "provincias": [
     {
-      "slug": "barcelona",
-      "displayName": "Barcelona",
-      "count": 8
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 11
     },
     {
       "slug": "alicante",
@@ -27,8 +27,8 @@
       "count": 4
     },
     {
-      "slug": "cadiz",
-      "displayName": "Cádiz",
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
       "count": 3
     },
     {
@@ -77,6 +77,11 @@
       "count": 1
     },
     {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 1
+    },
+    {
       "slug": "leon",
       "displayName": "León",
       "count": 1
@@ -84,11 +89,6 @@
     {
       "slug": "lerida",
       "displayName": "Lérida",
-      "count": 1
-    },
-    {
-      "slug": "murcia",
-      "displayName": "Murcia",
       "count": 1
     },
     {

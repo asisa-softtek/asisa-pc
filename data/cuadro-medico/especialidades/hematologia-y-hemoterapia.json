@@ -42,6 +42,11 @@
       "count": 15
     },
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 11
+    },
+    {
       "slug": "malaga",
       "displayName": "Málaga",
       "count": 11
@@ -65,11 +70,6 @@
       "slug": "pontevedra",
       "displayName": "Pontevedra",
       "count": 8
-    },
-    {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 7
     },
     {
       "slug": "valladolid",

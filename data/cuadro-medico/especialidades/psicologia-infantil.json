@@ -2,6 +2,11 @@
   "slug": "psicologia-infantil",
   "provincias": [
     {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 5
+    },
+    {
       "slug": "tarragona",
       "displayName": "Tarragona",
       "count": 3
@@ -14,11 +19,6 @@
     {
       "slug": "guipuzcoa",
       "displayName": "Guipúzcoa",
-      "count": 1
-    },
-    {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
       "count": 1
     }
   ]

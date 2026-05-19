@@ -12,14 +12,24 @@
       "count": 14
     },
     {
-      "slug": "valencia",
-      "displayName": "Valencia",
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 13
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
       "count": 12
     },
     {
       "slug": "tarragona",
       "displayName": "Tarragona",
       "count": 11
+    },
+    {
+      "slug": "gerona",
+      "displayName": "Gerona",
+      "count": 9
     },
     {
       "slug": "alicante",
@@ -42,14 +52,14 @@
       "count": 7
     },
     {
-      "slug": "murcia",
-      "displayName": "Murcia",
-      "count": 7
-    },
-    {
       "slug": "valladolid",
       "displayName": "Valladolid",
       "count": 7
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 6
     },
     {
       "slug": "toledo",
@@ -70,6 +80,11 @@
       "slug": "guipuzcoa",
       "displayName": "Guipúzcoa",
       "count": 5
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 4
     },
     {
       "slug": "almeria",
@@ -132,8 +147,18 @@
       "count": 2
     },
     {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 2
+    },
+    {
       "slug": "lugo",
       "displayName": "Lugo",
+      "count": 2
+    },
+    {
+      "slug": "ourense",
+      "displayName": "Ourense",
       "count": 2
     },
     {
@@ -174,11 +199,6 @@
     {
       "slug": "melilla",
       "displayName": "Melilla",
-      "count": 1
-    },
-    {
-      "slug": "ourense",
-      "displayName": "Ourense",
       "count": 1
     }
   ]

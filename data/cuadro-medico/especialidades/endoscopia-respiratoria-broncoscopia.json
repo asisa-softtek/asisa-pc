@@ -2,11 +2,6 @@
   "slug": "endoscopia-respiratoria-broncoscopia",
   "provincias": [
     {
-      "slug": "madrid",
-      "displayName": "Madrid",
-      "count": 31
-    },
-    {
       "slug": "baleares",
       "displayName": "Baleares",
       "count": 6
@@ -17,9 +12,19 @@
       "count": 6
     },
     {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
-      "count": 5
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 4
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 4
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 4
     },
     {
       "slug": "burgos",
@@ -42,8 +47,8 @@
       "count": 1
     },
     {
-      "slug": "leon",
-      "displayName": "León",
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
       "count": 1
     },
     {

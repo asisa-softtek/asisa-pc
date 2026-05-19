@@ -2,19 +2,24 @@
   "slug": "rehabilitacion-del-suelo-pelvico",
   "provincias": [
     {
-      "slug": "murcia",
-      "displayName": "Murcia",
-      "count": 8
-    },
-    {
       "slug": "lerida",
       "displayName": "Lérida",
+      "count": 6
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
       "count": 6
     },
     {
       "slug": "castellon",
       "displayName": "Castellón",
       "count": 4
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 3
     },
     {
       "slug": "albacete",
@@ -29,11 +34,6 @@
     {
       "slug": "ciudad-real",
       "displayName": "Ciudad Real",
-      "count": 2
-    },
-    {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
       "count": 2
     },
     {

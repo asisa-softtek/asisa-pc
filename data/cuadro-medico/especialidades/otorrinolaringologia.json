@@ -64,7 +64,7 @@
     {
       "slug": "a-coruna",
       "displayName": "A Coruña",
-      "count": 26
+      "count": 29
     },
     {
       "slug": "gerona",
@@ -227,6 +227,11 @@
       "count": 3
     },
     {
+      "slug": "ourense",
+      "displayName": "Ourense",
+      "count": 2
+    },
+    {
       "slug": "salamanca",
       "displayName": "Salamanca",
       "count": 2
@@ -234,11 +239,6 @@
     {
       "slug": "cuenca",
       "displayName": "Cuenca",
-      "count": 1
-    },
-    {
-      "slug": "ourense",
-      "displayName": "Ourense",
       "count": 1
     },
     {

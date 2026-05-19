@@ -2,16 +2,6 @@
   "slug": "radiologia-convencional",
   "provincias": [
     {
-      "slug": "madrid",
-      "displayName": "Madrid",
-      "count": 62
-    },
-    {
-      "slug": "murcia",
-      "displayName": "Murcia",
-      "count": 46
-    },
-    {
       "slug": "alicante",
       "displayName": "Alicante",
       "count": 40
@@ -22,14 +12,14 @@
       "count": 35
     },
     {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 34
+    },
+    {
       "slug": "valencia",
       "displayName": "Valencia",
       "count": 28
-    },
-    {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
-      "count": 26
     },
     {
       "slug": "malaga",
@@ -97,9 +87,9 @@
       "count": 8
     },
     {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 7
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 8
     },
     {
       "slug": "valladolid",
@@ -110,6 +100,11 @@
       "slug": "zaragoza",
       "displayName": "Zaragoza",
       "count": 7
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 6
     },
     {
       "slug": "huesca",
@@ -127,13 +122,33 @@
       "count": 5
     },
     {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 5
+    },
+    {
       "slug": "lerida",
       "displayName": "Lérida",
       "count": 5
     },
     {
+      "slug": "ourense",
+      "displayName": "Ourense",
+      "count": 5
+    },
+    {
       "slug": "cantabria",
       "displayName": "Cantabria",
+      "count": 4
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 4
+    },
+    {
+      "slug": "jaen",
+      "displayName": "Jaén",
       "count": 4
     },
     {
@@ -167,19 +182,9 @@
       "count": 3
     },
     {
-      "slug": "lugo",
-      "displayName": "Lugo",
-      "count": 2
-    },
-    {
       "slug": "palencia",
       "displayName": "Palencia",
       "count": 2
-    },
-    {
-      "slug": "ourense",
-      "displayName": "Ourense",
-      "count": 1
     }
   ]
 }

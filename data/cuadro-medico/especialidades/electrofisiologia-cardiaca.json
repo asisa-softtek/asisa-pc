@@ -17,6 +17,11 @@
       "count": 2
     },
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 1
+    },
+    {
       "slug": "cantabria",
       "displayName": "Cantabria",
       "count": 1
@@ -27,6 +32,11 @@
       "count": 1
     },
     {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 1
+    },
+    {
       "slug": "leon",
       "displayName": "León",
       "count": 1
@@ -34,11 +44,6 @@
     {
       "slug": "madrid",
       "displayName": "Madrid",
-      "count": 1
-    },
-    {
-      "slug": "murcia",
-      "displayName": "Murcia",
       "count": 1
     }
   ]

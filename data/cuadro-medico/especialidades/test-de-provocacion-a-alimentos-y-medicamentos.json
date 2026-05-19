@@ -2,23 +2,13 @@
   "slug": "test-de-provocacion-a-alimentos-y-medicamentos",
   "provincias": [
     {
-      "slug": "barcelona",
-      "displayName": "Barcelona",
-      "count": 11
-    },
-    {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
-      "count": 8
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 7
     },
     {
       "slug": "leon",
       "displayName": "León",
-      "count": 4
-    },
-    {
-      "slug": "murcia",
-      "displayName": "Murcia",
       "count": 4
     },
     {

@@ -32,14 +32,14 @@
       "count": 2
     },
     {
-      "slug": "cadiz",
-      "displayName": "Cádiz",
-      "count": 2
-    },
-    {
       "slug": "huelva",
       "displayName": "Huelva",
       "count": 2
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 1
     },
     {
       "slug": "almeria",
@@ -49,6 +49,11 @@
     {
       "slug": "castellon",
       "displayName": "Castellón",
+      "count": 1
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
       "count": 1
     },
     {

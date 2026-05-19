@@ -2,14 +2,14 @@
   "slug": "ecografia-ginecologica",
   "provincias": [
     {
-      "slug": "madrid",
-      "displayName": "Madrid",
-      "count": 249
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 69
     },
     {
-      "slug": "barcelona",
-      "displayName": "Barcelona",
-      "count": 125
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 46
     },
     {
       "slug": "sevilla",
@@ -27,6 +27,16 @@
       "count": 35
     },
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 34
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 29
+    },
+    {
       "slug": "tarragona",
       "displayName": "Tarragona",
       "count": 29
@@ -35,6 +45,11 @@
       "slug": "zaragoza",
       "displayName": "Zaragoza",
       "count": 22
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 18
     },
     {
       "slug": "toledo",
@@ -124,6 +139,11 @@
     {
       "slug": "cantabria",
       "displayName": "Cantabria",
+      "count": 1
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
       "count": 1
     }
   ]

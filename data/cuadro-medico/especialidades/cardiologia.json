@@ -57,14 +57,14 @@
       "count": 43
     },
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 40
+    },
+    {
       "slug": "las-palmas",
       "displayName": "Las Palmas",
       "count": 39
-    },
-    {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 30
     },
     {
       "slug": "gerona",
@@ -227,6 +227,11 @@
       "count": 3
     },
     {
+      "slug": "ourense",
+      "displayName": "Ourense",
+      "count": 3
+    },
+    {
       "slug": "soria",
       "displayName": "Soria",
       "count": 3
@@ -244,11 +249,6 @@
     {
       "slug": "cuenca",
       "displayName": "Cuenca",
-      "count": 2
-    },
-    {
-      "slug": "ourense",
-      "displayName": "Ourense",
       "count": 2
     }
   ]

@@ -22,6 +22,16 @@
       "count": 7
     },
     {
+      "slug": "gerona",
+      "displayName": "Gerona",
+      "count": 7
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 5
+    },
+    {
       "slug": "huesca",
       "displayName": "Huesca",
       "count": 4
@@ -40,6 +50,11 @@
       "slug": "tarragona",
       "displayName": "Tarragona",
       "count": 3
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 2
     },
     {
       "slug": "leon",
@@ -69,11 +84,6 @@
     {
       "slug": "melilla",
       "displayName": "Melilla",
-      "count": 1
-    },
-    {
-      "slug": "palencia",
-      "displayName": "Palencia",
       "count": 1
     }
   ]

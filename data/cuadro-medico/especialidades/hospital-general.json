@@ -152,6 +152,11 @@
       "count": 2
     },
     {
+      "slug": "ourense",
+      "displayName": "Ourense",
+      "count": 2
+    },
+    {
       "slug": "toledo",
       "displayName": "Toledo",
       "count": 2
@@ -204,11 +209,6 @@
     {
       "slug": "la-rioja",
       "displayName": "La Rioja",
-      "count": 1
-    },
-    {
-      "slug": "ourense",
-      "displayName": "Ourense",
       "count": 1
     },
     {

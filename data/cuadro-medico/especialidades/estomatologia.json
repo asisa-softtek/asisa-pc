@@ -142,11 +142,6 @@
       "count": 22
     },
     {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 21
-    },
-    {
       "slug": "alava",
       "displayName": "Álava",
       "count": 20
@@ -155,6 +150,11 @@
       "slug": "albacete",
       "displayName": "Albacete",
       "count": 20
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 19
     },
     {
       "slug": "gerona",
@@ -179,7 +179,7 @@
     {
       "slug": "ourense",
       "displayName": "Ourense",
-      "count": 15
+      "count": 14
     },
     {
       "slug": "zamora",

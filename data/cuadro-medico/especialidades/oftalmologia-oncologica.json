@@ -5,6 +5,11 @@
       "slug": "alicante",
       "displayName": "Alicante",
       "count": 3
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 1
     }
   ]
 }

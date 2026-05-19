@@ -7,18 +7,23 @@
       "count": 60
     },
     {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 33
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 18
+    },
+    {
       "slug": "a-coruna",
       "displayName": "A Coruña",
-      "count": 13
+      "count": 12
     },
     {
       "slug": "ciudad-real",
       "displayName": "Ciudad Real",
-      "count": 12
-    },
-    {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
       "count": 12
     },
     {
@@ -32,13 +37,8 @@
       "count": 9
     },
     {
-      "slug": "murcia",
-      "displayName": "Murcia",
-      "count": 8
-    },
-    {
-      "slug": "leon",
-      "displayName": "León",
+      "slug": "granada",
+      "displayName": "Granada",
       "count": 6
     },
     {
@@ -52,6 +52,11 @@
       "count": 5
     },
     {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 5
+    },
+    {
       "slug": "huesca",
       "displayName": "Huesca",
       "count": 4
@@ -62,18 +67,8 @@
       "count": 4
     },
     {
-      "slug": "palencia",
-      "displayName": "Palencia",
-      "count": 4
-    },
-    {
       "slug": "segovia",
       "displayName": "Segovia",
-      "count": 4
-    },
-    {
-      "slug": "teruel",
-      "displayName": "Teruel",
       "count": 4
     },
     {
@@ -89,6 +84,11 @@
     {
       "slug": "ceuta",
       "displayName": "Ceuta",
+      "count": 3
+    },
+    {
+      "slug": "jaen",
+      "displayName": "Jaén",
       "count": 3
     },
     {

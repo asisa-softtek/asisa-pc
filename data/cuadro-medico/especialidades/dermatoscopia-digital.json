@@ -2,6 +2,11 @@
   "slug": "dermatoscopia-digital",
   "provincias": [
     {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 6
+    },
+    {
       "slug": "madrid",
       "displayName": "Madrid",
       "count": 6
@@ -9,6 +14,16 @@
     {
       "slug": "barcelona",
       "displayName": "Barcelona",
+      "count": 1
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 1
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
       "count": 1
     },
     {

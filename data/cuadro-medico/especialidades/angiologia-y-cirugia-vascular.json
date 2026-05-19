@@ -77,6 +77,11 @@
       "count": 11
     },
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 10
+    },
+    {
       "slug": "murcia",
       "displayName": "Murcia",
       "count": 8
@@ -115,11 +120,6 @@
       "slug": "valladolid",
       "displayName": "Valladolid",
       "count": 6
-    },
-    {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 5
     },
     {
       "slug": "albacete",

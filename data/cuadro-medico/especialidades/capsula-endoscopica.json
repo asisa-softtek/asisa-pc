@@ -10,6 +10,11 @@
       "slug": "sevilla",
       "displayName": "Sevilla",
       "count": 3
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 2
     }
   ]
 }

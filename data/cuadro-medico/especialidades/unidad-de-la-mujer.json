@@ -12,18 +12,23 @@
       "count": 5
     },
     {
-      "slug": "cadiz",
-      "displayName": "Cádiz",
-      "count": 4
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 5
+    },
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 5
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 1
     },
     {
       "slug": "pontevedra",
       "displayName": "Pontevedra",
-      "count": 1
-    },
-    {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
       "count": 1
     },
     {

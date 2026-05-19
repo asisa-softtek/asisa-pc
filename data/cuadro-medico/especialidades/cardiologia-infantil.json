@@ -12,14 +12,14 @@
       "count": 5
     },
     {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
-      "count": 4
-    },
-    {
       "slug": "valladolid",
       "displayName": "Valladolid",
       "count": 3
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 2
     },
     {
       "slug": "baleares",
@@ -29,6 +29,16 @@
     {
       "slug": "cadiz",
       "displayName": "Cádiz",
+      "count": 2
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 2
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
       "count": 2
     },
     {
@@ -47,11 +57,6 @@
       "count": 1
     },
     {
-      "slug": "granada",
-      "displayName": "Granada",
-      "count": 1
-    },
-    {
       "slug": "huelva",
       "displayName": "Huelva",
       "count": 1
@@ -59,6 +64,11 @@
     {
       "slug": "huesca",
       "displayName": "Huesca",
+      "count": 1
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
       "count": 1
     },
     {

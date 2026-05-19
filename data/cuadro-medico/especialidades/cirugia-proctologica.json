@@ -7,14 +7,14 @@
       "count": 34
     },
     {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 13
+    },
+    {
       "slug": "barcelona",
       "displayName": "Barcelona",
       "count": 11
-    },
-    {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
-      "count": 10
     },
     {
       "slug": "baleares",
@@ -72,6 +72,11 @@
       "count": 3
     },
     {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 3
+    },
+    {
       "slug": "lerida",
       "displayName": "Lérida",
       "count": 3
@@ -92,6 +97,11 @@
       "count": 2
     },
     {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 2
+    },
+    {
       "slug": "leon",
       "displayName": "León",
       "count": 2
@@ -100,6 +110,16 @@
       "slug": "soria",
       "displayName": "Soria",
       "count": 2
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 1
+    },
+    {
+      "slug": "gerona",
+      "displayName": "Gerona",
+      "count": 1
     },
     {
       "slug": "huesca",

@@ -52,6 +52,11 @@
       "count": 52
     },
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 51
+    },
+    {
       "slug": "murcia",
       "displayName": "Murcia",
       "count": 49
@@ -65,11 +70,6 @@
       "slug": "gerona",
       "displayName": "Gerona",
       "count": 46
-    },
-    {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 40
     },
     {
       "slug": "tenerife",

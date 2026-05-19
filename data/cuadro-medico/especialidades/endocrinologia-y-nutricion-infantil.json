@@ -2,13 +2,8 @@
   "slug": "endocrinologia-y-nutricion-infantil",
   "provincias": [
     {
-      "slug": "madrid",
-      "displayName": "Madrid",
-      "count": 4
-    },
-    {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
       "count": 2
     },
     {
@@ -24,11 +19,6 @@
     {
       "slug": "huelva",
       "displayName": "Huelva",
-      "count": 1
-    },
-    {
-      "slug": "murcia",
-      "displayName": "Murcia",
       "count": 1
     },
     {

@@ -49,7 +49,7 @@
     {
       "slug": "a-coruna",
       "displayName": "A Coruña",
-      "count": 30
+      "count": 32
     },
     {
       "slug": "valencia",
@@ -187,6 +187,11 @@
       "count": 4
     },
     {
+      "slug": "ourense",
+      "displayName": "Ourense",
+      "count": 4
+    },
+    {
       "slug": "almeria",
       "displayName": "Almería",
       "count": 3
@@ -204,11 +209,6 @@
     {
       "slug": "lugo",
       "displayName": "Lugo",
-      "count": 3
-    },
-    {
-      "slug": "ourense",
-      "displayName": "Ourense",
       "count": 3
     },
     {

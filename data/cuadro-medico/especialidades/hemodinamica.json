@@ -7,8 +7,8 @@
       "count": 6
     },
     {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
+      "slug": "malaga",
+      "displayName": "Málaga",
       "count": 5
     },
     {
@@ -17,13 +17,13 @@
       "count": 4
     },
     {
-      "slug": "almeria",
-      "displayName": "Almería",
-      "count": 3
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 4
     },
     {
-      "slug": "murcia",
-      "displayName": "Murcia",
+      "slug": "almeria",
+      "displayName": "Almería",
       "count": 3
     },
     {
@@ -32,8 +32,8 @@
       "count": 1
     },
     {
-      "slug": "leon",
-      "displayName": "León",
+      "slug": "granada",
+      "displayName": "Granada",
       "count": 1
     }
   ]

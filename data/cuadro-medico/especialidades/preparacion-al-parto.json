@@ -7,9 +7,19 @@
       "count": 17
     },
     {
-      "slug": "murcia",
-      "displayName": "Murcia",
-      "count": 14
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 11
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 8
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 6
     },
     {
       "slug": "a-coruna",
@@ -19,6 +29,11 @@
     {
       "slug": "badajoz",
       "displayName": "Badajoz",
+      "count": 4
+    },
+    {
+      "slug": "burgos",
+      "displayName": "Burgos",
       "count": 4
     },
     {
@@ -47,6 +62,16 @@
       "count": 3
     },
     {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 3
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 3
+    },
+    {
       "slug": "huesca",
       "displayName": "Huesca",
       "count": 3
@@ -59,11 +84,6 @@
     {
       "slug": "la-rioja",
       "displayName": "La Rioja",
-      "count": 2
-    },
-    {
-      "slug": "leon",
-      "displayName": "León",
       "count": 2
     },
     {

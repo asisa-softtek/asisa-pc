@@ -7,9 +7,14 @@
       "count": 8
     },
     {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
       "count": 6
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 5
     },
     {
       "slug": "huesca",
@@ -20,11 +25,6 @@
       "slug": "baleares",
       "displayName": "Baleares",
       "count": 2
-    },
-    {
-      "slug": "granada",
-      "displayName": "Granada",
-      "count": 1
     },
     {
       "slug": "lerida",

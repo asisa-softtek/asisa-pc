@@ -2,9 +2,9 @@
   "slug": "ecocardiograma",
   "provincias": [
     {
-      "slug": "madrid",
-      "displayName": "Madrid",
-      "count": 100
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 34
     },
     {
       "slug": "barcelona",
@@ -35,6 +35,16 @@
       "slug": "ciudad-real",
       "displayName": "Ciudad Real",
       "count": 10
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 9
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 8
     },
     {
       "slug": "tarragona",
@@ -95,6 +105,11 @@
       "slug": "lugo",
       "displayName": "Lugo",
       "count": 3
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 2
     },
     {
       "slug": "jaen",

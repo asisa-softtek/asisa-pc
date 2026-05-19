@@ -67,14 +67,14 @@
       "count": 61
     },
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 59
+    },
+    {
       "slug": "las-palmas",
       "displayName": "Las Palmas",
       "count": 55
-    },
-    {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 53
     },
     {
       "slug": "valladolid",
@@ -217,6 +217,11 @@
       "count": 8
     },
     {
+      "slug": "ourense",
+      "displayName": "Ourense",
+      "count": 8
+    },
+    {
       "slug": "palencia",
       "displayName": "Palencia",
       "count": 8
@@ -230,11 +235,6 @@
       "slug": "zamora",
       "displayName": "Zamora",
       "count": 6
-    },
-    {
-      "slug": "ourense",
-      "displayName": "Ourense",
-      "count": 3
     },
     {
       "slug": "melilla",

@@ -1,0 +1,10 @@
+{
+  "slug": "toxina-botulinica",
+  "provincias": [
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 5
+    }
+  ]
+}

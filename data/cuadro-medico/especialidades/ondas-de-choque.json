@@ -5,6 +5,11 @@
       "slug": "caceres",
       "displayName": "Cáceres",
       "count": 1
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 1
     }
   ]
 }

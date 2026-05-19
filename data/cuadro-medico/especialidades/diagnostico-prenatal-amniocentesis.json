@@ -2,9 +2,24 @@
   "slug": "diagnostico-prenatal-amniocentesis",
   "provincias": [
     {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 24
+    },
+    {
       "slug": "barcelona",
       "displayName": "Barcelona",
       "count": 11
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 11
+    },
+    {
+      "slug": "toledo",
+      "displayName": "Toledo",
+      "count": 10
     },
     {
       "slug": "avila",
@@ -19,6 +34,11 @@
     {
       "slug": "burgos",
       "displayName": "Burgos",
+      "count": 5
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
       "count": 5
     },
     {
@@ -37,6 +57,16 @@
       "count": 5
     },
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 4
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 4
+    },
+    {
       "slug": "valencia",
       "displayName": "Valencia",
       "count": 3
@@ -44,16 +74,6 @@
     {
       "slug": "caceres",
       "displayName": "Cáceres",
-      "count": 2
-    },
-    {
-      "slug": "palencia",
-      "displayName": "Palencia",
-      "count": 2
-    },
-    {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
       "count": 2
     },
     {

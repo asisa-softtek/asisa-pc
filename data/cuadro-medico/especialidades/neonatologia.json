@@ -2,6 +2,11 @@
   "slug": "neonatologia",
   "provincias": [
     {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 4
+    },
+    {
       "slug": "valladolid",
       "displayName": "Valladolid",
       "count": 3
@@ -14,11 +19,6 @@
     {
       "slug": "huelva",
       "displayName": "Huelva",
-      "count": 1
-    },
-    {
-      "slug": "murcia",
-      "displayName": "Murcia",
       "count": 1
     }
   ]
