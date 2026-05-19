@@ -157,9 +157,55 @@ export default function handler(req, res) {
     // OTHER locations: same providerCode but different providerLocalicationCode.
     // Empty in current data; populates automatically when data is enriched.
     const allLocs = getProviderLocations(providerCode);
-    const otherLocations = [...allLocs.values()]
+    let otherLocations = [...allLocs.values()]
       .filter(({ entry }) => entry.providerLocalicationCode !== providerLocalicationCode)
       .map(({ entry }) => mapLocationSummary(entry));
+
+    // DEMO MODE: ?demo=1 injects 2 synthetic other locations so the UI section
+    // can be previewed before the data is enriched with multi-location info.
+    // Remove this branch (and the otherLocations let → const) once real data arrives.
+    if (req.query.demo === '1' && otherLocations.length === 0) {
+      otherLocations = [
+        {
+          providerLocalicationCode: -1,
+          providerType: 3,
+          doctorType: 0,
+          businessGroup: false,
+          parentDescription: 'Hospital La Paz',
+          name: 'Hospital La Paz',
+          speciality: detail.specialities[0] || '',
+          address: 'Calle Postas 7',
+          postalCode: '28002',
+          city: 'Madrid',
+          phone: detail.phone,
+          lat: detail.lat,
+          lon: detail.lon,
+          onlineAppointment: true,
+          videoConsultation: true,
+          ePrescription: true,
+          languages: [],
+        },
+        {
+          providerLocalicationCode: -2,
+          providerType: 3,
+          doctorType: 0,
+          businessGroup: false,
+          parentDescription: 'Hospital Quirón Salud',
+          name: 'Hospital Quirón Salud',
+          speciality: detail.specialities[0] || '',
+          address: 'Calle Estambul 30',
+          postalCode: '28232',
+          city: 'Alcorcón',
+          phone: detail.phone,
+          lat: detail.lat,
+          lon: detail.lon,
+          onlineAppointment: false,
+          videoConsultation: false,
+          ePrescription: true,
+          languages: [],
+        },
+      ];
+    }
 
     res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
     return res.status(200).json({

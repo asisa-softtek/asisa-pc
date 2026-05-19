@@ -186,8 +186,10 @@ export default function decorate(block) {
 
   block.innerHTML = '<p>Cargando médico…</p>';
 
+  const demo = new URLSearchParams(window.location.search).get('demo') === '1' ? '&demo=1' : '';
+
   Promise.all([
-    fetch(`${API_BASE}/api/doctor?key=${key}`).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
+    fetch(`${API_BASE}/api/doctor?key=${key}${demo}`).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
     fetch(`${API_BASE}/api/provincias`).then((r) => r.json()),
   ])
     .then(([d, provincias]) => {
