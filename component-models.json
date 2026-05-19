@@ -198,6 +198,7 @@
   { "id": "cuadro-medico-otros-medicos", "fields": [] },
   { "id": "cuadro-medico-spec-localizacion", "fields": [] },
   { "id": "cuadro-medico-centro-specs", "fields": [] },
+  { "id": "cuadro-medico-ficha-centro", "fields": [] },
   {
     "id": "hero",
     "fields": [

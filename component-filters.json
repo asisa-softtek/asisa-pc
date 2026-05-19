@@ -24,7 +24,8 @@
       "cuadro-medico-ficha-doctor",
       "cuadro-medico-otros-medicos",
       "cuadro-medico-spec-localizacion",
-      "cuadro-medico-centro-specs"
+      "cuadro-medico-centro-specs",
+      "cuadro-medico-ficha-centro"
     ]
   },
   {

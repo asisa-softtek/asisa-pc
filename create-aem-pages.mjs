@@ -6,6 +6,7 @@
  * Uso:
  *   AEM_TOKEN="login:eyJ..." node create-aem-pages.mjs --provincias
  *   AEM_TOKEN="login:eyJ..." node create-aem-pages.mjs --doctores
+ *   AEM_TOKEN="login:eyJ..." node create-aem-pages.mjs --centros
  *   AEM_TOKEN="login:eyJ..." node create-aem-pages.mjs --especialidades
  *   AEM_TOKEN="login:eyJ..." node create-aem-pages.mjs --all
  */
@@ -29,6 +30,7 @@ if (!TOKEN) { console.error('AEM_TOKEN requerido'); process.exit(1); }
 const args = process.argv.slice(2);
 const DO_PROVINCIAS = args.includes('--provincias') || args.includes('--all');
 const DO_DOCTORES = args.includes('--doctores') || args.includes('--all');
+const DO_CENTROS = args.includes('--centros') || args.includes('--all');
 const DO_ESPECIALIDADES = args.includes('--especialidades') || args.includes('--all');
 
 function sleep(ms) { return new Promise((r) => { setTimeout(r, ms); }); }
@@ -153,6 +155,22 @@ async function main() {
           `${AEM_CONTENT}/cuadro-medico/d`,
           key,
           `/cuadro-medico/d/${key}`,
+        );
+      });
+    }
+  }
+
+  if (DO_CENTROS) {
+    const indexPath = join(__dirname, 'data/cuadro-medico/centros-index.json');
+    if (existsSync(indexPath)) {
+      const keys = Object.keys(JSON.parse(readFileSync(indexPath, 'utf8')));
+      console.log(`\nCreando ${keys.length} páginas de centro...`);
+      await processInBatches(keys, CONCURRENCY, async (key) => {
+        await createPage(
+          `${AEM_CONTENT}/cuadro-medico/centro`,
+          `${AEM_CONTENT}/cuadro-medico/c`,
+          key,
+          `/cuadro-medico/c/${key}`,
         );
       });
     }
