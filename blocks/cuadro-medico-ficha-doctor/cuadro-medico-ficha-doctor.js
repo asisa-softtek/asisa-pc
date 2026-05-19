@@ -121,10 +121,9 @@ function renderMainCard(d, provinciaDisplayName) {
   </div>`;
 }
 
-function renderSpecCard(d, provinciaDisplayName) {
-  const speciality = formatName(d.specialities?.[0] || '');
-  const citaUrl = buildCitaUrl(d, provinciaDisplayName);
-  const ctaLabel = d.onlineAppointment ? 'Pedir cita online' : 'Pedir cita';
+function renderSpecCard(d, speciality, phone, online, provinciaDisplayName) {
+  const citaUrl = buildCitaUrl({ ...d, phone, onlineAppointment: online }, provinciaDisplayName);
+  const ctaLabel = online ? 'Pedir cita online' : 'Pedir cita';
 
   return `<div class="cmp-medical-detail__first-block cmp-medical-detail--blue">
     <div class="cmp-medical-detail__title-block">
@@ -133,10 +132,52 @@ function renderSpecCard(d, provinciaDisplayName) {
       </div>
     </div>
     <div class="cmp-medical-detail__buttons-block">
-      ${d.phone ? `<div class="button-cmp"><a href="tel:${d.phone}" class="btn button-cmp__text button-cmp__text--link"><i class="icon-phone"></i>${d.phone}</a></div>` : ''}
+      ${phone ? `<div class="button-cmp"><a href="tel:${phone}" class="btn button-cmp__text button-cmp__text--link"><i class="icon-phone"></i>${phone}</a></div>` : ''}
       <div class="button-cmp"><a href="${citaUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--primary">${ctaLabel}</a></div>
     </div>
   </div>`;
+}
+
+function renderOtherLocationCard(loc) {
+  const mapsUrl = (loc.lat && loc.lon) ? `https://www.google.com/maps/dir/?api=1&destination=${loc.lat},${loc.lon}` : '';
+  const addressLine = [loc.address, loc.postalCode, loc.city].filter(Boolean).join(', ');
+  const centerName = loc.parentDescription ? formatName(loc.parentDescription) : formatName(loc.name || '');
+  const tags = [];
+  if (loc.onlineAppointment) tags.push('<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Cita online</div></div>');
+  if (loc.videoConsultation) tags.push('<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Videoconsulta</div></div>');
+  if (loc.ePrescription) tags.push('<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Receta electrónica</div></div>');
+
+  return `<div class="cmp-medical-detail__first-block">
+    <div class="cmp-medical-detail__title-block">
+      <div class="cmp-medical-detail__title-block__tags">
+        <div class="cmp-medical-detail__title-block__tags--item">
+          <div class="cmp-tag-template cmp-tag-template--blue">
+            <div class="cmp-tag-template__text">CENTRO MÉDICO</div>
+          </div>
+        </div>
+      </div>
+      <div class="cmp-title">
+        <h3 class="cmp-title__text">${centerName}</h3>
+      </div>
+    </div>
+    <div class="cmp-medical-detail__address-block">
+      ${addressLine ? `<div class="cmp-medical-detail__address-block--name"><i class="icon-marker-02"></i>${formatName(addressLine)}</div>` : ''}
+      <div class="cmp-medical-detail__address-block__location">
+        ${mapsUrl ? `<div class="cmp-medical-detail__address-block__location--reach"><div class="button-cmp"><a href="${mapsUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--link button-location"><i class="icon-map-04 icon-large"></i>Cómo llegar</a></div></div>` : ''}
+      </div>
+      ${tags.length ? `<div class="cmp-medical-detail__address-block__tags">${tags.join('')}</div>` : ''}
+    </div>
+    ${loc.phone ? `<div class="cmp-medical-detail__buttons-block">
+      <div class="button-cmp"><a href="tel:${loc.phone}" class="btn button-cmp__text button-cmp__text--link"><i class="icon-phone"></i>${loc.phone}</a></div>
+    </div>` : ''}
+  </div>`;
+}
+
+function renderOtherLocations(d, provinciaDisplayName) {
+  if (!d.otherLocations?.length) return '';
+  const docName = formatPersonName(d.name);
+  const sections = d.otherLocations.map((loc) => `${renderOtherLocationCard(loc)}${renderSpecCard(d, formatName(loc.speciality || d.specialities?.[0] || ''), loc.phone, loc.onlineAppointment, provinciaDisplayName)}`).join('');
+  return `<h2 class="cmp-medical-detail__subtitle">${docName} también trabaja en estos centros</h2>${sections}`;
 }
 
 export default function decorate(block) {
@@ -153,9 +194,11 @@ export default function decorate(block) {
       const provincia = provincias.find((p) => p.slug === d.provinceSlug);
       const provinciaDisplayName = provincia?.displayName || d.provinceSlug;
 
+      const mainSpec = formatName(d.specialities?.[0] || '');
       block.innerHTML = `<div class="cmp-medical-detail">
         ${renderMainCard(d, provinciaDisplayName)}
-        ${renderSpecCard(d, provinciaDisplayName)}
+        ${renderSpecCard(d, mainSpec, d.phone, d.onlineAppointment, provinciaDisplayName)}
+        ${renderOtherLocations(d, provinciaDisplayName)}
       </div>`;
     })
     .catch(() => {

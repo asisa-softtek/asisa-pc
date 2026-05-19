@@ -1,10 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/etc.clientlibs/:path*",
-      "destination": "https://www.asisa.es/etc.clientlibs/:path*"
-    },
-    {
       "source": "/markup",
       "destination": "/api/markup"
     },
