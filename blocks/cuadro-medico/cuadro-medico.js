@@ -1,15 +1,18 @@
 /**
  * Bloque EDS "cuadro-medico".
  *
- * Render dinámico desde URL (BYOM):
+ * Render dinámico desde URL (BYOM). Lee window.location.pathname:
  *   /cuadro-medico/p/<prov>            → todos los providers de la provincia
  *   /cuadro-medico/p/<prov>/pe/<spec>  → providers filtrados por especialidad
- *   /cuadro-medico/e/<spec>            → fallback (especialidad sin provincia: oculto)
  *
- * UI:
- *  - Tabs Profesionales (N) / Centros médicos (N)
- *  - Grid 2 columnas
- *  - Paginación
+ * UI 100% con clases del design system de ASISA (clientlib-site.min.css):
+ *   - .cmp-medical-picture-result__*  → wrapper, header
+ *   - .cmp-tabs__*                    → tabs Profesionales / Centros
+ *   - .cmp-medical-detail__*          → tarjeta de cada provider
+ *   - .cmp-tag-template--*            → etiquetas
+ *   - .button-cmp / .btn              → botones
+ *
+ * No añade CSS propio.
  */
 
 const API_BASE = 'https://asisa-pc.vercel.app';
@@ -61,26 +64,24 @@ function maskPhone(phone) {
   return `${digits.slice(0, 1)}X XXX XXX`;
 }
 
-function namePrefix(name) {
-  if (!name) return '';
-  // Heuristic: if first given name (after comma) ends in 'a' or matches feminine markers → Dra.
-  // Spanish providers are typically "APELLIDOS, NOMBRE"
-  const parts = name.split(',');
-  const given = (parts[1] || parts[0] || '').trim().split(/\s+/)[0] || '';
-  const femEndings = /a$/i;
-  return femEndings.test(given) ? 'Dra.' : 'Dr.';
-}
-
 function formatName(name) {
   if (!name) return '';
-  // Title case each space-separated word. Avoid regex `\w` because it
-  // doesn't match accented chars and would re-capitalise letters after
-  // an accent (e.g. "alergologÍa" → "AlergologíA").
   return name.toLowerCase().split(/(\s+)/).map((w) => (w && /\S/.test(w) ? w.charAt(0).toUpperCase() + w.slice(1) : w)).join('');
 }
 
+function formatPersonName(name) {
+  if (!name) return '';
+  // Provider DB stores "APELLIDOS, NOMBRE" — reorder to "Nombre Apellidos"
+  const parts = name.split(',');
+  const ordered = parts.length === 2 ? `${parts[1].trim()} ${parts[0].trim()}` : name;
+  const formatted = formatName(ordered);
+  const given = formatted.split(/\s+/)[0] || '';
+  const prefix = /a$/i.test(given) ? 'Dra.' : 'Dr.';
+  return `${prefix} ${formatted}`;
+}
+
 function getProviderTag(p) {
-  if (String(p.doctorType) === '1') return 'MÉDICO/PROFESIONAL';
+  if (String(p.doctorType) === '1') return 'MÉDICO / PROFESIONAL';
   if (String(p.providerType) === '3') return 'HOSPITAL';
   if (String(p.providerType) === '4') return 'CENTRO MÉDICO';
   if (String(p.providerType) === '8') return 'LABORATORIO';
@@ -90,44 +91,52 @@ function getProviderTag(p) {
 }
 
 function renderCard(p, isProfessional, provinceCode, locationName) {
-  const formatted = isProfessional ? `${namePrefix(p.name)} ${formatName(p.name.replace(/(.+),\s*(.+)/, '$2 $1'))}` : formatName(p.name);
+  const displayName = isProfessional
+    ? formatPersonName(p.name)
+    : formatName(p.name);
   const speciality = formatName(p.speciality || '');
   const fullAddress = [p.address, p.postalCode, p.city].filter(Boolean).join(', ');
   const formattedAddress = formatName(fullAddress);
   const mapsUrl = (p.lat && p.lon) ? `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}` : '';
   const masked = maskPhone(p.phone);
-  const langTags = (p.languages || []).map((l) => `<span class="cm-lang">${l}</span>`).join('');
+  const langTags = (p.languages || [])
+    .map((l) => `<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">${l}</div></div>`)
+    .join('');
   const citaUrl = buildCitaUrl(provinceCode, locationName, p.speciality, p.lat, p.lon, p.name);
   const detailUrl = p.detailUrl || '#';
-  const tag = getProviderTag(p);
-  const businessGroup = p.businessGroup ? '<span class="cm-card-chip cm-card-chip--asisa">Centro de ASISA</span>' : '';
 
-  return `<article class="cm-card">
-    <div class="cm-card-body">
-      <div class="cm-card-tags">
-        <span class="cm-card-tag">${tag}</span>
-        ${businessGroup}
-      </div>
-      <h3 class="cm-card-name">${formatted}</h3>
-      <p class="cm-card-spec">${speciality}</p>
-      ${p.parentDescription ? `<p class="cm-card-center">${formatName(p.parentDescription)}</p>` : ''}
-      ${formattedAddress ? `<p class="cm-card-addr"><i class="icon-marker-02"></i> ${formattedAddress}</p>` : ''}
-      <div class="cm-card-meta">
-        ${mapsUrl ? `<a class="cm-card-meta-link" href="${mapsUrl}" target="_blank" rel="noopener"><i class="icon-map-04"></i> Cómo llegar</a>` : ''}
-        ${p.phone ? `<a class="cm-card-meta-link" href="tel:${p.phone}"><i class="icon-phone"></i> ${masked}</a>` : ''}
-      </div>
-    </div>
-    <div class="cm-card-side">
-      <div class="cm-card-side-tags">
-        ${p.onlineAppointment ? '<span class="cm-card-chip cm-card-chip--blank">Cita online</span>' : ''}
+  return `<div class="cmp-medical-detail__first-block">
+    <div class="cmp-medical-detail__title-block">
+      <div class="cmp-medical-detail__title-block__tags">
+        <div class="cmp-medical-detail__title-block__tags--item">
+          <div class="cmp-tag-template cmp-tag-template--blue">
+            <div class="cmp-tag-template__text">${getProviderTag(p)}</div>
+          </div>
+        </div>
+        ${p.businessGroup ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Centro de ASISA</div></div>' : ''}
+        ${p.ePrescription ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Receta electrónica</div></div>' : ''}
+        ${p.onlineAppointment ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Cita online</div></div>' : ''}
         ${langTags}
       </div>
-      <div class="cm-card-buttons">
-        ${p.onlineAppointment ? `<a class="btn btn--outline" href="${citaUrl}" target="_blank" rel="noopener">Pedir cita</a>` : ''}
-        <a class="btn btn--primary" href="${detailUrl}">Ver detalle</a>
+      <div class="cmp-title">
+        <h3 class="cmp-title__text">${displayName}</h3>
+      </div>
+      ${(isProfessional && p.collegiateCode) ? `<p class="cmp-medical-detail__title-block--num-member"><em>Núm. Colegiado – ${p.collegiateCode}</em></p>` : ''}
+      <p class="cmp-medical-detail__title-block--speciality">${speciality}</p>
+    </div>
+    <div class="cmp-medical-detail__address-block">
+      ${p.parentDescription ? `<div class="cmp-medical-detail__address-block--center">${formatName(p.parentDescription)}</div>` : ''}
+      ${formattedAddress ? `<div class="cmp-medical-detail__address-block--name"><i class="icon-marker-02"></i>${formattedAddress}</div>` : ''}
+      <div class="cmp-medical-detail__address-block__location">
+        ${mapsUrl ? `<div class="cmp-medical-detail__address-block__location--reach"><div class="button-cmp"><a href="${mapsUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--link button-location"><i class="icon-map-04 icon-large"></i>Cómo llegar</a></div></div>` : ''}
+        ${p.phone ? `<div class="cmp-medical-detail__address-block__location--reach"><div class="button-cmp"><a href="tel:${p.phone}" class="btn button-cmp__text button-cmp__text--link button-location"><i class="icon-phone"></i>${masked}</a></div></div>` : ''}
       </div>
     </div>
-  </article>`;
+    <div class="cmp-medical-detail__buttons-block">
+      ${p.onlineAppointment ? `<div class="button-cmp"><a href="${citaUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--tertiary">Pedir cita</a></div>` : ''}
+      <div class="button-cmp"><a href="${detailUrl}" class="btn button-cmp__text button-cmp__text--primary">Ver detalle</a></div>
+    </div>
+  </div>`;
 }
 
 function renderPagination(currentPage, totalPages) {
@@ -135,23 +144,22 @@ function renderPagination(currentPage, totalPages) {
   const items = [];
   const prev = currentPage > 1 ? currentPage - 1 : null;
   const next = currentPage < totalPages ? currentPage + 1 : null;
+  items.push(`<div class="button-cmp"><button class="btn button-cmp__text button-cmp__text--link" data-page="${prev || ''}" ${prev ? '' : 'disabled'}><i class="icon-chevron-left"></i></button></div>`);
 
-  items.push(`<button class="cm-page cm-page--prev" data-page="${prev || ''}" ${prev ? '' : 'disabled'}>‹</button>`);
-
-  // Show first, current ±2, last
   const pages = new Set([1, totalPages, currentPage]);
   for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i += 1) pages.add(i);
   const sorted = [...pages].sort((a, b) => a - b);
   let prevNum = 0;
   sorted.forEach((n) => {
-    if (n - prevNum > 1) items.push('<span class="cm-page-ellipsis">…</span>');
-    items.push(`<button class="cm-page${n === currentPage ? ' cm-page--current' : ''}" data-page="${n}">${n}</button>`);
+    if (n - prevNum > 1) items.push('<span>…</span>');
+    const active = n === currentPage ? 'button-cmp__text--primary' : 'button-cmp__text--link';
+    items.push(`<div class="button-cmp"><button class="btn button-cmp__text ${active}" data-page="${n}">${n}</button></div>`);
     prevNum = n;
   });
 
-  items.push(`<button class="cm-page cm-page--next" data-page="${next || ''}" ${next ? '' : 'disabled'}>›</button>`);
+  items.push(`<div class="button-cmp"><button class="btn button-cmp__text button-cmp__text--link" data-page="${next || ''}" ${next ? '' : 'disabled'}><i class="icon-chevron-right"></i></button></div>`);
 
-  return `<nav class="cm-pagination">${items.join('')}</nav>`;
+  return `<div class="cmp-medical-picture-result__pagination">${items.join('')}</div>`;
 }
 
 function renderShell(state) {
@@ -166,27 +174,31 @@ function renderShell(state) {
     ? buildShareUrl(provinceCode, locationName, results[0].speciality || specName || '', results[0].lat, results[0].lon)
     : '';
 
-  const title = specName
+  const titleText = specName
     ? `${total} resultados en <strong>${locationName}</strong> — ${specName}`
     : `${total} resultados en <strong>${locationName}</strong>`;
 
-  const tabsHtml = `<div class="cm-tabs">
-    <button class="cm-tab${tab === 'professionals' ? ' cm-tab--active' : ''}" data-tab="professionals">Profesionales (${totalProfessionals})</button>
-    <button class="cm-tab${tab === 'centers' ? ' cm-tab--active' : ''}" data-tab="centers">Centros médicos (${totalCenters})</button>
+  const header = `<div class="cmp-medical-picture-result__header">
+    <div class="cmp-medical-picture-result__header--share-title-block">
+      <div class="cmp-medical-picture-result__header--title">${titleText}</div>
+      ${shareUrl ? `<a class="cmp-medical-picture-result__header--share" href="${shareUrl}" target="_blank" rel="noopener"><i class="icon-share"></i>Compartir</a>` : ''}
+    </div>
   </div>`;
 
-  const header = `<div class="cm-header">
-    <div class="cm-header-title">${title}</div>
-    ${shareUrl ? `<a class="cm-share" href="${shareUrl}" target="_blank" rel="noopener"><i class="icon-share"></i> Compartir</a>` : ''}
+  const tabs = `<div class="cmp-tabs">
+    <ul class="cmp-tabs__tablist">
+      <li class="cmp-tabs__tab${tab === 'professionals' ? ' cmp-tabs__tab--active active' : ''}" data-tab="professionals">Profesionales (${totalProfessionals})</li>
+      <li class="cmp-tabs__tab${tab === 'centers' ? ' cmp-tabs__tab--active active' : ''}" data-tab="centers">Centros médicos (${totalCenters})</li>
+    </ul>
+    <div class="cmp-tabs__tabpanel">
+      ${loading
+    ? '<div class="cmp-medical-picture-result__loading">Cargando…</div>'
+    : `<div class="cmp-medical-detail">${results.map((p) => renderCard(p, tab === 'professionals', provinceCode, locationName)).join('')}</div>`}
+      ${renderPagination(page, totalPages)}
+    </div>
   </div>`;
 
-  const grid = loading
-    ? '<p class="cm-loading">Cargando…</p>'
-    : `<div class="cm-grid">${results.map((p) => renderCard(p, tab === 'professionals', provinceCode, locationName)).join('')}</div>`;
-
-  const pagination = renderPagination(page, totalPages);
-
-  return `${header}${tabsHtml}${grid}${pagination}`;
+  return `${header}${tabs}`;
 }
 
 async function fetchPage(provSlug, specSlug, tab, page) {
@@ -200,13 +212,13 @@ async function fetchPage(provSlug, specSlug, tab, page) {
 }
 
 function attachListeners(block, state, refresh) {
-  block.querySelectorAll('.cm-tab').forEach((btn) => {
+  block.querySelectorAll('.cmp-tabs__tab').forEach((btn) => {
     btn.addEventListener('click', () => {
       const newTab = btn.dataset.tab;
       if (newTab && newTab !== state.tab) refresh({ ...state, tab: newTab, page: 1 });
     });
   });
-  block.querySelectorAll('.cm-page').forEach((btn) => {
+  block.querySelectorAll('[data-page]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const p = parseInt(btn.dataset.page, 10);
       if (p && p !== state.page) {
@@ -220,9 +232,10 @@ function attachListeners(block, state, refresh) {
 async function decorate(block) {
   const { provSlug, specSlug } = getSlugsFromUrl();
   if (!provSlug) { block.hidden = true; return; }
+  block.classList.add('cmp-medical-picture-result');
 
   let state = { tab: 'professionals', page: 1, loading: true, results: [] };
-  block.innerHTML = '<p class="cm-loading">Cargando médicos…</p>';
+  block.innerHTML = '<div class="cmp-medical-picture-result__loading">Cargando médicos…</div>';
 
   async function refresh(next) {
     state = { ...state, ...next, loading: true };
@@ -249,7 +262,7 @@ async function decorate(block) {
       block.innerHTML = renderShell(state);
       attachListeners(block, state, refresh);
     } catch (e) {
-      block.innerHTML = '<p class="cm-error">No se pudieron cargar los resultados.</p>';
+      block.innerHTML = '<div class="cmp-medical-picture-result__error">No se pudieron cargar los resultados.</div>';
     }
   }
 
