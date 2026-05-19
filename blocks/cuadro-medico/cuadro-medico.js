@@ -58,12 +58,6 @@ function buildCitaUrl(provinceCode, locationName, speciality, lat, lon, concept)
   return `${ASISA_SEARCH_PRIVATE}?${params}`;
 }
 
-function maskPhone(phone) {
-  const digits = String(phone || '').replace(/\D/g, '');
-  if (digits.length < 4) return phone || '';
-  return `${digits.slice(0, 1)}X XXX XXX`;
-}
-
 function formatName(name) {
   if (!name) return '';
   return name.toLowerCase().split(/(\s+)/).map((w) => (w && /\S/.test(w) ? w.charAt(0).toUpperCase() + w.slice(1) : w)).join('');
@@ -98,7 +92,6 @@ function renderCard(p, isProfessional, provinceCode, locationName) {
   const fullAddress = [p.address, p.postalCode, p.city].filter(Boolean).join(', ');
   const formattedAddress = formatName(fullAddress);
   const mapsUrl = (p.lat && p.lon) ? `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}` : '';
-  const masked = maskPhone(p.phone);
   const langTags = (p.languages || [])
     .map((l) => `<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">${l}</div></div>`)
     .join('');
@@ -129,7 +122,7 @@ function renderCard(p, isProfessional, provinceCode, locationName) {
       ${formattedAddress ? `<div class="cmp-medical-detail__address-block--name"><i class="icon-marker-02"></i>${formattedAddress}</div>` : ''}
       <div class="cmp-medical-detail__address-block__location">
         ${mapsUrl ? `<div class="cmp-medical-detail__address-block__location--reach"><div class="button-cmp"><a href="${mapsUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--link button-location"><i class="icon-map-04 icon-large"></i>Cómo llegar</a></div></div>` : ''}
-        ${p.phone ? `<div class="cmp-medical-detail__address-block__location--reach"><div class="button-cmp"><a href="tel:${p.phone}" class="btn button-cmp__text button-cmp__text--link button-location"><i class="icon-phone"></i>${masked}</a></div></div>` : ''}
+        ${p.phone ? `<div class="cmp-medical-detail__address-block__location--reach"><div class="button-cmp"><a href="tel:${p.phone}" class="btn button-cmp__text button-cmp__text--link button-location"><i class="icon-phone"></i>${p.phone}</a></div></div>` : ''}
       </div>
     </div>
     <div class="cmp-medical-detail__buttons-block">
