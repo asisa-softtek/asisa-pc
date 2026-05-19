@@ -174,7 +174,7 @@ function renderShell(state) {
   const header = `<div class="cmp-medical-picture-result__header">
     <div class="cmp-medical-picture-result__header--share-title-block">
       <div class="cmp-medical-picture-result__header--title">${titleText}</div>
-      ${shareUrl ? `<a class="cmp-medical-picture-result__header--share" href="${shareUrl}" target="_blank" rel="noopener"><i class="icon-share"></i>Compartir</a>` : ''}
+      ${shareUrl ? `<a class="cmp-medical-picture-result__header--share" href="${shareUrl}" target="_blank" rel="noopener"><i class="icon-share-01"></i>Compartir</a>` : ''}
     </div>
   </div>`;
 

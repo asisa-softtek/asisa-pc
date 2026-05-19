@@ -98,7 +98,7 @@ function renderMainCard(d, provinciaDisplayName) {
       <div class="cmp-medical-detail__title-block__tags">
         ${renderTagRow(d)}
         <a class="cmp-medical-detail__title-block__tags--share" href="${shareUrl}" target="_blank" rel="noopener">
-          Compartir <i class="icon-share"></i>
+          Compartir <i class="icon-share-01"></i>
         </a>
       </div>
       <p class="cmp-medical-detail__title-block--speciality">${speciality}</p>

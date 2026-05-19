@@ -35,9 +35,9 @@ function buildPage(path, blocks, title) {
 </script>
 <link rel="stylesheet" href="/styles/styles.css">
 <link rel="stylesheet" href="/styles/fonts.css">
-<link rel="stylesheet" href="https://www.asisa.es/etc.clientlibs/wasisa/clientlibs/clientlib-generic.min.css?v=1.0">
-<link rel="stylesheet" href="https://www.asisa.es/etc.clientlibs/wasisa/clientlibs/clientlib-iconslib.min.css?v=1.0">
-<link rel="stylesheet" href="https://www.asisa.es/etc.clientlibs/wasisa/clientlibs/clientlib-site.min.css?v=1.0">
+<link rel="stylesheet" href="/etc.clientlibs/wasisa/clientlibs/clientlib-generic.min.css?v=1.0">
+<link rel="stylesheet" href="/etc.clientlibs/wasisa/clientlibs/clientlib-iconslib.min.css?v=1.0">
+<link rel="stylesheet" href="/etc.clientlibs/wasisa/clientlibs/clientlib-site.min.css?v=1.0">
 <script src="/scripts/aem.js" type="module"></script>
 <script src="/scripts/scripts.js" type="module"></script>
 </head>
