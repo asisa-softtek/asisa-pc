@@ -89,7 +89,9 @@ function scanProvince(provinceSlug) {
         if (subSpec && spec) c.specialities.get(spec).subSpecialities.add(subSpec);
       } else if (p.parentCode && p.providerCode) {
         // Doctor with a centro parent
-        const docKey = `${toSlug(p.providerName)}-${p.providerCode}`;
+        const coll = p.professional?.collegiateCode;
+        const id = coll && coll !== 0 ? coll : p.providerCode;
+        const docKey = `${toSlug(p.providerName)}-${id}`;
         const doc = {
           name: p.providerName || '',
           key: docKey,

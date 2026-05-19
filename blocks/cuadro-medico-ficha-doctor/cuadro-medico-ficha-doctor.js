@@ -3,12 +3,12 @@
  *
  * Ficha completa del médico. Lee la URL:  /cuadro-medico/d/{key}
  *
- * UI 100% con clases del design system ASISA (clientlib-site.min.css):
- *   - .cmp-medical-detail__first-block   → card principal
- *   - .cmp-medical-detail__title-block   → bloque de tags + nombre + colegiado + especialidad
- *   - .cmp-medical-detail__address-block → centro + dirección + Cómo llegar
- *   - .cmp-tag-template--blue / --blank  → etiquetas
- *   - .button-cmp / .btn                 → botones
+ * Un médico (agrupado por colegiado) puede ejercer en varios centros.
+ * Renderiza:
+ *   - Header con nombre, colegiado y especialidades únicas.
+ *   - Una card por cada ubicación con su dirección, servicios, teléfono y CTA "Pedir cita".
+ *
+ * UI con clases del design system ASISA (clientlib-site.min.css).
  */
 
 const API_BASE = 'https://asisa-pc.vercel.app';
@@ -36,136 +36,88 @@ function formatPersonName(raw) {
   return `${prefix} ${formatted}`;
 }
 
-function buildShareUrl(d, provinciaDisplayName) {
+function buildShareUrl(d, loc, provinciaDisplayName) {
   const params = new URLSearchParams({
-    networkId: '1', networkName: 'Salud',
-    ordination: 'Relevance', ordinationName: 'Relevancia',
-    address: `${provinciaDisplayName || d.city || ''}, España`,
-    provinceId: d.provinceCode || '',
-    speciality: d.specialities[0] || '',
-    specialityName: d.specialities[0] || '',
+    networkId: '1',
+    networkName: 'Salud',
+    ordination: 'Relevance',
+    ordinationName: 'Relevancia',
+    address: `${provinciaDisplayName || loc.city || ''}, España`,
+    provinceId: loc.provinceCode || '',
+    speciality: loc.speciality || d.specialities?.[0] || '',
+    specialityName: loc.speciality || d.specialities?.[0] || '',
     specialityType: '1',
   });
-  if (d.lat && d.lon) { params.set('latitude', d.lat); params.set('longitude', d.lon); }
+  if (loc.lat && loc.lon) { params.set('latitude', loc.lat); params.set('longitude', loc.lon); }
   return `${ASISA_SEARCH_PUBLIC}?${params}`;
 }
 
-function buildCitaUrl(d, provinciaDisplayName) {
+function buildCitaUrl(d, loc, provinciaDisplayName) {
   const params = new URLSearchParams({
-    networkId: '1', networkName: 'Salud',
-    ordination: 'Relevance', ordinationName: 'Relevancia',
-    address: `${provinciaDisplayName || d.city || ''}, España`,
-    provinceId: d.provinceCode || '',
-    speciality: d.specialities[0] || '',
-    specialityName: d.specialities[0] || '',
+    networkId: '1',
+    networkName: 'Salud',
+    ordination: 'Relevance',
+    ordinationName: 'Relevancia',
+    address: `${provinciaDisplayName || loc.city || ''}, España`,
+    provinceId: loc.provinceCode || '',
+    speciality: loc.speciality || '',
+    specialityName: loc.speciality || '',
     specialityType: '1',
     fromPublicArea: 'true',
     concept: d.name,
   });
-  if (d.lat && d.lon) { params.set('latitude', d.lat); params.set('longitude', d.lon); }
+  if (loc.lat && loc.lon) { params.set('latitude', loc.lat); params.set('longitude', loc.lon); }
   return `${ASISA_SEARCH}?${params}`;
 }
 
-function renderTagRow(d) {
-  const tags = [];
-  tags.push('<div class="cmp-medical-detail__title-block__tags--item"><div class="cmp-tag-template cmp-tag-template--blue"><div class="cmp-tag-template__text">MÉDICO / PROFESIONAL</div></div></div>');
-  if (d.businessGroup) {
-    tags.push('<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Centro de ASISA</div></div>');
-  }
-  return tags.join('');
-}
-
-function renderServiceTags(d) {
-  const tags = [];
-  if (d.onlineAppointment) tags.push('<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Cita online</div></div>');
-  if (d.videoConsultation) tags.push('<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Videoconsulta</div></div>');
-  if (d.ePrescription) tags.push('<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Receta electrónica</div></div>');
-  (d.languages || []).forEach((l) => {
-    tags.push(`<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">${l}</div></div>`);
-  });
-  return tags.join('');
-}
-
-function renderMainCard(d, provinciaDisplayName) {
-  const mapsUrl = (d.lat && d.lon) ? `https://www.google.com/maps/dir/?api=1&destination=${d.lat},${d.lon}` : '';
-  const addressLine = [d.address, d.postalCode, d.city].filter(Boolean).join(', ');
-  const shareUrl = buildShareUrl(d, provinciaDisplayName);
-  const center = d.parentDescription ? formatName(d.parentDescription) : '';
-  const speciality = formatName(d.specialities?.[0] || '');
-
-  return `<div class="cmp-medical-detail__first-block">
-    <div class="cmp-medical-detail__title-block">
-      <div class="cmp-medical-detail__title-block__tags">
-        ${renderTagRow(d)}
-        <a class="cmp-medical-detail__title-block__tags--share" href="${shareUrl}" target="_blank" rel="noopener">
-          Compartir <i class="icon-share-01"></i>
-        </a>
-      </div>
-      <p class="cmp-medical-detail__title-block--speciality">${speciality}</p>
-      <div class="cmp-title">
-        <h1 class="cmp-title__text">${formatPersonName(d.name)}</h1>
-      </div>
-      ${d.collegiateCode ? `<p class="cmp-medical-detail__title-block--num-member"><em>Núm. Colegiado – ${d.collegiateCode}</em></p>` : ''}
-    </div>
-    <div class="cmp-medical-detail__address-block">
-      ${center ? `<div class="cmp-medical-detail__address-block--center">${center}</div>` : ''}
-      ${addressLine ? `<div class="cmp-medical-detail__address-block--name"><i class="icon-marker-02"></i>${formatName(addressLine)}</div>` : ''}
-      <div class="cmp-medical-detail__address-block__location">
-        ${mapsUrl ? `<div class="cmp-medical-detail__address-block__location--reach"><div class="button-cmp"><a href="${mapsUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--link button-location"><i class="icon-map-04 icon-large"></i>Cómo llegar</a></div></div>` : ''}
-      </div>
-      <div class="cmp-medical-detail__address-block__tags">${renderServiceTags(d)}</div>
-    </div>
-    ${d.phone ? `<div class="cmp-medical-detail__buttons-block">
-      <div class="button-cmp"><a href="tel:${d.phone}" class="btn button-cmp__text button-cmp__text--link"><i class="icon-phone"></i>${d.phone}</a></div>
-    </div>` : ''}
-  </div>`;
-}
-
-function renderSpecCard(d, speciality, phone, online, provinciaDisplayName) {
-  const citaUrl = buildCitaUrl({ ...d, phone, onlineAppointment: online }, provinciaDisplayName);
-  const ctaLabel = online ? 'Pedir cita online' : 'Pedir cita';
-
-  return `<div class="cmp-medical-detail__first-block cmp-medical-detail--blue">
-    <div class="cmp-medical-detail__title-block">
-      <div class="cmp-title">
-        <h2 class="cmp-title__text">${speciality}</h2>
-      </div>
-    </div>
-    <div class="cmp-medical-detail__buttons-block">
-      ${phone ? `<div class="button-cmp"><a href="tel:${phone}" class="btn button-cmp__text button-cmp__text--link"><i class="icon-phone"></i>${phone}</a></div>` : ''}
-      <div class="button-cmp"><a href="${citaUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--primary">${ctaLabel}</a></div>
-    </div>
-  </div>`;
-}
-
-function renderOtherLocationCard(loc) {
-  const mapsUrl = (loc.lat && loc.lon) ? `https://www.google.com/maps/dir/?api=1&destination=${loc.lat},${loc.lon}` : '';
-  const addressLine = [loc.address, loc.postalCode, loc.city].filter(Boolean).join(', ');
-  const centerName = loc.parentDescription ? formatName(loc.parentDescription) : formatName(loc.name || '');
+function renderServiceTags(loc) {
   const tags = [];
   if (loc.onlineAppointment) tags.push('<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Cita online</div></div>');
   if (loc.videoConsultation) tags.push('<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Videoconsulta</div></div>');
   if (loc.ePrescription) tags.push('<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Receta electrónica</div></div>');
+  return tags.join('');
+}
+
+function renderLocationCard(d, loc, idx, provinciaDisplayName) {
+  const mapsUrl = (loc.lat && loc.lon) ? `https://www.google.com/maps/dir/?api=1&destination=${loc.lat},${loc.lon}` : '';
+  const addressLine = [loc.address, loc.postalCode, loc.city].filter(Boolean).join(', ');
+  const shareUrl = buildShareUrl(d, loc, provinciaDisplayName);
+  const center = loc.parentDescription ? formatName(loc.parentDescription) : '';
+  const speciality = formatName(loc.speciality || '');
+  const isFirst = idx === 0;
 
   return `<div class="cmp-medical-detail__first-block">
     <div class="cmp-medical-detail__title-block">
       <div class="cmp-medical-detail__title-block__tags">
         <div class="cmp-medical-detail__title-block__tags--item">
           <div class="cmp-tag-template cmp-tag-template--blue">
-            <div class="cmp-tag-template__text">CENTRO MÉDICO</div>
+            <div class="cmp-tag-template__text">${isFirst ? 'MÉDICO / PROFESIONAL' : 'CENTRO MÉDICO'}</div>
           </div>
         </div>
+        ${loc.businessGroup ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Centro de ASISA</div></div>' : ''}
+        <a class="cmp-medical-detail__title-block__tags--share" href="${shareUrl}" target="_blank" rel="noopener">
+          Compartir <i class="icon-share-01"></i>
+        </a>
       </div>
-      <div class="cmp-title">
-        <h3 class="cmp-title__text">${centerName}</h3>
-      </div>
+      ${isFirst ? `
+        <p class="cmp-medical-detail__title-block--speciality">${speciality}</p>
+        <div class="cmp-title">
+          <h1 class="cmp-title__text">${formatPersonName(d.name)}</h1>
+        </div>
+        ${d.collegiateCode ? `<p class="cmp-medical-detail__title-block--num-member"><em>Núm. Colegiado – ${d.collegiateCode}</em></p>` : ''}
+      ` : `
+        <div class="cmp-title">
+          <h3 class="cmp-title__text">${center || speciality}</h3>
+        </div>
+      `}
     </div>
     <div class="cmp-medical-detail__address-block">
+      ${center && isFirst ? `<div class="cmp-medical-detail__address-block--center">${center}</div>` : ''}
       ${addressLine ? `<div class="cmp-medical-detail__address-block--name"><i class="icon-marker-02"></i>${formatName(addressLine)}</div>` : ''}
       <div class="cmp-medical-detail__address-block__location">
         ${mapsUrl ? `<div class="cmp-medical-detail__address-block__location--reach"><div class="button-cmp"><a href="${mapsUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--link button-location"><i class="icon-map-04 icon-large"></i>Cómo llegar</a></div></div>` : ''}
       </div>
-      ${tags.length ? `<div class="cmp-medical-detail__address-block__tags">${tags.join('')}</div>` : ''}
+      <div class="cmp-medical-detail__address-block__tags">${renderServiceTags(loc)}</div>
     </div>
     ${loc.phone ? `<div class="cmp-medical-detail__buttons-block">
       <div class="button-cmp"><a href="tel:${loc.phone}" class="btn button-cmp__text button-cmp__text--link"><i class="icon-phone"></i>${loc.phone}</a></div>
@@ -173,11 +125,26 @@ function renderOtherLocationCard(loc) {
   </div>`;
 }
 
-function renderOtherLocations(d, provinciaDisplayName) {
-  if (!d.otherLocations?.length) return '';
-  const docName = formatPersonName(d.name);
-  const sections = d.otherLocations.map((loc) => `${renderOtherLocationCard(loc)}${renderSpecCard(d, formatName(loc.speciality || d.specialities?.[0] || ''), loc.phone, loc.onlineAppointment, provinciaDisplayName)}`).join('');
-  return `<h2 class="cmp-medical-detail__subtitle">${docName} también trabaja en estos centros</h2>${sections}`;
+function renderSpecCard(d, loc, provinciaDisplayName) {
+  const citaUrl = buildCitaUrl(d, loc, provinciaDisplayName);
+  const ctaLabel = loc.onlineAppointment ? 'Pedir cita online' : 'Pedir cita';
+  const title = formatName(loc.speciality || d.specialities?.[0] || '');
+
+  return `<div class="cmp-medical-detail__first-block cmp-medical-detail--blue">
+    <div class="cmp-medical-detail__title-block">
+      <div class="cmp-title">
+        <h2 class="cmp-title__text">${title}</h2>
+      </div>
+    </div>
+    <div class="cmp-medical-detail__buttons-block">
+      ${loc.phone ? `<div class="button-cmp"><a href="tel:${loc.phone}" class="btn button-cmp__text button-cmp__text--link"><i class="icon-phone"></i>${loc.phone}</a></div>` : ''}
+      <div class="button-cmp"><a href="${citaUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--primary">${ctaLabel}</a></div>
+    </div>
+  </div>`;
+}
+
+function renderOtherLocationsHeading(d) {
+  return `<h2 class="cmp-medical-detail__subtitle">${formatPersonName(d.name)} también trabaja en estos centros</h2>`;
 }
 
 export default function decorate(block) {
@@ -191,15 +158,27 @@ export default function decorate(block) {
     fetch(`${API_BASE}/api/provincias`).then((r) => r.json()),
   ])
     .then(([d, provincias]) => {
-      const provincia = provincias.find((p) => p.slug === d.provinceSlug);
-      const provinciaDisplayName = provincia?.displayName || d.provinceSlug;
+      const provinciaDisplayName = (loc) => {
+        const prov = provincias.find((p) => p.slug === loc.provinceSlug);
+        return prov?.displayName || loc.provinceSlug;
+      };
 
-      const mainSpec = formatName(d.specialities?.[0] || '');
-      block.innerHTML = `<div class="cmp-medical-detail">
-        ${renderMainCard(d, provinciaDisplayName)}
-        ${renderSpecCard(d, mainSpec, d.phone, d.onlineAppointment, provinciaDisplayName)}
-        ${renderOtherLocations(d, provinciaDisplayName)}
-      </div>`;
+      const locs = d.locations || [];
+      if (!locs.length) { block.innerHTML = '<p>No se pudo cargar la ficha del médico.</p>'; return; }
+
+      const parts = [];
+      parts.push(renderLocationCard(d, locs[0], 0, provinciaDisplayName(locs[0])));
+      parts.push(renderSpecCard(d, locs[0], provinciaDisplayName(locs[0])));
+
+      if (locs.length > 1) {
+        parts.push(renderOtherLocationsHeading(d));
+        for (let i = 1; i < locs.length; i += 1) {
+          parts.push(renderLocationCard(d, locs[i], i, provinciaDisplayName(locs[i])));
+          parts.push(renderSpecCard(d, locs[i], provinciaDisplayName(locs[i])));
+        }
+      }
+
+      block.innerHTML = `<div class="cmp-medical-detail">${parts.join('')}</div>`;
     })
     .catch(() => {
       block.innerHTML = '<p>No se pudo cargar la ficha del médico.</p>';

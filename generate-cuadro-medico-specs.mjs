@@ -54,8 +54,12 @@ function isProfessional(p) {
   return String(p.doctorType) === '1';
 }
 
+// Doctor key: groups all centros where the same colegiado practises into one page.
+// Falls back to providerCode for entries without collegiateCode.
 function buildDoctorKey(p) {
-  return `${toSlug(p.providerName || '')}-${p.providerCode}`;
+  const coll = p.professional?.collegiateCode;
+  const id = coll && coll !== 0 ? coll : p.providerCode;
+  return `${toSlug(p.providerName || '')}-${id}`;
 }
 
 function buildCentroKey(p) {
@@ -137,13 +141,22 @@ function main() {
           const key = buildDoctorKey(p);
           if (!doctoresIndex[key]) {
             doctoresIndex[key] = {
-              providerLocalicationCode: p.providerLocalicationCode,
-              providerCode: p.providerCode,
+              collegiateCode: p.professional?.collegiateCode || null,
               name: p.providerName,
-              specSlug,
-              provinceSlug: provSlug,
+              locations: [],
             };
           }
+          const loc = {
+            providerCode: p.providerCode,
+            providerLocalicationCode: p.providerLocalicationCode,
+            specSlug,
+            provinceSlug: provSlug,
+          };
+          const exists = doctoresIndex[key].locations
+            .some((l) => l.providerCode === loc.providerCode
+              && l.providerLocalicationCode === loc.providerLocalicationCode
+              && l.specSlug === loc.specSlug);
+          if (!exists) doctoresIndex[key].locations.push(loc);
         } else {
           const key = buildCentroKey(p);
           if (!centrosIndex[key]) {

@@ -33,7 +33,9 @@ function toSlug(str) {
 function buildDetailUrl(p) {
   const nameSlug = toSlug(p.providerName || '');
   if (String(p.doctorType) === '1') {
-    return `/cuadro-medico/d/${nameSlug}-${p.providerCode || p.providerLocalicationCode}`;
+    const coll = p.professional?.collegiateCode;
+    const id = coll && coll !== 0 ? coll : (p.providerCode || p.providerLocalicationCode);
+    return `/cuadro-medico/d/${nameSlug}-${id}`;
   }
   return `/cuadro-medico/c/${nameSlug}`;
 }

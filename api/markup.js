@@ -6,6 +6,7 @@
  *   /markup/cuadro-medico/p/<slug>           → provincia template
  *   /markup/cuadro-medico/p/<prov>/pe/<spec> → provincia + especialidad template
  *   /markup/cuadro-medico/d/<key>            → ficha doctor template
+ *   /markup/cuadro-medico/c/<key>            → ficha centro template
  *   /markup/cuadro-medico/e/<slug>           → especialidad template
  *   /markup/<other>                          → 404 (overlay-pass)
  */
@@ -16,6 +17,8 @@ const PROVINCIA_BLOCKS = `<div class="cuadro-medico"><div><div></div></div></div
 
 const DOCTOR_BLOCKS = `<div class="cuadro-medico-ficha-doctor"><div><div></div></div></div>
 <div class="cuadro-medico-otros-medicos"><div><div></div></div></div>`;
+
+const CENTRO_BLOCKS = '<div class="cuadro-medico-ficha-centro"><div><div></div></div></div>';
 
 const ESPECIALIDAD_BLOCKS = `<div class="cuadro-medico"><div><div></div></div></div>
 <div class="cuadro-medico-top-especialidades"><div><div></div></div></div>
@@ -82,6 +85,10 @@ function isDoctorPath(path) {
   return /^\/cuadro-medico\/d\/.+$/.test(path);
 }
 
+function isCentroPath(path) {
+  return /^\/cuadro-medico\/c\/.+$/.test(path);
+}
+
 function isEspecialidadPath(path) {
   return /^\/cuadro-medico\/e\/.+$/.test(path);
 }
@@ -94,6 +101,9 @@ export default function handler(req, res) {
   }
   if (isDoctorPath(path)) {
     return sendHtml(res, buildPage(path, DOCTOR_BLOCKS, 'Ficha de Médico'), 'template:doctor');
+  }
+  if (isCentroPath(path)) {
+    return sendHtml(res, buildPage(path, CENTRO_BLOCKS, 'Ficha de Centro Médico'), 'template:centro');
   }
   if (isEspecialidadPath(path)) {
     return sendHtml(res, buildPage(path, ESPECIALIDAD_BLOCKS, 'Cuadro Médico - Especialidad'), 'template:especialidad');
