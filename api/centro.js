@@ -151,6 +151,7 @@ function buildOtherCentros(provinceData, currentLocCode, currentSpecs, limit = 4
       address: buildAddress(addr),
       postalCode: addr.postalCode || '',
       city: addr.cityDescription || '',
+      provinceCode: addr.provinceCode || '',
       phone: e.contact?.phone || '',
       lat: addr.latitude || 0,
       lon: addr.longitude || 0,

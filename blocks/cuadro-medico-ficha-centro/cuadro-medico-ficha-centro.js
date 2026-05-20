@@ -203,17 +203,21 @@ function renderDoctorsSection(c) {
   </section>`;
 }
 
-function renderOtherCentroCard(oc) {
+function renderOtherCentroCard(oc, provinciaDisplayName) {
   const addressLine = [oc.address, oc.postalCode, oc.city].filter(Boolean).join('. ');
   const tagLabel = oc.providerType === 4 ? 'LABORATORIO' : 'CENTRO MÉDICO';
   const specTags = (oc.specialities || []).map((s) => `<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">${formatName(s)}</div></div>`).join('');
   const moreTag = oc.specialitiesMore > 0 ? `<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">+ ${oc.specialitiesMore}más</div></div>` : '';
+  const shareUrl = buildShareUrl(oc, provinciaDisplayName);
 
   return `<div class="cmp-medical-detail__first-block cm-fcentro__other">
     <div class="cmp-medical-detail__title-block">
       <div class="cmp-medical-detail__title-block__tags">
         <div class="cmp-medical-detail__title-block__tags--item"><div class="cmp-tag-template cmp-tag-template--blue"><div class="cmp-tag-template__text">${tagLabel}</div></div></div>
         ${oc.businessGroup ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Centro de ASISA</div></div>' : ''}
+        <a class="cmp-medical-detail__title-block__tags--share" href="${shareUrl}" target="_blank" rel="noopener">
+          Compartir <i class="icon-share-01"></i>
+        </a>
       </div>
       <div class="cmp-title">
         <h3 class="cmp-title__text"><a href="/cuadro-medico/c/${oc.key}">${formatName(oc.name)}</a></h3>
@@ -233,7 +237,7 @@ function renderOtherCentrosSection(c, provinciaDisplayName) {
   return `<section class="cm-fcentro__other-section">
     <h2 class="cmp-medical-detail__subtitle">Otros centros ASISA con las mismas especialidades en ${provinciaDisplayName}</h2>
     <div class="cm-fcentro__other-grid">
-      ${c.otherCentros.map(renderOtherCentroCard).join('')}
+      ${c.otherCentros.map((oc) => renderOtherCentroCard(oc, provinciaDisplayName)).join('')}
     </div>
   </section>`;
 }
