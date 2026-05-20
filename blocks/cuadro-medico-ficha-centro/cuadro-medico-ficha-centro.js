@@ -129,41 +129,51 @@ function renderMainCard(c, provinciaDisplayName) {
   </div>`;
 }
 
+function showsPedirCita(spec) {
+  if (/urgenc/i.test(spec.speciality)) return false;
+  return (spec.doctors && spec.doctors.length > 0) || !!spec.onlineAppointment;
+}
+
 function renderSpecAccordionItem(spec, c, provinciaDisplayName) {
   const docs = spec.doctors || [];
   const subs = spec.subSpecialities || [];
   const citaUrl = buildCitaUrl(c, spec.speciality, provinciaDisplayName);
   const ctaLabel = spec.onlineAppointment ? 'Pedir cita online' : 'Pedir cita';
   const phoneBlock = spec.phone ? `<div class="button-cmp"><a href="tel:${spec.phone}" class="btn button-cmp__text button-cmp__text--link"><i class="icon-phone"></i>${spec.phone}</a></div>` : '';
+  const citaBlock = showsPedirCita(spec)
+    ? `<div class="button-cmp"><a href="${citaUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--primary">${ctaLabel}</a></div>`
+    : '';
 
-  return `<details class="cm-fcentro__spec">
-    <summary class="cm-fcentro__spec-summary">
+  return `<div class="cm-fcentro__spec">
+    <div class="cm-fcentro__spec-header">
       <h3 class="cm-fcentro__spec-title">${formatName(spec.speciality)}</h3>
       <div class="cm-fcentro__spec-actions">
         ${phoneBlock}
-        <div class="button-cmp"><a href="${citaUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--primary">${ctaLabel}</a></div>
-      </div>
-      <span class="cm-fcentro__spec-toggle">Ver más información <i class="icon-chevron-down"></i></span>
-    </summary>
-    <div class="cm-fcentro__spec-body">
-      <div class="cm-fcentro__spec-col">
-        <h4 class="cm-fcentro__spec-col-title"><i class="icon-users-01"></i>Cuadro de especialistas</h4>
-        ${docs.length ? `<ul class="cm-fcentro__spec-list">
-          ${docs.map((d) => `<li><a href="/cuadro-medico/d/${d.key}">${formatPersonName(d.name)}</a></li>`).join('')}
-        </ul>` : '<p class="cm-fcentro__empty">—</p>'}
-      </div>
-      <div class="cm-fcentro__spec-col">
-        <h4 class="cm-fcentro__spec-col-title"><i class="icon-medical-cross-01"></i>Subespecialidades</h4>
-        ${subs.length ? `<ul class="cm-fcentro__spec-list">
-          ${subs.map((s) => `<li>${formatName(s)}</li>`).join('')}
-        </ul>` : '<p class="cm-fcentro__empty">—</p>'}
-      </div>
-      <div class="cm-fcentro__spec-col">
-        <h4 class="cm-fcentro__spec-col-title"><i class="icon-info-circle"></i>Observaciones</h4>
-        ${spec.observations ? `<p>${spec.observations}</p>` : '<p class="cm-fcentro__empty">—</p>'}
+        ${citaBlock}
       </div>
     </div>
-  </details>`;
+    <details class="cm-fcentro__spec-details">
+      <summary class="cm-fcentro__spec-toggle">Ver más información <i class="icon-chevron-down"></i></summary>
+      <div class="cm-fcentro__spec-body">
+        <div class="cm-fcentro__spec-col">
+          <h4 class="cm-fcentro__spec-col-title"><i class="icon-users-01"></i>Cuadro de especialistas</h4>
+          ${docs.length ? `<ul class="cm-fcentro__spec-list">
+            ${docs.map((d) => `<li><a href="/cuadro-medico/d/${d.key}">${formatName(d.name)}</a></li>`).join('')}
+          </ul>` : '<p class="cm-fcentro__empty">—</p>'}
+        </div>
+        <div class="cm-fcentro__spec-col">
+          <h4 class="cm-fcentro__spec-col-title"><i class="icon-medical-cross-01"></i>Subespecialidades</h4>
+          ${subs.length ? `<ul class="cm-fcentro__spec-list">
+            ${subs.map((s) => `<li>${formatName(s)}</li>`).join('')}
+          </ul>` : '<p class="cm-fcentro__empty">—</p>'}
+        </div>
+        <div class="cm-fcentro__spec-col">
+          <h4 class="cm-fcentro__spec-col-title"><i class="icon-info-circle"></i>Observaciones</h4>
+          ${spec.observations ? `<p>${spec.observations}</p>` : '<p class="cm-fcentro__empty">—</p>'}
+        </div>
+      </div>
+    </details>
+  </div>`;
 }
 
 function renderSpecialitiesSection(c, provinciaDisplayName) {
