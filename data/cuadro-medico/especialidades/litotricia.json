@@ -2,6 +2,11 @@
   "slug": "litotricia",
   "provincias": [
     {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 7
+    },
+    {
       "slug": "baleares",
       "displayName": "Baleares",
       "count": 3
@@ -10,6 +15,11 @@
       "slug": "cordoba",
       "displayName": "Córdoba",
       "count": 2
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 1
     }
   ]
 }

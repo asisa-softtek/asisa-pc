@@ -2,6 +2,11 @@
   "slug": "urologia-oncologica",
   "provincias": [
     {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 10
+    },
+    {
       "slug": "sevilla",
       "displayName": "Sevilla",
       "count": 10

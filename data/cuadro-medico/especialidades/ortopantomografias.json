@@ -2,14 +2,9 @@
   "slug": "ortopantomografias",
   "provincias": [
     {
-      "slug": "madrid",
-      "displayName": "Madrid",
-      "count": 95
-    },
-    {
-      "slug": "valencia",
-      "displayName": "Valencia",
-      "count": 41
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 53
     },
     {
       "slug": "guipuzcoa",
@@ -47,6 +42,11 @@
       "count": 14
     },
     {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 12
+    },
+    {
       "slug": "lerida",
       "displayName": "Lérida",
       "count": 12
@@ -72,8 +72,8 @@
       "count": 11
     },
     {
-      "slug": "tarragona",
-      "displayName": "Tarragona",
+      "slug": "sevilla",
+      "displayName": "Sevilla",
       "count": 11
     },
     {
@@ -122,11 +122,6 @@
       "count": 4
     },
     {
-      "slug": "granada",
-      "displayName": "Granada",
-      "count": 4
-    },
-    {
       "slug": "jaen",
       "displayName": "Jaén",
       "count": 4
@@ -155,6 +150,11 @@
       "slug": "cantabria",
       "displayName": "Cantabria",
       "count": 3
+    },
+    {
+      "slug": "lugo",
+      "displayName": "Lugo",
+      "count": 1
     }
   ]
 }

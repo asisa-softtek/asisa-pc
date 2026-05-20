@@ -2,6 +2,11 @@
   "slug": "endoscopia-digestiva",
   "provincias": [
     {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 34
+    },
+    {
       "slug": "barcelona",
       "displayName": "Barcelona",
       "count": 25
@@ -22,18 +27,13 @@
       "count": 14
     },
     {
-      "slug": "malaga",
-      "displayName": "Málaga",
-      "count": 14
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 13
     },
     {
       "slug": "baleares",
       "displayName": "Baleares",
-      "count": 11
-    },
-    {
-      "slug": "tarragona",
-      "displayName": "Tarragona",
       "count": 11
     },
     {
@@ -44,11 +44,6 @@
     {
       "slug": "gerona",
       "displayName": "Gerona",
-      "count": 9
-    },
-    {
-      "slug": "valencia",
-      "displayName": "Valencia",
       "count": 9
     },
     {
@@ -117,14 +112,14 @@
       "count": 4
     },
     {
-      "slug": "pontevedra",
-      "displayName": "Pontevedra",
-      "count": 4
+      "slug": "leon",
+      "displayName": "León",
+      "count": 3
     },
     {
-      "slug": "segovia",
-      "displayName": "Segovia",
-      "count": 4
+      "slug": "palencia",
+      "displayName": "Palencia",
+      "count": 3
     },
     {
       "slug": "avila",

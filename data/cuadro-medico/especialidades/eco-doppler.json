@@ -2,11 +2,6 @@
   "slug": "eco-doppler",
   "provincias": [
     {
-      "slug": "madrid",
-      "displayName": "Madrid",
-      "count": 17
-    },
-    {
       "slug": "sevilla",
       "displayName": "Sevilla",
       "count": 9
@@ -47,11 +42,6 @@
       "count": 3
     },
     {
-      "slug": "tarragona",
-      "displayName": "Tarragona",
-      "count": 3
-    },
-    {
       "slug": "granada",
       "displayName": "Granada",
       "count": 2
@@ -84,6 +74,11 @@
     {
       "slug": "melilla",
       "displayName": "Melilla",
+      "count": 1
+    },
+    {
+      "slug": "palencia",
+      "displayName": "Palencia",
       "count": 1
     }
   ]

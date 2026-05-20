@@ -2,6 +2,11 @@
   "slug": "cirugia-laser-dermatologica",
   "provincias": [
     {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 2
+    },
+    {
       "slug": "granada",
       "displayName": "Granada",
       "count": 2
@@ -12,8 +17,8 @@
       "count": 2
     },
     {
-      "slug": "soria",
-      "displayName": "Soria",
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
       "count": 1
     }
   ]

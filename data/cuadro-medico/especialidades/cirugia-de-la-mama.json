@@ -7,6 +7,11 @@
       "count": 9
     },
     {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 9
+    },
+    {
       "slug": "valencia",
       "displayName": "Valencia",
       "count": 8
@@ -27,6 +32,11 @@
       "count": 5
     },
     {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 5
+    },
+    {
       "slug": "pontevedra",
       "displayName": "Pontevedra",
       "count": 4
@@ -39,11 +49,6 @@
     {
       "slug": "huelva",
       "displayName": "Huelva",
-      "count": 2
-    },
-    {
-      "slug": "tarragona",
-      "displayName": "Tarragona",
       "count": 2
     },
     {

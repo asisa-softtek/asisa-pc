@@ -7,6 +7,11 @@
       "count": 15
     },
     {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 14
+    },
+    {
       "slug": "cantabria",
       "displayName": "Cantabria",
       "count": 8
@@ -22,6 +27,11 @@
       "count": 5
     },
     {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 4
+    },
+    {
       "slug": "almeria",
       "displayName": "Almería",
       "count": 2
@@ -32,6 +42,11 @@
       "count": 2
     },
     {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 2
+    },
+    {
       "slug": "ciudad-real",
       "displayName": "Ciudad Real",
       "count": 2
@@ -39,11 +54,6 @@
     {
       "slug": "pontevedra",
       "displayName": "Pontevedra",
-      "count": 2
-    },
-    {
-      "slug": "valencia",
-      "displayName": "Valencia",
       "count": 2
     },
     {

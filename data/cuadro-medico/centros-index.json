@@ -99,6 +99,11 @@
     "name": "DR. MARTIN ULLOA",
     "provinceSlug": "a-coruna"
   },
+  "cotram": {
+    "providerLocalicationCode": 1060847,
+    "name": "COTRAM",
+    "provinceSlug": "a-coruna"
+  },
   "miranza-instituto-gomez-ulla": {
     "providerLocalicationCode": 1122796,
     "name": "MIRANZA INSTITUTO GOMEZ-ULLA",
@@ -737,11 +742,6 @@
   "benito-gonzalez-concepcion": {
     "providerLocalicationCode": 1445002,
     "name": "BENITO GONZALEZ, CONCEPCION",
-    "provinceSlug": "a-coruna"
-  },
-  "cotram": {
-    "providerLocalicationCode": 1060847,
-    "name": "COTRAM",
     "provinceSlug": "a-coruna"
   },
   "hospital-vithas-vitoria": {
@@ -5279,9 +5279,19 @@
     "name": "CETIR CENTRE MEDIC",
     "provinceSlug": "barcelona"
   },
-  "clinica-perramon-sl": {
-    "providerLocalicationCode": 1549964,
-    "name": "CLINICA PERRAMON, SL",
+  "centro-ginecologico-gine-3": {
+    "providerLocalicationCode": 1369074,
+    "name": "CENTRO GINECOLOGICO GINE 3",
+    "provinceSlug": "barcelona"
+  },
+  "inst-guilera-obst-y-ginecologia": {
+    "providerLocalicationCode": 1111747,
+    "name": "INST. GUILERA OBST. Y GINECOLOGIA",
+    "provinceSlug": "barcelona"
+  },
+  "centre-ginecologic-dr-pardina": {
+    "providerLocalicationCode": 1257915,
+    "name": "CENTRE GINECOLOGIC DR. PARDINA",
     "provinceSlug": "barcelona"
   },
   "idona": {
@@ -5289,9 +5299,59 @@
     "name": "IDONA",
     "provinceSlug": "barcelona"
   },
-  "centre-ginecologic-dr-pardina": {
-    "providerLocalicationCode": 1257915,
-    "name": "CENTRE GINECOLOGIC DR. PARDINA",
+  "instituto-dra-gomez-roig": {
+    "providerLocalicationCode": 1351082,
+    "name": "INSTITUTO DRA. GOMEZ ROIG",
+    "provinceSlug": "barcelona"
+  },
+  "ginecologia-actual": {
+    "providerLocalicationCode": 1255759,
+    "name": "GINECOLOGIA ACTUAL",
+    "provinceSlug": "barcelona"
+  },
+  "ginex": {
+    "providerLocalicationCode": 1367762,
+    "name": "GINEX",
+    "provinceSlug": "barcelona"
+  },
+  "teknogin": {
+    "providerLocalicationCode": 1305092,
+    "name": "TEKNOGIN",
+    "provinceSlug": "barcelona"
+  },
+  "ginex-valles-s-l": {
+    "providerLocalicationCode": 1518870,
+    "name": "GINEX VALLES S.L.",
+    "provinceSlug": "barcelona"
+  },
+  "diatros": {
+    "providerLocalicationCode": 1141564,
+    "name": "DIATROS",
+    "provinceSlug": "barcelona"
+  },
+  "ginemolins": {
+    "providerLocalicationCode": 1204878,
+    "name": "GINEMOLINS",
+    "provinceSlug": "barcelona"
+  },
+  "clinica-eugin": {
+    "providerLocalicationCode": 1215973,
+    "name": "CLINICA EUGIN",
+    "provinceSlug": "barcelona"
+  },
+  "institut-dra-masip": {
+    "providerLocalicationCode": 1301885,
+    "name": "INSTITUT DRA. MASIP",
+    "provinceSlug": "barcelona"
+  },
+  "espai-syra": {
+    "providerLocalicationCode": 1376018,
+    "name": "ESPAI SYRA",
+    "provinceSlug": "barcelona"
+  },
+  "clinica-perramon-sl": {
+    "providerLocalicationCode": 1549964,
+    "name": "CLINICA PERRAMON, SL",
     "provinceSlug": "barcelona"
   },
   "c-r-m-centro-de-radiologia-del-maresme-s-l": {
@@ -5309,11 +5369,6 @@
     "name": "INSTITUT PER LA IMATGE",
     "provinceSlug": "barcelona"
   },
-  "diatros": {
-    "providerLocalicationCode": 1141564,
-    "name": "DIATROS",
-    "provinceSlug": "barcelona"
-  },
   "centre-de-diagnosi-per-la-imatge-de-terrassa": {
     "providerLocalicationCode": 1567452,
     "name": "CENTRE DE DIAGNOSI PER LA IMATGE DE TERRASSA",
@@ -5324,19 +5379,9 @@
     "name": "DIMAT DIAGNOSIS PER LA IMATGE 2017",
     "provinceSlug": "barcelona"
   },
-  "ginemolins": {
-    "providerLocalicationCode": 1204878,
-    "name": "GINEMOLINS",
-    "provinceSlug": "barcelona"
-  },
   "clinica-del-remedio-servicio-de-radiologia-sl": {
     "providerLocalicationCode": 1510124,
     "name": "CLINICA DEL REMEDIO, SERVICIO DE RADIOLOGIA, SL.",
-    "provinceSlug": "barcelona"
-  },
-  "institut-dra-masip": {
-    "providerLocalicationCode": 1301885,
-    "name": "INSTITUT DRA. MASIP",
     "provinceSlug": "barcelona"
   },
   "iriteb": {
@@ -5357,6 +5402,11 @@
   "c-e-m-vilassar": {
     "providerLocalicationCode": 1122897,
     "name": "C.E.M. VILASSAR",
+    "provinceSlug": "barcelona"
+  },
+  "neurodir": {
+    "providerLocalicationCode": 1393242,
+    "name": "NEURODIR",
     "provinceSlug": "barcelona"
   },
   "marti-ricart-lidia": {
@@ -6519,51 +6569,6 @@
     "name": "MONTOYA ALBESA, FRANCESC",
     "provinceSlug": "barcelona"
   },
-  "centro-ginecologico-gine-3": {
-    "providerLocalicationCode": 1369074,
-    "name": "CENTRO GINECOLOGICO GINE 3",
-    "provinceSlug": "barcelona"
-  },
-  "inst-guilera-obst-y-ginecologia": {
-    "providerLocalicationCode": 1111747,
-    "name": "INST. GUILERA OBST. Y GINECOLOGIA",
-    "provinceSlug": "barcelona"
-  },
-  "instituto-dra-gomez-roig": {
-    "providerLocalicationCode": 1351082,
-    "name": "INSTITUTO DRA. GOMEZ ROIG",
-    "provinceSlug": "barcelona"
-  },
-  "ginecologia-actual": {
-    "providerLocalicationCode": 1255759,
-    "name": "GINECOLOGIA ACTUAL",
-    "provinceSlug": "barcelona"
-  },
-  "teknogin": {
-    "providerLocalicationCode": 1305092,
-    "name": "TEKNOGIN",
-    "provinceSlug": "barcelona"
-  },
-  "ginex": {
-    "providerLocalicationCode": 1367762,
-    "name": "GINEX",
-    "provinceSlug": "barcelona"
-  },
-  "ginex-valles-s-l": {
-    "providerLocalicationCode": 1518870,
-    "name": "GINEX VALLES S.L.",
-    "provinceSlug": "barcelona"
-  },
-  "clinica-eugin": {
-    "providerLocalicationCode": 1215973,
-    "name": "CLINICA EUGIN",
-    "provinceSlug": "barcelona"
-  },
-  "espai-syra": {
-    "providerLocalicationCode": 1376018,
-    "name": "ESPAI SYRA",
-    "provinceSlug": "barcelona"
-  },
   "perez-gonzalez-fertilidad-s-l-p": {
     "providerLocalicationCode": 1710739,
     "name": "PEREZ GONZALEZ FERTILIDAD S.L.P.",
@@ -6597,6 +6602,21 @@
   "centre-sociosanitari-palau": {
     "providerLocalicationCode": 1222627,
     "name": "CENTRE SOCIOSANITARI PALAU",
+    "provinceSlug": "barcelona"
+  },
+  "instituto-medico-tecnologico-s-l": {
+    "providerLocalicationCode": 1056091,
+    "name": "INSTITUTO MEDICO TECNOLOGICO S.L.",
+    "provinceSlug": "barcelona"
+  },
+  "urodex-sl": {
+    "providerLocalicationCode": 1449583,
+    "name": "URODEX, SL",
+    "provinceSlug": "barcelona"
+  },
+  "internacional-de-litotricia-centro": {
+    "providerLocalicationCode": 887387,
+    "name": "INTERNACIONAL DE LITOTRICIA CENTRO",
     "provinceSlug": "barcelona"
   },
   "servei-logopedia-interdisciplinari": {
@@ -6787,11 +6807,6 @@
   "pneumologia-i-son": {
     "providerLocalicationCode": 1081552,
     "name": "PNEUMOLOGIA I SON",
-    "provinceSlug": "barcelona"
-  },
-  "neurodir": {
-    "providerLocalicationCode": 1393242,
-    "name": "NEURODIR",
     "provinceSlug": "barcelona"
   },
   "institut-oftalmologic-eurolaser": {
@@ -7554,24 +7569,9 @@
     "name": "CENTRE MEDIC I.T.C.O. SLP",
     "provinceSlug": "barcelona"
   },
-  "instituto-medico-tecnologico-s-l": {
-    "providerLocalicationCode": 1056091,
-    "name": "INSTITUTO MEDICO TECNOLOGICO S.L.",
-    "provinceSlug": "barcelona"
-  },
   "uro-serrate-ribal": {
     "providerLocalicationCode": 1365694,
     "name": "URO SERRATE & RIBAL",
-    "provinceSlug": "barcelona"
-  },
-  "urodex-sl": {
-    "providerLocalicationCode": 1449583,
-    "name": "URODEX, SL",
-    "provinceSlug": "barcelona"
-  },
-  "internacional-de-litotricia-centro": {
-    "providerLocalicationCode": 887387,
-    "name": "INTERNACIONAL DE LITOTRICIA CENTRO",
     "provinceSlug": "barcelona"
   },
   "centro-medico-recoletas-calzadas": {
@@ -8239,9 +8239,9 @@
     "name": "INQUIMED TORAX S.L.P.",
     "provinceSlug": "cadiz"
   },
-  "centros-medicos-de-diagnostico-integral": {
-    "providerLocalicationCode": 1188644,
-    "name": "CENTROS MEDICOS DE DIAGNOSTICO INTEGRAL",
+  "clinica-medestec": {
+    "providerLocalicationCode": 1253001,
+    "name": "CLINICA MEDESTEC",
     "provinceSlug": "cadiz"
   },
   "ht-medica-cadiz-rx": {
@@ -8249,19 +8249,19 @@
     "name": "HT MEDICA CADIZ (RX)",
     "provinceSlug": "cadiz"
   },
-  "centros-medicos-de-diagnostico-integral-cadiz": {
-    "providerLocalicationCode": 1371042,
-    "name": "CENTROS MEDICOS DE DIAGNOSTICO INTEGRAL CADIZ",
-    "provinceSlug": "cadiz"
-  },
-  "clinica-medestec": {
-    "providerLocalicationCode": 1253001,
-    "name": "CLINICA MEDESTEC",
+  "centros-medicos-de-diagnostico-integral": {
+    "providerLocalicationCode": 1188644,
+    "name": "CENTROS MEDICOS DE DIAGNOSTICO INTEGRAL",
     "provinceSlug": "cadiz"
   },
   "rodriguez-rubio-centro-integral-de-salud-pelvica": {
     "providerLocalicationCode": 1296583,
     "name": "RODRIGUEZ RUBIO - CENTRO INTEGRAL DE SALUD PELVICA",
+    "provinceSlug": "cadiz"
+  },
+  "centros-medicos-de-diagnostico-integral-cadiz": {
+    "providerLocalicationCode": 1371042,
+    "name": "CENTROS MEDICOS DE DIAGNOSTICO INTEGRAL CADIZ",
     "provinceSlug": "cadiz"
   },
   "centro-medico-los-remedios": {
@@ -12899,16 +12899,6 @@
     "name": "MARTINEZ HERVAS SALUD",
     "provinceSlug": "granada"
   },
-  "policlinica-san-miguel-armilla": {
-    "providerLocalicationCode": 1591503,
-    "name": "POLICLINICA SAN MIGUEL ARMILLA",
-    "provinceSlug": "granada"
-  },
-  "policlinica-guadix": {
-    "providerLocalicationCode": 1385120,
-    "name": "POLICLINICA GUADIX",
-    "provinceSlug": "granada"
-  },
   "centro-diagnostico-granada": {
     "providerLocalicationCode": 871613,
     "name": "CENTRO DIAGNOSTICO GRANADA",
@@ -12917,6 +12907,16 @@
   "hospital-hla-inmaculada-diagnostico": {
     "providerLocalicationCode": 1166750,
     "name": "HOSPITAL HLA INMACULADA - DIAGNOSTICO",
+    "provinceSlug": "granada"
+  },
+  "policlinica-san-miguel-armilla": {
+    "providerLocalicationCode": 1591503,
+    "name": "POLICLINICA SAN MIGUEL ARMILLA",
+    "provinceSlug": "granada"
+  },
+  "policlinica-guadix": {
+    "providerLocalicationCode": 1385120,
+    "name": "POLICLINICA GUADIX",
     "provinceSlug": "granada"
   },
   "clinica-sanabria": {
@@ -14064,16 +14064,6 @@
     "name": "ALTARE",
     "provinceSlug": "huelva"
   },
-  "hospital-quironsalud-huelva": {
-    "providerLocalicationCode": 1039877,
-    "name": "HOSPITAL QUIRONSALUD HUELVA",
-    "provinceSlug": "huelva"
-  },
-  "centro-de-diagnostico-por-la-imagen": {
-    "providerLocalicationCode": 4943,
-    "name": "CENTRO DE DIAGNOSTICO POR LA IMAGEN",
-    "provinceSlug": "huelva"
-  },
   "urgencias-san-roque-de-lepe": {
     "providerLocalicationCode": 1083314,
     "name": "URGENCIAS SAN ROQUE  DE LEPE",
@@ -14354,9 +14344,19 @@
     "name": "GONZÁLEZ ROMERO, TOMÁS",
     "provinceSlug": "huelva"
   },
+  "hospital-quironsalud-huelva": {
+    "providerLocalicationCode": 1039877,
+    "name": "HOSPITAL QUIRONSALUD HUELVA",
+    "provinceSlug": "huelva"
+  },
   "bernal-vilan-maria-fatima": {
     "providerLocalicationCode": 1315660,
     "name": "BERNAL VILAN, MARIA FATIMA",
+    "provinceSlug": "huelva"
+  },
+  "centro-de-diagnostico-por-la-imagen": {
+    "providerLocalicationCode": 4943,
+    "name": "CENTRO DE DIAGNOSTICO POR LA IMAGEN",
     "provinceSlug": "huelva"
   },
   "manzano-solis-antonio": {
@@ -15724,24 +15724,9 @@
     "name": "CLINICA BANDAMA",
     "provinceSlug": "las-palmas"
   },
-  "martin-del-castillo-marcos": {
-    "providerLocalicationCode": 1552616,
-    "name": "MARTIN DEL CASTILLO, MARCOS",
-    "provinceSlug": "las-palmas"
-  },
   "suarez-alvarez-elena": {
     "providerLocalicationCode": 1312371,
     "name": "SUAREZ ALVAREZ, ELENA",
-    "provinceSlug": "las-palmas"
-  },
-  "fernandez-robayna-hugo": {
-    "providerLocalicationCode": 1591893,
-    "name": "FERNANDEZ ROBAYNA, HUGO",
-    "provinceSlug": "las-palmas"
-  },
-  "martin-rodriguez-elena": {
-    "providerLocalicationCode": 1642054,
-    "name": "MARTIN RODRIGUEZ, ELENA",
     "provinceSlug": "las-palmas"
   },
   "suarez-diaz-danae": {
@@ -15752,6 +15737,21 @@
   "sanchez-lozano-leticia": {
     "providerLocalicationCode": 1648166,
     "name": "SANCHEZ LOZANO, LETICIA",
+    "provinceSlug": "las-palmas"
+  },
+  "martin-del-castillo-marcos": {
+    "providerLocalicationCode": 1552616,
+    "name": "MARTIN DEL CASTILLO, MARCOS",
+    "provinceSlug": "las-palmas"
+  },
+  "fernandez-robayna-hugo": {
+    "providerLocalicationCode": 1591893,
+    "name": "FERNANDEZ ROBAYNA, HUGO",
+    "provinceSlug": "las-palmas"
+  },
+  "martin-rodriguez-elena": {
+    "providerLocalicationCode": 1642054,
+    "name": "MARTIN RODRIGUEZ, ELENA",
     "provinceSlug": "las-palmas"
   },
   "toro-bohorquez-yuliana": {
@@ -16749,6 +16749,11 @@
     "name": "VAZQUEZ RODRIGUEZ, BELEN",
     "provinceSlug": "lugo"
   },
+  "hospital-quiron-san-jose": {
+    "providerLocalicationCode": 498412,
+    "name": "HOSPITAL QUIRON SAN JOSE",
+    "provinceSlug": "madrid"
+  },
   "hospital-universitario-hla-moncloa": {
     "providerLocalicationCode": 3155,
     "name": "HOSPITAL UNIVERSITARIO HLA MONCLOA",
@@ -16847,11 +16852,6 @@
   "inresa": {
     "providerLocalicationCode": 1140200,
     "name": "INRESA",
-    "provinceSlug": "madrid"
-  },
-  "hospital-quiron-san-jose": {
-    "providerLocalicationCode": 498412,
-    "name": "HOSPITAL QUIRON SAN JOSE",
     "provinceSlug": "madrid"
   },
   "centro-medico-villasalud": {
@@ -17324,6 +17324,56 @@
     "name": "CLINICA ABLA",
     "provinceSlug": "madrid"
   },
+  "hm-sanchinarro-nuevo-norte": {
+    "providerLocalicationCode": 1074736,
+    "name": "HM SANCHINARRO-NUEVO NORTE",
+    "provinceSlug": "madrid"
+  },
+  "hospital-san-francisco-de-asis": {
+    "providerLocalicationCode": 17419,
+    "name": "HOSPITAL SAN FRANCISCO DE ASIS",
+    "provinceSlug": "madrid"
+  },
+  "hospital-universitario-hm-monteprincipe": {
+    "providerLocalicationCode": 902713,
+    "name": "HOSPITAL UNIVERSITARIO HM MONTEPRINCIPE",
+    "provinceSlug": "madrid"
+  },
+  "hospital-universitario-hm-madrid": {
+    "providerLocalicationCode": 1041848,
+    "name": "HOSPITAL UNIVERSITARIO HM MADRID",
+    "provinceSlug": "madrid"
+  },
+  "hospital-san-rafael": {
+    "providerLocalicationCode": 851914,
+    "name": "HOSPITAL SAN RAFAEL",
+    "provinceSlug": "madrid"
+  },
+  "hospital-vithas-madrid-aravaca": {
+    "providerLocalicationCode": 1084984,
+    "name": "HOSPITAL VITHAS MADRID ARAVACA",
+    "provinceSlug": "madrid"
+  },
+  "hospital-universitario-hm-torrelodones": {
+    "providerLocalicationCode": 1033511,
+    "name": "HOSPITAL UNIVERSITARIO HM TORRELODONES",
+    "provinceSlug": "madrid"
+  },
+  "hospital-de-la-v-o-t-de-san-francisco": {
+    "providerLocalicationCode": 880315,
+    "name": "HOSPITAL DE LA V.O.T. DE SAN FRANCISCO",
+    "provinceSlug": "madrid"
+  },
+  "hospital-nuestra-senora-del-rosario": {
+    "providerLocalicationCode": 77923,
+    "name": "HOSPITAL NUESTRA SEÑORA DEL ROSARIO",
+    "provinceSlug": "madrid"
+  },
+  "clinica-medica-el-real": {
+    "providerLocalicationCode": 1063413,
+    "name": "CLINICA MEDICA EL REAL",
+    "provinceSlug": "madrid"
+  },
   "espiga-vascular": {
     "providerLocalicationCode": 1620056,
     "name": "ESPIGA VASCULAR",
@@ -17332,11 +17382,6 @@
   "hospital-universitario-hm-nuevo-belen": {
     "providerLocalicationCode": 502287,
     "name": "HOSPITAL UNIVERSITARIO HM NUEVO BELEN",
-    "provinceSlug": "madrid"
-  },
-  "hm-sanchinarro-nuevo-norte": {
-    "providerLocalicationCode": 1074736,
-    "name": "HM SANCHINARRO-NUEVO NORTE",
     "provinceSlug": "madrid"
   },
   "centro-medico-complutense": {
@@ -17369,11 +17414,6 @@
     "name": "GABINETE MEDICO DELICIAS",
     "provinceSlug": "madrid"
   },
-  "hospital-nuestra-senora-del-rosario": {
-    "providerLocalicationCode": 77923,
-    "name": "HOSPITAL NUESTRA SEÑORA DEL ROSARIO",
-    "provinceSlug": "madrid"
-  },
   "clinica-union": {
     "providerLocalicationCode": 1124516,
     "name": "CLINICA UNION",
@@ -17389,11 +17429,6 @@
     "name": "DIGESTIVO MEDICO QUIRURGICA",
     "provinceSlug": "madrid"
   },
-  "hospital-universitario-hm-madrid": {
-    "providerLocalicationCode": 1041848,
-    "name": "HOSPITAL UNIVERSITARIO HM MADRID",
-    "provinceSlug": "madrid"
-  },
   "unidigen": {
     "providerLocalicationCode": 1430543,
     "name": "UNIDIGEN",
@@ -17402,16 +17437,6 @@
   "inmeq-instituto-medico-quirurgico-del-ap-digestivo": {
     "providerLocalicationCode": 1628122,
     "name": "INMEQ INSTITUTO MEDICO-QUIRURGICO DEL AP.DIGESTIVO",
-    "provinceSlug": "madrid"
-  },
-  "hospital-san-rafael": {
-    "providerLocalicationCode": 851914,
-    "name": "HOSPITAL SAN RAFAEL",
-    "provinceSlug": "madrid"
-  },
-  "hospital-vithas-madrid-aravaca": {
-    "providerLocalicationCode": 1084984,
-    "name": "HOSPITAL VITHAS MADRID ARAVACA",
     "provinceSlug": "madrid"
   },
   "cirugia-y-digestivo": {
@@ -17469,24 +17494,9 @@
     "name": "CENTRO MEDICO RADIOLOGICO",
     "provinceSlug": "madrid"
   },
-  "hospital-universitario-hm-torrelodones": {
-    "providerLocalicationCode": 1033511,
-    "name": "HOSPITAL UNIVERSITARIO HM TORRELODONES",
-    "provinceSlug": "madrid"
-  },
   "cardiopatias-congenitas": {
     "providerLocalicationCode": 1424544,
     "name": "CARDIOPATIAS CONGENITAS",
-    "provinceSlug": "madrid"
-  },
-  "hospital-universitario-hm-monteprincipe": {
-    "providerLocalicationCode": 902713,
-    "name": "HOSPITAL UNIVERSITARIO HM MONTEPRINCIPE",
-    "provinceSlug": "madrid"
-  },
-  "hospital-san-francisco-de-asis": {
-    "providerLocalicationCode": 17419,
-    "name": "HOSPITAL SAN FRANCISCO DE ASIS",
     "provinceSlug": "madrid"
   },
   "centro-medico-dr-palomo": {
@@ -17569,11 +17579,6 @@
     "name": "MUNDOLAB XXI",
     "provinceSlug": "madrid"
   },
-  "clinica-medica-el-real": {
-    "providerLocalicationCode": 1063413,
-    "name": "CLINICA MEDICA EL REAL",
-    "provinceSlug": "madrid"
-  },
   "consulta-medica-torrelodones": {
     "providerLocalicationCode": 1064243,
     "name": "CONSULTA MEDICA TORRELODONES",
@@ -17587,56 +17592,6 @@
   "asisa-dental-hospital-moncloa": {
     "providerLocalicationCode": 1208809,
     "name": "ASISA DENTAL HOSPITAL MONCLOA",
-    "provinceSlug": "madrid"
-  },
-  "clinica-magnetosur": {
-    "providerLocalicationCode": 1120468,
-    "name": "CLINICA MAGNETOSUR",
-    "provinceSlug": "madrid"
-  },
-  "mamografia-ntra-sra-rosario": {
-    "providerLocalicationCode": 1491601,
-    "name": "MAMOGRAFIA NTRA. SRA. ROSARIO",
-    "provinceSlug": "madrid"
-  },
-  "centro-de-radiologia-y-r-m-n-valdemoro": {
-    "providerLocalicationCode": 1121416,
-    "name": "CENTRO DE RADIOLOGIA Y R.M.N. VALDEMORO",
-    "provinceSlug": "madrid"
-  },
-  "agrupacion-ginecologica-espanola": {
-    "providerLocalicationCode": 1404627,
-    "name": "AGRUPACION GINECOLOGICA ESPAÑOLA",
-    "provinceSlug": "madrid"
-  },
-  "centro-de-radiologia-de-la-mama": {
-    "providerLocalicationCode": 1634394,
-    "name": "CENTRO DE RADIOLOGIA DE LA MAMA",
-    "provinceSlug": "madrid"
-  },
-  "clinicas-nexo": {
-    "providerLocalicationCode": 1062625,
-    "name": "CLINICAS NEXO",
-    "provinceSlug": "madrid"
-  },
-  "vivo-diagnostico": {
-    "providerLocalicationCode": 1121588,
-    "name": "VIVO DIAGNOSTICO",
-    "provinceSlug": "madrid"
-  },
-  "diagnostico-para-todos": {
-    "providerLocalicationCode": 1218002,
-    "name": "DIAGNOSTICO PARA TODOS",
-    "provinceSlug": "madrid"
-  },
-  "clinica-palacios": {
-    "providerLocalicationCode": 1541540,
-    "name": "CLINICA PALACIOS",
-    "provinceSlug": "madrid"
-  },
-  "policlinico-ayala": {
-    "providerLocalicationCode": 1449730,
-    "name": "POLICLINICO AYALA",
     "provinceSlug": "madrid"
   },
   "centro-dermatologico-nuria-romero": {
@@ -17684,6 +17639,11 @@
     "name": "CONSULTORIO ALAMEDA DE OSUNA",
     "provinceSlug": "madrid"
   },
+  "policlinico-ayala": {
+    "providerLocalicationCode": 1449730,
+    "name": "POLICLINICO AYALA",
+    "provinceSlug": "madrid"
+  },
   "consultorio-medico-zarzaquemada": {
     "providerLocalicationCode": 1649143,
     "name": "CONSULTORIO MEDICO ZARZAQUEMADA",
@@ -17699,6 +17659,41 @@
     "name": "RESONA CENTRO DIAGNOSTICO POR IMAGEN",
     "provinceSlug": "madrid"
   },
+  "agrupacion-ginecologica-espanola": {
+    "providerLocalicationCode": 1404627,
+    "name": "AGRUPACION GINECOLOGICA ESPAÑOLA",
+    "provinceSlug": "madrid"
+  },
+  "dasan-sanidad": {
+    "providerLocalicationCode": 1372188,
+    "name": "DASAN SANIDAD",
+    "provinceSlug": "madrid"
+  },
+  "clinica-palacios": {
+    "providerLocalicationCode": 1541540,
+    "name": "CLINICA PALACIOS",
+    "provinceSlug": "madrid"
+  },
+  "mamografia-ntra-sra-rosario": {
+    "providerLocalicationCode": 1491601,
+    "name": "MAMOGRAFIA NTRA. SRA. ROSARIO",
+    "provinceSlug": "madrid"
+  },
+  "clinica-magnetosur": {
+    "providerLocalicationCode": 1120468,
+    "name": "CLINICA MAGNETOSUR",
+    "provinceSlug": "madrid"
+  },
+  "centro-de-radiologia-y-r-m-n-valdemoro": {
+    "providerLocalicationCode": 1121416,
+    "name": "CENTRO DE RADIOLOGIA Y R.M.N. VALDEMORO",
+    "provinceSlug": "madrid"
+  },
+  "centro-de-radiologia-de-la-mama": {
+    "providerLocalicationCode": 1634394,
+    "name": "CENTRO DE RADIOLOGIA DE LA MAMA",
+    "provinceSlug": "madrid"
+  },
   "centro-de-estudios-neurologicos-varela-de-seijas": {
     "providerLocalicationCode": 1603428,
     "name": "CENTRO DE ESTUDIOS NEUROLOGICOS VARELA DE SEIJAS",
@@ -17707,6 +17702,11 @@
   "andre-martinez-victorino": {
     "providerLocalicationCode": 757469,
     "name": "ANDRE MARTINEZ, VICTORINO",
+    "provinceSlug": "madrid"
+  },
+  "clinicas-nexo": {
+    "providerLocalicationCode": 1062625,
+    "name": "CLINICAS NEXO",
     "provinceSlug": "madrid"
   },
   "vera-iglesias-julio": {
@@ -20104,11 +20104,6 @@
     "name": "AQUINO LABBATE, KAREN S.",
     "provinceSlug": "madrid"
   },
-  "dasan-sanidad": {
-    "providerLocalicationCode": 1372188,
-    "name": "DASAN SANIDAD",
-    "provinceSlug": "madrid"
-  },
   "gineco-diagnostic": {
     "providerLocalicationCode": 1259429,
     "name": "GINECO DIAGNOSTIC",
@@ -20142,11 +20137,6 @@
   "hospital-quironsalud-ruber-internacional": {
     "providerLocalicationCode": 1508,
     "name": "HOSPITAL QUIRONSALUD  RUBER INTERNACIONAL",
-    "provinceSlug": "madrid"
-  },
-  "hospital-de-la-v-o-t-de-san-francisco": {
-    "providerLocalicationCode": 880315,
-    "name": "HOSPITAL DE LA V.O.T. DE SAN FRANCISCO",
     "provinceSlug": "madrid"
   },
   "hospital-virgen-del-mar": {
@@ -21317,6 +21307,16 @@
   "centro-qd-rm-san-fco-de-asis": {
     "providerLocalicationCode": 877702,
     "name": "CENTRO QD RM SAN FCO. DE ASIS",
+    "provinceSlug": "madrid"
+  },
+  "vivo-diagnostico": {
+    "providerLocalicationCode": 1121588,
+    "name": "VIVO DIAGNOSTICO",
+    "provinceSlug": "madrid"
+  },
+  "diagnostico-para-todos": {
+    "providerLocalicationCode": 1218002,
+    "name": "DIAGNOSTICO PARA TODOS",
     "provinceSlug": "madrid"
   },
   "ht-medica-madrid-hosp-universitario-san-rafael": {
@@ -24814,19 +24814,29 @@
     "name": "CLINICA OSTEN",
     "provinceSlug": "sevilla"
   },
-  "hospitalizacion-del-sur-de-sevilla": {
-    "providerLocalicationCode": 1087446,
-    "name": "HOSPITALIZACION DEL SUR DE SEVILLA",
+  "grupo-de-especialidades-neuroquirurgicas-s-l": {
+    "providerLocalicationCode": 1460171,
+    "name": "GRUPO DE ESPECIALIDADES NEUROQUIRURGICAS S.L.",
     "provinceSlug": "sevilla"
   },
-  "cirugia-toracica-congregados": {
-    "providerLocalicationCode": 1418402,
-    "name": "CIRUGIA TORACICA CONGREGADOS",
+  "pmgt-orthopedist": {
+    "providerLocalicationCode": 1466645,
+    "name": "PMGT ORTHOPEDIST",
     "provinceSlug": "sevilla"
   },
-  "centro-urologico-san-ignacio": {
-    "providerLocalicationCode": 860026,
-    "name": "CENTRO UROLOGICO SAN IGNACIO",
+  "horizon-medical-group": {
+    "providerLocalicationCode": 1596133,
+    "name": "HORIZON MEDICAL GROUP",
+    "provinceSlug": "sevilla"
+  },
+  "centro-de-especialidades-medicas-euclinic": {
+    "providerLocalicationCode": 1403288,
+    "name": "CENTRO DE ESPECIALIDADES MEDICAS EUCLINIC",
+    "provinceSlug": "sevilla"
+  },
+  "ctro-de-ginecologia-diagnostico-prenatal": {
+    "providerLocalicationCode": 1127443,
+    "name": "CTRO. DE GINECOLOGIA DIAGNOSTICO PRENATAL",
     "provinceSlug": "sevilla"
   },
   "inst-oftalmologico-privado-andaluz": {
@@ -24837,6 +24847,16 @@
   "visiocular": {
     "providerLocalicationCode": 1311134,
     "name": "VISIOCULAR",
+    "provinceSlug": "sevilla"
+  },
+  "hospitalizacion-del-sur-de-sevilla": {
+    "providerLocalicationCode": 1087446,
+    "name": "HOSPITALIZACION DEL SUR DE SEVILLA",
+    "provinceSlug": "sevilla"
+  },
+  "cirugia-toracica-congregados": {
+    "providerLocalicationCode": 1418402,
+    "name": "CIRUGIA TORACICA CONGREGADOS",
     "provinceSlug": "sevilla"
   },
   "vivo-nervion": {
@@ -24879,24 +24899,19 @@
     "name": "CLINICAS GINEMED",
     "provinceSlug": "sevilla"
   },
-  "ctro-de-ginecologia-diagnostico-prenatal": {
-    "providerLocalicationCode": 1127443,
-    "name": "CTRO. DE GINECOLOGIA DIAGNOSTICO PRENATAL",
-    "provinceSlug": "sevilla"
-  },
   "cuidado-integral-de-la-mujer-en-andalucia": {
     "providerLocalicationCode": 1187797,
     "name": "CUIDADO INTEGRAL DE LA MUJER EN ANDALUCIA",
     "provinceSlug": "sevilla"
   },
+  "centro-urologico-san-ignacio": {
+    "providerLocalicationCode": 860026,
+    "name": "CENTRO UROLOGICO SAN IGNACIO",
+    "provinceSlug": "sevilla"
+  },
   "st-salud": {
     "providerLocalicationCode": 1122031,
     "name": "ST SALUD",
-    "provinceSlug": "sevilla"
-  },
-  "centro-de-especialidades-medicas-euclinic": {
-    "providerLocalicationCode": 1403288,
-    "name": "CENTRO DE ESPECIALIDADES MEDICAS EUCLINIC",
     "provinceSlug": "sevilla"
   },
   "servicios-urologicos-tabladilla": {
@@ -24907,11 +24922,6 @@
   "utremedi": {
     "providerLocalicationCode": 860101,
     "name": "UTREMEDI",
-    "provinceSlug": "sevilla"
-  },
-  "horizon-medical-group": {
-    "providerLocalicationCode": 1596133,
-    "name": "HORIZON MEDICAL GROUP",
     "provinceSlug": "sevilla"
   },
   "diagnostico-x-imagen-moron": {
@@ -26649,11 +26659,6 @@
     "name": "CONSULTA DRES. BONILLA S.L.",
     "provinceSlug": "sevilla"
   },
-  "grupo-de-especialidades-neuroquirurgicas-s-l": {
-    "providerLocalicationCode": 1460171,
-    "name": "GRUPO DE ESPECIALIDADES NEUROQUIRURGICAS S.L.",
-    "provinceSlug": "sevilla"
-  },
   "genesis-care": {
     "providerLocalicationCode": 1244771,
     "name": "GENESIS CARE",
@@ -27159,11 +27164,6 @@
     "name": "RESONANCIA ABIERTA RECAREDO",
     "provinceSlug": "sevilla"
   },
-  "pmgt-orthopedist": {
-    "providerLocalicationCode": 1466645,
-    "name": "PMGT ORTHOPEDIST",
-    "provinceSlug": "sevilla"
-  },
   "ctro-medico-san-fco-javier-sevilla": {
     "providerLocalicationCode": 1101296,
     "name": "CTRO. MEDICO SAN FCO JAVIER SEVILLA",
@@ -27394,26 +27394,6 @@
     "name": "MEDITERRANI SALUT TORTOSA, SLP",
     "provinceSlug": "tarragona"
   },
-  "c-m-radiologico-tarragona-s-l": {
-    "providerLocalicationCode": 8440,
-    "name": "C.M.RADIOLOGICO TARRAGONA S.L.",
-    "provinceSlug": "tarragona"
-  },
-  "centre-m-diagnostic-alomar-tarragona": {
-    "providerLocalicationCode": 1070486,
-    "name": "CENTRE M. DIAGNOSTIC ALOMAR TARRAGONA",
-    "provinceSlug": "tarragona"
-  },
-  "denos-densitometria-i-osteoporosi": {
-    "providerLocalicationCode": 7317,
-    "name": "DENOS DENSITOMETRIA I OSTEOPOROSI",
-    "provinceSlug": "tarragona"
-  },
-  "radiocentre-per-la-imatge-s-l-p": {
-    "providerLocalicationCode": 1602324,
-    "name": "RADIOCENTRE PER LA IMATGE, S.L.P.",
-    "provinceSlug": "tarragona"
-  },
   "centre-clinic-fisioquiros": {
     "providerLocalicationCode": 1303908,
     "name": "CENTRE CLINIC FISIOQUIROS",
@@ -27422,21 +27402,6 @@
   "alta-medicina-vendrell-serveis-medics": {
     "providerLocalicationCode": 1242603,
     "name": "ALTA MEDICINA VENDRELL SERVEIS MEDICS",
-    "provinceSlug": "tarragona"
-  },
-  "ability-salud": {
-    "providerLocalicationCode": 1118894,
-    "name": "ABILITY SALUD",
-    "provinceSlug": "tarragona"
-  },
-  "fresenius-medical-care-serv-catalunya": {
-    "providerLocalicationCode": 1084564,
-    "name": "FRESENIUS MEDICAL CARE SERV. CATALUNYA",
-    "provinceSlug": "tarragona"
-  },
-  "centre-medic-c-m-q-r-consultes": {
-    "providerLocalicationCode": 17510,
-    "name": "CENTRE MEDIC C.M.Q.R. CONSULTES",
     "provinceSlug": "tarragona"
   },
   "ciobanica-postaru-angela": {
@@ -27664,6 +27629,11 @@
     "name": "MEIFIFONTA, S.L.",
     "provinceSlug": "tarragona"
   },
+  "ability-salud": {
+    "providerLocalicationCode": 1118894,
+    "name": "ABILITY SALUD",
+    "provinceSlug": "tarragona"
+  },
   "munoz-carrasco-josefina": {
     "providerLocalicationCode": 834269,
     "name": "MUÑOZ CARRASCO, JOSEFINA",
@@ -27889,6 +27859,11 @@
     "name": "CUENCA CLAVO RAFAEL",
     "provinceSlug": "tarragona"
   },
+  "centre-medic-c-m-q-r-consultes": {
+    "providerLocalicationCode": 17510,
+    "name": "CENTRE MEDIC C.M.Q.R. CONSULTES",
+    "provinceSlug": "tarragona"
+  },
   "institut-pere-mata": {
     "providerLocalicationCode": 2123,
     "name": "INSTITUT PERE MATA",
@@ -27902,6 +27877,11 @@
   "clinica-alomar-s-l": {
     "providerLocalicationCode": 1529630,
     "name": "CLINICA ALOMAR, S.L.",
+    "provinceSlug": "tarragona"
+  },
+  "fresenius-medical-care-serv-catalunya": {
+    "providerLocalicationCode": 1084564,
+    "name": "FRESENIUS MEDICAL CARE SERV. CATALUNYA",
     "provinceSlug": "tarragona"
   },
   "neuromicss-s-l-p": {
@@ -27974,16 +27954,6 @@
     "name": "RAMOS LOPEZ, MONICA",
     "provinceSlug": "tarragona"
   },
-  "celma-bel-adria": {
-    "providerLocalicationCode": 1564495,
-    "name": "CELMA BEL, ADRIA",
-    "provinceSlug": "tarragona"
-  },
-  "lorenzo-lazaro-carlos": {
-    "providerLocalicationCode": 1642676,
-    "name": "LORENZO LAZARO, CARLOS",
-    "provinceSlug": "tarragona"
-  },
   "vera-cazorla-andrea": {
     "providerLocalicationCode": 1619993,
     "name": "VERA CAZORLA, ANDREA",
@@ -28034,6 +28004,11 @@
     "name": "CASTELLA VELASCO, CONCEPCION",
     "provinceSlug": "tarragona"
   },
+  "lorenzo-lazaro-carlos": {
+    "providerLocalicationCode": 1642676,
+    "name": "LORENZO LAZARO, CARLOS",
+    "provinceSlug": "tarragona"
+  },
   "etcheverry-paula-diana": {
     "providerLocalicationCode": 1521290,
     "name": "ETCHEVERRY , PAULA DIANA",
@@ -28059,6 +28034,11 @@
     "name": "SALA LLINAS, LAURA",
     "provinceSlug": "tarragona"
   },
+  "celma-bel-adria": {
+    "providerLocalicationCode": 1564495,
+    "name": "CELMA BEL, ADRIA",
+    "provinceSlug": "tarragona"
+  },
   "garcia-soto-carina-roxana": {
     "providerLocalicationCode": 1568585,
     "name": "GARCIA SOTO, CARINA ROXANA",
@@ -28072,6 +28052,26 @@
   "sancho-sol-cinta": {
     "providerLocalicationCode": 1394896,
     "name": "SANCHO SOL, CINTA",
+    "provinceSlug": "tarragona"
+  },
+  "c-m-radiologico-tarragona-s-l": {
+    "providerLocalicationCode": 8440,
+    "name": "C.M.RADIOLOGICO TARRAGONA S.L.",
+    "provinceSlug": "tarragona"
+  },
+  "centre-m-diagnostic-alomar-tarragona": {
+    "providerLocalicationCode": 1070486,
+    "name": "CENTRE M. DIAGNOSTIC ALOMAR TARRAGONA",
+    "provinceSlug": "tarragona"
+  },
+  "radiocentre-per-la-imatge-s-l-p": {
+    "providerLocalicationCode": 1602324,
+    "name": "RADIOCENTRE PER LA IMATGE, S.L.P.",
+    "provinceSlug": "tarragona"
+  },
+  "denos-densitometria-i-osteoporosi": {
+    "providerLocalicationCode": 7317,
+    "name": "DENOS DENSITOMETRIA I OSTEOPOROSI",
     "provinceSlug": "tarragona"
   },
   "resonancia-de-tarragona": {
@@ -29099,14 +29099,14 @@
     "name": "OLIGAR PSICOLOGIA&MEDICINA",
     "provinceSlug": "toledo"
   },
-  "inst-oftalmologico-de-toledo": {
-    "providerLocalicationCode": 1130720,
-    "name": "INST. OFTALMOLOGICO  DE TOLEDO",
-    "provinceSlug": "toledo"
-  },
   "instituto-oftalmologico-de-talavera": {
     "providerLocalicationCode": 1189113,
     "name": "INSTITUTO OFTALMOLOGICO DE TALAVERA",
+    "provinceSlug": "toledo"
+  },
+  "inst-oftalmologico-de-toledo": {
+    "providerLocalicationCode": 1130720,
+    "name": "INST. OFTALMOLOGICO  DE TOLEDO",
     "provinceSlug": "toledo"
   },
   "buitrago-prieto-paola-del-mar": {
@@ -29484,41 +29484,6 @@
     "name": "DERMA-ESTETIC NAVARRO MIRA S.L.P.",
     "provinceSlug": "valencia"
   },
-  "consulta-ginecologica-sanimar-s-l-p-u": {
-    "providerLocalicationCode": 1423118,
-    "name": "CONSULTA GINECOLOGICA SANIMAR, S.L.P.U.",
-    "provinceSlug": "valencia"
-  },
-  "angel-blanes-espi-s-l": {
-    "providerLocalicationCode": 1411834,
-    "name": "ANGEL BLANES ESPI, S.L.",
-    "provinceSlug": "valencia"
-  },
-  "clinica-mumcare-s-l": {
-    "providerLocalicationCode": 1510081,
-    "name": "CLINICA MUMCARE, S.L.",
-    "provinceSlug": "valencia"
-  },
-  "unidad-de-rehabilitacion-s-l": {
-    "providerLocalicationCode": 1414035,
-    "name": "UNIDAD DE REHABILITACION, S.L.",
-    "provinceSlug": "valencia"
-  },
-  "imske": {
-    "providerLocalicationCode": 1461233,
-    "name": "IMSKE",
-    "provinceSlug": "valencia"
-  },
-  "fisiomed-previsalud-la-vall-s-l": {
-    "providerLocalicationCode": 1425084,
-    "name": "FISIOMED/PREVISALUD LA VALL, S.L.",
-    "provinceSlug": "valencia"
-  },
-  "asistencia-medica-especializada": {
-    "providerLocalicationCode": 1183489,
-    "name": "ASISTENCIA MEDICA ESPECIALIZADA",
-    "provinceSlug": "valencia"
-  },
   "servicio-de-practicante-de-urgencias-y-cia-c-b": {
     "providerLocalicationCode": 1527852,
     "name": "SERVICIO DE PRACTICANTE DE URGENCIAS Y CIA, C.B.",
@@ -29529,6 +29494,11 @@
     "name": "GABALDO SOLER, MARIA LUZ",
     "provinceSlug": "valencia"
   },
+  "fisiomed-previsalud-la-vall-s-l": {
+    "providerLocalicationCode": 1425084,
+    "name": "FISIOMED/PREVISALUD LA VALL, S.L.",
+    "provinceSlug": "valencia"
+  },
   "centro-medico-saedra-s-l": {
     "providerLocalicationCode": 1438273,
     "name": "CENTRO MEDICO SAEDRA, S.L.",
@@ -29537,6 +29507,11 @@
   "clinica-nuestra-senora-de-la-seo": {
     "providerLocalicationCode": 870997,
     "name": "CLINICA NUESTRA SEÑORA DE LA SEO",
+    "provinceSlug": "valencia"
+  },
+  "asistencia-medica-especializada": {
+    "providerLocalicationCode": 1183489,
+    "name": "ASISTENCIA MEDICA ESPECIALIZADA",
     "provinceSlug": "valencia"
   },
   "clinica-de-la-costera": {
@@ -30094,6 +30069,11 @@
     "name": "CLINICA PHYSIS. UNIPERSONAL",
     "provinceSlug": "valencia"
   },
+  "unidad-de-rehabilitacion-s-l": {
+    "providerLocalicationCode": 1414035,
+    "name": "UNIDAD DE REHABILITACION, S.L.",
+    "provinceSlug": "valencia"
+  },
   "company-moya-jesus-fco": {
     "providerLocalicationCode": 1206643,
     "name": "COMPANY MOYA, JESUS FCO.",
@@ -30419,6 +30399,11 @@
     "name": "CLINICA DOCTORA BERNABEU S.L.",
     "provinceSlug": "valencia"
   },
+  "consulta-ginecologica-sanimar-s-l-p-u": {
+    "providerLocalicationCode": 1423118,
+    "name": "CONSULTA GINECOLOGICA SANIMAR, S.L.P.U.",
+    "provinceSlug": "valencia"
+  },
   "dr-zanon-serrano-aparicio": {
     "providerLocalicationCode": 1122220,
     "name": "DR. ZANON SERRANO, APARICIO",
@@ -30427,6 +30412,16 @@
   "ginesagunt-s-l": {
     "providerLocalicationCode": 1633548,
     "name": "GINESAGUNT S.L.",
+    "provinceSlug": "valencia"
+  },
+  "angel-blanes-espi-s-l": {
+    "providerLocalicationCode": 1411834,
+    "name": "ANGEL BLANES ESPI, S.L.",
+    "provinceSlug": "valencia"
+  },
+  "clinica-mumcare-s-l": {
+    "providerLocalicationCode": 1510081,
+    "name": "CLINICA MUMCARE, S.L.",
     "provinceSlug": "valencia"
   },
   "gynemama-salud-s-l": {
@@ -30477,6 +30472,11 @@
   "clininav-s-l": {
     "providerLocalicationCode": 1413609,
     "name": "CLININAV, S.L",
+    "provinceSlug": "valencia"
+  },
+  "imske": {
+    "providerLocalicationCode": 1461233,
+    "name": "IMSKE",
     "provinceSlug": "valencia"
   },
   "clinica-simbor": {
@@ -30959,11 +30959,6 @@
     "name": "VALLADOLID SALUD",
     "provinceSlug": "valladolid"
   },
-  "centro-qd-valladolid": {
-    "providerLocalicationCode": 2543,
-    "name": "CENTRO QD VALLADOLID",
-    "provinceSlug": "valladolid"
-  },
   "centro-dermatologico-santa-teresa": {
     "providerLocalicationCode": 1595231,
     "name": "CENTRO DERMATOLOGICO SANTA TERESA",
@@ -30977,21 +30972,6 @@
   "clinica-villa-de-prado": {
     "providerLocalicationCode": 1338629,
     "name": "CLINICA VILLA DE PRADO",
-    "provinceSlug": "valladolid"
-  },
-  "centro-qd-campo-grande": {
-    "providerLocalicationCode": 1105995,
-    "name": "CENTRO QD CAMPO GRANDE",
-    "provinceSlug": "valladolid"
-  },
-  "centro-qd-felipe-ii": {
-    "providerLocalicationCode": 1134807,
-    "name": "CENTRO QD FELIPE II",
-    "provinceSlug": "valladolid"
-  },
-  "novotecnica-2-sl": {
-    "providerLocalicationCode": 1541481,
-    "name": "NOVOTECNICA 2, SL",
     "provinceSlug": "valladolid"
   },
   "centro-medico-recoletos-n-8": {
@@ -31017,6 +30997,11 @@
   "rivera-mayoral-sonia": {
     "providerLocalicationCode": 1455960,
     "name": "RIVERA MAYORAL, SONIA",
+    "provinceSlug": "valladolid"
+  },
+  "novotecnica-2-sl": {
+    "providerLocalicationCode": 1541481,
+    "name": "NOVOTECNICA 2, SL",
     "provinceSlug": "valladolid"
   },
   "iglesias-kisten-alfonso": {
@@ -31142,6 +31127,16 @@
   "fonivoz": {
     "providerLocalicationCode": 871280,
     "name": "FONIVOZ",
+    "provinceSlug": "valladolid"
+  },
+  "centro-qd-campo-grande": {
+    "providerLocalicationCode": 1105995,
+    "name": "CENTRO QD CAMPO GRANDE",
+    "provinceSlug": "valladolid"
+  },
+  "centro-qd-valladolid": {
+    "providerLocalicationCode": 2543,
+    "name": "CENTRO QD VALLADOLID",
     "provinceSlug": "valladolid"
   },
   "del-campo-sanz-maria-yolanda": {
@@ -31317,6 +31312,11 @@
   "hernandez-cruz-cristina": {
     "providerLocalicationCode": 1668618,
     "name": "HERNANDEZ CRUZ, CRISTINA",
+    "provinceSlug": "valladolid"
+  },
+  "centro-qd-felipe-ii": {
+    "providerLocalicationCode": 1134807,
+    "name": "CENTRO QD FELIPE II",
     "provinceSlug": "valladolid"
   },
   "osfi-1997": {
@@ -32044,11 +32044,6 @@
     "name": "CENTRO MEDICO LA ALMUNIA S L",
     "provinceSlug": "zaragoza"
   },
-  "clinica-montecanal": {
-    "providerLocalicationCode": 1072277,
-    "name": "CLINICA MONTECANAL",
-    "provinceSlug": "zaragoza"
-  },
   "policlinica-seap-bajo-aragon": {
     "providerLocalicationCode": 1551192,
     "name": "POLICLINICA SEAP BAJO ARAGON",
@@ -32327,6 +32322,11 @@
   "galvez-sanchez-maria-llanos": {
     "providerLocalicationCode": 1174393,
     "name": "GALVEZ SANCHEZ, MARIA LLANOS",
+    "provinceSlug": "zaragoza"
+  },
+  "clinica-montecanal": {
+    "providerLocalicationCode": 1072277,
+    "name": "CLINICA MONTECANAL",
     "provinceSlug": "zaragoza"
   },
   "ita-san-juan": {

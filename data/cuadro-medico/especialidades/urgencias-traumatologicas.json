@@ -22,13 +22,13 @@
       "count": 3
     },
     {
-      "slug": "valencia",
-      "displayName": "Valencia",
-      "count": 3
-    },
-    {
       "slug": "alava",
       "displayName": "Álava",
+      "count": 2
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
       "count": 2
     },
     {
@@ -49,11 +49,6 @@
     {
       "slug": "castellon",
       "displayName": "Castellón",
-      "count": 1
-    },
-    {
-      "slug": "granada",
-      "displayName": "Granada",
       "count": 1
     },
     {

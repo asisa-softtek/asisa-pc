@@ -12,11 +12,6 @@
       "count": 4
     },
     {
-      "slug": "sevilla",
-      "displayName": "Sevilla",
-      "count": 4
-    },
-    {
       "slug": "leon",
       "displayName": "León",
       "count": 2
@@ -32,6 +27,11 @@
       "count": 1
     },
     {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 1
+    },
+    {
       "slug": "las-palmas",
       "displayName": "Las Palmas",
       "count": 1
@@ -39,11 +39,6 @@
     {
       "slug": "madrid",
       "displayName": "Madrid",
-      "count": 1
-    },
-    {
-      "slug": "soria",
-      "displayName": "Soria",
       "count": 1
     }
   ]

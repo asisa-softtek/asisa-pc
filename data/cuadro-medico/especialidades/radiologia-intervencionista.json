@@ -2,19 +2,9 @@
   "slug": "radiologia-intervencionista",
   "provincias": [
     {
-      "slug": "tarragona",
-      "displayName": "Tarragona",
-      "count": 7
-    },
-    {
       "slug": "baleares",
       "displayName": "Baleares",
       "count": 5
-    },
-    {
-      "slug": "valencia",
-      "displayName": "Valencia",
-      "count": 3
     },
     {
       "slug": "valladolid",
@@ -29,6 +19,11 @@
     {
       "slug": "segovia",
       "displayName": "Segovia",
+      "count": 2
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
       "count": 2
     },
     {
@@ -69,6 +64,11 @@
     {
       "slug": "lerida",
       "displayName": "Lérida",
+      "count": 1
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
       "count": 1
     }
   ]

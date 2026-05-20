@@ -2,6 +2,11 @@
   "slug": "electroencefalograma",
   "provincias": [
     {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 29
+    },
+    {
       "slug": "barcelona",
       "displayName": "Barcelona",
       "count": 12
@@ -10,11 +15,6 @@
       "slug": "malaga",
       "displayName": "Málaga",
       "count": 10
-    },
-    {
-      "slug": "valencia",
-      "displayName": "Valencia",
-      "count": 7
     },
     {
       "slug": "cordoba",
@@ -44,11 +44,6 @@
     {
       "slug": "huesca",
       "displayName": "Huesca",
-      "count": 3
-    },
-    {
-      "slug": "pontevedra",
-      "displayName": "Pontevedra",
       "count": 3
     },
     {

@@ -2,6 +2,11 @@
   "slug": "alergologia-infantil",
   "provincias": [
     {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 7
+    },
+    {
       "slug": "sevilla",
       "displayName": "Sevilla",
       "count": 7

@@ -2,11 +2,6 @@
   "slug": "preparacion-al-parto",
   "provincias": [
     {
-      "slug": "madrid",
-      "displayName": "Madrid",
-      "count": 17
-    },
-    {
       "slug": "cadiz",
       "displayName": "Cádiz",
       "count": 11
@@ -47,11 +42,6 @@
       "count": 4
     },
     {
-      "slug": "zaragoza",
-      "displayName": "Zaragoza",
-      "count": 4
-    },
-    {
       "slug": "almeria",
       "displayName": "Almería",
       "count": 3
@@ -77,18 +67,13 @@
       "count": 3
     },
     {
-      "slug": "tarragona",
-      "displayName": "Tarragona",
-      "count": 3
-    },
-    {
       "slug": "la-rioja",
       "displayName": "La Rioja",
       "count": 2
     },
     {
-      "slug": "valencia",
-      "displayName": "Valencia",
+      "slug": "leon",
+      "displayName": "León",
       "count": 2
     },
     {
@@ -109,16 +94,6 @@
     {
       "slug": "albacete",
       "displayName": "Albacete",
-      "count": 1
-    },
-    {
-      "slug": "pontevedra",
-      "displayName": "Pontevedra",
-      "count": 1
-    },
-    {
-      "slug": "soria",
-      "displayName": "Soria",
       "count": 1
     },
     {

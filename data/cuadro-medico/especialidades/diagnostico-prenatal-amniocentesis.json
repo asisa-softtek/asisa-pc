@@ -52,18 +52,8 @@
       "count": 5
     },
     {
-      "slug": "tarragona",
-      "displayName": "Tarragona",
-      "count": 5
-    },
-    {
       "slug": "a-coruna",
       "displayName": "A Coruña",
-      "count": 4
-    },
-    {
-      "slug": "cadiz",
-      "displayName": "Cádiz",
       "count": 4
     },
     {
@@ -77,8 +67,13 @@
       "count": 2
     },
     {
-      "slug": "valladolid",
-      "displayName": "Valladolid",
+      "slug": "palencia",
+      "displayName": "Palencia",
+      "count": 2
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
       "count": 2
     },
     {

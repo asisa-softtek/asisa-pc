@@ -2,13 +2,13 @@
   "slug": "t-a-c",
   "provincias": [
     {
-      "slug": "malaga",
-      "displayName": "Málaga",
-      "count": 13
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 25
     },
     {
-      "slug": "valencia",
-      "displayName": "Valencia",
+      "slug": "malaga",
+      "displayName": "Málaga",
       "count": 13
     },
     {
@@ -29,6 +29,11 @@
     {
       "slug": "baleares",
       "displayName": "Baleares",
+      "count": 9
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
       "count": 9
     },
     {
@@ -57,11 +62,6 @@
       "count": 5
     },
     {
-      "slug": "cantabria",
-      "displayName": "Cantabria",
-      "count": 4
-    },
-    {
       "slug": "gerona",
       "displayName": "Gerona",
       "count": 4
@@ -75,6 +75,11 @@
       "slug": "pontevedra",
       "displayName": "Pontevedra",
       "count": 4
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 3
     },
     {
       "slug": "albacete",
@@ -159,6 +164,11 @@
     {
       "slug": "ciudad-real",
       "displayName": "Ciudad Real",
+      "count": 1
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
       "count": 1
     },
     {

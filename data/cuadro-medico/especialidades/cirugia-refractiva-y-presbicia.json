@@ -7,14 +7,14 @@
       "count": 6
     },
     {
-      "slug": "murcia",
-      "displayName": "Murcia",
-      "count": 3
-    },
-    {
       "slug": "valencia",
       "displayName": "Valencia",
       "count": 3
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 2
     },
     {
       "slug": "huesca",

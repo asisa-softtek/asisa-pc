@@ -2,19 +2,9 @@
   "slug": "urgencias-pediatricas",
   "provincias": [
     {
-      "slug": "madrid",
-      "displayName": "Madrid",
-      "count": 11
-    },
-    {
       "slug": "alicante",
       "displayName": "Alicante",
       "count": 6
-    },
-    {
-      "slug": "valencia",
-      "displayName": "Valencia",
-      "count": 5
     },
     {
       "slug": "las-palmas",
@@ -32,6 +22,11 @@
       "count": 3
     },
     {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 3
+    },
+    {
       "slug": "cordoba",
       "displayName": "Córdoba",
       "count": 2
@@ -44,11 +39,6 @@
     {
       "slug": "malaga",
       "displayName": "Málaga",
-      "count": 2
-    },
-    {
-      "slug": "pontevedra",
-      "displayName": "Pontevedra",
       "count": 2
     },
     {
@@ -74,11 +64,6 @@
     {
       "slug": "castellon",
       "displayName": "Castellón",
-      "count": 1
-    },
-    {
-      "slug": "granada",
-      "displayName": "Granada",
       "count": 1
     },
     {

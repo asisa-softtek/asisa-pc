@@ -2,6 +2,11 @@
   "slug": "tomogammagrafia-spect",
   "provincias": [
     {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 2
+    },
+    {
       "slug": "a-coruna",
       "displayName": "A Coruña",
       "count": 1

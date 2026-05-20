@@ -5,6 +5,11 @@
       "slug": "a-coruna",
       "displayName": "A Coruña",
       "count": 1
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 1
     }
   ]
 }

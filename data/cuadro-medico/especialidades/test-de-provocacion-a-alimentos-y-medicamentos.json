@@ -2,6 +2,11 @@
   "slug": "test-de-provocacion-a-alimentos-y-medicamentos",
   "provincias": [
     {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 11
+    },
+    {
       "slug": "cadiz",
       "displayName": "Cádiz",
       "count": 7

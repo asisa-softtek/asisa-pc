@@ -2,19 +2,14 @@
   "slug": "cardiologia-infantil",
   "provincias": [
     {
-      "slug": "tarragona",
-      "displayName": "Tarragona",
-      "count": 8
-    },
-    {
       "slug": "cordoba",
       "displayName": "Córdoba",
       "count": 5
     },
     {
-      "slug": "valladolid",
-      "displayName": "Valladolid",
-      "count": 3
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 4
     },
     {
       "slug": "a-coruna",
@@ -57,13 +52,8 @@
       "count": 1
     },
     {
-      "slug": "huelva",
-      "displayName": "Huelva",
-      "count": 1
-    },
-    {
-      "slug": "huesca",
-      "displayName": "Huesca",
+      "slug": "granada",
+      "displayName": "Granada",
       "count": 1
     },
     {
@@ -74,11 +64,6 @@
     {
       "slug": "valencia",
       "displayName": "Valencia",
-      "count": 1
-    },
-    {
-      "slug": "zaragoza",
-      "displayName": "Zaragoza",
       "count": 1
     }
   ]

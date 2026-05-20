@@ -2,6 +2,11 @@
   "slug": "neumologia-infantil",
   "provincias": [
     {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 5
+    },
+    {
       "slug": "barcelona",
       "displayName": "Barcelona",
       "count": 2
@@ -24,6 +29,11 @@
     {
       "slug": "a-coruna",
       "displayName": "A Coruña",
+      "count": 1
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
       "count": 1
     }
   ]

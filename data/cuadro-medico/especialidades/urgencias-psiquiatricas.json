@@ -7,8 +7,8 @@
       "count": 2
     },
     {
-      "slug": "madrid",
-      "displayName": "Madrid",
+      "slug": "barcelona",
+      "displayName": "Barcelona",
       "count": 1
     },
     {
@@ -19,6 +19,11 @@
     {
       "slug": "tarragona",
       "displayName": "Tarragona",
+      "count": 1
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
       "count": 1
     }
   ]

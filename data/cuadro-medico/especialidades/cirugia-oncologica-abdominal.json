@@ -7,6 +7,11 @@
       "count": 9
     },
     {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 4
+    },
+    {
       "slug": "barcelona",
       "displayName": "Barcelona",
       "count": 2
@@ -17,8 +22,18 @@
       "count": 1
     },
     {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 1
+    },
+    {
       "slug": "huesca",
       "displayName": "Huesca",
+      "count": 1
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
       "count": 1
     }
   ]

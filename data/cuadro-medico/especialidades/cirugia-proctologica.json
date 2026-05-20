@@ -17,6 +17,11 @@
       "count": 11
     },
     {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 10
+    },
+    {
       "slug": "baleares",
       "displayName": "Baleares",
       "count": 9
@@ -32,19 +37,9 @@
       "count": 8
     },
     {
-      "slug": "teruel",
-      "displayName": "Teruel",
-      "count": 8
-    },
-    {
       "slug": "castellon",
       "displayName": "Castellón",
       "count": 7
-    },
-    {
-      "slug": "murcia",
-      "displayName": "Murcia",
-      "count": 6
     },
     {
       "slug": "albacete",
@@ -55,16 +50,6 @@
       "slug": "las-palmas",
       "displayName": "Las Palmas",
       "count": 5
-    },
-    {
-      "slug": "zaragoza",
-      "displayName": "Zaragoza",
-      "count": 5
-    },
-    {
-      "slug": "tarragona",
-      "displayName": "Tarragona",
-      "count": 4
     },
     {
       "slug": "caceres",

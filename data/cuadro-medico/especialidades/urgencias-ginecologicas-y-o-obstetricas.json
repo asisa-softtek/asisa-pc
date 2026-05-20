@@ -2,19 +2,14 @@
   "slug": "urgencias-ginecologicas-y-o-obstetricas",
   "provincias": [
     {
-      "slug": "madrid",
-      "displayName": "Madrid",
-      "count": 12
-    },
-    {
       "slug": "alicante",
       "displayName": "Alicante",
       "count": 6
     },
     {
-      "slug": "valencia",
-      "displayName": "Valencia",
-      "count": 4
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 2
     },
     {
       "slug": "cordoba",

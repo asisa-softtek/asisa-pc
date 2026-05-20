@@ -2,13 +2,13 @@
   "slug": "hemodinamica",
   "provincias": [
     {
-      "slug": "valencia",
-      "displayName": "Valencia",
-      "count": 6
-    },
-    {
       "slug": "malaga",
       "displayName": "Málaga",
+      "count": 5
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
       "count": 5
     },
     {
@@ -34,6 +34,11 @@
     {
       "slug": "granada",
       "displayName": "Granada",
+      "count": 1
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
       "count": 1
     }
   ]

@@ -2,11 +2,6 @@
   "slug": "obstetricia",
   "provincias": [
     {
-      "slug": "madrid",
-      "displayName": "Madrid",
-      "count": 82
-    },
-    {
       "slug": "cadiz",
       "displayName": "Cádiz",
       "count": 31
@@ -37,19 +32,19 @@
       "count": 14
     },
     {
-      "slug": "tarragona",
-      "displayName": "Tarragona",
-      "count": 12
-    },
-    {
       "slug": "huelva",
       "displayName": "Huelva",
       "count": 11
     },
     {
-      "slug": "toledo",
-      "displayName": "Toledo",
-      "count": 10
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 11
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 8
     },
     {
       "slug": "avila",
@@ -59,6 +54,11 @@
     {
       "slug": "burgos",
       "displayName": "Burgos",
+      "count": 6
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
       "count": 6
     },
     {
@@ -92,11 +92,6 @@
       "count": 4
     },
     {
-      "slug": "soria",
-      "displayName": "Soria",
-      "count": 4
-    },
-    {
       "slug": "albacete",
       "displayName": "Albacete",
       "count": 3
@@ -127,8 +122,8 @@
       "count": 1
     },
     {
-      "slug": "pontevedra",
-      "displayName": "Pontevedra",
+      "slug": "sevilla",
+      "displayName": "Sevilla",
       "count": 1
     }
   ]

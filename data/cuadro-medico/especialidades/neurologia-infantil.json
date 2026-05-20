@@ -2,11 +2,6 @@
   "slug": "neurologia-infantil",
   "provincias": [
     {
-      "slug": "madrid",
-      "displayName": "Madrid",
-      "count": 4
-    },
-    {
       "slug": "a-coruna",
       "displayName": "A Coruña",
       "count": 2
@@ -20,16 +15,6 @@
       "slug": "cordoba",
       "displayName": "Córdoba",
       "count": 2
-    },
-    {
-      "slug": "tarragona",
-      "displayName": "Tarragona",
-      "count": 2
-    },
-    {
-      "slug": "valencia",
-      "displayName": "Valencia",
-      "count": 1
     },
     {
       "slug": "zaragoza",

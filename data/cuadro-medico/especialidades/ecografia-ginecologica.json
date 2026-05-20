@@ -2,6 +2,16 @@
   "slug": "ecografia-ginecologica",
   "provincias": [
     {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 125
+    },
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 85
+    },
+    {
       "slug": "malaga",
       "displayName": "Málaga",
       "count": 69
@@ -37,11 +47,6 @@
       "count": 29
     },
     {
-      "slug": "tarragona",
-      "displayName": "Tarragona",
-      "count": 29
-    },
-    {
       "slug": "zaragoza",
       "displayName": "Zaragoza",
       "count": 22
@@ -59,11 +64,6 @@
     {
       "slug": "ciudad-real",
       "displayName": "Ciudad Real",
-      "count": 16
-    },
-    {
-      "slug": "huelva",
-      "displayName": "Huelva",
       "count": 16
     },
     {
@@ -94,11 +94,6 @@
     {
       "slug": "leon",
       "displayName": "León",
-      "count": 10
-    },
-    {
-      "slug": "pontevedra",
-      "displayName": "Pontevedra",
       "count": 10
     },
     {

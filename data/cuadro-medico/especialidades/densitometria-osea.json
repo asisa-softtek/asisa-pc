@@ -2,19 +2,9 @@
   "slug": "densitometria-osea",
   "provincias": [
     {
-      "slug": "madrid",
-      "displayName": "Madrid",
-      "count": 67
-    },
-    {
       "slug": "sevilla",
       "displayName": "Sevilla",
       "count": 14
-    },
-    {
-      "slug": "cadiz",
-      "displayName": "Cádiz",
-      "count": 13
     },
     {
       "slug": "malaga",
@@ -22,9 +12,9 @@
       "count": 12
     },
     {
-      "slug": "tarragona",
-      "displayName": "Tarragona",
-      "count": 11
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 12
     },
     {
       "slug": "gerona",
@@ -49,11 +39,6 @@
     {
       "slug": "badajoz",
       "displayName": "Badajoz",
-      "count": 7
-    },
-    {
-      "slug": "valladolid",
-      "displayName": "Valladolid",
       "count": 7
     },
     {
@@ -137,6 +122,11 @@
       "count": 3
     },
     {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 2
+    },
+    {
       "slug": "huesca",
       "displayName": "Huesca",
       "count": 2
@@ -174,11 +164,6 @@
     {
       "slug": "soria",
       "displayName": "Soria",
-      "count": 2
-    },
-    {
-      "slug": "teruel",
-      "displayName": "Teruel",
       "count": 2
     },
     {

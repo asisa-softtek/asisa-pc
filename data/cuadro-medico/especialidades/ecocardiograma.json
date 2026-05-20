@@ -2,6 +2,11 @@
   "slug": "ecocardiograma",
   "provincias": [
     {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 84
+    },
+    {
       "slug": "cadiz",
       "displayName": "Cádiz",
       "count": 34
@@ -37,18 +42,8 @@
       "count": 10
     },
     {
-      "slug": "a-coruna",
-      "displayName": "A Coruña",
-      "count": 9
-    },
-    {
       "slug": "granada",
       "displayName": "Granada",
-      "count": 8
-    },
-    {
-      "slug": "tarragona",
-      "displayName": "Tarragona",
       "count": 8
     },
     {
@@ -59,11 +54,6 @@
     {
       "slug": "pontevedra",
       "displayName": "Pontevedra",
-      "count": 5
-    },
-    {
-      "slug": "zaragoza",
-      "displayName": "Zaragoza",
       "count": 5
     },
     {
@@ -84,11 +74,6 @@
     {
       "slug": "palencia",
       "displayName": "Palencia",
-      "count": 4
-    },
-    {
-      "slug": "segovia",
-      "displayName": "Segovia",
       "count": 4
     },
     {

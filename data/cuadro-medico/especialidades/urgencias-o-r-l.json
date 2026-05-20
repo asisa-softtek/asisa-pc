@@ -2,11 +2,6 @@
   "slug": "urgencias-o-r-l",
   "provincias": [
     {
-      "slug": "madrid",
-      "displayName": "Madrid",
-      "count": 9
-    },
-    {
       "slug": "alicante",
       "displayName": "Alicante",
       "count": 6

@@ -2,6 +2,11 @@
   "slug": "cirugia-de-grandes-reconstrucciones-microcirugia",
   "provincias": [
     {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 3
+    },
+    {
       "slug": "a-coruna",
       "displayName": "A Coruña",
       "count": 2

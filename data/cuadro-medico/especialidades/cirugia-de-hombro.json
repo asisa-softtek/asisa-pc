@@ -2,6 +2,11 @@
   "slug": "cirugia-de-hombro",
   "provincias": [
     {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 15
+    },
+    {
       "slug": "cadiz",
       "displayName": "Cádiz",
       "count": 13
@@ -20,6 +25,11 @@
       "slug": "baleares",
       "displayName": "Baleares",
       "count": 8
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 5
     },
     {
       "slug": "huesca",

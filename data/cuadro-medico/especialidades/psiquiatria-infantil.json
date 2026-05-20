@@ -2,19 +2,9 @@
   "slug": "psiquiatria-infantil",
   "provincias": [
     {
-      "slug": "tarragona",
-      "displayName": "Tarragona",
-      "count": 8
-    },
-    {
       "slug": "cadiz",
       "displayName": "Cádiz",
       "count": 4
-    },
-    {
-      "slug": "granada",
-      "displayName": "Granada",
-      "count": 3
     },
     {
       "slug": "alava",
@@ -49,11 +39,6 @@
     {
       "slug": "valladolid",
       "displayName": "Valladolid",
-      "count": 1
-    },
-    {
-      "slug": "zaragoza",
-      "displayName": "Zaragoza",
       "count": 1
     }
   ]

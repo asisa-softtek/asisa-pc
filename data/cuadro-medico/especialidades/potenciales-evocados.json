@@ -2,11 +2,6 @@
   "slug": "potenciales-evocados",
   "provincias": [
     {
-      "slug": "madrid",
-      "displayName": "Madrid",
-      "count": 48
-    },
-    {
       "slug": "barcelona",
       "displayName": "Barcelona",
       "count": 13
@@ -19,11 +14,6 @@
     {
       "slug": "almeria",
       "displayName": "Almería",
-      "count": 7
-    },
-    {
-      "slug": "valencia",
-      "displayName": "Valencia",
       "count": 7
     },
     {
@@ -52,13 +42,13 @@
       "count": 3
     },
     {
-      "slug": "toledo",
-      "displayName": "Toledo",
+      "slug": "leon",
+      "displayName": "León",
       "count": 3
     },
     {
-      "slug": "zaragoza",
-      "displayName": "Zaragoza",
+      "slug": "toledo",
+      "displayName": "Toledo",
       "count": 3
     },
     {
@@ -69,11 +59,6 @@
     {
       "slug": "ciudad-real",
       "displayName": "Ciudad Real",
-      "count": 2
-    },
-    {
-      "slug": "granada",
-      "displayName": "Granada",
       "count": 2
     },
     {

@@ -27,8 +27,8 @@
       "count": 12
     },
     {
-      "slug": "tarragona",
-      "displayName": "Tarragona",
+      "slug": "sevilla",
+      "displayName": "Sevilla",
       "count": 12
     },
     {
@@ -42,13 +42,13 @@
       "count": 6
     },
     {
-      "slug": "caceres",
-      "displayName": "Cáceres",
-      "count": 5
+      "slug": "leon",
+      "displayName": "León",
+      "count": 6
     },
     {
-      "slug": "pontevedra",
-      "displayName": "Pontevedra",
+      "slug": "caceres",
+      "displayName": "Cáceres",
       "count": 5
     },
     {
@@ -67,8 +67,13 @@
       "count": 4
     },
     {
-      "slug": "segovia",
-      "displayName": "Segovia",
+      "slug": "palencia",
+      "displayName": "Palencia",
+      "count": 4
+    },
+    {
+      "slug": "teruel",
+      "displayName": "Teruel",
       "count": 4
     },
     {
@@ -99,11 +104,6 @@
     {
       "slug": "alava",
       "displayName": "Álava",
-      "count": 2
-    },
-    {
-      "slug": "zamora",
-      "displayName": "Zamora",
       "count": 2
     },
     {
