@@ -185,12 +185,12 @@ function renderSpecialitiesSection(c, provinciaDisplayName) {
 }
 
 function renderDoctorCard(d) {
-  return `<a class="cm-fcentro__doctor-card" href="/cuadro-medico/d/${d.key}">
-    <div class="cm-fcentro__doctor-icon"><i class="icon-user-doctor"></i></div>
-    <p class="cm-fcentro__doctor-name">${formatPersonName(d.name)}</p>
+  return `<article class="cm-fcentro__doctor-card">
+    <i class="icon-user-doctor cm-fcentro__doctor-icon" aria-hidden="true"></i>
+    <h3 class="cm-fcentro__doctor-name">${formatPersonName(d.name)}</h3>
     ${d.speciality ? `<p class="cm-fcentro__doctor-spec">${formatName(d.speciality)}</p>` : ''}
-    <span class="cm-fcentro__doctor-link">Ver perfil</span>
-  </a>`;
+    <a class="cm-fcentro__doctor-link" href="/cuadro-medico/d/${d.key}">Ver perfil</a>
+  </article>`;
 }
 
 function renderDoctorsSection(c) {
