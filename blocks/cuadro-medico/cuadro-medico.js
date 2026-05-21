@@ -18,7 +18,7 @@
 const API_BASE = 'https://asisa-pc.vercel.app';
 const ASISA_SEARCH = 'https://www.asisa.es/cuadro-medico/resultados-cuadro-medico';
 const ASISA_SEARCH_PRIVATE = 'https://www.asisa.es/asegurado/salud/cuadro-medico/resultados-cuadro-medico';
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 10;
 
 function getSlugsFromUrl() {
   const parts = window.location.pathname.split('/');

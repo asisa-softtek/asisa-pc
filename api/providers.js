@@ -1,8 +1,9 @@
 import { readFileSync, existsSync, readdirSync } from 'fs';
 import { join } from 'path';
 
-const DEFAULT_LIMIT = 20;
+const DEFAULT_LIMIT = 10;
 const MAX_LIMIT = 50;
+const MAX_TOTAL_BY_TAB = { professionals: 30, centers: 50 };
 
 let provinciasCache = null;
 let especialidadesCache = null;
@@ -143,12 +144,15 @@ export default async function handler(req, res) {
       if (!raw) return res.status(404).json({ error: `No data for ${provinceSlug}` });
     }
 
-    // Filter by tab
-    const filtered = raw.filter((p) => (tab === 'professionals' ? isProfessional(p) : isCenter(p)));
+    // Filter by tab, then cap the displayable list per business rule
+    // (profesionales muestra hasta 30, centros hasta 50)
+    const filteredAll = raw.filter((p) => (tab === 'professionals' ? isProfessional(p) : isCenter(p)));
+    const cap = MAX_TOTAL_BY_TAB[tab];
+    const filtered = filteredAll.slice(0, cap);
 
-    // Counts per tab (always return both so the UI can render both tab labels)
-    const totalProfessionals = raw.filter(isProfessional).length;
-    const totalCenters = raw.filter(isCenter).length;
+    // Counts per tab (capped, so the tab label refleja lo navegable)
+    const totalProfessionals = Math.min(raw.filter(isProfessional).length, MAX_TOTAL_BY_TAB.professionals);
+    const totalCenters = Math.min(raw.filter(isCenter).length, MAX_TOTAL_BY_TAB.centers);
 
     // Paginate
     const total = filtered.length;
