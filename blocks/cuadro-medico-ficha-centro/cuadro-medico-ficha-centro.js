@@ -184,9 +184,16 @@ function renderSpecialitiesSection(c, provinciaDisplayName) {
   </section>`;
 }
 
+function doctorIconClass(d) {
+  if (d.gender === 'H') return 'icon-personal-asisa-mujer';
+  if (d.gender === 'V') return 'icon-personal-asisa-hombre';
+  // Fallback by name: "Dra." prefix → female
+  return /^Dra\./.test(formatPersonName(d.name)) ? 'icon-personal-asisa-mujer' : 'icon-personal-asisa-hombre';
+}
+
 function renderDoctorCard(d) {
   return `<article class="cm-fcentro__doctor-card">
-    <i class="icon-user-doctor cm-fcentro__doctor-icon" aria-hidden="true"></i>
+    <i class="${doctorIconClass(d)} cm-fcentro__doctor-icon" aria-hidden="true"></i>
     <h3 class="cm-fcentro__doctor-name">${formatPersonName(d.name)}</h3>
     ${d.speciality ? `<p class="cm-fcentro__doctor-spec">${formatName(d.speciality)}</p>` : ''}
     <a class="cm-fcentro__doctor-link" href="/cuadro-medico/d/${d.key}">Ver perfil</a>

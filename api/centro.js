@@ -98,6 +98,7 @@ function scanProvince(provinceSlug) {
           specSlug,
           speciality: spec,
           subSpeciality: subSpec,
+          gender: p.professional?.gender || '',
         };
         if (!doctorsByParent.has(p.parentCode)) doctorsByParent.set(p.parentCode, []);
         doctorsByParent.get(p.parentCode).push(doc);
@@ -216,7 +217,9 @@ export default function handler(req, res) {
       for (const d of meta.doctors) {
         if (!docIndex[d.key] || seenDocs.has(d.key)) continue;
         seenDocs.add(d.key);
-        flatDoctors.push({ key: d.key, name: d.name, speciality: d.speciality });
+        flatDoctors.push({
+          key: d.key, name: d.name, speciality: d.speciality, gender: d.gender || '',
+        });
       }
     }
     flatDoctors.sort((a, b) => a.name.localeCompare(b.name));
