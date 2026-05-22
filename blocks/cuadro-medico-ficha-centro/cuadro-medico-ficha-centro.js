@@ -73,14 +73,15 @@ function renderBreadcrumb(c, provinciaDisplayName) {
   </nav>`;
 }
 
-function renderHeader(c) {
-  return `<div class="cmp-medical-detail__header">
-    <p class="cmp-medical-detail__eyebrow">CUADRO MÉDICO ASISA</p>
+function renderHeader(c, provinciaDisplayName) {
+  const centerName = formatName(c.name);
+  const intro = `Consulta la información de ${centerName} dentro del cuadro médico de ASISA. Encuentra especialidades, servicios médicos y profesionales disponibles en este centro sanitario, así como datos de contacto y ubicación.`;
+  return `<section class="cmp-medical-detail__header">
     <div class="cmp-title">
-      <h1 class="cmp-title__text">${formatName(c.name)}</h1>
+      <h1 class="cmp-title__text">${centerName} en ${provinciaDisplayName}</h1>
     </div>
-    ${c.description ? `<p class="cmp-medical-detail__description">${c.description}</p>` : ''}
-  </div>`;
+    <p class="cmp-medical-detail__description">${intro}</p>
+  </section>`;
 }
 
 function renderTagRow(c) {
@@ -265,7 +266,7 @@ export default function decorate(block) {
 
       block.innerHTML = `<div class="cmp-medical-detail">
         ${renderBreadcrumb(c, provinciaDisplayName)}
-        ${renderHeader(c)}
+        ${renderHeader(c, provinciaDisplayName)}
         ${renderMainCard(c, provinciaDisplayName)}
         ${renderSpecialitiesSection(c, provinciaDisplayName)}
         ${renderDoctorsSection(c)}
