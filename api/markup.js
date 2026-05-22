@@ -21,7 +21,6 @@ const DOCTOR_BLOCKS = `<div class="cuadro-medico-ficha-doctor"><div><div></div><
 const CENTRO_BLOCKS = '<div class="cuadro-medico-ficha-centro"><div><div></div></div></div>';
 
 const ESPECIALIDAD_BLOCKS = `<div class="cuadro-medico"><div><div></div></div></div>
-<div class="cuadro-medico-top-especialidades"><div><div></div></div></div>
 <div class="cuadro-medico-otras-especialidades"><div><div></div></div></div>
 <div class="cuadro-medico-otras-provincias"><div><div></div></div></div>`;
 
