@@ -10,9 +10,12 @@ function getSlugsFromUrl() {
   const parts = window.location.pathname.split('/');
   const pIdx = parts.indexOf('p');
   const peIdx = parts.indexOf('pe');
+  const eIdx = parts.indexOf('e');
+  let specSlug = peIdx !== -1 ? parts[peIdx + 1] : null;
+  if (!specSlug && eIdx !== -1) specSlug = parts[eIdx + 1];
   return {
     provSlug: pIdx !== -1 ? parts[pIdx + 1] : null,
-    specSlug: peIdx !== -1 ? parts[peIdx + 1] : null,
+    specSlug,
   };
 }
 
@@ -26,15 +29,17 @@ export default function decorate(block) {
     .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then((data) => {
       const provincias = (data.provincias || []).filter((p) => p.slug !== provSlug);
+      if (!provincias.length) { block.hidden = true; return; }
+      const specLower = (data.name || specSlug).toLowerCase();
 
       block.innerHTML = `
-        <h2 class="cm-otras-prov-title">Otras localidades con ${data.name.toLowerCase()} ASISA</h2>
+        <h2 class="cm-otras-prov-title">Otras provincias con ${specLower} ASISA</h2>
         <ul class="cm-otras-prov-list">
           ${provincias.map((p) => `
             <li class="cm-otras-prov-item">
               <a class="cm-otras-prov-card" href="/cuadro-medico/p/${p.slug}/pe/${specSlug}">
                 <div class="cm-otras-prov-card__info">
-                  <span class="cm-otras-prov-card__name">${p.displayName}</span>
+                  <span class="cm-otras-prov-card__name">${data.name} ${p.displayName}</span>
                   <span class="cm-otras-prov-card__count">${p.count} profesionales</span>
                 </div>
                 <span class="cm-otras-prov-card__arrow" aria-hidden="true">→</span>
