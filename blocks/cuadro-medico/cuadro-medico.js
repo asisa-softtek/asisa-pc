@@ -167,12 +167,18 @@ function renderShell(state) {
     ? buildShareUrl(provinceCode, locationName, results[0].speciality || specName || '', results[0].lat, results[0].lon)
     : '';
 
-  const intro = specName
+  const introTitle = specName
+    ? `${specName} en ${locationName}`
+    : `Cuadro Médico de ASISA en ${locationName}`;
+  const introBody = specName
+    ? `Encuentra especialistas en ${specName} en ${locationName} dentro del cuadro médico de ASISA. Consulta médicos, hospitales y clínicas donde recibir atención especializada y accede a la información de cada profesional de forma rápida y sencilla.`
+    : `Consulta el cuadro médico de ASISA en ${locationName} y encuentra hospitales, clínicas y especialistas cerca de ti. Localiza médicos por especialidad, consulta información de los centros y accede fácilmente a los servicios disponibles. Encuentra el profesional que necesitas y pide cita con ASISA de forma rápida y sencilla.`;
+  const intro = locationName
     ? `<section class="cmp-medical-detail__header">
         <div class="cmp-title">
-          <h1 class="cmp-title__text">${specName} en ${locationName}</h1>
+          <h1 class="cmp-title__text">${introTitle}</h1>
         </div>
-        <p class="cmp-medical-detail__description">Encuentra especialistas en ${specName} en ${locationName} dentro del cuadro médico de ASISA. Consulta médicos, hospitales y clínicas donde recibir atención especializada y accede a la información de cada profesional de forma rápida y sencilla.</p>
+        <p class="cmp-medical-detail__description">${introBody}</p>
       </section>`
     : '';
 
