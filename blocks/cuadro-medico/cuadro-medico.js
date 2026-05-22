@@ -167,6 +167,15 @@ function renderShell(state) {
     ? buildShareUrl(provinceCode, locationName, results[0].speciality || specName || '', results[0].lat, results[0].lon)
     : '';
 
+  const intro = specName
+    ? `<section class="cmp-medical-detail__header">
+        <div class="cmp-title">
+          <h1 class="cmp-title__text">${specName} en ${locationName}</h1>
+        </div>
+        <p class="cmp-medical-detail__description">Encuentra especialistas en ${specName} en ${locationName} dentro del cuadro médico de ASISA. Consulta médicos, hospitales y clínicas donde recibir atención especializada y accede a la información de cada profesional de forma rápida y sencilla.</p>
+      </section>`
+    : '';
+
   const titleText = specName
     ? `${total} resultados en <strong>${locationName}</strong> — ${specName}`
     : `${total} resultados en <strong>${locationName}</strong>`;
@@ -191,17 +200,20 @@ function renderShell(state) {
     </div>
   </div>`;
 
-  return `${header}${tabs}`;
+  return `${intro}${header}${tabs}`;
 }
 
 async function fetchPage(provSlug, specSlug, tab, page) {
   const params = new URLSearchParams({ provinceSlug: provSlug, tab, page: String(page), limit: String(PAGE_SIZE) });
   if (specSlug) params.set('specSlug', specSlug);
-  const [provincia, providersResp] = await Promise.all([
+  const [provincia, providersResp, especialidad] = await Promise.all([
     fetch(`${API_BASE}/api/provincias?slug=${provSlug}`).then((r) => r.json()),
     fetch(`${API_BASE}/api/providers?${params}`).then((r) => r.json()),
+    specSlug
+      ? fetch(`${API_BASE}/api/especialidades?slug=${specSlug}`).then((r) => (r.ok ? r.json() : null)).catch(() => null)
+      : Promise.resolve(null),
   ]);
-  return { provincia, providersResp };
+  return { provincia, providersResp, especialidad };
 }
 
 function attachListeners(block, state, refresh) {
@@ -234,13 +246,14 @@ async function decorate(block) {
     state = { ...state, ...next, loading: true };
     block.innerHTML = renderShell(state);
     try {
-      const { provincia, providersResp } = await fetchPage(provSlug, specSlug, state.tab, state.page);
+      const { provincia, providersResp, especialidad } = await fetchPage(provSlug, specSlug, state.tab, state.page);
+      const fallbackSpec = specSlug ? specSlug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) : '';
       state = {
         ...state,
         loading: false,
         locationName: provincia?.displayName || provSlug,
         provinceCode: provincia?.provinceCode || '',
-        specName: specSlug ? specSlug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) : '',
+        specName: especialidad?.name || fallbackSpec,
         totalProfessionals: providersResp.totalProfessionals || 0,
         totalCenters: providersResp.totalCenters || 0,
         page: providersResp.page,
