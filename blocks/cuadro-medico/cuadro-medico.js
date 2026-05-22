@@ -16,7 +16,6 @@
  */
 
 const API_BASE = 'https://asisa-pc.vercel.app';
-const ASISA_SEARCH = 'https://www.asisa.es/cuadro-medico/resultados-cuadro-medico';
 const ASISA_SEARCH_PRIVATE = 'https://www.asisa.es/asegurado/salud/cuadro-medico/resultados-cuadro-medico';
 const PAGE_SIZE = 10;
 
@@ -29,19 +28,6 @@ function getSlugsFromUrl() {
   let specSlug = peIdx !== -1 ? parts[peIdx + 1] : null;
   if (!specSlug && eIdx !== -1) specSlug = parts[eIdx + 1];
   return { provSlug, specSlug, nationalSpec: !provSlug && !!specSlug };
-}
-
-function buildShareUrl(provinceCode, locationName, speciality, lat, lon) {
-  const params = new URLSearchParams({
-    networkId: '1', networkName: 'Salud',
-    ordination: 'Relevance', ordinationName: 'Relevancia',
-    address: `${locationName}, España`,
-    provinceId: provinceCode,
-    speciality, specialityName: speciality,
-    specialityType: '1',
-  });
-  if (lat && lon) { params.set('latitude', lat); params.set('longitude', lon); }
-  return `${ASISA_SEARCH}?${params}`;
 }
 
 function buildCitaUrl(provinceCode, locationName, speciality, lat, lon, concept) {
@@ -160,13 +146,9 @@ function renderShell(state) {
   const {
     locationName, provinceCode, specName,
     totalProfessionals, totalCenters,
-    tab, page, totalPages, total, results,
+    tab, page, totalPages, results,
     loading, nationalSpec,
   } = state;
-
-  const shareUrl = results[0]
-    ? buildShareUrl(provinceCode, locationName, results[0].speciality || specName || '', results[0].lat, results[0].lon)
-    : '';
 
   let introTitle = '';
   let introBody = '';
@@ -189,17 +171,6 @@ function renderShell(state) {
       </section>`
     : '';
 
-  let titleText;
-  if (nationalSpec && specName) titleText = `${total} resultados — <strong>${specName}</strong>`;
-  else if (specName) titleText = `${total} resultados en <strong>${locationName}</strong> — ${specName}`;
-  else titleText = `${total} resultados en <strong>${locationName}</strong>`;
-
-  const header = `<div class="cmp-medical-picture-result__header">
-    <div class="cmp-medical-picture-result__header--share-title-block">
-      <div class="cmp-medical-picture-result__header--title">${titleText}</div>
-      ${shareUrl ? `<a class="cmp-medical-picture-result__header--share" href="${shareUrl}" target="_blank" rel="noopener"><i class="icon-share-01"></i>Compartir</a>` : ''}
-    </div>
-  </div>`;
 
   const tabs = `<div class="cmp-tabs">
     <ul class="cmp-tabs__tablist">
@@ -214,7 +185,7 @@ function renderShell(state) {
     </div>
   </div>`;
 
-  return `${intro}${header}${tabs}`;
+  return `${intro}${tabs}`;
 }
 
 async function fetchPage(provSlug, specSlug, tab, page) {
