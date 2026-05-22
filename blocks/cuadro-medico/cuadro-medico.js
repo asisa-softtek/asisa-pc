@@ -24,10 +24,11 @@ function getSlugsFromUrl() {
   const parts = window.location.pathname.split('/');
   const pIdx = parts.indexOf('p');
   const peIdx = parts.indexOf('pe');
-  return {
-    provSlug: pIdx !== -1 ? parts[pIdx + 1] : null,
-    specSlug: peIdx !== -1 ? parts[peIdx + 1] : null,
-  };
+  const eIdx = parts.indexOf('e');
+  const provSlug = pIdx !== -1 ? parts[pIdx + 1] : null;
+  let specSlug = peIdx !== -1 ? parts[peIdx + 1] : null;
+  if (!specSlug && eIdx !== -1) specSlug = parts[eIdx + 1];
+  return { provSlug, specSlug, nationalSpec: !provSlug && !!specSlug };
 }
 
 function buildShareUrl(provinceCode, locationName, speciality, lat, lon) {
@@ -160,20 +161,26 @@ function renderShell(state) {
     locationName, provinceCode, specName,
     totalProfessionals, totalCenters,
     tab, page, totalPages, total, results,
-    loading,
+    loading, nationalSpec,
   } = state;
 
   const shareUrl = results[0]
     ? buildShareUrl(provinceCode, locationName, results[0].speciality || specName || '', results[0].lat, results[0].lon)
     : '';
 
-  const introTitle = specName
-    ? `${specName} en ${locationName}`
-    : `Cuadro Médico de ASISA en ${locationName}`;
-  const introBody = specName
-    ? `Encuentra especialistas en ${specName} en ${locationName} dentro del cuadro médico de ASISA. Consulta médicos, hospitales y clínicas donde recibir atención especializada y accede a la información de cada profesional de forma rápida y sencilla.`
-    : `Consulta el cuadro médico de ASISA en ${locationName} y encuentra hospitales, clínicas y especialistas cerca de ti. Localiza médicos por especialidad, consulta información de los centros y accede fácilmente a los servicios disponibles. Encuentra el profesional que necesitas y pide cita con ASISA de forma rápida y sencilla.`;
-  const intro = locationName
+  let introTitle = '';
+  let introBody = '';
+  if (nationalSpec && specName) {
+    introTitle = `Especialistas en ${specName} con ASISA`;
+    introBody = `Encuentra especialistas en ${specName} dentro del cuadro médico de ASISA. Consulta médicos, clínicas y hospitales disponibles y accede fácilmente a atención sanitaria especializada cerca de ti.`;
+  } else if (specName) {
+    introTitle = `${specName} en ${locationName}`;
+    introBody = `Encuentra especialistas en ${specName} en ${locationName} dentro del cuadro médico de ASISA. Consulta médicos, hospitales y clínicas donde recibir atención especializada y accede a la información de cada profesional de forma rápida y sencilla.`;
+  } else if (locationName) {
+    introTitle = `Cuadro Médico de ASISA en ${locationName}`;
+    introBody = `Consulta el cuadro médico de ASISA en ${locationName} y encuentra hospitales, clínicas y especialistas cerca de ti. Localiza médicos por especialidad, consulta información de los centros y accede fácilmente a los servicios disponibles. Encuentra el profesional que necesitas y pide cita con ASISA de forma rápida y sencilla.`;
+  }
+  const intro = introTitle
     ? `<section class="cmp-medical-detail__header">
         <div class="cmp-title">
           <h1 class="cmp-title__text">${introTitle}</h1>
@@ -182,9 +189,10 @@ function renderShell(state) {
       </section>`
     : '';
 
-  const titleText = specName
-    ? `${total} resultados en <strong>${locationName}</strong> — ${specName}`
-    : `${total} resultados en <strong>${locationName}</strong>`;
+  let titleText;
+  if (nationalSpec && specName) titleText = `${total} resultados — <strong>${specName}</strong>`;
+  else if (specName) titleText = `${total} resultados en <strong>${locationName}</strong> — ${specName}`;
+  else titleText = `${total} resultados en <strong>${locationName}</strong>`;
 
   const header = `<div class="cmp-medical-picture-result__header">
     <div class="cmp-medical-picture-result__header--share-title-block">
@@ -210,10 +218,13 @@ function renderShell(state) {
 }
 
 async function fetchPage(provSlug, specSlug, tab, page) {
-  const params = new URLSearchParams({ provinceSlug: provSlug, tab, page: String(page), limit: String(PAGE_SIZE) });
+  const params = new URLSearchParams({ tab, page: String(page), limit: String(PAGE_SIZE) });
+  if (provSlug) params.set('provinceSlug', provSlug);
   if (specSlug) params.set('specSlug', specSlug);
   const [provincia, providersResp, especialidad] = await Promise.all([
-    fetch(`${API_BASE}/api/provincias?slug=${provSlug}`).then((r) => r.json()),
+    provSlug
+      ? fetch(`${API_BASE}/api/provincias?slug=${provSlug}`).then((r) => r.json()).catch(() => null)
+      : Promise.resolve(null),
     fetch(`${API_BASE}/api/providers?${params}`).then((r) => r.json()),
     specSlug
       ? fetch(`${API_BASE}/api/especialidades?slug=${specSlug}`).then((r) => (r.ok ? r.json() : null)).catch(() => null)
@@ -241,8 +252,8 @@ function attachListeners(block, state, refresh) {
 }
 
 async function decorate(block) {
-  const { provSlug, specSlug } = getSlugsFromUrl();
-  if (!provSlug) { block.hidden = true; return; }
+  const { provSlug, specSlug, nationalSpec } = getSlugsFromUrl();
+  if (!provSlug && !nationalSpec) { block.hidden = true; return; }
   block.classList.add('cmp-medical-picture-result');
 
   let state = { tab: 'professionals', page: 1, loading: true, results: [] };
@@ -257,7 +268,8 @@ async function decorate(block) {
       state = {
         ...state,
         loading: false,
-        locationName: provincia?.displayName || provSlug,
+        nationalSpec,
+        locationName: provincia?.displayName || provSlug || '',
         provinceCode: provincia?.provinceCode || '',
         specName: especialidad?.name || fallbackSpec,
         totalProfessionals: providersResp.totalProfessionals || 0,

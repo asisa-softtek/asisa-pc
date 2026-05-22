@@ -110,17 +110,19 @@ export default async function handler(req, res) {
     limit: limitParam,
   } = req.query;
 
-  if (!provinceSlug) {
-    return res.status(400).json({ error: 'provinceSlug is required' });
+  if (!provinceSlug && !specSlug) {
+    return res.status(400).json({ error: 'provinceSlug or specSlug is required' });
   }
 
   if (!['professionals', 'centers'].includes(tab)) {
     return res.status(400).json({ error: 'tab must be professionals or centers' });
   }
 
-  // Resolve province
-  const provincia = getProvincias().find((p) => p.slug === provinceSlug);
-  if (!provincia) return res.status(404).json({ error: `Province not found: ${provinceSlug}` });
+  // Resolve province (optional when scanning nationally by spec)
+  if (provinceSlug) {
+    const provincia = getProvincias().find((p) => p.slug === provinceSlug);
+    if (!provincia) return res.status(404).json({ error: `Province not found: ${provinceSlug}` });
+  }
 
   // Resolve speciality (optional)
   if (specSlug) {
@@ -133,15 +135,27 @@ export default async function handler(req, res) {
 
   try {
     let raw;
-    if (specSlug) {
+    if (provinceSlug && specSlug) {
       const cachePath = join(process.cwd(), `data/providers/${provinceSlug}/${specSlug}.json`);
       if (!existsSync(cachePath)) {
         return res.status(404).json({ error: `No data for ${provinceSlug}/${specSlug}` });
       }
       raw = JSON.parse(readFileSync(cachePath, 'utf8'));
-    } else {
+    } else if (provinceSlug) {
       raw = loadAllProvincePro(provinceSlug);
       if (!raw) return res.status(404).json({ error: `No data for ${provinceSlug}` });
+    } else {
+      // National mode: aggregate this spec across all provinces
+      const provincesDir = join(process.cwd(), 'data/providers');
+      if (!existsSync(provincesDir)) return res.status(404).json({ error: 'No providers data' });
+      const provSlugs = readdirSync(provincesDir);
+      const acc = [];
+      for (const slug of provSlugs) {
+        const f = join(provincesDir, slug, `${specSlug}.json`);
+        if (!existsSync(f)) continue;
+        try { acc.push(...JSON.parse(readFileSync(f, 'utf8'))); } catch { /* skip */ }
+      }
+      raw = acc;
     }
 
     // Filter by tab, then cap the displayable list per business rule
