@@ -78,6 +78,21 @@ function renderServiceTags(loc) {
   return tags.join('');
 }
 
+function renderDoctorHeader(d) {
+  const name = formatPersonName(d.name);
+  const specName = formatName(d.specialities?.[0] || '');
+  const titleSuffix = specName ? `, ${specName}` : '';
+  const introBody = specName
+    ? `Consulta la ficha de ${name}, especialista en ${specName} dentro del cuadro médico de ASISA. Encuentra información sobre su especialidad y centros donde atiende.`
+    : `Consulta la ficha de ${name} dentro del cuadro médico de ASISA. Encuentra información sobre su especialidad y centros donde atiende.`;
+  return `<section class="cmp-medical-detail__header">
+    <div class="cmp-title">
+      <h1 class="cmp-title__text">${name}${titleSuffix}</h1>
+    </div>
+    <p class="cmp-medical-detail__description">${introBody}</p>
+  </section>`;
+}
+
 function renderLocationCard(d, loc, idx, provinciaDisplayName) {
   const mapsUrl = (loc.lat && loc.lon) ? `https://www.google.com/maps/dir/?api=1&destination=${loc.lat},${loc.lon}` : '';
   const addressLine = [loc.address, loc.postalCode, loc.city].filter(Boolean).join(', ');
@@ -166,7 +181,7 @@ export default function decorate(block) {
       const locs = d.locations || [];
       if (!locs.length) { block.innerHTML = '<p>No se pudo cargar la ficha del médico.</p>'; return; }
 
-      const parts = [];
+      const parts = [renderDoctorHeader(d)];
       parts.push(renderLocationCard(d, locs[0], 0, provinciaDisplayName(locs[0])));
       parts.push(renderSpecCard(d, locs[0], provinciaDisplayName(locs[0])));
 
