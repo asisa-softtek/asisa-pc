@@ -34,18 +34,14 @@ export default function decorate(block) {
 
       block.innerHTML = `
         <h2 class="cm-otras-prov-title">Otras provincias con ${specLower} ASISA</h2>
-        <ul class="cm-otras-prov-list">
+        <div class="cm-otras-prov-list">
           ${provincias.map((p) => `
-            <li class="cm-otras-prov-item">
-              <a class="cm-otras-prov-card" href="/cuadro-medico/p/${p.slug}/pe/${specSlug}">
-                <div class="cm-otras-prov-card__info">
-                  <span class="cm-otras-prov-card__name">${data.name} ${p.displayName}</span>
-                  <span class="cm-otras-prov-card__count">${p.count} profesionales</span>
-                </div>
-                <span class="cm-otras-prov-card__arrow" aria-hidden="true">→</span>
-              </a>
-            </li>`).join('')}
-        </ul>`;
+            <article class="cm-otras-prov-card">
+              <h3 class="cm-otras-prov-card__name">${data.name} ${p.displayName}</h3>
+              <p class="cm-otras-prov-card__count">${p.count} profesionales</p>
+              <a class="cm-otras-prov-card__arrow" href="/cuadro-medico/p/${p.slug}/pe/${specSlug}" aria-label="Ver ${data.name} en ${p.displayName}">→</a>
+            </article>`).join('')}
+        </div>`;
     })
     .catch(() => { block.innerHTML = ''; });
 }
