@@ -136,7 +136,7 @@ export default function handler(req, res) {
       collegiateCode,
       languages,
       specialities,
-      // Representative fields kept at top-level for backwards compat with otros-medicos / spec-localizacion blocks
+      // Representative fields kept at top-level for the otros-medicos block
       specSlug: rep.specSlug,
       provinceSlug: rep.provinceSlug,
       parentDescription: rep.parentDescription,

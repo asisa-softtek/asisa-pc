@@ -1,3 +1,4 @@
+
 # BYOM (Bring Your Own Markup) en asisa-pc
 
 > Documento operativo para el equipo de Softtek.
@@ -242,8 +243,9 @@ Patrones HTML actuales:
 | Patrón URL | Bloques |
 |------------|---------|
 | `/cuadro-medico/p/*` | `cuadro-medico`, `cuadro-medico-otras-especialidades`, `cuadro-medico-otras-provincias` |
-| `/cuadro-medico/d/*` | `cuadro-medico-ficha-doctor`, `cuadro-medico-otros-medicos`, `cuadro-medico-spec-localizacion` |
-| `/cuadro-medico/e/*` | `cuadro-medico`, `cuadro-medico-top-especialidades`, `cuadro-medico-otras-especialidades`, `cuadro-medico-otras-provincias` |
+| `/cuadro-medico/d/*` | `cuadro-medico-ficha-doctor`, `cuadro-medico-otros-medicos` |
+| `/cuadro-medico/c/*` | `cuadro-medico-ficha-centro` |
+| `/cuadro-medico/e/*` | `cuadro-medico`, `cuadro-medico-otras-especialidades`, `cuadro-medico-otras-provincias` |
 
 **Importante:** los bloques deben estar registrados en
 [`component-definition.json`](../component-definition.json),
