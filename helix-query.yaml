@@ -1,11 +1,20 @@
 version: 1
 
 indices:
+  # Default index: solo páginas estáticas (home, landings, cuadro-medico
+  # plantillas). Excluye explícitamente las dinámicas (que tienen su
+  # propio índice) y patrones obsoletos del histórico.
   pages:
     include:
       - '/**'
     exclude:
       - '/**.json'
+      - '/cuadro-medico/p/**'
+      - '/cuadro-medico/d/**'
+      - '/cuadro-medico/c/**'
+      - '/cuadro-medico/e/**'
+      - '/cuadro-medico/salud/**'
+      - '/pokemon/**'
     target: /query-index.json
     properties:
       lastModified:
@@ -14,3 +23,56 @@ indices:
       robots:
         select: head > meta[name="robots"]
         value: attribute(el, "content")
+
+  # Listados de provincia (/cuadro-medico/p/{slug}) — sin las
+  # combinaciones con especialidad.
+  cuadro-medico-provincias:
+    include:
+      - '/cuadro-medico/p/*'
+    exclude:
+      - '/cuadro-medico/p/*/**'
+    target: /query-index-cuadro-medico-provincias.json
+    properties:
+      lastModified:
+        select: none
+        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
+
+  # Listados provincia+especialidad (/cuadro-medico/p/{prov}/pe/{spec}).
+  cuadro-medico-provincia-specs:
+    include:
+      - '/cuadro-medico/p/*/pe/*'
+    target: /query-index-cuadro-medico-provincia-specs.json
+    properties:
+      lastModified:
+        select: none
+        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
+
+  # Fichas de profesional (/cuadro-medico/d/{key}).
+  cuadro-medico-doctores:
+    include:
+      - '/cuadro-medico/d/*'
+    target: /query-index-cuadro-medico-doctores.json
+    properties:
+      lastModified:
+        select: none
+        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
+
+  # Fichas de centro (/cuadro-medico/c/{key}).
+  cuadro-medico-centros:
+    include:
+      - '/cuadro-medico/c/*'
+    target: /query-index-cuadro-medico-centros.json
+    properties:
+      lastModified:
+        select: none
+        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
+
+  # Listados nacionales por especialidad (/cuadro-medico/e/{slug}).
+  cuadro-medico-especialidades:
+    include:
+      - '/cuadro-medico/e/*'
+    target: /query-index-cuadro-medico-especialidades.json
+    properties:
+      lastModified:
+        select: none
+        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
