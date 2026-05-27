@@ -10,6 +10,7 @@
  *   node refresh-eds-pages.mjs --doctores        # páginas /d/{key}
  *   node refresh-eds-pages.mjs --centros         # páginas /c/{key}
  *   node refresh-eds-pages.mjs --especialidades  # páginas /e/{slug}
+ *   node refresh-eds-pages.mjs --sitemaps        # /sitemap.xml + los 5 /sitemap-cuadro-medico-*.xml
  *   node refresh-eds-pages.mjs --province=madrid # solo una provincia + sus specs
  */
 
@@ -37,9 +38,10 @@ const MODE_SPECS = flags.has('--specs');
 const MODE_DOCTORES = flags.has('--doctores');
 const MODE_CENTROS = flags.has('--centros');
 const MODE_ESPECIALIDADES = flags.has('--especialidades');
+const MODE_SITEMAPS = flags.has('--sitemaps');
 const PROVINCE_FILTER = opts.province || null;
 const MODE_FULL = !MODE_CODE && !MODE_PROVINCIAS && !MODE_SPECS
-  && !MODE_DOCTORES && !MODE_CENTROS && !MODE_ESPECIALIDADES && !PROVINCE_FILTER;
+  && !MODE_DOCTORES && !MODE_CENTROS && !MODE_ESPECIALIDADES && !MODE_SITEMAPS && !PROVINCE_FILTER;
 
 // -----------------
 
@@ -141,6 +143,19 @@ async function refreshEspecialidades() {
   await processInBatches(paths, CONCURRENCY);
 }
 
+async function refreshSitemaps() {
+  const paths = [
+    '/sitemap.xml',
+    '/sitemap-cuadro-medico-provincias.xml',
+    '/sitemap-cuadro-medico-provincia-specs.xml',
+    '/sitemap-cuadro-medico-doctores.xml',
+    '/sitemap-cuadro-medico-centros.xml',
+    '/sitemap-cuadro-medico-especialidades.xml',
+  ];
+  console.log(`\nRefreshing ${paths.length} sitemaps...`);
+  for (const p of paths) await refreshPage(p);
+}
+
 async function main() {
   if (PROVINCE_FILTER) {
     console.log(`Mode: province=${PROVINCE_FILTER}`);
@@ -164,6 +179,7 @@ async function main() {
   if (MODE_FULL || MODE_DOCTORES) await refreshDoctores();
   if (MODE_FULL || MODE_CENTROS) await refreshCentros();
   if (MODE_FULL || MODE_ESPECIALIDADES) await refreshEspecialidades();
+  if (MODE_FULL || MODE_SITEMAPS) await refreshSitemaps();
 
   console.log('\nDone!');
 }
