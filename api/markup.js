@@ -67,7 +67,7 @@ function sendHtml(res, html, source) {
 }
 
 function sendXml(res, xml, source) {
-  res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+  res.setHeader('Content-Type', 'text/xml; charset=utf-8');
   res.setHeader('Cache-Control', 'public, max-age=60');
   res.setHeader('x-source', source);
   res.status(200).send(xml);
