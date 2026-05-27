@@ -12,6 +12,7 @@
  *   node refresh-eds-pages.mjs --especialidades  # páginas /e/{slug}
  *   node refresh-eds-pages.mjs --sitemaps        # /sitemap.xml + los 5 /sitemap-cuadro-medico-*.xml
  *   node refresh-eds-pages.mjs --province=madrid # solo una provincia + sus specs
+ *   node refresh-eds-pages.mjs --reindex         # POST /index para cada path (popula query-index-*.json)
  */
 
 import { readFileSync, existsSync, readdirSync } from 'fs';
@@ -39,9 +40,10 @@ const MODE_DOCTORES = flags.has('--doctores');
 const MODE_CENTROS = flags.has('--centros');
 const MODE_ESPECIALIDADES = flags.has('--especialidades');
 const MODE_SITEMAPS = flags.has('--sitemaps');
+const MODE_REINDEX = flags.has('--reindex');
 const PROVINCE_FILTER = opts.province || null;
 const MODE_FULL = !MODE_CODE && !MODE_PROVINCIAS && !MODE_SPECS
-  && !MODE_DOCTORES && !MODE_CENTROS && !MODE_ESPECIALIDADES && !MODE_SITEMAPS && !PROVINCE_FILTER;
+  && !MODE_DOCTORES && !MODE_CENTROS && !MODE_ESPECIALIDADES && !MODE_SITEMAPS && !MODE_REINDEX && !PROVINCE_FILTER;
 
 // -----------------
 
@@ -156,6 +158,66 @@ async function refreshSitemaps() {
   for (const p of paths) await refreshPage(p);
 }
 
+async function indexPath(path, retries = 3) {
+  const url = `${ADMIN_BASE}/index/${REPO}${path}`;
+  for (let attempt = 1; attempt <= retries; attempt += 1) {
+    try {
+      const resp = await fetch(url, { method: 'POST', headers: { 'x-auth-token': ADMIN_TOKEN } });
+      if (resp.status === 200) return 200;
+      if (resp.status === 401 || resp.status === 404) return resp.status;
+      if (attempt < retries) await sleep(500 * attempt);
+    } catch {
+      if (attempt < retries) await sleep(500 * attempt);
+    }
+  }
+  return 0;
+}
+
+async function indexInBatches(paths, batchSize, label) {
+  let ok = 0;
+  let total = 0;
+  for (let i = 0; i < paths.length; i += batchSize) {
+    const batch = paths.slice(i, i + batchSize);
+    const results = await Promise.all(batch.map((p) => indexPath(p)));
+    total += batch.length;
+    ok += results.filter((r) => r === 200).length;
+    if (total % 500 === 0 || total === paths.length) {
+      console.log(`  ${label}: ${total}/${paths.length} (${ok} OK)`);
+    }
+  }
+}
+
+async function reindexAll() {
+  const provincias = JSON.parse(readFileSync(join(__dirname, 'data/provincias.json'), 'utf8'));
+  const provinciaPaths = provincias.map((p) => `/cuadro-medico/p/${p.slug}`);
+  console.log(`\nReindexing ${provinciaPaths.length} provincias...`);
+  await indexInBatches(provinciaPaths, CONCURRENCY, 'provincias');
+
+  const provinciasDir = join(__dirname, 'data/cuadro-medico/provincias');
+  const specPaths = [];
+  for (const file of readdirSync(provinciasDir).filter((f) => f.endsWith('.json'))) {
+    const provSlug = file.replace('.json', '');
+    const data = JSON.parse(readFileSync(join(provinciasDir, file), 'utf8'));
+    for (const specSlug of data.especialidades || []) specPaths.push(`/cuadro-medico/p/${provSlug}/pe/${specSlug}`);
+  }
+  console.log(`\nReindexing ${specPaths.length} provincia+especialidad...`);
+  await indexInBatches(specPaths, CONCURRENCY, 'specs');
+
+  const doctores = Object.keys(JSON.parse(readFileSync(join(__dirname, 'data/cuadro-medico/doctores-index.json'), 'utf8')));
+  console.log(`\nReindexing ${doctores.length} doctores...`);
+  await indexInBatches(doctores.map((k) => `/cuadro-medico/d/${k}`), CONCURRENCY, 'doctores');
+
+  const centros = Object.keys(JSON.parse(readFileSync(join(__dirname, 'data/cuadro-medico/centros-index.json'), 'utf8')));
+  console.log(`\nReindexing ${centros.length} centros...`);
+  await indexInBatches(centros.map((k) => `/cuadro-medico/c/${k}`), CONCURRENCY, 'centros');
+
+  const especDir = join(__dirname, 'data/cuadro-medico/especialidades');
+  const especPaths = readdirSync(especDir).filter((f) => f.endsWith('.json'))
+    .map((f) => `/cuadro-medico/e/${f.replace('.json', '')}`);
+  console.log(`\nReindexing ${especPaths.length} especialidades...`);
+  await indexInBatches(especPaths, CONCURRENCY, 'especialidades');
+}
+
 async function main() {
   if (PROVINCE_FILTER) {
     console.log(`Mode: province=${PROVINCE_FILTER}`);
@@ -179,6 +241,7 @@ async function main() {
   if (MODE_FULL || MODE_DOCTORES) await refreshDoctores();
   if (MODE_FULL || MODE_CENTROS) await refreshCentros();
   if (MODE_FULL || MODE_ESPECIALIDADES) await refreshEspecialidades();
+  if (MODE_REINDEX) await reindexAll();
   if (MODE_FULL || MODE_SITEMAPS) await refreshSitemaps();
 
   console.log('\nDone!');
