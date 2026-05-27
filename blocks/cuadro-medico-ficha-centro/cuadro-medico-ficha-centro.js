@@ -76,12 +76,10 @@ function renderBreadcrumb(c, provinciaDisplayName) {
 function renderHeader(c, provinciaDisplayName) {
   const centerName = formatName(c.name);
   const intro = `Consulta la información de ${centerName} dentro del cuadro médico de ASISA. Encuentra especialidades, servicios médicos y profesionales disponibles en este centro sanitario, así como datos de contacto y ubicación.`;
-  return `<section class="cmp-medical-detail__header">
-    <div class="cmp-title">
-      <h1 class="cmp-title__text">${centerName} en ${provinciaDisplayName}</h1>
-    </div>
-    <p class="cmp-medical-detail__description">${intro}</p>
-  </section>`;
+  return `<section class="eds-mp-box-head">
+        <h1 class="eds-mp-box-head--title">${centerName} en ${provinciaDisplayName}</h1>
+        <p class="eds-mp-box-head--text">${intro}</p>
+      </section>`;
 }
 
 function renderTagRow(c) {

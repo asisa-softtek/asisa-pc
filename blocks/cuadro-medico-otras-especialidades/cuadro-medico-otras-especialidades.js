@@ -27,13 +27,14 @@ function getSlugsFromUrl() {
 
 function renderProvincialChips(provincia, specs, provSlug, specSlug) {
   return `
-    <h2 class="cmp-medical-detail__subtitle">Otras especialidades en ${provincia.displayName}</h2>
-    <div class="cmp-medical-detail__other-specialities">
+  <div class="eds-mp-other-specs">
+    <h2 class="eds-mp-other-specs__title">Otras especialidades en ${provincia.displayName}</h2>
+    <ul class="eds-mp-other-specs__container">
       ${specs.map((e) => {
-    const variant = e.slug === specSlug ? 'cmp-tag-template--blue' : 'cmp-tag-template--blank';
-    return `<a class="cmp-tag-template ${variant}" href="/cuadro-medico/p/${provSlug}/pe/${e.slug}"><span class="cmp-tag-template__text">${e.name}</span></a>`;
+    const variant = 'cmp-tag-template--blue-100';
+    return `<li><a class="cmp-tag-template ${variant}" href="/cuadro-medico/p/${provSlug}/pe/${e.slug}"><span class="cmp-tag-template__text">${e.name}</span></a></li>`;
   }).join('')}
-    </div>`;
+    </ul></div>`;
 }
 
 function renderNationalChips(specs, specSlug) {

@@ -85,12 +85,10 @@ function renderDoctorHeader(d) {
   const introBody = specName
     ? `Consulta la ficha de ${name}, especialista en ${specName} dentro del cuadro médico de ASISA. Encuentra información sobre su especialidad y centros donde atiende.`
     : `Consulta la ficha de ${name} dentro del cuadro médico de ASISA. Encuentra información sobre su especialidad y centros donde atiende.`;
-  return `<section class="cmp-medical-detail__header">
-    <div class="cmp-title">
-      <h1 class="cmp-title__text">${name}${titleSuffix}</h1>
-    </div>
-    <p class="cmp-medical-detail__description">${introBody}</p>
-  </section>`;
+  return `<section class="eds-mp-box-head">
+        <h1 class="eds-mp-box-head--title">${name}${titleSuffix}</h1>
+        <p class="eds-mp-box-head--text">${introBody}</p>
+      </section>`;
 }
 
 function renderLocationCard(d, loc, idx, provinciaDisplayName) {

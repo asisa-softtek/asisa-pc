@@ -124,7 +124,7 @@ function renderPagination(currentPage, totalPages) {
   const items = [];
   const prev = currentPage > 1 ? currentPage - 1 : null;
   const next = currentPage < totalPages ? currentPage + 1 : null;
-  items.push(`<div class="button-cmp"><button class="btn button-cmp__text button-cmp__text--link" data-page="${prev || ''}" ${prev ? '' : 'disabled'}><i class="icon-chevron-left"></i></button></div>`);
+  items.push(`<li class="${prev ? '' : 'disabled'}" title="${prev || ''}" data-page="${prev || ''}">⟨</li>`);
 
   const pages = new Set([1, totalPages, currentPage]);
   for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i += 1) pages.add(i);
@@ -132,14 +132,14 @@ function renderPagination(currentPage, totalPages) {
   let prevNum = 0;
   sorted.forEach((n) => {
     if (n - prevNum > 1) items.push('<span>…</span>');
-    const active = n === currentPage ? 'button-cmp__text--primary' : 'button-cmp__text--link';
-    items.push(`<div class="button-cmp"><button class="btn button-cmp__text ${active}" data-page="${n}">${n}</button></div>`);
+    const active = n === currentPage ? 'active' : '';
+    items.push(`<li class="${active}" title="Page ${n}" data-page="${n}">${n}</li>`);
     prevNum = n;
   });
 
-  items.push(`<div class="button-cmp"><button class="btn button-cmp__text button-cmp__text--link" data-page="${next || ''}" ${next ? '' : 'disabled'}><i class="icon-chevron-right"></i></button></div>`);
+  items.push(`<li class="${next ? '' : 'disabled'}" title="${next || ''}" data-page="${next || ''}">⟨</li>`);
 
-  return `<div class="cmp-medical-picture-result__pagination">${items.join('')}</div>`;
+  return `<div class="eds-mp-pagination">${items.join('')}</div>`;
 }
 
 function renderShell(state) {
@@ -163,11 +163,9 @@ function renderShell(state) {
     introBody = `Consulta el cuadro médico de ASISA en ${locationName} y encuentra hospitales, clínicas y especialistas cerca de ti. Localiza médicos por especialidad, consulta información de los centros y accede fácilmente a los servicios disponibles. Encuentra el profesional que necesitas y pide cita con ASISA de forma rápida y sencilla.`;
   }
   const intro = introTitle
-    ? `<section class="cmp-medical-detail__header">
-        <div class="cmp-title">
-          <h1 class="cmp-title__text">${introTitle}</h1>
-        </div>
-        <p class="cmp-medical-detail__description">${introBody}</p>
+    ? `<section class="eds-mp-box-head">
+        <h1 class="eds-mp-box-head--title">${introTitle}</h1>
+        <p class="eds-mp-box-head--text">${introBody}</p>
       </section>`
     : '';
 
