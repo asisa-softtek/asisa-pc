@@ -235,10 +235,19 @@ async function decorate(block) {
   block.classList.add('cmp-medical-picture-result');
 
   let state = { tab: 'professionals', page: 1, loading: true, results: [] };
+  // Si el overlay ya pintó contenido (SSR), saltamos el spinner inicial para no
+  // hacer flicker. La primera llamada a refresh() entonces no toca el DOM hasta
+  // que llega la respuesta del API. EDS puede haber reescrito el HTML del SSR
+  // por su auto-blocking, así que detectamos por presencia de hijos.
+  let silentFirst = block.children.length > 0;
 
   async function refresh(next) {
     state = { ...state, ...next, loading: true };
-    block.innerHTML = renderShell(state);
+    if (silentFirst) {
+      silentFirst = false; // siguientes interacciones SÍ muestran loading
+    } else {
+      block.innerHTML = renderShell(state);
+    }
     try {
       const { provincia, providersResp, especialidad } = await fetchPage(provSlug, specSlug, state.tab, state.page);
       const fallbackSpec = specSlug ? specSlug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) : '';
