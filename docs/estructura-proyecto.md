@@ -410,24 +410,29 @@ Recorrido recomendado para ver TODAS las piezas funcionando, de mayor a menor ab
 
 ### C. Operación (Admin HLX y AEM Author)
 
+> Estos comandos NO necesitan token: el access.json del site tiene `requireAuth: "auto"` y EDS acepta preview / live / code / index / status anónimos. Solo `/config/...` y los scripts que tocan AEM Author (`AEM_TOKEN`) requieren credenciales.
+
 ```
 1. Estado de una URL (qué fuente la sirve)
    curl https://admin.hlx.page/status/asisa-softtek/asisa-pc/main/cuadro-medico/p/madrid
 
 2. Refrescar manualmente preview + live
-   curl -X POST -H "x-auth-token: $T" https://admin.hlx.page/preview/asisa-softtek/asisa-pc/main/cuadro-medico/p/madrid
-   curl -X POST -H "x-auth-token: $T" https://admin.hlx.page/live/asisa-softtek/asisa-pc/main/cuadro-medico/p/madrid
+   curl -X POST https://admin.hlx.page/preview/asisa-softtek/asisa-pc/main/cuadro-medico/p/madrid
+   curl -X POST https://admin.hlx.page/live/asisa-softtek/asisa-pc/main/cuadro-medico/p/madrid
 
 3. Refrescar code bus tras cambio de JS/CSS
-   curl -X POST -H "x-auth-token: $T" https://admin.hlx.page/code/asisa-softtek/asisa-pc/main
+   curl -X POST https://admin.hlx.page/code/asisa-softtek/asisa-pc/main
 
-4. AEM Author (Marketing)
+4. Repoblar query indexes tras cambio en helix-query.yaml
+   curl -X POST https://admin.hlx.page/index/asisa-softtek/asisa-pc/main/cuadro-medico/p/madrid
+
+5. AEM Author (Marketing)
    https://author-p133185-e1320482.adobeaemcloud.com/editor.html/content/site-pc/cuadro-medico/provincia.html
 
-5. Sidekick (toolbar de edición)
+6. Sidekick (toolbar de edición)
    Activar la extensión sobre cualquier URL de preview / live.
 
-6. CI/CD
+7. CI/CD
    https://github.com/asisa-softtek/asisa-pc/actions
 ```
 

@@ -1,0 +1,1373 @@
+#!/usr/bin/env python3
+"""
+Genera docs/traspaso-conocimiento.docx — documento de traspaso del proyecto
+asisa-pc para el equipo que va a migrarlo de Vercel a Azure.
+"""
+
+import os
+from docx import Document
+from docx.shared import Pt, RGBColor, Cm, Inches
+from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.enum.style import WD_STYLE_TYPE
+from docx.oxml.ns import qn
+from docx.oxml import OxmlElement
+
+OUTPUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'traspaso-conocimiento.docx')
+
+doc = Document()
+
+# --- Estilos base ---
+normal = doc.styles['Normal']
+normal.font.name = 'Calibri'
+normal.font.size = Pt(11)
+
+# Estilo "Code" (monospace) — creamos un Character Style nuevo
+try:
+    code_style = doc.styles.add_style('Code', WD_STYLE_TYPE.PARAGRAPH)
+    code_style.font.name = 'Consolas'
+    code_style.font.size = Pt(9)
+    code_style.font.color.rgb = RGBColor(0x1A, 0x1A, 0x1A)
+    code_style.paragraph_format.space_before = Pt(2)
+    code_style.paragraph_format.space_after = Pt(2)
+except Exception:
+    code_style = doc.styles['Normal']
+
+
+def add_code_block(text):
+    for line in text.split('\n'):
+        p = doc.add_paragraph(line if line else ' ', style='Code')
+        # Fondo gris claro
+        pPr = p._p.get_or_add_pPr()
+        shd = OxmlElement('w:shd')
+        shd.set(qn('w:fill'), 'F4F4F4')
+        shd.set(qn('w:val'), 'clear')
+        pPr.append(shd)
+
+
+def add_para(text, bold=False, italic=False):
+    p = doc.add_paragraph()
+    r = p.add_run(text)
+    r.bold = bold
+    r.italic = italic
+    return p
+
+
+def add_bullet(text):
+    return doc.add_paragraph(text, style='List Bullet')
+
+
+def add_numbered(text):
+    return doc.add_paragraph(text, style='List Number')
+
+
+def add_table(headers, rows, widths=None):
+    t = doc.add_table(rows=1 + len(rows), cols=len(headers))
+    t.style = 'Light Grid Accent 1'
+    hdr = t.rows[0].cells
+    for i, h in enumerate(headers):
+        hdr[i].text = h
+        for p in hdr[i].paragraphs:
+            for r in p.runs:
+                r.bold = True
+    for ri, row in enumerate(rows):
+        cells = t.rows[ri + 1].cells
+        for ci, val in enumerate(row):
+            cells[ci].text = str(val)
+    if widths:
+        for i, w in enumerate(widths):
+            for cell in t.columns[i].cells:
+                cell.width = w
+
+
+# =============================================================================
+# Portada
+# =============================================================================
+title = doc.add_paragraph()
+title.alignment = WD_ALIGN_PARAGRAPH.CENTER
+title_run = title.add_run('Proyecto asisa-pc')
+title_run.font.size = Pt(28)
+title_run.bold = True
+
+subtitle = doc.add_paragraph()
+subtitle.alignment = WD_ALIGN_PARAGRAPH.CENTER
+subtitle_run = subtitle.add_run('Traspaso de conocimiento y plan de migración a Azure')
+subtitle_run.font.size = Pt(16)
+subtitle_run.italic = True
+
+doc.add_paragraph()
+doc.add_paragraph()
+
+meta = doc.add_paragraph()
+meta.alignment = WD_ALIGN_PARAGRAPH.CENTER
+meta.add_run('Equipo: Softtek · ASISA\n').bold = True
+meta.add_run('Versión: 1.0 · Fecha: 2026-05-27\n')
+meta.add_run('Stack actual: AEM Author + Edge Delivery Services + Vercel\n')
+meta.add_run('Stack objetivo: AEM Author + Edge Delivery Services + Azure')
+
+doc.add_page_break()
+
+# =============================================================================
+# 0. Resumen ejecutivo
+# =============================================================================
+doc.add_heading('0. Resumen ejecutivo', level=1)
+doc.add_paragraph(
+    'asisa-pc es el sitio del Cuadro Médico de ASISA construido sobre Adobe Edge Delivery '
+    'Services (EDS). Sirve URLs ultrarrápidas indexables por Google a partir de una arquitectura '
+    'híbrida que combina:'
+)
+add_bullet('AEM Author (Adobe Cloud) — autoría de plantillas y contenido estático.')
+add_bullet('Edge Delivery Services (aem.live / aem.page) — CDN y capa de entrega de Adobe.')
+add_bullet('Vercel — capa "BYOM" (Bring Your Own Markup): genera bajo demanda el HTML de '
+           'decenas de miles de URLs dinámicas (provincias, especialidades, fichas de médico/centro) '
+           'y expone unas APIs JSON que consumen los bloques en cliente.')
+add_bullet('GitHub (asisa-softtek/asisa-pc) — fuente de verdad del código y de los JSON cacheados '
+           'que alimentan la web.')
+
+doc.add_paragraph(
+    'El objetivo de este documento es doble: (1) traspasar el conocimiento completo del proyecto '
+    'al equipo entrante y (2) servir como guía para sustituir Vercel por Azure manteniendo intacto '
+    'el resto del stack.'
+)
+doc.add_paragraph(
+    'Volumen aproximado a 2026-05: ~36.000 URLs dinámicas en el cuadro médico (52 provincias, '
+    '~3.250 combinaciones provincia+especialidad, ~20.500 doctores, ~6.500 centros, ~181 '
+    'especialidades nacionales).'
+)
+
+# =============================================================================
+# 1. Arquitectura general
+# =============================================================================
+doc.add_heading('1. Arquitectura general', level=1)
+doc.add_paragraph('Flujo de una petición de usuario a una URL dinámica '
+                  '(ej. /cuadro-medico/p/madrid/pe/cardiologia):')
+add_code_block(
+    'Usuario\n'
+    '   │  GET https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/p/madrid/pe/cardiologia\n'
+    '   ▼\n'
+    'CDN de Edge Delivery Services\n'
+    '   │  Sirve HTML ya procesado (si está en el bus live).\n'
+    '   ▼\n'
+    'Navegador ejecuta scripts/aem.js + scripts/scripts.js\n'
+    '   │  Detecta bloques <div class="cuadro-medico"> y los hidrata.\n'
+    '   ▼\n'
+    'Bloque JS lee window.location.pathname → llama a la API de datos\n'
+    '   │  fetch("https://asisa-pc.vercel.app/api/providers?provinceSlug=madrid&specSlug=cardiologia&...")\n'
+    '   ▼\n'
+    'Función serverless en Vercel\n'
+    '   │  Lee JSON cacheados de data/providers/madrid/cardiologia.json.\n'
+    '   ▼\n'
+    'Devuelve el listado paginado al navegador, que renderiza tarjetas.'
+)
+doc.add_paragraph('¿Y cómo entró ese HTML en la CDN de EDS la primera vez?')
+add_numbered('Alguien hizo POST /preview/.../cuadro-medico/p/madrid/pe/cardiologia.')
+add_numbered('EDS, al ver que es una URL dinámica, consultó al overlay en Vercel: '
+             'GET https://asisa-pc.vercel.app/markup/cuadro-medico/p/madrid/pe/cardiologia.')
+add_numbered('Vercel respondió con una plantilla HTML mínima que tiene los <div class="..."> '
+             'de los bloques (cuadro-medico, otras-especialidades, otras-provincias) vacíos.')
+add_numbered('EDS guardó ese HTML en su bus preview, lo procesó (extracción de secciones y '
+             'bloques) y lo dejó listo para servir.')
+add_numbered('Un POST /live posterior promocionó el HTML de preview al bus live para que sea '
+             'público.')
+
+# =============================================================================
+# 2. Setup inicial EDS — los comandos críticos
+# =============================================================================
+doc.add_heading('2. Setup inicial EDS (configuración del Config Service)', level=1)
+doc.add_paragraph(
+    'EDS se configura mediante POSTs al "Config Service" en admin.hlx.page. '
+    'Esto se hace UNA VEZ por entorno y solo se repite si cambia la arquitectura. '
+    'Para modificarlos hace falta un token con rol config_admin (cuenta técnica de Adobe; '
+    'jorge.lorenzo@ext.softtek.com sólo tiene rol admin y NO puede tocar estos endpoints).'
+)
+doc.add_paragraph(
+    'IMPORTANTE — Tokens en este proyecto: el access.json (§2.3) tiene "requireAuth": "auto", '
+    'lo que significa que las operaciones de preview, live, code, index y status admiten '
+    'llamadas anónimas. Por tanto, todos los refrescos del día a día (POST /preview, /live, '
+    '/code, /index; DELETE; GET /status) funcionan SIN token. Solo necesitan token los '
+    'endpoints de configuración (POST /config/...) y los scripts que hablan directamente con '
+    'AEM Author (create-aem-pages.mjs requiere AEM_TOKEN).'
+)
+
+doc.add_heading('2.1 Sitewide config (vincula GitHub, AEM y el overlay)', level=2)
+add_code_block(
+    "curl --request POST \\\n"
+    "  --url https://admin.hlx.page/config/asisa-softtek/sites/asisa-pc.json \\\n"
+    "  --header 'Content-Type: application/json' \\\n"
+    "  --header 'x-auth-token: <TOKEN_CONFIG_ADMIN>' \\\n"
+    "  --data '{\n"
+    '    "code": {\n'
+    '      "owner": "asisa-softtek",\n'
+    '      "repo": "asisa-pc",\n'
+    '      "source": { "type": "github", "url": "https://github.com/asisa-softtek/asisa-pc" }\n'
+    '    },\n'
+    '    "content": {\n'
+    '      "source": {\n'
+    '        "url": "https://author-p133185-e1320482.adobeaemcloud.com/bin/franklin.delivery/asisa-softtek/asisa-pc/main",\n'
+    '        "type": "markup",\n'
+    '        "suffix": ".html"\n'
+    '      },\n'
+    '      "overlay": {\n'
+    '        "url": "https://asisa-pc.vercel.app/markup",\n'
+    '        "type": "markup"\n'
+    '      }\n'
+    "    }\n"
+    "  }'"
+)
+doc.add_paragraph(
+    'Qué hace: EDS, para cada request, consulta primero al overlay. Si responde 200, usa esa '
+    'respuesta. Si responde 404, hace fallback al source (AEM Author). En la migración a Azure, '
+    'lo único que hay que cambiar aquí es la URL del overlay.'
+)
+
+doc.add_heading('2.2 Public config (mappings de rutas dinámicas)', level=2)
+add_code_block(
+    "curl --request POST \\\n"
+    "  --url https://admin.hlx.page/config/asisa-softtek/sites/asisa-pc/public.json \\\n"
+    "  --header 'Content-Type: application/json' \\\n"
+    "  --header 'x-auth-token: <TOKEN_CONFIG_ADMIN>' \\\n"
+    "  --data '{\n"
+    '    "paths": {\n'
+    '      "mappings": [\n'
+    '        "/content/site-pc/:/",\n'
+    '        "/content/site-pc/configuration:/.helix/config.json",\n'
+    '        "/cuadro-medico/p/*:/cuadro-medico/provincia",\n'
+    '        "/cuadro-medico/d/*:/cuadro-medico/doctor",\n'
+    '        "/cuadro-medico/e/*:/cuadro-medico/especialidad",\n'
+    '        "/cuadro-medico/c/*:/cuadro-medico/centro"\n'
+    '      ],\n'
+    '      "includes": ["/content/site-pc/"]\n'
+    "    }\n"
+    "  }'"
+)
+doc.add_paragraph(
+    'Define la red de seguridad para fallback a AEM: si el overlay devuelve 404 para una URL '
+    'dinámica, EDS sabe qué plantilla cargar desde AEM Author.'
+)
+
+doc.add_heading('2.3 Access config (roles admin / config_admin)', level=2)
+add_code_block(
+    "curl --request POST \\\n"
+    "  --url https://admin.hlx.page/config/asisa-softtek/sites/asisa-pc/access.json \\\n"
+    "  --header 'Content-Type: application/json' \\\n"
+    "  --header 'x-auth-token: <TOKEN_CONFIG_ADMIN>' \\\n"
+    "  --data '{\n"
+    '    "admin": {\n'
+    '      "role": {\n'
+    '        "admin": ["jorge.lorenzo@ext.softtek.com"],\n'
+    '        "config_admin": [\n'
+    '          "662F1E56661D006D0A495E33@techacct.adobe.com",\n'
+    '          "jorge.lorenzo@ext.softtek.com"\n'
+    '        ]\n'
+    '      },\n'
+    '      "requireAuth": "auto"\n'
+    "    }\n"
+    "  }'"
+)
+doc.add_paragraph(
+    'admin permite previewar, publicar y refrescar code. config_admin permite ADEMÁS modificar '
+    'estos 3 endpoints. Sin config_admin, todos los POST /config/... devuelven 401.'
+)
+
+doc.add_heading('2.4 Headers config (opcional pero recomendado en migración Azure)', level=2)
+doc.add_paragraph(
+    'Si Azure necesita un header específico para autenticar al overlay (API key, bypass token, '
+    'etc.), se inyecta vía headers.json:'
+)
+add_code_block(
+    "curl --request POST \\\n"
+    "  --url https://admin.hlx.page/config/asisa-softtek/sites/asisa-pc/headers.json \\\n"
+    "  --header 'Content-Type: application/json' \\\n"
+    "  --header 'x-auth-token: <TOKEN_CONFIG_ADMIN>' \\\n"
+    "  --data '{\n"
+    '    "mappings": [\n'
+    '      {\n'
+    '        "path": "/**",\n'
+    '        "headers": { "X-BYOM-Origin": "Azure-Functions" }\n'
+    "      }\n"
+    "    ]\n"
+    "  }'"
+)
+
+doc.add_heading('2.5 Verificación', level=2)
+add_code_block(
+    "# Anónimo (no necesita token gracias a requireAuth: auto)\n"
+    "curl https://admin.hlx.page/status/asisa-softtek/asisa-pc/main/cuadro-medico/p/madrid"
+)
+doc.add_paragraph(
+    'Debe responder con un sourceLocation que apunte al overlay '
+    '("markup:https://<overlay-host>/markup/cuadro-medico/p/madrid"). Si apunta al author de AEM, '
+    'el overlay no está aplicado.'
+)
+
+doc.add_heading('2.6 Resumen de tokens en el proyecto', level=2)
+add_table(
+    ['Operación', '¿Token?', 'Cuál'],
+    [
+        ('POST /config/asisa-softtek/sites/*.json', 'Sí', 'x-auth-token con rol config_admin '
+         '(cuenta técnica de Adobe)'),
+        ('POST /preview, /live, /code, /index', 'No', 'Anónimo (requireAuth: auto)'),
+        ('DELETE /preview, /live', 'No', 'Anónimo'),
+        ('GET /status, /profile', 'No', 'Anónimo'),
+        ('POST /bin/wcmcommand, /bin/replicate.json (AEM Author)', 'Sí',
+         'AEM_TOKEN (cookie login-token del Author)'),
+        ('GET /api/sync-aem (endpoint propio en Vercel)', 'Sí',
+         'SYNC_SECRET como query param'),
+        ('Cualquier otro /api/* (Vercel)', 'No', 'Públicos con CORS abierto'),
+    ],
+    widths=[Inches(2.5), Inches(0.8), Inches(3.2)],
+)
+
+# =============================================================================
+# 3. Estructura del repositorio
+# =============================================================================
+doc.add_heading('3. Estructura del repositorio (file-by-file)', level=1)
+doc.add_paragraph(
+    'El repo asisa-softtek/asisa-pc contiene tanto el código del frontend EDS como las funciones '
+    'serverless del backend Vercel (carpeta api/). En la migración, todo el código del frontend '
+    '(blocks/, scripts/, styles/, head.html, configuraciones EDS) se queda igual; solo se reemplaza '
+    'la carpeta api/ y los ficheros de configuración de Vercel.'
+)
+
+doc.add_heading('3.1 Configuración EDS / AEM', level=2)
+add_table(
+    ['Fichero', 'Función'],
+    [
+        ('fstab.yaml', 'Mountpoints. Solo monta "/" desde AEM Author '
+                       '(/bin/franklin.delivery/asisa-softtek/asisa-pc/main, sufijo .html). Los '
+                       'sitemaps ya NO se montan aquí — los genera EDS nativamente vía '
+                       'helix-sitemap.yaml.'),
+        ('helix-query.yaml', '6 índices de pages: pages (estáticas), cuadro-medico-provincias, '
+                             'cuadro-medico-provincia-specs, cuadro-medico-doctores, '
+                             'cuadro-medico-centros, cuadro-medico-especialidades. Cada uno '
+                             'produce un /query-index-*.json filtrado por glob patterns.'),
+        ('helix-sitemap.yaml', '6 sitemaps, uno por índice, con origin: https://www.asisa.es '
+                               'para que las URLs en el XML apunten a producción.'),
+        ('paths.json', 'Mapping interno: /content/site-pc/ → /.'),
+        ('head.html', 'HTML inyectado en TODAS las páginas. Contiene CSP, scripts principales '
+                      '(aem.js, scripts.js), styles.css local y las clientlibs CSS de ASISA '
+                      'servidas por proxy vía Vercel /etc.clientlibs/*.'),
+        ('404.html', 'Página de error custom con botón "volver" y evento RUM.'),
+        ('.hlxignore', 'Excluye dotfiles y similares de la publicación EDS.'),
+        ('tools/sidekick/config.json', 'Config del Sidekick (toolbar de edición).'),
+    ],
+    widths=[Inches(2), Inches(4.5)],
+)
+
+doc.add_heading('3.2 Configuración Vercel (la que cambia en la migración)', level=2)
+add_table(
+    ['Fichero', 'Función'],
+    [
+        ('vercel.json', 'Headers y rewrites. CORS abierto en /etc.clientlibs/*; rewrites para '
+                        '/markup/*, /sitemap*.xml, /api/markup → /api/markup. Proxy '
+                        '/etc.clientlibs/* → www.asisa.es/etc.clientlibs/* (clientlibs del DS '
+                        'corporativo).'),
+        ('.vercel/project.json', 'IDs internos del proyecto Vercel.'),
+    ],
+    widths=[Inches(2), Inches(4.5)],
+)
+
+doc.add_heading('3.3 Universal Editor — modelos de bloques (AEM Author)', level=2)
+add_table(
+    ['Fichero', 'Función'],
+    [
+        ('component-definition.json', 'Catálogo de componentes (Default Content, Sections, '
+                                       'Blocks incluyendo los 8 bloques de cuadro médico).'),
+        ('component-filters.json', '¿Qué bloque puede ir dentro de qué contenedor?'),
+        ('component-models.json', 'Esquema de campos editables por componente.'),
+        ('models/_*.json', 'Fragmentos modulares de las definiciones globales.'),
+    ],
+    widths=[Inches(2), Inches(4.5)],
+)
+
+doc.add_heading('3.4 Endpoints API (carpeta api/) — funciones serverless en Vercel', level=2)
+doc.add_paragraph(
+    'Todos los ficheros api/*.js son funciones serverless Node.js (ESM puro, sin dependencias en '
+    'runtime). En Vercel, cada uno se expone como una function en /api/<nombre>. Algunos están '
+    'remapeados por vercel.json (ej. /markup/* → /api/markup).'
+)
+add_table(
+    ['Fichero', 'Ruta HTTP', 'Función'],
+    [
+        ('api/markup.js', '/markup/* (rewrite)',
+         'Overlay BYOM. Devuelve plantillas HTML para /cuadro-medico/p/*, /d/*, /c/*, /e/*. 404 '
+         'para el resto. También sirve los 6 sitemaps en /markup/sitemap*.xml.'),
+        ('api/providers.js', '/api/providers',
+         'Listado paginado de profesionales/centros (provinceSlug, specSlug, tab, page, limit).'),
+        ('api/doctor.js', '/api/doctor?key=…',
+         'Ficha completa de profesional.'),
+        ('api/centro.js', '/api/centro?key=…',
+         'Ficha completa de centro.'),
+        ('api/provincias.js', '/api/provincias[?slug=]',
+         'Listado de provincias o detalle de una.'),
+        ('api/especialidades.js', '/api/especialidades[?slug=]',
+         'Master list de especialidades o detalle.'),
+        ('api/providers-detail.js', '/api/providers-detail?id=…',
+         'Detalle consolidado por código de localización.'),
+        ('api/specialities.js', '/api/specialities?provinceCode=…',
+         'PROXY en vivo al backend ASISA (ursaepre.asisa.es) — no usa caché local.'),
+        ('api/sitemap.js', '/sitemap.xml (rewrite)',
+         'Sitemap index "Vercel-only" (no usado por EDS). Apunta a www.asisa.es.'),
+        ('api/sitemap-cuadro-medico.js', '/sitemap-cuadro-medico-*.xml (rewrite)',
+         'Sitemap específico por tipo. EDS no lo usa, pero está accesible directo en Vercel.'),
+        ('api/sync-aem.js', '/api/sync-aem',
+         'Sincroniza URLs del sitemap remoto de www.asisa.es con preview+live de EDS. Requiere '
+         'SYNC_SECRET y HLX_ADMIN_API_TOKEN.'),
+    ],
+    widths=[Inches(1.8), Inches(1.8), Inches(2.9)],
+)
+doc.add_paragraph(
+    'Importante: varios endpoints implementan caché in-memory (variables module-scope *Cache) '
+    'para evitar releer los JSON en cada petición. En Azure Functions hay que tener en cuenta que '
+    'estas cachés solo persisten dentro de la misma instancia warm; en cold start se reconstruyen.'
+)
+
+doc.add_heading('3.5 Bloques EDS (carpeta blocks/)', level=2)
+doc.add_paragraph(
+    'Cada bloque vive en blocks/<nombre>/<nombre>.{js,css}. EDS los instancia automáticamente '
+    'cuando detecta <div class="<nombre>"> en el HTML. Los CSS son casi todos vacíos: los estilos '
+    'efectivos vienen del design system de ASISA (clientlib-site.min.css).'
+)
+doc.add_paragraph('Bloques heredados del boilerplate AEM:')
+add_bullet('cards, columns, hero, fragment — contenido estático autorado en AEM.')
+add_bullet('header — carga /nav como fragmento. Hamburguesa responsive, dropdowns, breakpoint 900px.')
+add_bullet('footer — carga /footer como fragmento (.plain.html).')
+
+doc.add_paragraph('Bloques específicos del cuadro médico (todos operan en modo BYOM: leen '
+                  'window.location.pathname, extraen slugs, llaman a las APIs):')
+add_table(
+    ['Bloque', 'URL donde aparece', 'APIs que consume'],
+    [
+        ('cuadro-medico', '/p/<prov>, /p/<prov>/pe/<spec>, /e/<spec>',
+         'providers, provincias, especialidades'),
+        ('cuadro-medico-provincias', '/cuadro-medico (home)',
+         'provincias'),
+        ('cuadro-medico-top-especialidades', '/cuadro-medico (home)',
+         'especialidades'),
+        ('cuadro-medico-otras-especialidades', '/p/<prov>/pe/<spec>, /e/<spec>',
+         'provincias, especialidades'),
+        ('cuadro-medico-otras-provincias', '/p/<prov>/pe/<spec>, /e/<spec>',
+         'especialidades'),
+        ('cuadro-medico-ficha-doctor', '/d/<key>',
+         'doctor, provincias'),
+        ('cuadro-medico-otros-medicos', '/d/<key>',
+         'doctor, provincias, providers'),
+        ('cuadro-medico-ficha-centro', '/c/<key>',
+         'centro, provincias'),
+    ],
+    widths=[Inches(2.2), Inches(2.5), Inches(1.8)],
+)
+doc.add_paragraph(
+    'Regla de oro de los bloques: TODAS las llamadas a /api/* deben usar URL ABSOLUTA del overlay '
+    '("https://<overlay-host>/api/...") porque el bloque corre en aem.live, no en Vercel/Azure. '
+    'Una llamada relativa fetch("/api/…") apuntaría al dominio de EDS, que no tiene esos '
+    'endpoints. En la migración a Azure este punto es crítico: hay que cambiar la base URL en '
+    'todos los bloques.'
+)
+
+doc.add_page_break()
+doc.add_heading('3.5.1 Detalle exhaustivo de cada bloque del cuadro médico', level=3)
+doc.add_paragraph(
+    'A continuación se documenta cada bloque del cuadro médico fichero por fichero: ruta, '
+    'propósito, URLs donde aparece, cómo lee el contexto (URL o filas del DOM), endpoints API '
+    'consumidos con sus query params exactos, esqueleto del HTML que pinta, estados especiales '
+    '(ocultado, error, loading), y funciones auxiliares relevantes. Los bloques boilerplate '
+    '(cards, columns, header, footer, fragment, hero) tienen un resumen al final.'
+)
+doc.add_paragraph(
+    'Constantes globales que comparten todos los bloques:'
+)
+add_table(
+    ['Constante', 'Valor', 'Para qué'],
+    [
+        ('API_BASE', 'https://asisa-pc.vercel.app', 'Base URL de las APIs de datos'),
+        ('ASISA_SEARCH_PRIVATE', 'https://www.asisa.es/asegurado/salud/cuadro-medico/'
+                                  'resultados-cuadro-medico',
+         'Destino "Pedir cita" para asegurados (área privada)'),
+        ('ASISA_SEARCH_PUBLIC', 'https://www.asisa.es/cuadro-medico/resultados-cuadro-medico',
+         'Destino "Compartir" público'),
+        ('PAGE_SIZE', '10', 'Resultados por página en el bloque cuadro-medico'),
+        ('networkId / specialityType', "'1'", 'Hardcoded en params de Pedir cita (red Salud)'),
+        ('Breakpoint responsive', '900px',
+         'Usado por header para hamburger menu (window.matchMedia)'),
+    ],
+    widths=[Inches(2), Inches(2.5), Inches(2)],
+)
+
+# -- BLOQUE 1: cuadro-medico --
+doc.add_heading('Bloque 1 · cuadro-medico (motor de búsqueda principal)', level=4)
+doc.add_paragraph('Ruta: blocks/cuadro-medico/cuadro-medico.js (274 líneas).')
+doc.add_paragraph(
+    'Propósito: motor principal de listado paginado de profesionales y centros, con tabs y '
+    'paginación. Es el bloque más grande y complejo del sitio.'
+)
+doc.add_paragraph('URLs donde aparece:')
+add_bullet('/cuadro-medico/p/<prov>')
+add_bullet('/cuadro-medico/p/<prov>/pe/<spec>')
+add_bullet('/cuadro-medico/e/<spec> (búsqueda nacional por especialidad)')
+doc.add_paragraph(
+    'Lee el contexto desde window.location.pathname con getSlugsFromUrl(): extrae provSlug '
+    '(segmento "p/"), specSlug (segmento "pe/" o "e/") y un flag nationalSpec (true si hay '
+    'especialidad pero no provincia). Si no hay provSlug ni nationalSpec, el bloque se oculta.'
+)
+doc.add_paragraph('APIs consumidas:')
+add_table(
+    ['Endpoint', 'Query params', 'Para qué'],
+    [
+        ('/api/provincias', 'slug=<provSlug>', 'displayName y provinceCode'),
+        ('/api/especialidades', 'slug=<specSlug>', 'name de la especialidad'),
+        ('/api/providers',
+         'tab=professionals|centers, page=N, limit=10, provinceSlug, specSlug',
+         'listado paginado + totales por tab'),
+    ],
+    widths=[Inches(1.6), Inches(2.4), Inches(2.5)],
+)
+doc.add_paragraph('Estructura DOM que pinta (esqueleto):')
+add_code_block(
+    '<div class="cmp-medical-picture-result">\n'
+    '  <section class="eds-mp-box-head">\n'
+    '    <h1 class="eds-mp-box-head--title">…</h1>\n'
+    '    <p class="eds-mp-box-head--text">…</p>\n'
+    '  </section>\n'
+    '  <div class="eds-mp-tabs">\n'
+    '    <ul class="eds-mp-tabs__nav">\n'
+    '      <li class="eds-mp-tabs__nav--item active" data-tab="professionals">\n'
+    '         Profesionales (X)</li>\n'
+    '      <li class="eds-mp-tabs__nav--item" data-tab="centers">Centros (Y)</li>\n'
+    '    </ul>\n'
+    '    <div class="eds-mp-tabs__container">\n'
+    '      <div class="eds-mp-tabs__content">\n'
+    '        <div class="eds-mp-card">…</div>  <!-- una por resultado -->\n'
+    '      </div>\n'
+    '      <div class="eds-mp-pagination">…</div>\n'
+    '    </div>\n'
+    '  </div>\n'
+    '</div>'
+)
+doc.add_paragraph('Cada tarjeta de resultado tiene esta estructura:')
+add_code_block(
+    '<div class="eds-mp-card">\n'
+    '  <div class="eds-mp-card__principal-tag">\n'
+    '    <div class="cmp-tag-template cmp-tag-template--blue">MÉDICO|HOSPITAL|CENTRO|…</div>\n'
+    '    <!-- tags condicionales: Centro de ASISA, Receta electrónica -->\n'
+    '  </div>\n'
+    '  <div class="eds-mp-card__info">\n'
+    '    <div class="eds-mp-card__info--contact">\n'
+    '      <p class="eds-mp-card__type--speciality">…</p>\n'
+    '      <p class="eds-mp-card__type--name">Dr. Nombre</p>\n'
+    '      <p class="eds-mp-card__type--num-member">Núm. Colegiado</p>\n'
+    '      <p class="eds-mp-card__type--center">Centro padre</p>\n'
+    '      <div class="eds-mp-card__type--address">Dirección</div>\n'
+    '      <div class="eds-mp-card__info--location">\n'
+    '        <a href="https://maps.google.com/…">Cómo llegar</a>\n'
+    '        <a href="tel:…">Teléfono</a>\n'
+    '      </div>\n'
+    '    </div>\n'
+    '    <div class="eds-mp-card__info--tags">\n'
+    '      <!-- Cita online, idiomas -->\n'
+    '    </div>\n'
+    '  </div>\n'
+    '  <div class="eds-mp-card__info--buttons">\n'
+    '    <a href="<ASISA_SEARCH_PRIVATE>?…">Pedir cita</a>\n'
+    '    <a href="/cuadro-medico/d/<detailUrl>">Ver detalle</a>\n'
+    '  </div>\n'
+    '</div>'
+)
+doc.add_paragraph('Funciones auxiliares:')
+add_bullet('getSlugsFromUrl(): parsea pathname y devuelve {provSlug, specSlug, nationalSpec}.')
+add_bullet('buildCitaUrl(): construye URL a ASISA_SEARCH_PRIVATE con networkId=1, '
+           'specialityType=1, lat, lon y código de provincia.')
+add_bullet('formatPersonName(): mapea "APELLIDOS, NOMBRE" → "Dr./Dra. Nombre Apellidos" según '
+           'terminación del primer nombre.')
+add_bullet('getProviderTag(): mapea doctorType y providerType al texto de la etiqueta principal '
+           '(3=HOSPITAL, 4=CENTRO MÉDICO, 8=LABORATORIO, 2=TRANSPORTE, 9=OXIGENOTERAPIA).')
+add_bullet('renderCard(), renderPagination(): generación de HTML.')
+add_bullet('attachListeners(): clicks en tabs y páginas refetchean conservando el otro estado.')
+doc.add_paragraph('Estados especiales:')
+add_bullet('Sin provSlug ni nationalSpec → block.hidden = true.')
+add_bullet('API devuelve 0 resultados en TODAS las categorías → block.hidden = true.')
+add_bullet('Error de fetch → muestra <div class="cmp-medical-picture-result__error">.')
+add_bullet('Loading → spinner inline hasta la primera respuesta.')
+
+# -- BLOQUE 2: cuadro-medico-provincias --
+doc.add_heading('Bloque 2 · cuadro-medico-provincias (selector de provincias)', level=4)
+doc.add_paragraph('Ruta: blocks/cuadro-medico-provincias/cuadro-medico-provincias.js (28 líneas).')
+doc.add_paragraph('Propósito: lista todas las provincias donde ASISA tiene red.')
+doc.add_paragraph('URLs donde aparece: home y landings de cuadro médico (autoradas en AEM).')
+doc.add_paragraph('Sin contexto de entrada — modo BYOM puro (no lee URL).')
+doc.add_paragraph('API: GET /api/provincias (sin params) → array {slug, displayName}.')
+add_code_block(
+    '<h2 class="eds-md-prov-title">Provincias donde está ASISA (X)</h2>\n'
+    '<ul class="eds-md-prov-list">\n'
+    '  <li class="eds-md-prov-item">\n'
+    '    <a href="/cuadro-medico/p/{slug}">\n'
+    '      <span><i class="icon-localizacion"></i></span>\n'
+    '      <p>{displayName}</p>\n'
+    '    </a>\n'
+    '  </li>\n'
+    '</ul>'
+)
+doc.add_paragraph('Estados: spinner durante el fetch; error muestra '
+                  '"No se pudieron cargar las provincias".')
+
+# -- BLOQUE 3: cuadro-medico-top-especialidades --
+doc.add_heading('Bloque 3 · cuadro-medico-top-especialidades', level=4)
+doc.add_paragraph('Ruta: blocks/cuadro-medico-top-especialidades/cuadro-medico-top-especialidades.js '
+                  '(28 líneas).')
+doc.add_paragraph('Propósito: lista de especialidades más buscadas con link a la búsqueda nacional.')
+doc.add_paragraph('URLs donde aparece: home / landings de cuadro médico.')
+doc.add_paragraph('API: GET /api/especialidades → array {slug, name}.')
+add_code_block(
+    '<h2 class="eds-md-esp-top-title">Especialidades más buscadas (X)</h2>\n'
+    '<ul class="eds-md-esp-top-list">\n'
+    '  <li class="eds-md-esp-top-item">\n'
+    '    <a href="/cuadro-medico/e/{slug}">\n'
+    '      <span><i class="icon-ventajas"></i></span>\n'
+    '      <p>{name}</p>\n'
+    '    </a>\n'
+    '  </li>\n'
+    '</ul>'
+)
+
+# -- BLOQUE 4: cuadro-medico-otras-especialidades --
+doc.add_heading('Bloque 4 · cuadro-medico-otras-especialidades', level=4)
+doc.add_paragraph('Ruta: blocks/cuadro-medico-otras-especialidades/cuadro-medico-otras-especialidades.js '
+                  '(80 líneas).')
+doc.add_paragraph(
+    'Propósito: chips con especialidades alternativas. Dos modos según la URL:'
+)
+add_bullet('Provincia + especialidad (/cuadro-medico/p/<prov>/pe/<spec>): muestra las otras '
+           'especialidades disponibles EN ESA PROVINCIA.')
+add_bullet('Especialidad nacional (/cuadro-medico/e/<spec>): muestra TOP 15 especialidades '
+           'nacionales (filtra las de kind === "service").')
+doc.add_paragraph(
+    'Lee de la URL: getSlugsFromUrl() devuelve provSlug (segmento "p/") y specSlug (segmento '
+    '"pe/" o "e/"). Sin ninguno de los dos → block.hidden = true.'
+)
+doc.add_paragraph('APIs:')
+add_table(
+    ['Modo', 'Endpoints'],
+    [
+        ('Provincial',
+         'GET /api/provincias?slug=<provSlug> + GET /api/especialidades → filtra por '
+         'provincia.especialidades[]'),
+        ('Nacional', 'GET /api/especialidades → toma top 15 con kind !== "service"'),
+    ],
+    widths=[Inches(1.5), Inches(5)],
+)
+doc.add_paragraph('Estructura DOM (provincial):')
+add_code_block(
+    '<div class="eds-mp-other-specs">\n'
+    '  <h2 class="eds-mp-other-specs__title">Otras especialidades en {provincia}</h2>\n'
+    '  <ul class="eds-mp-other-specs__container">\n'
+    '    <li><a class="cmp-tag-template cmp-tag-template--blue-100"\n'
+    '           href="/cuadro-medico/p/{provSlug}/pe/{slug}">\n'
+    '      <span class="cmp-tag-template__text">{name}</span></a></li>\n'
+    '  </ul>\n'
+    '</div>'
+)
+doc.add_paragraph(
+    'En modo nacional usa clases cmp-medical-detail__subtitle y cmp-medical-detail__'
+    'other-specialities, y marca la especialidad actual con cmp-tag-template--blue.'
+)
+
+# -- BLOQUE 5: cuadro-medico-otras-provincias --
+doc.add_heading('Bloque 5 · cuadro-medico-otras-provincias', level=4)
+doc.add_paragraph('Ruta: blocks/cuadro-medico-otras-provincias/cuadro-medico-otras-provincias.js '
+                  '(47 líneas).')
+doc.add_paragraph('Propósito: grid de cards de OTRAS provincias que ofrecen la misma especialidad. '
+                  'Cada card muestra el conteo de profesionales y enlaza a la combinación '
+                  '/p/<slug>/pe/<spec>.')
+doc.add_paragraph(
+    'URLs donde aparece: /cuadro-medico/p/<prov>/pe/<spec> y /cuadro-medico/e/<spec>. El bloque '
+    'lee specSlug tanto del segmento "pe/" como del "e/". Sin specSlug → block.hidden = true.'
+)
+doc.add_paragraph('API: GET /api/especialidades?slug=<specSlug> → especialidad con array provincias[].')
+add_code_block(
+    '<h2 class="cm-otras-prov-title">Otras provincias con {specName} ASISA</h2>\n'
+    '<div class="cm-otras-prov-list">\n'
+    '  <article class="cm-otras-prov-card">\n'
+    '    <h3 class="cm-otras-prov-card__name">{specName} {provincia}</h3>\n'
+    '    <p class="cm-otras-prov-card__count">{count} profesionales</p>\n'
+    '    <a class="cm-otras-prov-card__arrow"\n'
+    '       href="/cuadro-medico/p/{slug}/pe/{specSlug}">→</a>\n'
+    '  </article>\n'
+    '</div>'
+)
+doc.add_paragraph(
+    'Excluye la provincia actual del listado (filter p.slug !== provSlug). En la búsqueda '
+    'nacional /e/<spec> muestra TODAS las provincias con la especialidad.'
+)
+
+# -- BLOQUE 6: cuadro-medico-ficha-doctor --
+doc.add_heading('Bloque 6 · cuadro-medico-ficha-doctor (ficha del profesional)', level=4)
+doc.add_paragraph('Ruta: blocks/cuadro-medico-ficha-doctor/cuadro-medico-ficha-doctor.js (199 líneas).')
+doc.add_paragraph(
+    'Propósito: ficha completa de un médico (agrupado por número colegiado). Como un médico puede '
+    'trabajar en varios centros, renderiza header + una "card de ubicación" + CTA por cada centro '
+    'donde ejerce.'
+)
+doc.add_paragraph('URLs: /cuadro-medico/d/<key>. getKeyFromUrl() extrae el segmento "d/".')
+doc.add_paragraph('APIs:')
+add_table(
+    ['Endpoint', 'Para qué'],
+    [
+        ('/api/doctor?key=<key>',
+         'doctor completo con name, collegiateCode, specialities[], locations[]'),
+        ('/api/provincias', 'mapa provinceSlug → displayName'),
+    ],
+    widths=[Inches(2.2), Inches(4.3)],
+)
+doc.add_paragraph('Esqueleto DOM (resumido):')
+add_code_block(
+    '<div class="cmp-medical-detail">\n'
+    '  <section class="eds-mp-box-head">  <!-- H1 + intro SEO -->\n'
+    '    <h1>Dr. Nombre, Especialidad</h1>\n'
+    '  </section>\n'
+    '  <div class="cmp-medical-detail__first-block">  <!-- primer centro -->\n'
+    '    <div class="cmp-medical-detail__title-block">…</div>\n'
+    '    <div class="cmp-medical-detail__address-block">…</div>\n'
+    '    <div class="cmp-medical-detail__buttons-block">…</div>\n'
+    '  </div>\n'
+    '  <div class="cmp-medical-detail__first-block cmp-medical-detail--blue">\n'
+    '    <h2>{especialidad}</h2>\n'
+    '    <a href="<cita>">Pedir cita online</a>\n'
+    '  </div>\n'
+    '  <!-- repite el bloque por cada ubicación adicional -->\n'
+    '  <h2 class="cmp-medical-detail__subtitle">\n'
+    '     Dr. Nombre también trabaja en estos centros\n'
+    '  </h2>\n'
+    '</div>'
+)
+doc.add_paragraph('Funciones clave: buildShareUrl() (URL pública sin fromPublicArea) y '
+                  'buildCitaUrl() (URL privada con fromPublicArea=true).')
+doc.add_paragraph('Estados: sin key → block.hidden; sin locations o error → '
+                  '"No se pudo cargar la ficha del médico".')
+
+# -- BLOQUE 7: cuadro-medico-otros-medicos --
+doc.add_heading('Bloque 7 · cuadro-medico-otros-medicos', level=4)
+doc.add_paragraph('Ruta: blocks/cuadro-medico-otros-medicos/cuadro-medico-otros-medicos.js (86 líneas).')
+doc.add_paragraph(
+    'Propósito: bajo la ficha del doctor, dos listas de chips con OTROS médicos: (1) de la misma '
+    'especialidad en la misma provincia; (2) de la misma especialidad en el mismo centro padre '
+    '(solo si el doctor tiene parentDescription).'
+)
+doc.add_paragraph('URLs: /cuadro-medico/d/<key>.')
+doc.add_paragraph('APIs:')
+add_table(
+    ['Endpoint', 'Para qué'],
+    [
+        ('/api/doctor?key=<key>',
+         'datos del doctor (specSlug, provinceSlug, parentDescription, name)'),
+        ('/api/provincias?slug=<provinceSlug>', 'displayName'),
+        ('/api/providers?provinceSlug&specSlug&tab=professionals&limit=50',
+         'listado para extraer chips (máx 20 en provincia, máx 10 en mismo centro)'),
+    ],
+    widths=[Inches(3.2), Inches(3.3)],
+)
+add_code_block(
+    '<section>\n'
+    '  <h2 class="cmp-medical-detail__subtitle">\n'
+    '    Otros médicos de {especialidad} en {provincia}\n'
+    '  </h2>\n'
+    '  <div class="cmp-medical-detail__other-specialities">\n'
+    '    <a class="cmp-tag-template cmp-tag-template--blank"\n'
+    '       href="/cuadro-medico/d/{detailUrl}">\n'
+    '      <span class="cmp-tag-template__text">Dr. Nombre</span></a>\n'
+    '  </div>\n'
+    '</section>\n'
+    '<!-- segunda sección equivalente para "en {centro}" si aplica -->'
+)
+doc.add_paragraph('Si las dos listas vienen vacías → block.hidden = true.')
+
+# -- BLOQUE 8: cuadro-medico-ficha-centro --
+doc.add_heading('Bloque 8 · cuadro-medico-ficha-centro (ficha del centro)', level=4)
+doc.add_paragraph('Ruta: blocks/cuadro-medico-ficha-centro/cuadro-medico-ficha-centro.js (277 líneas).')
+doc.add_paragraph(
+    'Propósito: ficha completa de un centro médico. Incluye breadcrumb, card principal del centro, '
+    'sección con acordeones por especialidad (con doctores, subespecialidades y observaciones), '
+    'grid de doctores del centro y sección de "otros centros ASISA con las mismas especialidades '
+    'en la provincia".'
+)
+doc.add_paragraph('URLs: /cuadro-medico/c/<key>.')
+doc.add_paragraph('APIs:')
+add_table(
+    ['Endpoint', 'Para qué'],
+    [
+        ('/api/centro?key=<key>',
+         'centro completo con specialities[], doctors[], otherCentros[]'),
+        ('/api/provincias', 'mapeo provinceSlug → displayName'),
+    ],
+    widths=[Inches(2.2), Inches(4.3)],
+)
+doc.add_paragraph('Esqueleto DOM (resumido):')
+add_code_block(
+    '<div class="cmp-medical-detail">\n'
+    '  <nav class="cmp-breadcrumb">…</nav>\n'
+    '  <section class="eds-mp-box-head"><h1>…</h1></section>\n'
+    '  <div class="cmp-medical-detail__first-block">\n'
+    '    <!-- card principal del centro: tags, título, dirección, teléfono -->\n'
+    '  </div>\n'
+    '  <section class="cm-fcentro__specs-section">\n'
+    '    <h2 class="cmp-medical-detail__subtitle">Especialidades del centro</h2>\n'
+    '    <div class="cm-fcentro__spec">\n'
+    '      <div class="cm-fcentro__spec-header">\n'
+    '        <h3>Dermatología</h3>\n'
+    '        <a href="tel:">Teléfono</a>  <a href="<cita>">Pedir cita</a>\n'
+    '      </div>\n'
+    '      <details class="cm-fcentro__spec-details">\n'
+    '        <summary>Ver más información</summary>\n'
+    '        <div class="cm-fcentro__spec-body">\n'
+    '          <!-- columnas: doctores, subespecialidades, observaciones -->\n'
+    '        </div>\n'
+    '      </details>\n'
+    '    </div>\n'
+    '  </section>\n'
+    '  <section class="cm-fcentro__doctors-section">\n'
+    '    <div class="cm-fcentro__doctors-grid">\n'
+    '      <article class="cm-fcentro__doctor-card">\n'
+    '        <i class="icon-personal-asisa-{mujer|hombre}"></i>\n'
+    '        <h3>Dr. Nombre</h3><p>Especialidad</p>\n'
+    '        <a href="/cuadro-medico/d/{key}">Ver perfil</a>\n'
+    '      </article>\n'
+    '    </div>\n'
+    '  </section>\n'
+    '  <section class="cm-fcentro__other-section">\n'
+    '    <h2>Otros centros ASISA con las mismas especialidades</h2>\n'
+    '    <!-- grid de otros centros -->\n'
+    '  </section>\n'
+    '</div>'
+)
+doc.add_paragraph('Funciones notables:')
+add_bullet('doctorIconClass(d): elige el icono (mujer/hombre) según gender o heurística por "Dra.".')
+add_bullet('showsPedirCita(spec): false si la especialidad contiene "urgenc" (no se puede pedir '
+           'cita para urgencias). True si hay doctors o cita online.')
+add_bullet('Cada sección se omite si no hay datos: si no hay doctors, no se renderiza la grid; '
+           'si no hay otros centros, no aparece la sección.')
+
+# -- Boilerplate brief --
+doc.add_heading('Bloques boilerplate (resumen)', level=4)
+add_bullet('cards: transforma rows del editor en grid <ul><li>. Optimiza imágenes con '
+           'createOptimizedPicture (ancho 750px).')
+add_bullet('columns: aplica clase .columns-N-cols dinámica y .columns-img-col para columnas que '
+           'solo contienen una imagen.')
+add_bullet('header: carga /nav como fragmento. Hamburger menu, ARIA, dropdowns con aria-expanded, '
+           'breakpoint 900px.')
+add_bullet('footer: carga /footer como fragmento.')
+add_bullet('fragment: utility para incluir HTML de otra ruta .plain.html. Resetea media URLs.')
+add_bullet('hero: stub vacío (no implementado).')
+
+doc.add_heading('Regla de oro común a todos los bloques', level=4)
+doc.add_paragraph(
+    'TODAS las llamadas a /api/* DEBEN usar URL ABSOLUTA "https://<overlay-host>/api/…". Una '
+    'llamada relativa fetch("/api/…") apunta al dominio de aem.live, que no tiene los endpoints '
+    'y devuelve 404. En la migración a Azure el cambio es masivo: hay que reemplazar "API_BASE = '
+    "'https://asisa-pc.vercel.app'\" por el nuevo dominio en cada bloque (.js) y en api/markup.js."
+)
+
+doc.add_heading('3.6 Scripts del frontend EDS (carpeta scripts/)', level=2)
+add_table(
+    ['Fichero', 'Función'],
+    [
+        ('scripts/aem.js', 'Boilerplate de Adobe EDS. Utilidades core: loadHeader/Footer, '
+                            'decorateButtons/Icons/Sections/Blocks, loadSection, loadCSS, '
+                            'loadFragment. No tocar salvo upgrades.'),
+        ('scripts/scripts.js', 'Orquesta la carga en 3 fases: loadEager (primera sección + LCP), '
+                                'loadLazy (header, footer, lazy-styles), loadDelayed (importa '
+                                'delayed.js a los 3s).'),
+        ('scripts/delayed.js', 'Hueco para lógica no crítica (analytics, RUM). Actualmente vacío.'),
+        ('scripts/editor-support.js', 'Sólo activo dentro del Universal Editor de AEM. Escucha '
+                                       'eventos aue:content-* y re-decora bloques sin recargar.'),
+        ('scripts/editor-support-rte.js', 'Agrupa nodos rich-text consecutivos para edición '
+                                           'cómoda en el editor.'),
+        ('scripts/dompurify.min.js', 'Librería externa de sanitización XSS, usada por '
+                                      'editor-support.js.'),
+    ],
+    widths=[Inches(2), Inches(4.5)],
+)
+
+doc.add_heading('3.7 Estilos y assets', level=2)
+add_table(
+    ['Path', 'Función'],
+    [
+        ('styles/styles.css', 'Stub. Estilos vienen de las clientlibs de ASISA.'),
+        ('styles/fonts.css', 'Vacío. Fuentes vía clientlibs.'),
+        ('styles/lazy-styles.css', 'Placeholder para CSS no crítico (post-LCP).'),
+        ('fonts/roboto-*.woff2', 'Roboto Regular/Medium/Bold/Condensed Bold como fallback local.'),
+        ('icons/search.svg', 'Icono de búsqueda local; el resto desde clientlib-iconslib.'),
+        ('favicon.ico', 'Favicon del site.'),
+    ],
+    widths=[Inches(2), Inches(4.5)],
+)
+
+# =============================================================================
+# 4. Datos
+# =============================================================================
+doc.add_heading('4. Datos cacheados (carpeta data/)', level=1)
+doc.add_paragraph(
+    'Las funciones serverless NO consultan la API de ASISA en cada request. En su lugar leen JSON '
+    'pre-generados que viven en el repo de GitHub. Eso da latencia mínima y desacopla la web del '
+    'backend de ASISA.'
+)
+add_table(
+    ['Path', 'Contenido', 'Volumen aprox.'],
+    [
+        ('data/provincias.json', 'Catálogo maestro de provincias (name, displayName, slug, code).', '52'),
+        ('data/cuadro-medico/especialidades.json', 'Master list de especialidades.', '181'),
+        ('data/cuadro-medico/doctores-index.json', 'slug-doctor → [ubicaciones].', '~20.500'),
+        ('data/cuadro-medico/centros-index.json', 'slug-centro → [ubicaciones].', '~6.500'),
+        ('data/cuadro-medico/especialidades/<spec>.json', 'Provincias donde está disponible.', '~183'),
+        ('data/cuadro-medico/provincias/<prov>.json', 'Especialidades disponibles en la provincia.', '50'),
+        ('data/providers/<prov>/<spec>.json', 'Lista cruda por (provincia, especialidad).', '~3.700'),
+        ('data/provider-details/<locCode>.json', 'Detalle por código de localización.', '~33.000'),
+    ],
+    widths=[Inches(2.5), Inches(2.8), Inches(1.2)],
+)
+doc.add_paragraph(
+    'En Vercel, estos JSON viajan dentro del bundle de cada función serverless. En Azure hay dos '
+    'opciones: (a) seguir empaquetándolos con cada Function (simple, pero el bundle es grande), o '
+    '(b) moverlos a Azure Blob Storage y que las funciones los lean por HTTP. La opción (b) es '
+    'preferible para deployments más rápidos.'
+)
+
+# =============================================================================
+# 5. Sitemaps
+# =============================================================================
+doc.add_heading('5. Sitemaps (configuración EDS-native)', level=1)
+doc.add_paragraph(
+    'La estrategia actual es 100% nativa de EDS: cada tipo de URL tiene su propio query-index y '
+    'su propio sitemap. EDS los autogenera al servir las rutas /sitemap-*.xml a partir de la '
+    'configuración en helix-query.yaml y helix-sitemap.yaml. Las URLs internas del XML apuntan a '
+    'https://www.asisa.es gracias a la directiva origin.'
+)
+doc.add_paragraph('Sitemaps generados:')
+add_table(
+    ['URL', 'Origen', 'Contenido'],
+    [
+        ('/sitemap.xml',
+         'pages-static index (estáticas)',
+         'Páginas autoradas en AEM, no las dinámicas del cuadro médico.'),
+        ('/sitemap-cuadro-medico-provincias.xml', 'cuadro-medico-provincias index', '52 URLs /p/<slug>'),
+        ('/sitemap-cuadro-medico-provincia-specs.xml',
+         'cuadro-medico-provincia-specs index', '~3.250 URLs /p/<prov>/pe/<spec>'),
+        ('/sitemap-cuadro-medico-doctores.xml',
+         'cuadro-medico-doctores index', '~20.500 URLs /d/<key>'),
+        ('/sitemap-cuadro-medico-centros.xml',
+         'cuadro-medico-centros index', '~6.500 URLs /c/<key>'),
+        ('/sitemap-cuadro-medico-especialidades.xml',
+         'cuadro-medico-especialidades index', '~181 URLs /e/<slug>'),
+    ],
+    widths=[Inches(2.5), Inches(2.2), Inches(1.8)],
+)
+doc.add_paragraph('Importante: las respuestas vienen comprimidas con Brotli desde la CDN. Curl '
+                  'sin --compressed devuelve bytes binarios; usar:')
+add_code_block('curl --compressed https://main--asisa-pc--asisa-softtek.aem.live/sitemap-cuadro-medico-doctores.xml')
+doc.add_paragraph(
+    'Las cachés api/sitemap.js y api/sitemap-cuadro-medico.js en Vercel se conservan como vía '
+    'paralela útil para diagnóstico (accesibles directamente en https://<overlay-host>/sitemap.xml '
+    'y similares), pero EDS no las consume. En la migración a Azure pueden eliminarse o portarse '
+    'según se prefiera.'
+)
+
+doc.add_heading('5.1 Repoblar índices tras cambios', level=2)
+doc.add_paragraph(
+    'Cuando se cambia helix-query.yaml, los índices existentes NO se reescriben automáticamente; '
+    'solo se actualizan a medida que se previsualiza cada path. Para forzar la repoblación masiva:'
+)
+add_code_block('node refresh-eds-pages.mjs --reindex')
+doc.add_paragraph(
+    'Este flag recorre las ~30.000 URLs en data/ y dispara POST /index/{path} contra '
+    'admin.hlx.page con concurrencia 10. Tarda en torno a 40 minutos para el catálogo completo. '
+    'No necesita token (anónimo gracias a requireAuth: auto).'
+)
+
+# =============================================================================
+# 6. Scripts de mantenimiento
+# =============================================================================
+doc.add_heading('6. Scripts de mantenimiento (raíz del repo)', level=1)
+doc.add_paragraph(
+    'Toda la cadena de regeneración de datos y publicación está en scripts node ESM en la raíz:'
+)
+add_table(
+    ['Script', 'Función'],
+    [
+        ('generate-providers-data.mjs',
+         'Descarga el catálogo desde la API de ASISA (/searchPortal) por provincia y especialidad. '
+         'Concurrencia 10. Flags: FORCE=true, PROVINCE_CODE=28. Salida: data/providers/.'),
+        ('generate-provider-details.mjs',
+         'Pre-descarga el detalle de cada (locCode, docNum) único desde /providers/details. '
+         'Concurrencia 25 (bajar si 429). Salida: data/provider-details/.'),
+        ('generate-cuadro-medico-specs.mjs',
+         'Agrega lo anterior y construye los índices doctores-index.json, centros-index.json, '
+         'especialidades/*.json y provincias/*.json.'),
+        ('create-aem-pages.mjs',
+         'Crea las páginas plantilla en AEM Author (copy + publish) y refresca EDS. Requiere '
+         'AEM_TOKEN. Flags: --provincias, --especialidades, --doctores, --centros, --all.'),
+        ('refresh-eds-pages.mjs',
+         'Refresca preview+live (y opcionalmente reindex) en EDS sin tocar AEM. Flags: --code, '
+         '--provincias, --specs, --doctores, --centros, --especialidades, --sitemaps, --reindex, '
+         '--province=madrid. Requiere HLX_ADMIN_API_TOKEN.'),
+    ],
+    widths=[Inches(2.5), Inches(4)],
+)
+doc.add_paragraph('Flujo encadenado típico para una actualización completa:')
+add_code_block(
+    '# 1. Descargar catálogo desde la API de ASISA\n'
+    'node generate-providers-data.mjs\n\n'
+    '# 2. Descargar detalles por localización\n'
+    'node generate-provider-details.mjs\n\n'
+    '# 3. Construir índices\n'
+    'node generate-cuadro-medico-specs.mjs\n\n'
+    '# 4. (Solo la primera vez) crear páginas plantilla en AEM — necesita AEM_TOKEN\n'
+    'AEM_TOKEN=… node create-aem-pages.mjs --all\n\n'
+    '# 5. Refrescar todo en EDS (anónimo, no necesita token)\n'
+    'node refresh-eds-pages.mjs\n\n'
+    '# 6. Repoblar índices si se cambió helix-query.yaml\n'
+    'node refresh-eds-pages.mjs --reindex'
+)
+
+doc.add_heading('6.1 Comandos sueltos clave', level=2)
+doc.add_paragraph(
+    'Ninguno de estos comandos necesita token (requireAuth: auto en el access config).'
+)
+doc.add_paragraph('Publicar una URL concreta:')
+add_code_block(
+    '# Preview (lo procesa pero no es público)\n'
+    'curl -X POST https://admin.hlx.page/preview/asisa-softtek/asisa-pc/main/cuadro-medico/p/madrid\n\n'
+    '# Live (lo hace público, requiere preview previo)\n'
+    'curl -X POST https://admin.hlx.page/live/asisa-softtek/asisa-pc/main/cuadro-medico/p/madrid'
+)
+doc.add_paragraph('Consultar el estado de una URL en EDS:')
+add_code_block('curl https://admin.hlx.page/status/asisa-softtek/asisa-pc/main/cuadro-medico/p/madrid')
+doc.add_paragraph('Refrescar el code bus (JS, CSS, head.html, YAMLs) tras un push a GitHub:')
+add_code_block(
+    '# Refresca todo el code bus\n'
+    'curl -X POST https://admin.hlx.page/code/asisa-softtek/asisa-pc/main\n\n'
+    '# Solo un fichero\n'
+    'curl -X POST https://admin.hlx.page/code/asisa-softtek/asisa-pc/main/head.html'
+)
+doc.add_paragraph(
+    'Si el GitHub App "AEM Code Sync" está instalado en el repo, el code bus se '
+    'refresca solo en cada push. El curl manual es para forzarlo.'
+)
+
+# =============================================================================
+# 7. GitHub Actions
+# =============================================================================
+doc.add_heading('7. GitHub Actions', level=1)
+add_table(
+    ['Workflow', 'Trigger', 'Función'],
+    [
+        ('.github/workflows/main.yaml',
+         'Push a cualquier rama',
+         'CI básico: npm ci + npm run lint (ESLint + Stylelint).'),
+        ('.github/workflows/generate-providers-data.yml',
+         'workflow_dispatch (manual, input force)',
+         'Ejecuta generate-providers-data.mjs y commitea los cambios en data/. Cron diario '
+         'comentado.'),
+        ('.github/workflows/generate-provider-details.yml',
+         'workflow_dispatch',
+         'Ejecuta generate-provider-details.mjs. Timeout 360 min. Cron diario comentado.'),
+    ],
+    widths=[Inches(2.5), Inches(2), Inches(2)],
+)
+
+# =============================================================================
+# 8. Migración a Azure — el capítulo clave
+# =============================================================================
+doc.add_page_break()
+doc.add_heading('8. Migración de Vercel a Azure', level=1)
+doc.add_paragraph(
+    'Este capítulo es la guía operativa de la migración. La filosofía es: cambiar SOLO la capa '
+    'Vercel; AEM Author, Edge Delivery Services y GitHub se quedan exactamente como están.'
+)
+
+doc.add_heading('8.1 Qué hace Vercel hoy (inventario completo)', level=2)
+add_table(
+    ['Capacidad', 'Endpoint actual', 'Implementación'],
+    [
+        ('Overlay BYOM (HTML plantillas)', 'https://asisa-pc.vercel.app/markup/*',
+         'api/markup.js como Vercel Function'),
+        ('API datos: listados', 'https://asisa-pc.vercel.app/api/providers',
+         'api/providers.js'),
+        ('API datos: ficha doctor', 'https://asisa-pc.vercel.app/api/doctor',
+         'api/doctor.js'),
+        ('API datos: ficha centro', 'https://asisa-pc.vercel.app/api/centro',
+         'api/centro.js'),
+        ('API datos: provincias', 'https://asisa-pc.vercel.app/api/provincias',
+         'api/provincias.js'),
+        ('API datos: especialidades', 'https://asisa-pc.vercel.app/api/especialidades',
+         'api/especialidades.js'),
+        ('API datos: providers-detail', 'https://asisa-pc.vercel.app/api/providers-detail',
+         'api/providers-detail.js'),
+        ('Proxy autocomplete ASISA', 'https://asisa-pc.vercel.app/api/specialities',
+         'api/specialities.js (fetch en vivo a ursaepre.asisa.es)'),
+        ('Sync sitemap → EDS', 'https://asisa-pc.vercel.app/api/sync-aem',
+         'api/sync-aem.js'),
+        ('Proxy clientlibs CSS de ASISA', 'https://asisa-pc.vercel.app/etc.clientlibs/*',
+         'rewrite en vercel.json hacia www.asisa.es'),
+        ('Hosting de los JSON cacheados', '~3.700 + 33.000 ficheros en data/',
+         'Empaquetados con cada function en cada deploy'),
+        ('CORS automático en /api/*', 'Headers de respuesta',
+         'Vercel inyecta CORS por defecto'),
+        ('Auto-deploy desde GitHub', '',
+         'Conector Vercel ↔ GitHub (actualmente DESCONECTADO; el deploy de las últimas semanas se '
+         'ha hecho manualmente con `vercel deploy --prod --archive=tgz`)'),
+    ],
+    widths=[Inches(2.2), Inches(2.5), Inches(2)],
+)
+
+doc.add_heading('8.2 Equivalencias Vercel → Azure', level=2)
+add_table(
+    ['Capacidad Vercel', 'Azure recomendado', 'Notas'],
+    [
+        ('Vercel Functions (Node 22, ESM)',
+         'Azure Functions (Node 22, ESM) con runtime v4',
+         'Mismo modelo de funciones. Hay que adaptar el "request handler shape" — Azure '
+         'Functions usa context.res en lugar de (req, res). Wrappers fáciles de añadir.'),
+        ('Edge Functions / static',
+         'Azure Front Door + Azure Functions Premium',
+         'Front Door da CDN global y reglas de routing/rewrite equivalentes a vercel.json.'),
+        ('Rewrites de vercel.json',
+         'Reglas en Azure Front Door (rules engine) o azure-functions host.json',
+         'Para /etc.clientlibs/* el proxy se hace con una Front Door Origin pointing to '
+         'www.asisa.es y una regla path-based.'),
+        ('Headers CORS',
+         'Configurar en host.json de Azure Functions o vía Front Door',
+         'Definir Access-Control-Allow-Origin: * para /api/*.'),
+        ('Lectura de data/*.json',
+         'Azure Blob Storage (preferido) o bundled with function',
+         'Si los datos cambian a menudo (workflow GH Actions), Blob Storage es mejor: '
+         'el deploy de funciones queda independiente de los datos. Usar @azure/storage-blob.'),
+        ('Caché in-memory por instancia',
+         'Sigue funcionando en Azure Functions',
+         'Premium plan = instancias más "warm". Considerar Azure Cache for Redis si se quiere '
+         'caché compartida entre instancias.'),
+        ('Auto-deploy desde GitHub',
+         'GitHub Actions con azure/functions-action',
+         'Workflow estándar: en push a main, build + deploy a Function App. Habilitar deployment '
+         'slots para staging.'),
+        ('Dominio asisa-pc.vercel.app',
+         'CNAME a asisa-pc.azurefd.net (o custom)',
+         'El dominio del overlay puede cambiar — solo hay que actualizar la URL en la config '
+         'sitewide de EDS (§2.1) y en los bloques (§3.5).'),
+        ('Variables de entorno',
+         'Azure Function App Configuration / Key Vault',
+         'SYNC_SECRET, HLX_ADMIN_API_TOKEN, ASISA API keys.'),
+    ],
+    widths=[Inches(2), Inches(2), Inches(2.5)],
+)
+
+doc.add_heading('8.3 Plan de migración paso a paso', level=2)
+add_numbered('Crear el Resource Group en Azure (rg-asisa-pc-prod, rg-asisa-pc-stage).')
+add_numbered('Provisionar Azure Storage Account para los JSON de data/. Subir el catálogo '
+             'actual y crear un container "asisa-pc-data" público read-only o privado con SAS.')
+add_numbered('Provisionar Azure Function App (Node 22, Premium plan ideal para evitar cold '
+             'starts en /markup/*).')
+add_numbered('Portar el código de api/*.js: cambiar la firma a Azure Functions v4 '
+             '(app.http(name, handler)), reemplazar readFileSync de data/ por fetch al Blob '
+             'Storage (o seguir empaquetando si se prefiere simplicidad).')
+add_numbered('Provisionar Azure Front Door con un Origin Group apuntando a la Function App. '
+             'Añadir reglas: (a) /etc.clientlibs/* → origin www.asisa.es, (b) /sitemap.xml y '
+             '/sitemap-cuadro-medico-*.xml → Function App (opcional, EDS ya los genera nativos), '
+             '(c) /markup/* → Function App.')
+add_numbered('Configurar dominio custom en Front Door (ej. asisa-pc.azurefd.net).')
+add_numbered('Crear un workflow GitHub Actions que despliega a Azure Functions en cada push.')
+add_numbered('Actualizar las URLs en los bloques (blocks/*/*.js — buscar "asisa-pc.vercel.app" '
+             'y reemplazar). Ojo: hay ~10 ficheros con la URL hardcodeada.')
+add_numbered('Actualizar head.html: las tres líneas que cargan /etc.clientlibs/* deben '
+             'apuntar al nuevo dominio Azure.')
+add_numbered('Actualizar api/markup.js: el template HTML inyecta tres <link rel="stylesheet" '
+             'href="https://asisa-pc.vercel.app/etc.clientlibs/..."> — cambiar al nuevo dominio.')
+add_numbered('Hacer push a main (cambios de URL + nuevo workflow Azure).')
+add_numbered('Ejecutar POST /code refresh para que EDS recoja head.html y los bloques nuevos.')
+add_numbered('Modificar la sitewide config de EDS: cambiar content.overlay.url de '
+             'https://asisa-pc.vercel.app/markup a https://asisa-pc.azurefd.net/markup '
+             '(comando completo en §2.1). Requiere token config_admin.')
+add_numbered('Ejecutar `node refresh-eds-pages.mjs --reindex` para que EDS reconstruya '
+             'sus índices apuntando al overlay nuevo.')
+add_numbered('Verificar: status de una URL de cuadro médico debe mostrar sourceLocation con '
+             'el nuevo overlay; los bloques deben pintar datos correctamente; los 6 sitemaps '
+             'deben responder 200 con XML válido.')
+add_numbered('Una vez verificado, retirar el proyecto Vercel (o dejarlo apagado un tiempo '
+             'como backup).')
+
+doc.add_heading('8.4 Puntos delicados de la migración', level=2)
+add_bullet('Cold starts: Azure Functions en Consumption Plan puede tener cold starts >2s, '
+           'inaceptable para el overlay BYOM (EDS hace request y el HTML aparece en LCP). '
+           'Usar Premium Plan o Always-On.')
+add_bullet('Imports entre funciones: api/markup.js importa de api/sitemap.js y api/sitemap-cuadro-medico.js. '
+           'En Vercel cada función se bundlea independiente; en Azure Functions v4 hay que '
+           'configurar el packaging para compartir código vía shared/.')
+add_bullet('Tamaño del deploy: con 33.000 ficheros JSON en data/ el bundle de cada función es '
+           'enorme. Si NO se usa Blob Storage, hay que aumentar los límites de deploy en Azure '
+           '(default ~250MB).')
+add_bullet('CORS: las APIs necesitan Access-Control-Allow-Origin: * porque los bloques en aem.live '
+           'hacen fetch cross-origin. Configurar explícitamente en host.json o vía Front Door rules.')
+add_bullet('Permisos EDS: hace falta el token config_admin (cuenta técnica de Adobe) para '
+           'cambiar la sitewide config. jorge.lorenzo@ext.softtek.com NO tiene ese rol. Localizar '
+           'al técnico de Adobe (proyecto en https://developer.adobe.com/console) antes de '
+           'empezar la migración.')
+add_bullet('Rollback: mientras Azure no esté validado, mantener Vercel funcional. Para volver, '
+           'basta con un nuevo POST sitewide config apuntando de nuevo al overlay Vercel.')
+
+# =============================================================================
+# 9. Operación día a día
+# =============================================================================
+doc.add_page_break()
+doc.add_heading('9. Operación día a día', level=1)
+
+doc.add_heading('9.1 Tras cambiar JS o CSS de un bloque', level=2)
+add_numbered('Commit + push a main.')
+add_numbered('Si AEM Code Sync está activo en el repo, EDS se entera solo. Si no: '
+             'POST /code refresh.')
+add_numbered('NO hace falta re-publicar páginas; los bloques se ejecutan en cliente.')
+
+doc.add_heading('9.2 Tras cambiar head.html', level=2)
+add_numbered('Commit + push.')
+add_numbered('POST /code refresh.')
+add_numbered('POST /preview y /live para CADA URL afectada — head.html se inlinea en el HTML '
+             'procesado, no se sirve dinámicamente. Para masivo: '
+             '`node refresh-eds-pages.mjs` (sin flags = todo).')
+
+doc.add_heading('9.3 Tras cambiar la plantilla en api/markup.js', level=2)
+add_numbered('Commit + push.')
+add_numbered('Deploy a Vercel (o Azure tras migración).')
+add_numbered('`node refresh-eds-pages.mjs` para re-previewar todas las URLs dinámicas — EDS '
+             're-fetcha del overlay.')
+
+doc.add_heading('9.4 Tras actualizar datos (data/*.json)', level=2)
+add_numbered('Commit + push (los workflows GH Actions ya lo hacen).')
+add_numbered('Vercel/Azure recoge los datos en el siguiente deploy. Si Blob Storage, los datos '
+             'son visibles inmediatamente sin redeploy.')
+add_numbered('Los bloques fetchean datos en runtime, así que NO hace falta re-publicar páginas.')
+
+doc.add_heading('9.5 Verificación rápida del estado del sistema', level=2)
+add_code_block(
+    '# Health check del overlay\n'
+    'curl -sI https://asisa-pc.vercel.app/markup/cuadro-medico/p/madrid\n'
+    '# → HTTP 200, x-source: template:provincia\n\n'
+    '# Health check de una API\n'
+    'curl -s "https://asisa-pc.vercel.app/api/provincias" | jq "length"\n'
+    '# → 52\n\n'
+    '# Status de una URL en EDS\n'
+    'curl https://admin.hlx.page/status/asisa-softtek/asisa-pc/main/cuadro-medico/p/madrid\n'
+    '# → preview/live status 200, sourceLocation apuntando al overlay\n\n'
+    '# Sitemap de un tipo\n'
+    'curl --compressed https://main--asisa-pc--asisa-softtek.aem.live/sitemap-cuadro-medico-provincias.xml\n'
+    '# → XML con 52 <url>'
+)
+
+# =============================================================================
+# 10. Troubleshooting
+# =============================================================================
+doc.add_heading('10. Troubleshooting', level=1)
+
+add_table(
+    ['Síntoma', 'Causa probable', 'Solución'],
+    [
+        ('Página dinámica devuelve 404 desde aem.live',
+         'La URL no ha sido previsualizada/publicada en EDS',
+         'POST /preview + POST /live para esa URL (o node refresh-eds-pages.mjs)'),
+        ('Bloque no carga datos ("No se pudieron cargar")',
+         'fetch relativo en lugar de absoluto',
+         'Cambiar fetch("/api/...") por fetch("https://<overlay>/api/...")'),
+        ('Página "en blanco" sin estilos',
+         'Falta las clientlibs CSS de ASISA',
+         'Comprobar que api/markup.js inyecta los <link> a /etc.clientlibs/* y que el rewrite '
+         'apunta correctamente'),
+        ('Cambio en api/markup.js no se ve',
+         'EDS cachea el HTML procesado',
+         'POST /preview + POST /live para cada URL'),
+        ('POST /config devuelve 401',
+         'Usuario no está en config_admin',
+         'Usar el token de la cuenta técnica de Adobe'),
+        ('/query-index.json devuelve 413',
+         'Más de 6MB (límite de Lambda interno de EDS)',
+         'Reducir vía exclude en helix-query.yaml o split en varios índices (ya hecho en este proyecto)'),
+        ('Vercel no auto-despliega tras push',
+         'El conector GitHub-Vercel está desconectado',
+         'Lanzar manualmente `vercel deploy --prod --archive=tgz`'),
+        ('Sitemap viene en bytes binarios',
+         'Comprimido en Brotli',
+         'Añadir --compressed al curl'),
+        ('POST /preview/sitemap-*.xml devuelve 415',
+         'El content-bus de EDS rechaza XML por el pipeline de preview',
+         'No es bloqueante: EDS genera los sitemaps nativamente vía helix-sitemap.yaml sin '
+         'necesidad de preview/live'),
+    ],
+    widths=[Inches(2.2), Inches(2), Inches(2.3)],
+)
+
+# =============================================================================
+# 11. Apéndices
+# =============================================================================
+doc.add_heading('11. Apéndices', level=1)
+
+doc.add_heading('11.1 URLs y dominios clave', level=2)
+add_table(
+    ['Entorno', 'URL'],
+    [
+        ('EDS Live (público)', 'https://main--asisa-pc--asisa-softtek.aem.live'),
+        ('EDS Preview (autenticado)', 'https://main--asisa-pc--asisa-softtek.aem.page'),
+        ('Vercel (overlay + APIs)', 'https://asisa-pc.vercel.app'),
+        ('AEM Author', 'https://author-p133185-e1320482.adobeaemcloud.com'),
+        ('Admin HLX API', 'https://admin.hlx.page'),
+        ('GitHub repo', 'https://github.com/asisa-softtek/asisa-pc'),
+        ('Producción final (target)', 'https://www.asisa.es'),
+    ],
+    widths=[Inches(2.5), Inches(4)],
+)
+
+doc.add_heading('11.2 Variables de entorno y secretos', level=2)
+add_table(
+    ['Variable', 'Uso', 'Dónde se configura'],
+    [
+        ('HLX_ADMIN_API_TOKEN', 'Token admin EDS para POST /preview, /live, /code, /index',
+         'Local (export) o GitHub Secret'),
+        ('AEM_TOKEN', 'Token de AEM Author para create-aem-pages.mjs',
+         'Local (export)'),
+        ('SYNC_SECRET', 'Shared secret para api/sync-aem.js',
+         'Vercel env / Azure Function App settings'),
+        ('FORCE', 'Flag para forzar regeneración en los generate-*.mjs',
+         'CLI inline o input del workflow'),
+        ('PROVINCE_CODE', 'Restringe el scrape a una provincia',
+         'CLI inline'),
+    ],
+    widths=[Inches(2), Inches(2.5), Inches(2)],
+)
+
+doc.add_heading('11.3 Docs internas del proyecto', level=2)
+add_bullet('docs/byom.md — explicación detallada del setup BYOM, los 3 POSTs originales, '
+           'troubleshooting histórico y permisos.')
+add_bullet('docs/estructura-proyecto.md — referencia fichero por fichero de todo el repo, con '
+           'URLs en vivo donde inspeccionar cada pieza.')
+add_bullet('docs/traspaso-conocimiento.docx — este documento.')
+
+doc.add_heading('11.4 Glosario rápido', level=2)
+add_table(
+    ['Término', 'Significado'],
+    [
+        ('EDS', 'Edge Delivery Services (Adobe). CDN + capa de entrega para sites AEM.'),
+        ('BYOM', 'Bring Your Own Markup. Patrón donde EDS pide HTML a un overlay externo en lugar '
+                 'de a AEM Author.'),
+        ('Overlay', 'Servidor que devuelve el HTML para URLs dinámicas. Hoy en Vercel, mañana en '
+                    'Azure.'),
+        ('Content bus', 'Almacenamiento interno de EDS para los HTML procesados (preview y live).'),
+        ('Code bus', 'Almacenamiento interno de EDS para el código del repo (.js, .css, .yaml).'),
+        ('Sidekick', 'Toolbar de edición integrada en el navegador para autores.'),
+        ('Universal Editor', 'Editor visual de AEM Author donde se autora el contenido estático.'),
+        ('Clientlib', 'Librería compilada de CSS/JS publicada por AEM. En este proyecto, las del '
+                       'design system de ASISA viven en www.asisa.es/etc.clientlibs/wasisa/.'),
+        ('Bloque', 'Componente EDS instanciado a partir de <div class="<nombre>">. Vive en '
+                    'blocks/<nombre>/.'),
+        ('Query index', 'JSON con los paths indexados de páginas (origen de los sitemaps).'),
+    ],
+    widths=[Inches(2), Inches(4.5)],
+)
+
+# =============================================================================
+# Save
+# =============================================================================
+doc.save(OUTPUT)
+print(f"Generado: {OUTPUT}")
+print(f"Tamaño: {os.path.getsize(OUTPUT):,} bytes")
