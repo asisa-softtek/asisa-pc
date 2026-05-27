@@ -421,6 +421,387 @@ doc.add_paragraph(
     'estas cachés solo persisten dentro de la misma instancia warm; en cold start se reconstruyen.'
 )
 
+doc.add_page_break()
+doc.add_heading('3.4.1 Detalle exhaustivo de cada endpoint API', level=3)
+doc.add_paragraph(
+    'A continuación se documenta cada uno de los 11 endpoints de la carpeta api/: fichero, '
+    'método, query params con tipo y validaciones, ficheros de data/ que lee, cachés in-memory, '
+    'headers de respuesta, shape EXACTA del JSON o XML devuelto, y reglas de negocio. Esta es la '
+    'información imprescindible para portar cada función serverless a Azure Functions sin perder '
+    'comportamiento.'
+)
+
+# --- api/markup.js ---
+doc.add_heading('Endpoint 1 · api/markup.js (overlay BYOM)', level=4)
+doc.add_paragraph('Ruta: api/markup.js · 135 líneas')
+doc.add_paragraph(
+    'HTTP: GET. Vercel reescribe /markup y /markup/(.*) → /api/markup?path=$1. '
+    'Devuelve HTML (text/html) para URLs dinámicas o XML (text/xml) para sitemaps. 404 con '
+    'header "x-source: overlay-pass" si el path no coincide con ninguna regla — eso indica a EDS '
+    'que pase al source de AEM.'
+)
+doc.add_paragraph('Query params:')
+add_table(
+    ['Param', 'Tipo', 'Obligatorio', 'Descripción'],
+    [('path', 'String', 'Sí',
+      'Ruta del recurso solicitado (sin el prefijo /markup). Se acepta con o sin sufijo .html o '
+      '.plain.html — el handler los normaliza.')],
+    widths=[Inches(0.8), Inches(0.8), Inches(0.8), Inches(4.1)],
+)
+doc.add_paragraph('Patrones de path reconocidos:')
+add_bullet('/cuadro-medico/p/<slug> → template provincia (3 bloques)')
+add_bullet('/cuadro-medico/p/<prov>/pe/<spec> → mismo template (los bloques leen el path)')
+add_bullet('/cuadro-medico/d/<key> → template doctor (2 bloques)')
+add_bullet('/cuadro-medico/c/<key> → template centro (1 bloque)')
+add_bullet('/cuadro-medico/e/<slug> → template especialidad (3 bloques)')
+add_bullet('/sitemap.xml → sitemap index (delega en api/sitemap.js)')
+add_bullet('/sitemap-cuadro-medico-{provincias|provincia-specs|doctores|centros|especialidades}.xml '
+           '→ delega en api/sitemap-cuadro-medico.js')
+add_bullet('Cualquier otro → 404 overlay-pass')
+doc.add_paragraph('Headers de respuesta:')
+add_bullet('Content-Type: text/html; charset=utf-8 (templates) o application/xml; charset=utf-8 (sitemaps)')
+add_bullet('Cache-Control: public, max-age=60 (EDS lo cachea aparte; este TTL es para Vercel CDN)')
+add_bullet('x-source: template:provincia | template:doctor | template:centro | '
+           'template:especialidad | sitemap:index | sitemap:<type> | overlay-pass')
+doc.add_paragraph(
+    'No lee data/ directamente. Importa las funciones getSitemapIndexXml() de api/sitemap.js y '
+    'getCuadroMedicoSitemapXml(type) de api/sitemap-cuadro-medico.js para servir los sitemaps. '
+    'Helpers: extractPath() (normaliza el query param), isProvinciaPath/isDoctorPath/'
+    'isCentroPath/isEspecialidadPath (regex matchers).'
+)
+doc.add_paragraph(
+    'Inyecta un <script> con history.replaceState() en el HTML para que, al abrir el overlay '
+    'directamente desde Vercel (/markup/cuadro-medico/p/madrid), los bloques JS vean el path real '
+    'cuando leen window.location.pathname.'
+)
+doc.add_paragraph('Consumido por: EDS preview/live al hacer fetch al overlay configurado en sitewide config.')
+
+# --- api/providers.js ---
+doc.add_heading('Endpoint 2 · api/providers.js (listado paginado)', level=4)
+doc.add_paragraph('Ruta: api/providers.js · 194 líneas · HTTP: GET /api/providers')
+add_table(
+    ['Param', 'Tipo', 'Obligatorio', 'Default', 'Descripción'],
+    [
+        ('provinceSlug', 'String', 'Opcional¹', '-', 'Slug de provincia.'),
+        ('specSlug', 'String', 'Opcional¹', '-', 'Slug de especialidad.'),
+        ('tab', "'professionals'|'centers'", 'Opcional', 'professionals', 'Pestaña.'),
+        ('page', 'Number', 'Opcional', '1', 'Número de página (1-indexed).'),
+        ('limit', 'Number', 'Opcional', '10', 'Tamaño de página. Capado a MAX_LIMIT=50.'),
+    ],
+    widths=[Inches(1.2), Inches(1.5), Inches(0.9), Inches(0.8), Inches(2.1)],
+)
+doc.add_paragraph(
+    '¹ Al menos UNO de provinceSlug o specSlug es obligatorio. Si se pasa solo specSlug, hace '
+    'búsqueda nacional escaneando todas las provincias.'
+)
+doc.add_paragraph('Errores HTTP:')
+add_bullet('400 { error: "provinceSlug or specSlug is required" }')
+add_bullet('400 { error: "tab must be professionals or centers" }')
+add_bullet('404 { error: "Province not found: <slug>" }')
+add_bullet('404 { error: "Speciality not found: <slug>" }')
+add_bullet('404 { error: "No data for <prov>/<spec>" }')
+doc.add_paragraph('Ficheros leídos: data/provincias.json, data/cuadro-medico/especialidades.json, '
+                  'data/providers/<provinceSlug>/<specSlug>.json y/o todos los ficheros de '
+                  'data/providers/<provinceSlug>/*.json (para modo "solo provincia").')
+doc.add_paragraph('Cachés in-memory: provinciasCache (master), especialidadesCache (master), '
+                  'allProvinceCache (Map<provSlug, lista_deduplicada>).')
+doc.add_paragraph('Headers: Access-Control-Allow-Origin: *, Cache-Control: public, '
+                  's-maxage=300, stale-while-revalidate=3600 (5 min CDN + 1h stale).')
+doc.add_paragraph('Shape de la respuesta (200):')
+add_code_block(
+    '{\n'
+    '  "provinceSlug": "madrid" | null,\n'
+    '  "specSlug": "cardiologia" | null,\n'
+    '  "tab": "professionals" | "centers",\n'
+    '  "page": 1,\n'
+    '  "limit": 10,\n'
+    '  "total": Number,                 // total CAPADO (max 30 prof, 50 centros)\n'
+    '  "totalPages": Number,\n'
+    '  "totalProfessionals": Number,    // count CAPADO a 30\n'
+    '  "totalCenters": Number,          // count CAPADO a 50\n'
+    '  "results": [\n'
+    '    {\n'
+    '      "name": "DR. PEREZ GARCIA",\n'
+    '      "speciality": "CARDIOLOGÍA",\n'
+    '      "providerType": Number|null,\n'
+    '      "doctorType": Number|null,   // 1 = profesional\n'
+    '      "businessGroup": Boolean,\n'
+    '      "parentDescription": "Hospital HM …",\n'
+    '      "address": "DOCTOR ESQUERDO 83",\n'
+    '      "postalCode": "28028",\n'
+    '      "city": "MADRID",\n'
+    '      "phone": "915732022",\n'
+    '      "lat": 40.43,\n'
+    '      "lon": -3.66,\n'
+    '      "onlineAppointment": Boolean,\n'
+    '      "videoConsultation": Boolean,\n'
+    '      "ePrescription": Boolean,\n'
+    '      "languages": ["es", "en"],\n'
+    '      "collegiateCode": "281234567",\n'
+    '      "providerLocalicationCode": 1234567,\n'
+    '      "providerCode": 7654321,\n'
+    '      "detailUrl": "/cuadro-medico/d/<slug>-<id>"\n'
+    '    }\n'
+    '  ]\n'
+    '}'
+)
+doc.add_paragraph('Lógica de negocio:')
+add_bullet('Filtra por tab: isProfessional() = doctorType === "1"; '
+           'isCenter() = providerType ∈ {3,4,8,2,9}.')
+add_bullet('Aplica caps MAX_TOTAL_BY_TAB: 30 prof / 50 centros antes de paginar.')
+add_bullet('Modo "solo provincia" (sin specSlug): lee TODOS los ficheros de '
+           'data/providers/<prov>/, deduplica por providerCode|providerLocalicationCode.')
+add_bullet('Modo "nacional" (sin provinceSlug): escanea todas las carpetas data/providers/*/ '
+           'buscando el spec.')
+add_bullet('Consumido por bloques: cuadro-medico (motor búsqueda) y cuadro-medico-otros-medicos '
+           '(con limit=50).')
+
+# --- api/doctor.js ---
+doc.add_heading('Endpoint 3 · api/doctor.js (ficha de profesional)', level=4)
+doc.add_paragraph('Ruta: api/doctor.js · 161 líneas · HTTP: GET /api/doctor')
+add_table(
+    ['Param', 'Tipo', 'Obligatorio', 'Descripción'],
+    [('key', 'String', 'Sí',
+      'Identificador único del doctor en doctores-index.json '
+      '(formato: "<slug-nombre>-<collegiateCode|providerCode>").')],
+    widths=[Inches(0.8), Inches(0.8), Inches(0.8), Inches(4.1)],
+)
+doc.add_paragraph('Errores: 400 si falta key; 404 "Doctor not found"; 404 "No locations for".')
+doc.add_paragraph('Ficheros leídos: doctores-index.json, provider-details/<locCode>.json (por cada '
+                  'ubicación), providers/<prov>/<spec>.json (cross-ref).')
+doc.add_paragraph('Cachés: indexCache, providersListCache (Map<"prov|spec", lista>).')
+doc.add_paragraph('Cache-Control: public, s-maxage=3600, stale-while-revalidate=86400.')
+doc.add_paragraph('Shape (resumen):')
+add_code_block(
+    '{\n'
+    '  "key": "perez-garcia-juan-1234567",\n'
+    '  "name": "PEREZ GARCIA, JUAN",\n'
+    '  "collegiateCode": "281234567",\n'
+    '  "languages": ["es", "en"],\n'
+    '  "specialities": ["CARDIOLOGÍA", "MEDICINA INTERNA"],\n'
+    '  // -- Campos del "representative" (primer location con detail) --\n'
+    '  "specSlug", "provinceSlug", "parentDescription", "address",\n'
+    '  "postalCode", "city", "provinceCode", "phone", "lat", "lon",\n'
+    '  "onlineAppointment", "videoConsultation", "ePrescription",\n'
+    '  "businessGroup",\n'
+    '  "tuotempo": { presential, online, video, phone, asisaLive },\n'
+    '  // -- Todas las ubicaciones donde trabaja --\n'
+    '  "locations": [\n'
+    '    { providerCode, providerLocalicationCode, specSlug, provinceSlug,\n'
+    '      speciality, parentDescription, businessGroup, address, postalCode,\n'
+    '      city, provinceCode, phone, lat, lon, onlineAppointment,\n'
+    '      videoConsultation, ePrescription, tuotempo }\n'
+    '  ]\n'
+    '}'
+)
+doc.add_paragraph('Lógica clave:')
+add_bullet('pickRepresentative(): elige la ubicación que tenga fichero de detalle si existe.')
+add_bullet('mergeAddress(): combina address de detail y de la lista, priorizando valores '
+           '"meaningful" (no vacíos, no 0).')
+add_bullet('Una persona puede tener varias entradas (cada ubicación + especialidad genera una); '
+           'se agrupa por collegiateCode en el índice.')
+add_bullet('Consumido por: cuadro-medico-ficha-doctor, cuadro-medico-otros-medicos, '
+           'cuadro-medico-spec-localizacion (ya retirado).')
+
+# --- api/centro.js ---
+doc.add_heading('Endpoint 4 · api/centro.js (ficha de centro)', level=4)
+doc.add_paragraph('Ruta: api/centro.js · 259 líneas · HTTP: GET /api/centro')
+doc.add_paragraph('Query: key (String, obligatorio) — slug del centro en centros-index.json.')
+doc.add_paragraph('Errores: 400 si falta key; 404 "Centro not found"; 404 "Centro has no data".')
+doc.add_paragraph('Ficheros leídos: centros-index.json, doctores-index.json (para validar qué '
+                  'médicos tienen ficha publicada), data/providers/<prov>/*.json (scan completo).')
+doc.add_paragraph('Cachés: centrosIndexCache, doctoresIndexCache, provinceScanCache '
+                  '(Map<provSlug, { centros, doctorsByParent }>).')
+doc.add_paragraph('Shape (resumen):')
+add_code_block(
+    '{\n'
+    '  "key", "providerLocalicationCode", "name", "providerType",\n'
+    '  "businessGroup", "address", "postalCode", "city", "provinceCode",\n'
+    '  "provinceSlug", "phone", "lat", "lon",\n'
+    '  "onlineAppointment", "videoConsultation", "ePrescription",\n'
+    '  "specialities": [\n'
+    '    {\n'
+    '      "speciality": "CARDIOLOGÍA",\n'
+    '      "specSlug": "cardiologia",\n'
+    '      "phone", "onlineAppointment", "videoConsultation", "ePrescription",\n'
+    '      "subSpecialities": ["..."],\n'
+    '      "doctors": [{ key, name, subSpeciality }],\n'
+    '      "observations": ""\n'
+    '    }\n'
+    '  ],\n'
+    '  "doctors": [{ key, name, speciality, gender }],\n'
+    '  "otherCentros": [\n'
+    '    { key, providerLocalicationCode, name, providerType, businessGroup,\n'
+    '      address, postalCode, city, provinceCode, phone, lat, lon,\n'
+    '      specialities: ["..."],   // máx 4\n'
+    '      specialitiesMore: Number  // el resto (n - 4)\n'
+    '    }\n'
+    '  ],\n'
+    '  "description": "Centro con N especialidades en {ciudad}…"\n'
+    '}'
+)
+doc.add_paragraph('Lógica clave:')
+add_bullet('scanProvince(provSlug): parser que recorre TODOS los .json de '
+           'data/providers/<prov>/, agrupa por centro y por doctor-padre. Cacheado.')
+add_bullet('Vincula doctors al centro vía parentCode → providerLocalicationCode.')
+add_bullet('otherCentros: top 4 centros con MAYOR overlap de especialidades (orden: overlap '
+           'desc, nombre asc).')
+add_bullet('Consumido por: cuadro-medico-ficha-centro.')
+
+# --- api/provincias.js ---
+doc.add_heading('Endpoint 5 · api/provincias.js (listado / detalle de provincia)', level=4)
+doc.add_paragraph('Ruta: api/provincias.js · 20 líneas · HTTP: GET /api/provincias')
+doc.add_paragraph('Query: slug (opcional). Sin slug → array de provincias. Con slug → detalle.')
+doc.add_paragraph('Sin caché in-memory (passthrough de fichero). Cache-Control: s-maxage=86400, '
+                  'stale-while-revalidate=604800 (24h + 7d stale).')
+doc.add_paragraph('Shape sin slug:')
+add_code_block(
+    '[\n'
+    '  { "name": "MADRID", "displayName": "Madrid", "slug": "madrid",\n'
+    '    "provinceCode": "28" },\n'
+    '  …\n'
+    ']'
+)
+doc.add_paragraph('Shape con slug: objeto de data/cuadro-medico/provincias/<slug>.json — '
+                  '{ slug, displayName, provinceCode, especialidades: [<spec-slugs>] }.')
+
+# --- api/especialidades.js ---
+doc.add_heading('Endpoint 6 · api/especialidades.js (listado / detalle de especialidad)', level=4)
+doc.add_paragraph('Ruta: api/especialidades.js · 36 líneas · HTTP: GET /api/especialidades')
+doc.add_paragraph('Query: slug (opcional).')
+doc.add_paragraph('Cachés: masterCache.')
+doc.add_paragraph('Errores: 404 "Especialidad no encontrada", 404 "Sin datos para".')
+doc.add_paragraph('Shape sin slug:')
+add_code_block(
+    '[\n'
+    '  { "slug": "cardiologia", "name": "Cardiología",\n'
+    '    "nameApi": "CARDIOLOGÍA",\n'
+    '    "professionalPlural": "Cardiólogos",\n'
+    '    "professionalPluralLower": "cardiólogos",\n'
+    '    "kind": "specialty" | "service" | "technique",\n'
+    '    "specialityCode": 9 },\n'
+    '  …\n'
+    ']'
+)
+doc.add_paragraph('Shape con slug: meta + array provincias[]:')
+add_code_block(
+    '{\n'
+    '  "slug": "cardiologia", "name": "Cardiología", "kind": "specialty",\n'
+    '  "provincias": [\n'
+    '    { "slug": "madrid", "displayName": "Madrid", "count": 381 },\n'
+    '    …  // ordenado por count desc\n'
+    '  ]\n'
+    '}'
+)
+
+# --- api/providers-detail.js ---
+doc.add_heading('Endpoint 7 · api/providers-detail.js (detalle por locCode)', level=4)
+doc.add_paragraph('Ruta: api/providers-detail.js · 78 líneas · HTTP: GET /api/providers-detail')
+doc.add_paragraph('Query: id (String, obligatorio) — providerLocalicationCode.')
+doc.add_paragraph('Lee data/provider-details/<id>.json. Sin caché in-memory.')
+doc.add_paragraph(
+    'Un mismo provider-details puede tener varios entries (mismo provider, distintas '
+    'especialidades). mapDetail() consolida: toma base del primer entry, deduplica y agrupa '
+    'specialities y languages de todos los entries.'
+)
+doc.add_paragraph('Consumido por: usado como fallback / enriquecimiento desde otros endpoints; '
+                  'también accesible directo desde el frontend si se necesita una sola ubicación.')
+
+# --- api/specialities.js ---
+doc.add_heading('Endpoint 8 · api/specialities.js (proxy autocomplete a ASISA)', level=4)
+doc.add_paragraph('Ruta: api/specialities.js · 32 líneas · HTTP: GET /api/specialities')
+doc.add_paragraph('Query: provinceCode (opcional, código numérico INE).')
+doc.add_paragraph('NO lee data/ ni tiene caché — es un PROXY EN VIVO al backend de ASISA:')
+add_code_block(
+    'GET https://ursaepre.asisa.es/ASISA/middlewasisa/public/v1/api/searchPortal/\n'
+    '    autocomplete/specialities\n'
+    '  ?specialityDescription=&networkCode=1[&provinceCode=<code>]\n'
+    '  &maxResultsNumber=500\n'
+    'Headers:\n'
+    '  Ocp-Apim-Subscription-Key: 0908b85b9d0e4a75b2eb33048bd9fe01\n'
+    '  Api-Version: 1'
+)
+doc.add_paragraph('Devuelve la respuesta tal cual (passthrough). Si el backend de ASISA cae, '
+                  'este endpoint cae también. Pensado para autocomplete de búsqueda.')
+doc.add_paragraph('CRÍTICO para migración Azure: este endpoint es el único que sí depende del '
+                  'backend ASISA en runtime. La subscription key debe ir a Key Vault.')
+
+# --- api/sitemap.js + api/sitemap-cuadro-medico.js ---
+doc.add_heading('Endpoints 9 y 10 · sitemaps (Vercel-only fallback)', level=4)
+doc.add_paragraph(
+    'api/sitemap.js (29 líneas) → /sitemap.xml: sitemap index estático que apunta a 5 '
+    'sitemaps específicos en www.asisa.es. Exporta getSitemapIndexXml() para que api/markup.js '
+    'lo reuse.'
+)
+doc.add_paragraph(
+    'api/sitemap-cuadro-medico.js (94 líneas) → /sitemap-cuadro-medico-<type>.xml: genera el '
+    'XML del tipo según el query param type. Tipos aceptados: provincias, provincia-specs, '
+    'doctores, centros, especialidades. Cada uno enumera URLs leyendo:'
+)
+add_bullet('provincias → data/cuadro-medico/provincias/*.json (52 URLs)')
+add_bullet('provincia-specs → cruza cada provincia con sus especialidades (~3.250 URLs)')
+add_bullet('doctores → keys de doctores-index.json (~20.500 URLs)')
+add_bullet('centros → keys de centros-index.json (~6.500 URLs)')
+add_bullet('especialidades → ficheros en especialidades/ (~181 URLs)')
+doc.add_paragraph(
+    'Estos endpoints existen como vía paralela. EDS sirve los mismos paths NATIVAMENTE vía '
+    'helix-sitemap.yaml (con origin: https://www.asisa.es); los de Vercel son un fallback '
+    'accesible directamente en asisa-pc.vercel.app y útil para debugging.'
+)
+
+# --- api/sync-aem.js ---
+doc.add_heading('Endpoint 11 · api/sync-aem.js (sincronizador de sitemap externo)', level=4)
+doc.add_paragraph('Ruta: api/sync-aem.js · 84 líneas · HTTP: GET /api/sync-aem (interno)')
+doc.add_paragraph('Query:')
+add_bullet('secret (String) — debe coincidir con env SYNC_SECRET, si no 401.')
+add_bullet('path (String, opcional) — sincroniza solo esa ruta.')
+add_bullet('limit (Number, default 50) — URLs por lote.')
+add_bullet('offset (Number, default 0) — offset para paginación.')
+doc.add_paragraph('Si no se pasa path, lee https://www.asisa.es/sitemap.xml, filtra URLs que '
+                  'contengan "/cuadro-medico/" y procesa por lotes. Para cada URL hace:')
+add_code_block(
+    'POST https://admin.hlx.page/preview/asisa-softtek/asisa-pc/main<path>\n'
+    'POST https://admin.hlx.page/live/asisa-softtek/asisa-pc/main<path>\n'
+    'Headers: x-auth-token: <HLX_ADMIN_API_TOKEN>'
+)
+doc.add_paragraph('Concurrencia 5 (Promise.all en lotes). Requiere env HLX_ADMIN_API_TOKEN o '
+                  'devuelve 500. Útil para automatizar sincronización masiva desde un sitemap '
+                  'externo (e.g. tras una republicación en www.asisa.es).')
+
+doc.add_heading('3.4.2 Resumen de cachés y TTLs', level=3)
+add_table(
+    ['Endpoint', 'Cachés in-memory', 'Cache-Control'],
+    [
+        ('api/markup.js', '—', 'max-age=60'),
+        ('api/providers.js',
+         'provinciasCache + especialidadesCache + allProvinceCache',
+         's-maxage=300, stale-while-revalidate=3600'),
+        ('api/doctor.js', 'indexCache + providersListCache',
+         's-maxage=3600, stale-while-revalidate=86400'),
+        ('api/centro.js',
+         'centrosIndexCache + doctoresIndexCache + provinceScanCache',
+         's-maxage=3600, stale-while-revalidate=86400'),
+        ('api/provincias.js', '—',
+         's-maxage=86400, stale-while-revalidate=604800'),
+        ('api/especialidades.js', 'masterCache',
+         's-maxage=86400, stale-while-revalidate=604800'),
+        ('api/providers-detail.js', '—',
+         's-maxage=3600, stale-while-revalidate=86400'),
+        ('api/specialities.js', '— (proxy en vivo)',
+         's-maxage=86400, stale-while-revalidate=604800'),
+        ('api/sitemap.js', '—', 's-maxage=3600, stale-while-revalidate=86400'),
+        ('api/sitemap-cuadro-medico.js', '—',
+         's-maxage=86400, stale-while-revalidate=86400'),
+        ('api/sync-aem.js', '— (no cacheable)', '—'),
+    ],
+    widths=[Inches(2.2), Inches(2.5), Inches(2)],
+)
+doc.add_paragraph(
+    'Nota Azure: las cachés in-memory SOBREVIVEN dentro de la misma instancia warm pero NO entre '
+    'instancias ni tras cold start. En Premium Plan con Always-On las cachés serán efectivas la '
+    'mayoría del tiempo. Si quieres caché compartida, Azure Cache for Redis.'
+)
+
 doc.add_heading('3.5 Bloques EDS (carpeta blocks/)', level=2)
 doc.add_paragraph(
     'Cada bloque vive en blocks/<nombre>/<nombre>.{js,css}. EDS los instancia automáticamente '
@@ -1038,6 +1419,241 @@ doc.add_paragraph(
     'preferible para deployments más rápidos.'
 )
 
+doc.add_heading('4.1 Schemas detallados de cada fichero', level=2)
+
+doc.add_heading('4.1.1 data/provincias.json', level=3)
+doc.add_paragraph('1 fichero. Array de 52 entradas (España completa + Ceuta y Melilla). '
+                  'Mantenido a mano; rara vez cambia.')
+add_code_block(
+    '[\n'
+    '  {\n'
+    '    "name": "MADRID",          // mayúsculas, como viene de ASISA\n'
+    '    "displayName": "Madrid",   // título, para pintar en UI\n'
+    '    "slug": "madrid",          // kebab-case, usado en URLs\n'
+    '    "provinceCode": "28"       // código INE\n'
+    '  },\n'
+    '  …\n'
+    ']'
+)
+doc.add_paragraph('Generador: manual. Consumido por: TODOS los scripts .mjs (filtrar por '
+                  'provinceCode o slug) + api/providers.js + api/provincias.js.')
+
+doc.add_heading('4.1.2 data/cuadro-medico/especialidades.json', level=3)
+doc.add_paragraph('1 fichero. Master list de 181 especialidades.')
+add_code_block(
+    '[\n'
+    '  {\n'
+    '    "slug": "cardiologia",\n'
+    '    "name": "Cardiología",                   // pretty\n'
+    '    "nameApi": "CARDIOLOGÍA",                // como ASISA lo devuelve\n'
+    '    "professionalPlural": "Cardiólogos",\n'
+    '    "professionalPluralLower": "cardiólogos",\n'
+    '    "kind": "specialty" | "service" | "technique",\n'
+    '    "specialityCode": 9                      // numérico ASISA (solo si specialty)\n'
+    '  },\n'
+    '  …\n'
+    ']'
+)
+doc.add_paragraph(
+    'Generador: manual (extraído originalmente del backend ASISA). Consumido por: '
+    'api/especialidades.js + generate-cuadro-medico-specs.mjs (validación de slugs). El campo '
+    'kind se usa para filtrar: el bloque cuadro-medico-otras-especialidades excluye las "service" '
+    'cuando muestra el top 15 nacional.'
+)
+
+doc.add_heading('4.1.3 data/cuadro-medico/doctores-index.json', level=3)
+doc.add_paragraph('1 fichero. Object con ~20.500 keys. Es el ÍNDICE MAESTRO de profesionales. '
+                  'Cada key tiene formato "<slug-nombre>-<collegiateCode|providerCode>".')
+add_code_block(
+    '{\n'
+    '  "garcia-balda-ainhoa-152854071": {\n'
+    '    "collegiateCode": 152854071,    // único por profesional (puede ser null)\n'
+    '    "name": "GARCIA BALDA, AINHOA",\n'
+    '    "locations": [\n'
+    '      {\n'
+    '        "providerCode": 7654321,\n'
+    '        "providerLocalicationCode": 1234567,\n'
+    '        "specSlug": "alergologia",\n'
+    '        "provinceSlug": "a-coruna"\n'
+    '      }\n'
+    '      // … una ubicación por cada {centro, especialidad}\n'
+    '    ]\n'
+    '  },\n'
+    '  …\n'
+    '}'
+)
+doc.add_paragraph('Generador: generate-cuadro-medico-specs.mjs (agrupa entradas por '
+                  'collegiateCode). Consumido por: api/doctor.js + create-aem-pages.mjs (un page '
+                  '/cuadro-medico/d/<key> por cada key) + refresh-eds-pages.mjs --doctores.')
+
+doc.add_heading('4.1.4 data/cuadro-medico/centros-index.json', level=3)
+doc.add_paragraph('1 fichero. Object con ~6.500 keys. Cada key es el slug del centro.')
+add_code_block(
+    '{\n'
+    '  "hm-rosaleda": {\n'
+    '    "providerLocalicationCode": 12345,\n'
+    '    "name": "HM ROSALEDA",\n'
+    '    "provinceSlug": "a-coruna"\n'
+    '  },\n'
+    '  …\n'
+    '}'
+)
+doc.add_paragraph('Generador: generate-cuadro-medico-specs.mjs. Consumido por: api/centro.js + '
+                  'create-aem-pages.mjs + refresh-eds-pages.mjs --centros.')
+
+doc.add_heading('4.1.5 data/cuadro-medico/provincias/<slug>.json', level=3)
+doc.add_paragraph('50 ficheros (uno por provincia que tiene catálogo). 1 por provincia. Indica '
+                  'QUÉ especialidades hay disponibles ahí.')
+add_code_block(
+    '{\n'
+    '  "slug": "madrid",\n'
+    '  "displayName": "Madrid",\n'
+    '  "provinceCode": "28",\n'
+    '  "especialidades": [\n'
+    '    "alergologia", "cardiologia", "dermatologia-medico-quirurgica-y-venereo",\n'
+    '    …\n'
+    '  ]\n'
+    '}'
+)
+doc.add_paragraph('Generador: generate-cuadro-medico-specs.mjs. Consumido por: '
+                  'api/sitemap-cuadro-medico.js, refresh-eds-pages.mjs (genera todas las '
+                  'combinaciones /p/<prov>/pe/<spec>), create-aem-pages.mjs.')
+
+doc.add_heading('4.1.6 data/cuadro-medico/especialidades/<slug>.json', level=3)
+doc.add_paragraph('~183 ficheros. Uno por especialidad. Indica EN QUÉ provincias está '
+                  'disponible y con cuántos profesionales.')
+add_code_block(
+    '{\n'
+    '  "slug": "cardiologia",\n'
+    '  "provincias": [\n'
+    '    { "slug": "madrid", "displayName": "Madrid", "count": 381 },\n'
+    '    { "slug": "barcelona", "displayName": "Barcelona", "count": 218 },\n'
+    '    …  // ordenado por count desc\n'
+    '  ]\n'
+    '}'
+)
+doc.add_paragraph('Generador: generate-cuadro-medico-specs.mjs. Consumido por: '
+                  'api/especialidades.js, cuadro-medico-otras-provincias (bloque), '
+                  'api/sitemap-cuadro-medico.js (type=especialidades).')
+
+doc.add_heading('4.1.7 data/providers/<prov>/<spec>.json (LISTA CRUDA)', level=3)
+doc.add_paragraph(
+    '~3.700 ficheros distribuidos en 52 subcarpetas (una por provincia). Cada fichero contiene '
+    'el array crudo de todos los providers (médicos+centros) que ASISA devolvió para esa '
+    'combinación. Es el dataset MÁS PESADO y la fuente de TODO el resto de datos.'
+)
+add_code_block(
+    '[\n'
+    '  {\n'
+    '    "providerCode": 7654321,                  // ID global del provider\n'
+    '    "providerLocalicationCode": 1234567,      // ID único por ubicación\n'
+    '    "providerName": "DR. PEREZ GARCIA",       // O "HOSPITAL HM …"\n'
+    '    "networkCode": 1,                         // Red Salud\n'
+    '    "doctorType": 1,                          // 1 = profesional, 0 = centro\n'
+    '    "providerType": Number,                   // 3=HOSPITAL, 4=CENTRO,\n'
+    '                                               //  8=LABORATORIO, etc.\n'
+    '    "collegiateCode": 152854071,              // solo si doctorType=1\n'
+    '    "gender": "M" | "F" | "",\n'
+    '    "businessGroup": Boolean,\n'
+    '    "specialityInfo": {\n'
+    '      "specialityCode": 9,\n'
+    '      "specialityDescription": "CARDIOLOGÍA",\n'
+    '      "subSpecialityCode": Number,\n'
+    '      "subSpecialityDescription": null | String\n'
+    '    },\n'
+    '    "contact": {\n'
+    '      "phone": "915732022",\n'
+    '      "mobilePhone": "",\n'
+    '      "email": "",\n'
+    '      "documentNumber": "12345678X"           // DNI del titular\n'
+    '    },\n'
+    '    "address": {\n'
+    '      "addressType": "CL",                    // tipo de vía\n'
+    '      "addressDescription": "DOCTOR ESQUERDO",\n'
+    '      "addressNumber": 83,\n'
+    '      "cityDescription": "MADRID",\n'
+    '      "postalCode": "28028",\n'
+    '      "provinceCode": 28,\n'
+    '      "latitude": 40.43,\n'
+    '      "longitude": -3.66\n'
+    '    },\n'
+    '    "parentDescription": "Hospital HM Universitario …",\n'
+    '    "parentCode": Number,                     // → centro padre\n'
+    '    "onlineAppointment": Boolean,\n'
+    '    "videoConsultation": Boolean,\n'
+    '    "electronicPrescription": Boolean,\n'
+    '    "languages": [{ "code": "es" }, { "code": "en" }],\n'
+    '    "tuotempo": {                             // datos del booking partner\n'
+    '      "centerCode": Number,\n'
+    '      "providerCode": Number,\n'
+    '      "onlineAppointment": Boolean,\n'
+    '      "presentialAppointment": Boolean,\n'
+    '      "videoAppointment": Boolean,\n'
+    '      "phoneAppointment": Boolean,\n'
+    '      "asisaLiveAppointment": Boolean\n'
+    '    }\n'
+    '  },\n'
+    '  …\n'
+    ']'
+)
+doc.add_paragraph('Generador: generate-providers-data.mjs (descarga de ASISA). Consumido por: '
+                  'TODO — api/providers.js (lectura directa), api/centro.js (scan), '
+                  'generate-cuadro-medico-specs.mjs (construye los índices), '
+                  'generate-provider-details.mjs (extrae locCodes únicos).')
+
+doc.add_heading('4.1.8 data/provider-details/<locCode>.json', level=3)
+doc.add_paragraph('~33.000 ficheros (uno por providerLocalicationCode único). Cada fichero '
+                  'contiene un ARRAY (no objeto) con 1+ entries que comparten ubicación pero '
+                  'pueden diferir en especialidad. Si la API ASISA falló, el fichero contiene '
+                  '"null".')
+add_code_block(
+    '// data/provider-details/1234567.json\n'
+    '[\n'
+    '  {\n'
+    '    "providerCode": 7654321,\n'
+    '    "providerLocalicationCode": 1234567,\n'
+    '    "providerName": "DR. PEREZ GARCIA",\n'
+    '    "specialityInfo": { … },\n'
+    '    "contact": { phone, email, documentNumber, … },\n'
+    '    "address": { … },\n'
+    '    // Campos ADICIONALES respecto a la lista cruda:\n'
+    '    "observations": "Consulta privada en planta 3 …",\n'
+    '    "appointments": Boolean,\n'
+    '    // Horarios, servicios extra, etc. según el endpoint\n'
+    '  }\n'
+    '  // … más entries si el provider trabaja varias specs en esa ubicación\n'
+    ']'
+)
+doc.add_paragraph('Generador: generate-provider-details.mjs (~33k fetches a /providers/details). '
+                  'Consumido por: api/providers-detail.js + api/doctor.js (enriquece datos del '
+                  'representative location).')
+
+doc.add_heading('4.1.9 Flujo de datos entre todos los ficheros', level=3)
+add_code_block(
+    'API ASISA (ursaepre.asisa.es)\n'
+    '  │\n'
+    '  ├─ /searchPortal/providers ── generate-providers-data.mjs ──┐\n'
+    '  │                                                            ▼\n'
+    '  │                          data/providers/<prov>/<spec>.json (raw)\n'
+    '  │                                                            │\n'
+    '  ├─ /providers/details ── generate-provider-details.mjs ──┐  │\n'
+    '  │                                                        ▼  │\n'
+    '  │              data/provider-details/<locCode>.json         │\n'
+    '  │                                                            │\n'
+    '                                                                ▼\n'
+    '                                  generate-cuadro-medico-specs.mjs\n'
+    '                                                                │\n'
+    '                                                                ▼\n'
+    '                  data/cuadro-medico/\n'
+    '                    ├─ provincias/<slug>.json\n'
+    '                    ├─ especialidades/<slug>.json\n'
+    '                    ├─ doctores-index.json\n'
+    '                    └─ centros-index.json\n'
+    '                                                                │\n'
+    '                                                                ▼\n'
+    '                  api/* (serverless) los leen en runtime'
+)
+
 # =============================================================================
 # 5. Sitemaps
 # =============================================================================
@@ -1134,7 +1750,169 @@ add_code_block(
     'node refresh-eds-pages.mjs --reindex'
 )
 
-doc.add_heading('6.1 Comandos sueltos clave', level=2)
+doc.add_heading('6.1 Detalle exhaustivo de cada script', level=2)
+
+# generate-providers-data.mjs
+doc.add_heading('Script 1 · generate-providers-data.mjs (~190 líneas)', level=3)
+doc.add_paragraph(
+    'Propósito: descarga el catálogo completo de profesionales y centros de ASISA, lo dedupla y '
+    'lo guarda en data/providers/<provinciaSlug>/<especialidadSlug>.json. Es el cimiento de '
+    'toda la pirámide de datos.'
+)
+doc.add_paragraph('Inputs:')
+add_bullet('Env: FORCE=true (sobrescribe caché existente); PROVINCE_CODE=28 (solo una provincia).')
+add_bullet('Ficheros: data/provincias.json (lista provincias y sus códigos).')
+doc.add_paragraph('Outputs: data/providers/<prov>/<spec>.json — arrays planos de providers.')
+doc.add_paragraph('APIs externas a ASISA:')
+add_code_block(
+    'Base: https://ursaepre.asisa.es/ASISA/middlewasisa/public/v1/api/searchPortal\n\n'
+    '1) GET /autocomplete/specialities\n'
+    '   ?specialityDescription=&networkCode=1&provinceCode=<code>&maxResultsNumber=200\n'
+    '   → lista de especialidades disponibles en esa provincia\n\n'
+    '2) GET /providers\n'
+    '   ?networkCode=1&provinceCode=<code>\n'
+    '   &specialityDescription=<DESC>&specialityType=<N>\n'
+    '   &pageNumber=<P>      // 100 results por página\n'
+    '   → listado paginado de providers\n\n'
+    'Headers (todas):\n'
+    '  Ocp-Apim-Subscription-Key: 0908b85b9d0e4a75b2eb33048bd9fe01\n'
+    '  Api-Version: 1\n\n'
+    'Timeout: 150 s'
+)
+doc.add_paragraph('Flujo:')
+add_numbered('Lee data/provincias.json y filtra por PROVINCE_CODE si se ha pasado.')
+add_numbered('Para cada provincia (concurrencia 10), llama /autocomplete/specialities para '
+             'obtener qué especialidades tiene.')
+add_numbered('Para cada (provincia, especialidad), llama /providers paginando de 100 en 100 hasta '
+             'consumir totalCount.')
+add_numbered('Deduplica usando un Set por providerCode (si existe) o fallback (name, address, '
+             'city).')
+add_numbered('Si el fichero destino existe y no hay FORCE → skip (lee caché del repo).')
+add_numbered('Escribe data/providers/<prov>/<spec>.json.')
+doc.add_paragraph('Concurrencia: 10. Sin retry automático para 429 (timeout 150 s ya es generoso). '
+                  'Errores tolerados: status != 200, NETWORK, TIMEOUT — log y continúa.')
+doc.add_paragraph('Lanzador: manual (CLI) o GitHub Action workflow_dispatch (con cron diario '
+                  'disponible pero comentado).')
+
+# generate-provider-details.mjs
+doc.add_heading('Script 2 · generate-provider-details.mjs (~158 líneas)', level=3)
+doc.add_paragraph('Propósito: por cada (providerLocalicationCode, documentNumber) único en los '
+                  'JSON de providers, llama /providers/details para obtener datos ampliados '
+                  '(observaciones, horarios, etc.) y los guarda en data/provider-details/.')
+doc.add_paragraph('Inputs: env FORCE; lee data/providers/**/*.json para extraer los pares únicos.')
+doc.add_paragraph('Outputs: data/provider-details/<providerLocalicationCode>.json — array con 1+ '
+                  'entries (o null si error).')
+doc.add_paragraph('APIs externas:')
+add_code_block(
+    'GET /searchPortal/providers/details\n'
+    '  ?networkCode=1&providerLocalicationCode=<id>&documentNumber=<dni>\n'
+    'Headers iguales que generate-providers-data.\n'
+    'Timeout: 150 s.'
+)
+doc.add_paragraph('Concurrencia: 25 (bajar a 10 si la API empieza a devolver 429). Si la '
+                  'request falla, escribe "null" en el fichero (no propaga el error).')
+doc.add_paragraph('Lanzador: manual o workflow_dispatch (timeout configurado a 360 min, '
+                  '~33k peticiones).')
+
+# generate-cuadro-medico-specs.mjs
+doc.add_heading('Script 3 · generate-cuadro-medico-specs.mjs (~236 líneas)', level=3)
+doc.add_paragraph(
+    'Propósito: NO toca la red. Lee TODOS los data/providers/<prov>/<spec>.json y produce los '
+    '4 ficheros de índice + los 2 directorios de detalle agregado.'
+)
+doc.add_paragraph('Inputs: env PROVINCE_SLUG=madrid (solo una); lee provincias.json, '
+                  'especialidades.json, data/providers/**/*.json.')
+doc.add_paragraph('Outputs:')
+add_bullet('data/cuadro-medico/provincias/<slug>.json (52)')
+add_bullet('data/cuadro-medico/especialidades/<slug>.json (~183)')
+add_bullet('data/cuadro-medico/doctores-index.json (~20.500 keys)')
+add_bullet('data/cuadro-medico/centros-index.json (~6.500 keys)')
+doc.add_paragraph('Flujo:')
+add_numbered('Itera cada (provincia, especialidad) → lee el JSON crudo.')
+add_numbered('Para cada provider: si doctorType=1, key="<slug-nombre>-<collegiateCode|providerCode>" '
+             '→ doctoresIndex. Si no, key="<slug-nombre>" → centrosIndex.')
+add_numbered('Mantiene un mapa provSlug → Set(specSlugs) y otro specSlug → Map(provSlug → count).')
+add_numbered('Al final escribe los 4 ficheros / 2 carpetas con los agregados.')
+doc.add_paragraph('Errores tolerados: ficheros vacíos o corruptos → skip silencioso. Fatales: '
+                  'sin provincias.json o sin especialidades.json → exit(1).')
+doc.add_paragraph('Lanzador: manual tras los dos generate-*.mjs anteriores.')
+
+# create-aem-pages.mjs
+doc.add_heading('Script 4 · create-aem-pages.mjs (~183 líneas)', level=3)
+doc.add_paragraph(
+    'Propósito: crea en AEM Author la página AEM correspondiente a cada URL dinámica (copy desde '
+    'plantilla), la activa (publish), y refresca preview+live en EDS. Es el único script que '
+    'toca AEM directamente.'
+)
+doc.add_paragraph('Inputs:')
+add_bullet('Env: AEM_TOKEN="login:eyJ..." (REQUERIDO; cookie login-token del Author).')
+add_bullet('Flags: --provincias, --especialidades, --doctores, --centros, --all.')
+add_bullet('Lee: provincias.json + provincias/<slug>.json + especialidades/ + doctores-index '
+           '+ centros-index según los flags.')
+doc.add_paragraph('APIs externas:')
+add_code_block(
+    'AEM Author (https://author-p133185-e1320482.adobeaemcloud.com)\n'
+    '  GET  {path}.infinity.json          → comprueba si la página existe\n'
+    '  POST /bin/wcmcommand               → cmd=copyPage&srcPath=…&destParentPath=…&pageName=…\n'
+    '                                      &shallow=false&replaceExistingPages=false\n'
+    '  POST /bin/replicate.json           → cmd=activate&path=…\n'
+    '  Headers: Cookie: login-token=<AEM_TOKEN>\n'
+    '           Content-Type: application/x-www-form-urlencoded\n\n'
+    'EDS admin (https://admin.hlx.page)\n'
+    '  POST /preview/asisa-softtek/asisa-pc/main<edsPath>\n'
+    '  POST /live/asisa-softtek/asisa-pc/main<edsPath>'
+)
+doc.add_paragraph('Plantillas AEM de las que copia:')
+add_bullet('/content/site-pc/cuadro-medico/provincia → /cuadro-medico/p/<slug>')
+add_bullet('/content/site-pc/cuadro-medico/provincia → /cuadro-medico/p/<prov>/pe/<spec>')
+add_bullet('/content/site-pc/cuadro-medico/doctor → /cuadro-medico/d/<key>')
+add_bullet('/content/site-pc/cuadro-medico/centro → /cuadro-medico/c/<key>')
+add_bullet('/content/site-pc/cuadro-medico/especialidad → /cuadro-medico/e/<slug>')
+doc.add_paragraph('Concurrencia 5 con delay 200 ms entre batches (concurrencia más alta puede '
+                  'generar locks OAK en AEM). Errores tolerados: FAIL copy → log y continúa. '
+                  'Fatal: sin AEM_TOKEN → exit(1).')
+doc.add_paragraph('Importante para la migración: este script es independiente de Vercel. '
+                  'Funciona igual sea cual sea el overlay. No requiere cambios.')
+
+# refresh-eds-pages.mjs
+doc.add_heading('Script 5 · refresh-eds-pages.mjs (~254 líneas)', level=3)
+doc.add_paragraph(
+    'Propósito: refresca preview/live y opcionalmente repuebla los query-indexes en EDS, sin '
+    'tocar AEM. Es el "Swiss army knife" del día a día.'
+)
+doc.add_paragraph('Inputs:')
+add_bullet('Env: HLX_ADMIN_API_TOKEN (opcional, gracias a requireAuth: auto).')
+add_bullet('Flags: --code, --provincias, --specs, --doctores, --centros, --especialidades, '
+           '--sitemaps, --reindex, --province=madrid. Sin flags → MODO FULL (todo).')
+add_bullet('Lee data/ para construir las listas de paths.')
+doc.add_paragraph('APIs externas:')
+add_code_block(
+    'POST https://admin.hlx.page/code/asisa-softtek/asisa-pc/main\n'
+    'POST https://admin.hlx.page/preview/asisa-softtek/asisa-pc/main<path>\n'
+    'POST https://admin.hlx.page/live/asisa-softtek/asisa-pc/main<path>\n'
+    'POST https://admin.hlx.page/index/asisa-softtek/asisa-pc/main<path>\n'
+    'Headers: x-auth-token: <HLX_ADMIN_API_TOKEN>     // opcional con requireAuth: auto'
+)
+doc.add_paragraph('Flujo:')
+add_numbered('Refresca code bus (siempre que se pase code o esté en modo full).')
+add_numbered('Para cada tipo seleccionado: lee data/, construye lista de paths, '
+             'POST /preview seguido de POST /live con delay 100 ms entre llamadas.')
+add_numbered('Si --reindex: POST /index para cada path. Si la URL no existe en EDS '
+             '(404), se loga y sigue.')
+add_numbered('Si --sitemaps: dispara preview+live de los 6 paths de sitemap.')
+doc.add_paragraph('Concurrencia: 10. Retry: 3 intentos con backoff 500 ms × intento para '
+                  'errores no fatales. 401 y 404 → no se reintenta.')
+doc.add_paragraph('Tiempos de referencia con el catálogo actual (concurrencia 10):')
+add_bullet('--code: < 5 s.')
+add_bullet('--provincias: < 1 min.')
+add_bullet('--specs: 3-5 min.')
+add_bullet('--doctores: 35-45 min.')
+add_bullet('--centros: 10-15 min.')
+add_bullet('--especialidades: < 1 min.')
+add_bullet('--sitemaps: < 1 min.')
+add_bullet('--reindex (todo): ~40 min.')
+
+doc.add_heading('6.2 Comandos sueltos clave', level=2)
 doc.add_paragraph(
     'Ninguno de estos comandos necesita token (requireAuth: auto en el access config).'
 )
