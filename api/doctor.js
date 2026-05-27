@@ -85,10 +85,23 @@ function pickRepresentative(locations) {
   return locations[0];
 }
 
-export function fetchDoctor(key) {
-  if (!key) return { error: 'key is required', status: 400 };
-  const entry = getIndex()[key];
-  if (!entry) return { error: `Doctor not found: ${key}`, status: 404 };
+export function fetchDoctor(rawKey) {
+  if (!rawKey) return { error: 'key is required', status: 400 };
+  const index = getIndex();
+  let key = rawKey;
+  let entry = index[key];
+  // Fallback por slug: si el id numérico cambió tras regenerar el índice (URLs
+  // antiguas con providerCode vs nuevas con collegiateCode), buscamos por el
+  // prefijo del slug del nombre.
+  if (!entry) {
+    const slug = key.replace(/-\d+$/, '');
+    const match = Object.keys(index).find((k) => k.replace(/-\d+$/, '') === slug);
+    if (match) {
+      key = match;
+      entry = index[match];
+    }
+  }
+  if (!entry) return { error: `Doctor not found: ${rawKey}`, status: 404 };
 
   const locations = [];
   let collegiateCode = entry.collegiateCode || '';

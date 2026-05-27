@@ -105,6 +105,53 @@ function renderCard(p, isProfessional) {
 }
 
 // ---------------- SSR builders ----------------
+function ssrOtrasEspecialidades({ provSlug, specSlug, provDisplay }) {
+  const allEspec = fetchEspecialidadesMaster();
+  if (provSlug) {
+    const provDetail = fetchProvincia(provSlug);
+    const provSpecsSet = new Set(provDetail?.especialidades || []);
+    const specs = allEspec.filter((e) => provSpecsSet.has(e.slug));
+    if (!specs.length) return '';
+    const items = specs.map((e) => `<li><a class="cmp-tag-template cmp-tag-template--blue-100" href="/cuadro-medico/p/${esc(provSlug)}/pe/${esc(e.slug)}"><span class="cmp-tag-template__text">${esc(e.name)}</span></a></li>`).join('');
+    return `<div class="cuadro-medico-otras-especialidades">
+  <div class="eds-mp-other-specs">
+    <h2 class="eds-mp-other-specs__title">Otras especialidades en ${esc(provDisplay)}</h2>
+    <ul class="eds-mp-other-specs__container">${items}</ul>
+  </div>
+</div>`;
+  }
+  // National mode
+  const top = allEspec.filter((e) => e.kind !== 'service').slice(0, 15);
+  if (!top.length) return '';
+  const chips = top.map((e) => {
+    const variant = e.slug === specSlug ? 'cmp-tag-template--blue' : 'cmp-tag-template--blank';
+    return `<a class="cmp-tag-template ${variant}" href="/cuadro-medico/e/${esc(e.slug)}"><span class="cmp-tag-template__text">${esc(e.name)}</span></a>`;
+  }).join('');
+  return `<div class="cuadro-medico-otras-especialidades">
+  <h2 class="cmp-medical-detail__subtitle">Otras especialidades del Cuadro médico ASISA</h2>
+  <div class="cmp-medical-detail__other-specialities">${chips}</div>
+</div>`;
+}
+
+function ssrOtrasProvincias({ provSlug, specSlug }) {
+  if (!specSlug) return '<div class="cuadro-medico-otras-provincias"></div>';
+  const detail = fetchEspecialidad(specSlug);
+  if (!detail) return '<div class="cuadro-medico-otras-provincias"></div>';
+  const provincias = (detail.provincias || []).filter((p) => p.slug !== provSlug);
+  if (!provincias.length) return '<div class="cuadro-medico-otras-provincias"></div>';
+  const specName = detail.name || specSlug;
+  const specLower = specName.toLowerCase();
+  const cards = provincias.map((p) => `<article class="cm-otras-prov-card">
+  <h3 class="cm-otras-prov-card__name">${esc(specName)} ${esc(p.displayName)}</h3>
+  <p class="cm-otras-prov-card__count">${p.count} profesionales</p>
+  <a class="cm-otras-prov-card__arrow" href="/cuadro-medico/p/${esc(p.slug)}/pe/${esc(specSlug)}" aria-label="Ver ${esc(specName)} en ${esc(p.displayName)}">→</a>
+</article>`).join('');
+  return `<div class="cuadro-medico-otras-provincias">
+  <h2 class="cm-otras-prov-title">Otras provincias con ${esc(specLower)} ASISA</h2>
+  <div class="cm-otras-prov-list">${cards}</div>
+</div>`;
+}
+
 function ssrListing({ provSlug, specSlug, nationalSpec }) {
   // Resolve display data
   const prov = provSlug ? fetchProvincias().find((p) => p.slug === provSlug) : null;
@@ -176,11 +223,12 @@ function ssrListing({ provSlug, specSlug, nationalSpec }) {
       <div class="eds-mp-tabs__content">${cards}</div>
     </div>
   </div>
-</div>
-<div class="cuadro-medico-otras-especialidades"><div><div></div></div></div>
-<div class="cuadro-medico-otras-provincias"><div><div></div></div></div>`;
+</div>`;
 
-  return { title, description, blocks: cuadroMedicoBlock };
+  const otrasEspecs = ssrOtrasEspecialidades({ provSlug, specSlug, provDisplay: locationName });
+  const otrasProvs = ssrOtrasProvincias({ provSlug, specSlug });
+
+  return { title, description, blocks: `${cuadroMedicoBlock}\n${otrasEspecs}\n${otrasProvs}` };
 }
 
 function ssrDoctor(key) {

@@ -169,10 +169,22 @@ function buildDescription(specCount, city, provDisplayName) {
   return `Centro médico del cuadro de ASISA${where}. Atiende en ${n} especialidad${n === 1 ? '' : 'es'} con acceso directo a especialistas sin necesidad de derivación. Solicita cita online o llama al centro.`;
 }
 
-export function fetchCentro(key) {
-  if (!key) return { error: 'key is required', status: 400 };
-  const indexEntry = getCentrosIndex()[key];
-  if (!indexEntry) return { error: `Centro not found: ${key}`, status: 404 };
+export function fetchCentro(rawKey) {
+  if (!rawKey) return { error: 'key is required', status: 400 };
+  const idx = getCentrosIndex();
+  let key = rawKey;
+  let indexEntry = idx[key];
+  // Fallback por slug: tolera URLs obsoletas cuyo slug del nombre coincide
+  // con un centro presente pero con un sufijo distinto (raro, pero ocurre
+  // cuando el centro cambia de localización canónica).
+  if (!indexEntry) {
+    const match = Object.keys(idx).find((k) => k === rawKey || k.startsWith(`${rawKey}-`));
+    if (match) {
+      key = match;
+      indexEntry = idx[match];
+    }
+  }
+  if (!indexEntry) return { error: `Centro not found: ${rawKey}`, status: 404 };
 
   const { providerLocalicationCode, name, provinceSlug } = indexEntry;
   try {

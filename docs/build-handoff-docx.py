@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Genera docs/traspaso-conocimiento.docx — documento de traspaso del proyecto
-asisa-pc para el equipo que va a migrarlo de Vercel a Azure.
+asisa-pc para el equipo entrante.
 """
 
 import os
@@ -90,7 +90,7 @@ title_run.bold = True
 
 subtitle = doc.add_paragraph()
 subtitle.alignment = WD_ALIGN_PARAGRAPH.CENTER
-subtitle_run = subtitle.add_run('Traspaso de conocimiento y plan de migración a Azure')
+subtitle_run = subtitle.add_run('Traspaso de conocimiento')
 subtitle_run.font.size = Pt(16)
 subtitle_run.italic = True
 
@@ -101,8 +101,7 @@ meta = doc.add_paragraph()
 meta.alignment = WD_ALIGN_PARAGRAPH.CENTER
 meta.add_run('Equipo: Softtek · ASISA\n').bold = True
 meta.add_run('Versión: 1.0 · Fecha: 2026-05-27\n')
-meta.add_run('Stack actual: AEM Author + Edge Delivery Services + Vercel\n')
-meta.add_run('Stack objetivo: AEM Author + Edge Delivery Services + Azure')
+meta.add_run('Stack: AEM Author + Edge Delivery Services + Vercel')
 
 doc.add_page_break()
 
@@ -124,9 +123,8 @@ add_bullet('GitHub (asisa-softtek/asisa-pc) — fuente de verdad del código y d
            'que alimentan la web.')
 
 doc.add_paragraph(
-    'El objetivo de este documento es doble: (1) traspasar el conocimiento completo del proyecto '
-    'al equipo entrante y (2) servir como guía para sustituir Vercel por Azure manteniendo intacto '
-    'el resto del stack.'
+    'El objetivo de este documento es traspasar el conocimiento completo del proyecto al equipo '
+    'entrante: arquitectura, configuración, endpoints, datos, bloques y operación.'
 )
 doc.add_paragraph(
     'Volumen aproximado a 2026-05: ~36.000 URLs dinámicas en el cuadro médico (52 provincias, '
@@ -215,8 +213,7 @@ add_code_block(
 )
 doc.add_paragraph(
     'Qué hace: EDS, para cada request, consulta primero al overlay. Si responde 200, usa esa '
-    'respuesta. Si responde 404, hace fallback al source (AEM Author). En la migración a Azure, '
-    'lo único que hay que cambiar aquí es la URL del overlay.'
+    'respuesta. Si responde 404, hace fallback al source (AEM Author).'
 )
 
 doc.add_heading('2.2 Public config (mappings de rutas dinámicas)', level=2)
@@ -268,10 +265,10 @@ doc.add_paragraph(
     'estos 3 endpoints. Sin config_admin, todos los POST /config/... devuelven 401.'
 )
 
-doc.add_heading('2.4 Headers config (opcional pero recomendado en migración Azure)', level=2)
+doc.add_heading('2.4 Headers config (opcional)', level=2)
 doc.add_paragraph(
-    'Si Azure necesita un header específico para autenticar al overlay (API key, bypass token, '
-    'etc.), se inyecta vía headers.json:'
+    'Si en algún momento se necesita que EDS envíe un header específico al overlay (API key, '
+    'bypass token, etc.), se inyecta vía headers.json:'
 )
 add_code_block(
     "curl --request POST \\\n"
@@ -282,7 +279,7 @@ add_code_block(
     '    "mappings": [\n'
     '      {\n'
     '        "path": "/**",\n'
-    '        "headers": { "X-BYOM-Origin": "Azure-Functions" }\n'
+    '        "headers": { "X-BYOM-Origin": "Vercel" }\n'
     "      }\n"
     "    ]\n"
     "  }'"
@@ -323,9 +320,7 @@ add_table(
 doc.add_heading('3. Estructura del repositorio (file-by-file)', level=1)
 doc.add_paragraph(
     'El repo asisa-softtek/asisa-pc contiene tanto el código del frontend EDS como las funciones '
-    'serverless del backend Vercel (carpeta api/). En la migración, todo el código del frontend '
-    '(blocks/, scripts/, styles/, head.html, configuraciones EDS) se queda igual; solo se reemplaza '
-    'la carpeta api/ y los ficheros de configuración de Vercel.'
+    'serverless del backend Vercel (carpeta api/).'
 )
 
 doc.add_heading('3.1 Configuración EDS / AEM', level=2)
@@ -352,7 +347,7 @@ add_table(
     widths=[Inches(2), Inches(4.5)],
 )
 
-doc.add_heading('3.2 Configuración Vercel (la que cambia en la migración)', level=2)
+doc.add_heading('3.2 Configuración Vercel', level=2)
 add_table(
     ['Fichero', 'Función'],
     [
@@ -416,8 +411,8 @@ add_table(
 )
 doc.add_paragraph(
     'Importante: varios endpoints implementan caché in-memory (variables module-scope *Cache) '
-    'para evitar releer los JSON en cada petición. En Azure Functions hay que tener en cuenta que '
-    'estas cachés solo persisten dentro de la misma instancia warm; en cold start se reconstruyen.'
+    'para evitar releer los JSON en cada petición. Solo persisten mientras la instancia '
+    'serverless esté caliente; en un arranque en frío se reconstruyen.'
 )
 
 doc.add_page_break()
@@ -425,9 +420,7 @@ doc.add_heading('3.4.1 Detalle exhaustivo de cada endpoint API', level=3)
 doc.add_paragraph(
     'A continuación se documenta cada uno de los 11 endpoints de la carpeta api/: fichero, '
     'método, query params con tipo y validaciones, ficheros de data/ que lee, cachés in-memory, '
-    'headers de respuesta, shape EXACTA del JSON o XML devuelto, y reglas de negocio. Esta es la '
-    'información imprescindible para portar cada función serverless a Azure Functions sin perder '
-    'comportamiento.'
+    'headers de respuesta, shape EXACTA del JSON o XML devuelto, y reglas de negocio.'
 )
 
 # --- api/markup.js ---
@@ -721,7 +714,7 @@ add_code_block(
 )
 doc.add_paragraph('Devuelve la respuesta tal cual (passthrough). Si el backend de ASISA cae, '
                   'este endpoint cae también. Pensado para autocomplete de búsqueda.')
-doc.add_paragraph('CRÍTICO para migración Azure: este endpoint es el único que sí depende del '
+doc.add_paragraph('Este endpoint es el único que sí depende del '
                   'backend ASISA en runtime. La subscription key debe ir a Key Vault.')
 
 # --- api/sitemap.js + api/sitemap-cuadro-medico.js ---
@@ -812,9 +805,9 @@ add_table(
     widths=[Inches(2.2), Inches(2.5), Inches(2)],
 )
 doc.add_paragraph(
-    'Nota Azure: las cachés in-memory SOBREVIVEN dentro de la misma instancia warm pero NO entre '
-    'instancias ni tras cold start. En Premium Plan con Always-On las cachés serán efectivas la '
-    'mayoría del tiempo. Si quieres caché compartida, Azure Cache for Redis.'
+    'Las cachés in-memory sobreviven dentro de la misma instancia serverless caliente pero NO '
+    'entre instancias ni tras un arranque en frío. La primera petición a una instancia recién '
+    'arrancada paga el coste de leer los JSON; las siguientes son sub-milisegundo.'
 )
 
 doc.add_heading('3.5 Bloques EDS (carpeta blocks/)', level=2)
@@ -854,9 +847,9 @@ add_table(
 )
 doc.add_paragraph(
     'Regla de oro de los bloques: TODAS las llamadas a /api/* deben usar URL ABSOLUTA del overlay '
-    '("https://<overlay-host>/api/...") porque el bloque corre en aem.live, no en Vercel/Azure. '
+    '("https://<overlay-host>/api/...") porque el bloque corre en aem.live, no en Vercel. '
     'Una llamada relativa fetch("/api/…") apuntaría al dominio de EDS, que no tiene esos '
-    'endpoints. En la migración a Azure este punto es crítico: hay que cambiar la base URL en '
+    'endpoints. Importante: hay que cambiar la base URL en '
     'todos los bloques.'
 )
 
@@ -1365,7 +1358,7 @@ doc.add_heading('Regla de oro común a todos los bloques', level=4)
 doc.add_paragraph(
     'TODAS las llamadas a /api/* DEBEN usar URL ABSOLUTA "https://<overlay-host>/api/…". Una '
     'llamada relativa fetch("/api/…") apunta al dominio de aem.live, que no tiene los endpoints '
-    'y devuelve 404. En la migración a Azure el cambio es masivo: hay que reemplazar "API_BASE = '
+    'y devuelve 404. Si en algún momento cambia el dominio del overlay: hay que reemplazar "API_BASE = '
     "'https://asisa-pc.vercel.app'\" por el nuevo dominio en cada bloque (.js) y en api/markup.js."
 )
 
@@ -1428,10 +1421,8 @@ add_table(
     widths=[Inches(2.5), Inches(2.8), Inches(1.2)],
 )
 doc.add_paragraph(
-    'En Vercel, estos JSON viajan dentro del bundle de cada función serverless. En Azure hay dos '
-    'opciones: (a) seguir empaquetándolos con cada Function (simple, pero el bundle es grande), o '
-    '(b) moverlos a Azure Blob Storage y que las funciones los lean por HTTP. La opción (b) es '
-    'preferible para deployments más rápidos.'
+    'En Vercel, estos JSON viajan dentro del bundle de cada función serverless en cada deploy. '
+    'Las funciones los leen con readFileSync y los cachean en memoria.'
 )
 
 doc.add_heading('4.1 Schemas detallados de cada fichero', level=2)
@@ -1885,7 +1876,7 @@ add_bullet('/content/site-pc/cuadro-medico/especialidad → /cuadro-medico/e/<sl
 doc.add_paragraph('Concurrencia 5 con delay 200 ms entre batches (concurrencia más alta puede '
                   'generar locks OAK en AEM). Errores tolerados: FAIL copy → log y continúa. '
                   'Fatal: sin AEM_TOKEN → exit(1).')
-doc.add_paragraph('Importante para la migración: este script es independiente de Vercel. '
+doc.add_paragraph('Este script es independiente de Vercel. '
                   'Funciona igual sea cual sea el overlay. No requiere cambios.')
 
 # refresh-eds-pages.mjs
@@ -1973,16 +1964,15 @@ add_table(
 )
 
 # =============================================================================
-# 8. Migración a Azure — el capítulo clave
+# 8. Capacidades de la capa Vercel
 # =============================================================================
 doc.add_page_break()
-doc.add_heading('8. Migración de Vercel a Azure', level=1)
+doc.add_heading('8. Capacidades de la capa Vercel', level=1)
 doc.add_paragraph(
-    'Este capítulo es la guía operativa de la migración. La filosofía es: cambiar SOLO la capa '
-    'Vercel; AEM Author, Edge Delivery Services y GitHub se quedan exactamente como están.'
+    'Inventario de lo que sirve hoy el proyecto en Vercel y cómo está implementado.'
 )
 
-doc.add_heading('8.1 Qué hace Vercel hoy (inventario completo)', level=2)
+doc.add_heading('8.1 Endpoints y proxies servidos por Vercel', level=2)
 add_table(
     ['Capacidad', 'Endpoint actual', 'Implementación'],
     [
@@ -2016,100 +2006,6 @@ add_table(
     widths=[Inches(2.2), Inches(2.5), Inches(2)],
 )
 
-doc.add_heading('8.2 Equivalencias Vercel → Azure', level=2)
-add_table(
-    ['Capacidad Vercel', 'Azure recomendado', 'Notas'],
-    [
-        ('Vercel Functions (Node 22, ESM)',
-         'Azure Functions (Node 22, ESM) con runtime v4',
-         'Mismo modelo de funciones. Hay que adaptar el "request handler shape" — Azure '
-         'Functions usa context.res en lugar de (req, res). Wrappers fáciles de añadir.'),
-        ('Edge Functions / static',
-         'Azure Front Door + Azure Functions Premium',
-         'Front Door da CDN global y reglas de routing/rewrite equivalentes a vercel.json.'),
-        ('Rewrites de vercel.json',
-         'Reglas en Azure Front Door (rules engine) o azure-functions host.json',
-         'Para /etc.clientlibs/* el proxy se hace con una Front Door Origin pointing to '
-         'www.asisa.es y una regla path-based.'),
-        ('Headers CORS',
-         'Configurar en host.json de Azure Functions o vía Front Door',
-         'Definir Access-Control-Allow-Origin: * para /api/*.'),
-        ('Lectura de data/*.json',
-         'Azure Blob Storage (preferido) o bundled with function',
-         'Si los datos cambian a menudo (workflow GH Actions), Blob Storage es mejor: '
-         'el deploy de funciones queda independiente de los datos. Usar @azure/storage-blob.'),
-        ('Caché in-memory por instancia',
-         'Sigue funcionando en Azure Functions',
-         'Premium plan = instancias más "warm". Considerar Azure Cache for Redis si se quiere '
-         'caché compartida entre instancias.'),
-        ('Auto-deploy desde GitHub',
-         'GitHub Actions con azure/functions-action',
-         'Workflow estándar: en push a main, build + deploy a Function App. Habilitar deployment '
-         'slots para staging.'),
-        ('Dominio asisa-pc.vercel.app',
-         'CNAME a asisa-pc.azurefd.net (o custom)',
-         'El dominio del overlay puede cambiar — solo hay que actualizar la URL en la config '
-         'sitewide de EDS (§2.1) y en los bloques (§3.5).'),
-        ('Variables de entorno',
-         'Azure Function App Configuration / Key Vault',
-         'SYNC_SECRET, HLX_ADMIN_API_TOKEN, ASISA API keys.'),
-    ],
-    widths=[Inches(2), Inches(2), Inches(2.5)],
-)
-
-doc.add_heading('8.3 Plan de migración paso a paso', level=2)
-add_numbered('Crear el Resource Group en Azure (rg-asisa-pc-prod, rg-asisa-pc-stage).')
-add_numbered('Provisionar Azure Storage Account para los JSON de data/. Subir el catálogo '
-             'actual y crear un container "asisa-pc-data" público read-only o privado con SAS.')
-add_numbered('Provisionar Azure Function App (Node 22, Premium plan ideal para evitar cold '
-             'starts en /markup/*).')
-add_numbered('Portar el código de api/*.js: cambiar la firma a Azure Functions v4 '
-             '(app.http(name, handler)), reemplazar readFileSync de data/ por fetch al Blob '
-             'Storage (o seguir empaquetando si se prefiere simplicidad).')
-add_numbered('Provisionar Azure Front Door con un Origin Group apuntando a la Function App. '
-             'Añadir reglas: (a) /etc.clientlibs/* → origin www.asisa.es, (b) /sitemap.xml y '
-             '/sitemap-cuadro-medico-*.xml → Function App (opcional, EDS los genera nativos), '
-             '(c) /markup/* → Function App.')
-add_numbered('Configurar dominio custom en Front Door (ej. asisa-pc.azurefd.net).')
-add_numbered('Crear un workflow GitHub Actions que despliega a Azure Functions en cada push.')
-add_numbered('Actualizar las URLs en los bloques (blocks/*/*.js — buscar "asisa-pc.vercel.app" '
-             'y reemplazar). Ojo: hay ~10 ficheros con la URL hardcodeada.')
-add_numbered('Actualizar head.html: las tres líneas que cargan /etc.clientlibs/* deben '
-             'apuntar al nuevo dominio Azure.')
-add_numbered('Actualizar api/markup.js: el template HTML inyecta tres <link rel="stylesheet" '
-             'href="https://asisa-pc.vercel.app/etc.clientlibs/..."> — cambiar al nuevo dominio.')
-add_numbered('Hacer push a main (cambios de URL + nuevo workflow Azure).')
-add_numbered('Ejecutar POST /code refresh para que EDS recoja head.html y los bloques nuevos.')
-add_numbered('Modificar la sitewide config de EDS: cambiar content.overlay.url de '
-             'https://asisa-pc.vercel.app/markup a https://asisa-pc.azurefd.net/markup '
-             '(comando completo en §2.1). Requiere token config_admin.')
-add_numbered('Ejecutar `node refresh-eds-pages.mjs --reindex` para que EDS reconstruya '
-             'sus índices apuntando al overlay nuevo.')
-add_numbered('Verificar: status de una URL de cuadro médico debe mostrar sourceLocation con '
-             'el nuevo overlay; los bloques deben pintar datos correctamente; los 6 sitemaps '
-             'deben responder 200 con XML válido.')
-add_numbered('Una vez verificado, retirar el proyecto Vercel (o dejarlo apagado un tiempo '
-             'como backup).')
-
-doc.add_heading('8.4 Puntos delicados de la migración', level=2)
-add_bullet('Cold starts: Azure Functions en Consumption Plan puede tener cold starts >2s, '
-           'inaceptable para el overlay BYOM (EDS hace request y el HTML aparece en LCP). '
-           'Usar Premium Plan o Always-On.')
-add_bullet('Imports entre funciones: api/markup.js importa de api/sitemap.js y api/sitemap-cuadro-medico.js. '
-           'En Vercel cada función se bundlea independiente; en Azure Functions v4 hay que '
-           'configurar el packaging para compartir código vía shared/.')
-add_bullet('Tamaño del deploy: con 33.000 ficheros JSON en data/ el bundle de cada función es '
-           'enorme. Si NO se usa Blob Storage, hay que aumentar los límites de deploy en Azure '
-           '(default ~250MB).')
-add_bullet('CORS: las APIs necesitan Access-Control-Allow-Origin: * porque los bloques en aem.live '
-           'hacen fetch cross-origin. Configurar explícitamente en host.json o vía Front Door rules.')
-add_bullet('Permisos EDS: hace falta el token config_admin (cuenta técnica de Adobe) para '
-           'cambiar la sitewide config. jorge.lorenzo@ext.softtek.com NO tiene ese rol. Localizar '
-           'al técnico de Adobe (proyecto en https://developer.adobe.com/console) antes de '
-           'empezar la migración.')
-add_bullet('Rollback: mientras Azure no esté validado, mantener Vercel funcional. Para volver, '
-           'basta con un nuevo POST sitewide config apuntando de nuevo al overlay Vercel.')
-
 # =============================================================================
 # 9. Operación día a día
 # =============================================================================
@@ -2131,14 +2027,14 @@ add_numbered('POST /preview y /live para CADA URL afectada — head.html se inli
 
 doc.add_heading('9.3 Tras cambiar la plantilla en api/markup.js', level=2)
 add_numbered('Commit + push.')
-add_numbered('Deploy a Vercel (o Azure tras migración).')
+add_numbered('Deploy a Vercel.')
 add_numbered('`node refresh-eds-pages.mjs` para re-previewar todas las URLs dinámicas — EDS '
              're-fetcha del overlay.')
 
 doc.add_heading('9.4 Tras actualizar datos (data/*.json)', level=2)
 add_numbered('Commit + push a main (los workflows de GH Actions ejecutan los generate-* y '
              'commitean los JSON resultantes en data/).')
-add_numbered('Vercel/Azure recoge los datos en el siguiente deploy. Si Blob Storage, los datos '
+add_numbered('Vercel recoge los datos en el siguiente deploy. Si Blob Storage, los datos '
              'son visibles inmediatamente sin redeploy.')
 add_numbered('Los bloques fetchean datos en runtime, así que NO hace falta re-publicar páginas.')
 
@@ -2228,7 +2124,7 @@ add_table(
         ('AEM_TOKEN', 'Token de AEM Author para create-aem-pages.mjs',
          'Local (export)'),
         ('SYNC_SECRET', 'Shared secret para api/sync-aem.js',
-         'Vercel env / Azure Function App settings'),
+         'Vercel env'),
         ('FORCE', 'Flag para forzar regeneración en los generate-*.mjs',
          'CLI inline o input del workflow'),
         ('PROVINCE_CODE', 'Restringe el scrape a una provincia',
@@ -2251,8 +2147,7 @@ add_table(
         ('EDS', 'Edge Delivery Services (Adobe). CDN + capa de entrega para sites AEM.'),
         ('BYOM', 'Bring Your Own Markup. Patrón donde EDS pide HTML a un overlay externo en lugar '
                  'de a AEM Author.'),
-        ('Overlay', 'Servidor que devuelve el HTML para URLs dinámicas. Hoy en Vercel, mañana en '
-                    'Azure.'),
+        ('Overlay', 'Servidor que devuelve el HTML para URLs dinámicas. Implementado en Vercel.'),
         ('Content bus', 'Almacenamiento interno de EDS para los HTML procesados (preview y live).'),
         ('Code bus', 'Almacenamiento interno de EDS para el código del repo (.js, .css, .yaml).'),
         ('Sidekick', 'Toolbar de edición integrada en el navegador para autores.'),
