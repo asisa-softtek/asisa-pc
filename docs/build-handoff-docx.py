@@ -588,6 +588,50 @@ add_bullet('API devuelve 0 resultados en TODAS las categorías → block.hidden 
 add_bullet('Error de fetch → muestra <div class="cmp-medical-picture-result__error">.')
 add_bullet('Loading → spinner inline hasta la primera respuesta.')
 
+add_para('Reglas de negocio del listado paginado (caps):', bold=True)
+add_table(
+    ['Parámetro', 'Valor', 'Definido en', 'Por qué'],
+    [
+        ('DEFAULT_LIMIT', '10',
+         'api/providers.js:4',
+         'Tamaño de página por defecto cuando el bloque no pasa limit explícito.'),
+        ('MAX_LIMIT', '50',
+         'api/providers.js:5',
+         'Tope al limit que un cliente puede pedir en una sola request (evita XHR enormes).'),
+        ('MAX_TOTAL_BY_TAB.professionals', '30',
+         'api/providers.js:6',
+         'TOTAL de profesionales mostrables en el cuadro (≈ 3 páginas de 10). El backend trunca '
+         'la lista a 30 antes de paginar — el resto NO es alcanzable navegando.'),
+        ('MAX_TOTAL_BY_TAB.centers', '50',
+         'api/providers.js:6',
+         'TOTAL de centros mostrables (≈ 5 páginas de 10).'),
+    ],
+    widths=[Inches(1.8), Inches(0.7), Inches(1.4), Inches(2.6)],
+)
+doc.add_paragraph(
+    'Justificación: el backend de ASISA puede devolver listados muy largos (cientos de médicos '
+    'por provincia+especialidad). Mostrarlos todos haría la página injustificadamente larga y '
+    'mal indexable. La regla de producto acuerda topes razonables (30 profesionales, 50 centros) '
+    'y obliga al usuario a refinar por provincia/especialidad/centro para encontrar lo que busca. '
+    'La etiqueta del tab refleja el conteo CAPADO (e.g. "Profesionales (30)") para no engañar '
+    'sobre lo navegable.'
+)
+doc.add_paragraph(
+    'Implicación en pagination: con tab=professionals y limit=10, totalPages será como máximo 3 '
+    '(30/10). Con tab=centers, como máximo 5 (50/10). El bloque renderiza paginación con elipsis '
+    'si hace falta, pero en la práctica nunca pasa de 5 páginas.'
+)
+doc.add_paragraph(
+    'Si en el futuro hay que cambiar estos caps (p.ej. para SEO o por petición de marketing), '
+    'es un cambio de UNA línea en api/providers.js. El frontend no asume nada del cap: respeta '
+    'totalPages que viene en la respuesta.'
+)
+doc.add_paragraph(
+    'Otros usos del endpoint: el bloque cuadro-medico-otros-medicos pide '
+    'limit=50&tab=professionals para extraer hasta 50 chips. Como MAX_LIMIT=50, no hay que tocar '
+    'caps. Si se necesitara más, primero hay que subir MAX_LIMIT.'
+)
+
 # -- BLOQUE 2: cuadro-medico-provincias --
 doc.add_heading('Bloque 2 · cuadro-medico-provincias (selector de provincias)', level=4)
 doc.add_paragraph('Ruta: blocks/cuadro-medico-provincias/cuadro-medico-provincias.js (28 líneas).')
@@ -855,6 +899,71 @@ add_bullet('header: carga /nav como fragmento. Hamburger menu, ARIA, dropdowns c
 add_bullet('footer: carga /footer como fragmento.')
 add_bullet('fragment: utility para incluir HTML de otra ruta .plain.html. Resetea media URLs.')
 add_bullet('hero: stub vacío (no implementado).')
+
+doc.add_heading('Reglas de negocio consolidadas (caps y umbrales)', level=4)
+doc.add_paragraph(
+    'Esta tabla consolida todos los "magic numbers" del proyecto. Son acuerdos de producto o '
+    'topes técnicos que el equipo nuevo debe conocer: tocar uno puede cambiar visiblemente la '
+    'experiencia del usuario o la cobertura SEO.'
+)
+add_table(
+    ['Cap / umbral', 'Valor', 'Definido en', 'Qué controla'],
+    [
+        ('Tamaño de página por defecto', '10',
+         'api/providers.js:4 (DEFAULT_LIMIT)',
+         'Resultados por página cuando el bloque no pasa limit.'),
+        ('Tamaño máximo de página', '50',
+         'api/providers.js:5 (MAX_LIMIT)',
+         'Tope al limit por request. Si un cliente pide más, se trunca a 50.'),
+        ('Total profesionales mostrables', '30',
+         'api/providers.js:6 (MAX_TOTAL_BY_TAB.professionals)',
+         'Tope total del listado en el tab "Profesionales" (≈ 3 páginas de 10). El backend trunca '
+         'la lista antes de paginar; el resto NO es alcanzable.'),
+        ('Total centros mostrables', '50',
+         'api/providers.js:6 (MAX_TOTAL_BY_TAB.centers)',
+         'Tope total en el tab "Centros médicos" (≈ 5 páginas de 10).'),
+        ('Top especialidades nacionales', '15',
+         'blocks/cuadro-medico-otras-especialidades/cuadro-medico-otras-especialidades.js:41',
+         'Especialidades mostradas como chips en /cuadro-medico/e/<spec> (filtra '
+         'kind !== "service" antes).'),
+        ('Otros médicos en provincia (chips)', '20',
+         'blocks/cuadro-medico-otros-medicos/cuadro-medico-otros-medicos.js:78',
+         'Chips máximos en la lista "Otros médicos de {spec} en {provincia}" bajo la ficha de '
+         'doctor.'),
+        ('Otros médicos en centro (chips)', '10',
+         'blocks/cuadro-medico-otros-medicos/cuadro-medico-otros-medicos.js:79',
+         'Chips máximos en "Otros médicos de {spec} en {centro}" — solo aparece si el doctor '
+         'tiene parentDescription.'),
+        ('Otros centros con mismas especialidades', '— (configurable)',
+         'api/centro.js:141',
+         'Centros similares mostrados al pie de la ficha de centro. El cap se pasa como argumento '
+         'a la función; revisa el código si se va a modificar.'),
+        ('Especialidades visibles por centro', '4 (resto colapsadas)',
+         'api/centro.js:145',
+         'Solo las primeras 4 especialidades se muestran expandidas por defecto en el card de un '
+         'centro; el resto aparecen colapsadas tras un toggle.'),
+        ('Concurrencia de fetch a API ASISA',
+         '10 (providers), 25 (provider-details)',
+         'generate-providers-data.mjs y generate-provider-details.mjs',
+         'Requests paralelas a /searchPortal y /providers/details. Bajar a 5/10 si aparecen 429.'),
+        ('Concurrencia de admin EDS', '10',
+         'refresh-eds-pages.mjs (CONCURRENCY)',
+         'Requests paralelas a admin.hlx.page (preview/live/code/index). Subir podría disparar '
+         'rate limits.'),
+        ('Concurrencia de copy AEM Author', '5',
+         'create-aem-pages.mjs (CONCURRENCY)',
+         'Copias paralelas vía /bin/wcmcommand. Más causa OakLock collisions; menos enlentece.'),
+        ('Cache TTL CDN', 's-maxage=300, stale-while-revalidate=3600',
+         'api/providers.js, api/doctor.js, api/centro.js (res.setHeader)',
+         '5 min de cache fresh + 1h de stale en el edge. Tras un update de datos, los listados '
+         'pueden tardar hasta 5 min en reflejar.'),
+        ('Cache TTL sitemaps',
+         's-maxage=86400, stale-while-revalidate=86400',
+         'api/sitemap.js, api/sitemap-cuadro-medico.js',
+         '24h de cache fresh + 24h stale para sitemaps.'),
+    ],
+    widths=[Inches(1.6), Inches(0.9), Inches(2), Inches(2)],
+)
 
 doc.add_heading('Regla de oro común a todos los bloques', level=4)
 doc.add_paragraph(
