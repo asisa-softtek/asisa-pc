@@ -85,38 +85,44 @@ function renderCard(p, isProfessional, provinceCode, locationName) {
   const citaUrl = buildCitaUrl(provinceCode, locationName, p.speciality, p.lat, p.lon, p.name);
   const detailUrl = p.detailUrl || '#';
 
-  return `<div class="cmp-medical-detail__first-block">
-    <div class="cmp-medical-detail__title-block">
-      <div class="cmp-medical-detail__title-block__tags">
-        <div class="cmp-medical-detail__title-block__tags--item">
-          <div class="cmp-tag-template cmp-tag-template--blue">
+  return `
+   <div class="eds-mp-card">
+      <div class="eds-mp-card__principal-tag">
+           <div class="cmp-tag-template cmp-tag-template--blue">
             <div class="cmp-tag-template__text">${getProviderTag(p)}</div>
           </div>
+            ${p.businessGroup ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Centro de ASISA</div></div>' : ''}
+            ${p.ePrescription ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Receta electrónica</div></div>' : ''}
+           
+
         </div>
-        ${p.businessGroup ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Centro de ASISA</div></div>' : ''}
-        ${p.ePrescription ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Receta electrónica</div></div>' : ''}
-        ${p.onlineAppointment ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Cita online</div></div>' : ''}
-        ${langTags}
-      </div>
-      <div class="cmp-title">
-        <h3 class="cmp-title__text">${displayName}</h3>
-      </div>
-      ${(isProfessional && p.collegiateCode) ? `<p class="cmp-medical-detail__title-block--num-member"><em>Núm. Colegiado – ${p.collegiateCode}</em></p>` : ''}
-      <p class="cmp-medical-detail__title-block--speciality">${speciality}</p>
-    </div>
-    <div class="cmp-medical-detail__address-block">
-      ${p.parentDescription ? `<div class="cmp-medical-detail__address-block--center">${formatName(p.parentDescription)}</div>` : ''}
-      ${formattedAddress ? `<div class="cmp-medical-detail__address-block--name"><i class="icon-marker-02"></i>${formattedAddress}</div>` : ''}
-      <div class="cmp-medical-detail__address-block__location">
-        ${mapsUrl ? `<div class="cmp-medical-detail__address-block__location--reach"><div class="button-cmp"><a href="${mapsUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--link button-location"><i class="icon-map-04 icon-large"></i>Cómo llegar</a></div></div>` : ''}
-        ${p.phone ? `<div class="cmp-medical-detail__address-block__location--reach"><div class="button-cmp"><a href="tel:${p.phone}" class="btn button-cmp__text button-cmp__text--link button-location"><i class="icon-phone"></i>${p.phone}</a></div></div>` : ''}
-      </div>
-    </div>
-    <div class="cmp-medical-detail__buttons-block">
-      ${p.onlineAppointment ? `<div class="button-cmp"><a href="${citaUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--tertiary">Pedir cita</a></div>` : ''}
-      <div class="button-cmp"><a href="${detailUrl}" class="btn button-cmp__text button-cmp__text--primary">Ver detalle</a></div>
-    </div>
-  </div>`;
+         <div class="eds-mp-card__info">
+              <div class="eds-mp-card__info--contact">
+                  <p class="eds-mp-card__type--speciality">Dermatología</p>
+                  <p class="eds-mp-card__type--name">${displayName}</p>
+                  ${(isProfessional && p.collegiateCode) ? `<p class="eds-mp-card__type--num-member">Núm. Colegiado – ${p.collegiateCode}</p>` : ''}
+                  ${p.parentDescription ? `<p class="eds-mp-card__type--center">${formatName(p.parentDescription)}</p>` : ''}
+                  ${formattedAddress ? `<div class="eds-mp-card__type--address"><i class="icon-marker-02"></i>${formattedAddress}</div>` : ''}
+                  <div class="eds-mp-card__info--location">
+                    ${mapsUrl ? `<div class="eds-mp-card__type--location"><div class="button-cmp"><a href="${mapsUrl}" target="_blank" rel="noopener" class=" button-cmp__text button-cmp__text--link button-location"><i class="icon-map-04 icon-large"></i>Cómo llegar</a></div></div>` : ''}
+                    ${p.phone ? `<div class="eds-mp-card__type--phone"><div class="button-cmp"><a href="tel:${p.phone}" class=" button-cmp__text button-cmp__text--link button-location"><i class="icon-phone"></i>${p.phone}</a></div></div>` : ''}
+                  </div>
+              </div>
+              <div class="eds-mp-card__info--tags">
+                 ${p.onlineAppointment ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Cita online</div></div>' : ''}
+                 ${langTags}
+              </div>
+         </div>
+           <div class="eds-mp-card__info--buttons">
+             
+              <div class="eds-mp-card__info--buttons-detail">
+                ${p.onlineAppointment ? `<div class="button-cmp"><a href="${citaUrl}" target="_blank" rel="noopener" class="button-cmp__text button-cmp__text--tertiary">Pedir cita</a></div>` : ''}
+              </div>
+               <div class="eds-mp-card__info--buttons-detail">
+                <div class="button-cmp"><a href="${detailUrl}" class="btn button-cmp__text button-cmp__text--primary">Ver detalle</a></div>
+              </div>
+            </div>
+   </div>`;
 }
 
 function renderPagination(currentPage, totalPages) {
@@ -170,18 +176,21 @@ function renderShell(state) {
     : '';
 
 
-  const tabs = `<div class="cmp-tabs">
-    <ul class="cmp-tabs__tablist">
-      <li class="cmp-tabs__tab${tab === 'professionals' ? ' cmp-tabs__tab--active active' : ''}" data-tab="professionals">Profesionales (${totalProfessionals})</li>
-      <li class="cmp-tabs__tab${tab === 'centers' ? ' cmp-tabs__tab--active active' : ''}" data-tab="centers">Centros médicos (${totalCenters})</li>
+  const tabs = `
+  
+  <div class="eds-mp-tabs">
+    <ul class="eds-mp-tabs__nav">
+      <li class=" eds-mp-tabs__nav--item ${tab === 'professionals' ? 'active' : ''}" name="professionals" data-tab="professionals">Profesionales (${totalProfessionals})</li>
+      <li class="eds-mp-tabs__nav--item ${tab === 'centers' ? ' active' : ''}" name="centers" data-tab="centers">Centros médicos (${totalCenters})</li>
     </ul>
-    <div class="cmp-tabs__tabpanel">
+    <div class="eds-mp-tabs__container">
       ${loading
-    ? '<div class="cmp-medical-picture-result__loading">Cargando…</div>'
-    : `<div class="cmp-medical-detail">${results.map((p) => renderCard(p, tab === 'professionals', provinceCode, locationName)).join('')}</div>`}
-      ${renderPagination(page, totalPages)}
-    </div>
-  </div>`;
+    ? '<div class="eds-mp-tabs__loading"><div class="spinner"></div><p>Cargando…</p></div>'
+    : `<div class="eds-mp-tabs__content">${results.map((p) => renderCard(p, tab === 'professionals', provinceCode, locationName)).join('')}  ${renderPagination(page, totalPages)}</div>`}
+    </div> 
+  </div>
+  
+  `;
 
   return `${intro}${tabs}`;
 }
@@ -203,7 +212,7 @@ async function fetchPage(provSlug, specSlug, tab, page) {
 }
 
 function attachListeners(block, state, refresh) {
-  block.querySelectorAll('.cmp-tabs__tab').forEach((btn) => {
+  block.querySelectorAll('.eds-mp-tabs__nav--item').forEach((btn) => {
     btn.addEventListener('click', () => {
       const newTab = btn.dataset.tab;
       if (newTab && newTab !== state.tab) refresh({ ...state, tab: newTab, page: 1 });
