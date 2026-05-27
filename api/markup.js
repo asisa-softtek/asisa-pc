@@ -67,7 +67,10 @@ function sendHtml(res, html, source) {
 }
 
 function sendXml(res, xml, source) {
-  res.setHeader('Content-Type', 'text/xml; charset=utf-8');
+  // EDS preview content-bus rejects XML content types (415). We declare
+  // text/html so EDS ingests the markup, and rely on the <?xml ... ?>
+  // declaration in the body for crawlers to still parse it as a sitemap.
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.setHeader('Cache-Control', 'public, max-age=60');
   res.setHeader('x-source', source);
   res.status(200).send(xml);
