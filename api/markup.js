@@ -8,8 +8,13 @@
  *   /markup/cuadro-medico/d/<key>            → ficha doctor template
  *   /markup/cuadro-medico/c/<key>            → ficha centro template
  *   /markup/cuadro-medico/e/<slug>           → especialidad template
+ *   /markup/sitemap.xml                      → sitemap index (Vercel-generated)
+ *   /markup/sitemap-cuadro-medico-*.xml      → per-type sitemap
  *   /markup/<other>                          → 404 (overlay-pass)
  */
+
+import { getSitemapIndexXml } from './sitemap.js';
+import { getCuadroMedicoSitemapXml } from './sitemap-cuadro-medico.js';
 
 const PROVINCIA_BLOCKS = `<div class="cuadro-medico"><div><div></div></div></div>
 <div class="cuadro-medico-otras-especialidades"><div><div></div></div></div>
@@ -62,6 +67,13 @@ function sendHtml(res, html, source) {
   res.status(200).send(html);
 }
 
+function sendXml(res, xml, source) {
+  res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+  res.setHeader('Cache-Control', 'public, max-age=60');
+  res.setHeader('x-source', source);
+  res.status(200).send(xml);
+}
+
 function send404(res, path) {
   res.setHeader('x-source', 'overlay-pass');
   res.status(404).send(`no overlay for ${path}`);
@@ -92,6 +104,9 @@ function isEspecialidadPath(path) {
   return /^\/cuadro-medico\/e\/.+$/.test(path);
 }
 
+const SITEMAP_INDEX_PATH = '/sitemap.xml';
+const SITEMAP_TYPE_RE = /^\/sitemap-cuadro-medico-(provincias|provincia-specs|doctores|centros|especialidades)\.xml$/;
+
 export default function handler(req, res) {
   const path = extractPath(req);
 
@@ -106,6 +121,14 @@ export default function handler(req, res) {
   }
   if (isEspecialidadPath(path)) {
     return sendHtml(res, buildPage(path, ESPECIALIDAD_BLOCKS, 'Cuadro Médico - Especialidad'), 'template:especialidad');
+  }
+  if (path === SITEMAP_INDEX_PATH) {
+    return sendXml(res, getSitemapIndexXml(), 'sitemap:index');
+  }
+  const sitemapMatch = path.match(SITEMAP_TYPE_RE);
+  if (sitemapMatch) {
+    const xml = getCuadroMedicoSitemapXml(sitemapMatch[1]);
+    if (xml) return sendXml(res, xml, `sitemap:${sitemapMatch[1]}`);
   }
 
   return send404(res, path);

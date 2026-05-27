@@ -69,21 +69,25 @@ function getEspecialidades() {
   return buildSitemap(urls);
 }
 
+const generators = {
+  provincias: getProvincias,
+  'provincia-specs': getProvinciaSpecs,
+  doctores: getDoctores,
+  centros: getCentros,
+  especialidades: getEspecialidades,
+};
+
+export function getCuadroMedicoSitemapXml(type) {
+  const gen = generators[type];
+  return gen ? gen() : null;
+}
+
 export default function handler(req, res) {
   const { type } = req.query;
-
-  const generators = {
-    provincias: getProvincias,
-    'provincia-specs': getProvinciaSpecs,
-    doctores: getDoctores,
-    centros: getCentros,
-    especialidades: getEspecialidades,
-  };
-
-  const gen = generators[type];
-  if (!gen) return res.status(400).send('type must be: provincias, provincia-specs, doctores, centros, especialidades');
+  const xml = getCuadroMedicoSitemapXml(type);
+  if (!xml) return res.status(400).send('type must be: provincias, provincia-specs, doctores, centros, especialidades');
 
   res.setHeader('Content-Type', 'text/xml');
   res.setHeader('Cache-Control', 'public, s-maxage=86400, stale-while-revalidate=86400');
-  return res.status(200).send(gen());
+  return res.status(200).send(xml);
 }
