@@ -332,10 +332,9 @@ doc.add_heading('3.1 Configuración EDS / AEM', level=2)
 add_table(
     ['Fichero', 'Función'],
     [
-        ('fstab.yaml', 'Mountpoints. Solo monta "/" desde AEM Author '
+        ('fstab.yaml', 'Mountpoints. Monta "/" desde AEM Author '
                        '(/bin/franklin.delivery/asisa-softtek/asisa-pc/main, sufijo .html). Los '
-                       'sitemaps ya NO se montan aquí — los genera EDS nativamente vía '
-                       'helix-sitemap.yaml.'),
+                       'sitemaps se generan nativamente vía helix-sitemap.yaml.'),
         ('helix-query.yaml', '6 índices de pages: pages (estáticas), cuadro-medico-provincias, '
                              'cuadro-medico-provincia-specs, cuadro-medico-doctores, '
                              'cuadro-medico-centros, cuadro-medico-especialidades. Cada uno '
@@ -600,8 +599,7 @@ add_bullet('mergeAddress(): combina address de detail y de la lista, priorizando
            '"meaningful" (no vacíos, no 0).')
 add_bullet('Una persona puede tener varias entradas (cada ubicación + especialidad genera una); '
            'se agrupa por collegiateCode en el índice.')
-add_bullet('Consumido por: cuadro-medico-ficha-doctor, cuadro-medico-otros-medicos, '
-           'cuadro-medico-spec-localizacion (ya retirado).')
+add_bullet('Consumido por: cuadro-medico-ficha-doctor y cuadro-medico-otros-medicos.')
 
 # --- api/centro.js ---
 doc.add_heading('Endpoint 4 · api/centro.js (ficha de centro)', level=4)
@@ -727,11 +725,22 @@ doc.add_paragraph('CRÍTICO para migración Azure: este endpoint es el único qu
                   'backend ASISA en runtime. La subscription key debe ir a Key Vault.')
 
 # --- api/sitemap.js + api/sitemap-cuadro-medico.js ---
-doc.add_heading('Endpoints 9 y 10 · sitemaps (Vercel-only fallback)', level=4)
+doc.add_heading('Endpoints 9 y 10 · sitemaps en Vercel', level=4)
 doc.add_paragraph(
     'api/sitemap.js (29 líneas) → /sitemap.xml: sitemap index estático que apunta a 5 '
     'sitemaps específicos en www.asisa.es. Exporta getSitemapIndexXml() para que api/markup.js '
     'lo reuse.'
+)
+add_code_block(
+    'curl https://asisa-pc.vercel.app/sitemap.xml\n\n'
+    'Devuelve:\n'
+    '<sitemapindex>\n'
+    '  <sitemap><loc>https://www.asisa.es/sitemap-cuadro-medico-provincias.xml</loc></sitemap>\n'
+    '  <sitemap><loc>https://www.asisa.es/sitemap-cuadro-medico-provincia-specs.xml</loc></sitemap>\n'
+    '  <sitemap><loc>https://www.asisa.es/sitemap-cuadro-medico-doctores.xml</loc></sitemap>\n'
+    '  <sitemap><loc>https://www.asisa.es/sitemap-cuadro-medico-centros.xml</loc></sitemap>\n'
+    '  <sitemap><loc>https://www.asisa.es/sitemap-cuadro-medico-especialidades.xml</loc></sitemap>\n'
+    '</sitemapindex>'
 )
 doc.add_paragraph(
     'api/sitemap-cuadro-medico.js (94 líneas) → /sitemap-cuadro-medico-<type>.xml: genera el '
@@ -743,10 +752,16 @@ add_bullet('provincia-specs → cruza cada provincia con sus especialidades (~3.
 add_bullet('doctores → keys de doctores-index.json (~20.500 URLs)')
 add_bullet('centros → keys de centros-index.json (~6.500 URLs)')
 add_bullet('especialidades → ficheros en especialidades/ (~181 URLs)')
+doc.add_paragraph('Ejemplos directos:')
+add_code_block(
+    'curl https://asisa-pc.vercel.app/sitemap-cuadro-medico-provincias.xml\n'
+    'curl https://asisa-pc.vercel.app/sitemap-cuadro-medico-doctores.xml\n'
+    'curl "https://asisa-pc.vercel.app/api/sitemap-cuadro-medico?type=centros"'
+)
 doc.add_paragraph(
-    'Estos endpoints existen como vía paralela. EDS sirve los mismos paths NATIVAMENTE vía '
-    'helix-sitemap.yaml (con origin: https://www.asisa.es); los de Vercel son un fallback '
-    'accesible directamente en asisa-pc.vercel.app y útil para debugging.'
+    'Devuelven XML con la lista de URLs. EDS sirve los mismos paths nativamente vía '
+    'helix-sitemap.yaml (con origin: https://www.asisa.es). Los endpoints de Vercel son '
+    'accesibles directamente en asisa-pc.vercel.app y útiles para debugging.'
 )
 
 # --- api/sync-aem.js ---
@@ -1455,7 +1470,7 @@ add_code_block(
     ']'
 )
 doc.add_paragraph(
-    'Generador: manual (extraído originalmente del backend ASISA). Consumido por: '
+    'Generador: manual (extraído del backend ASISA). Consumido por: '
     'api/especialidades.js + generate-cuadro-medico-specs.mjs (validación de slugs). El campo '
     'kind se usa para filtrar: el bloque cuadro-medico-otras-especialidades excluye las "service" '
     'cuando muestra el top 15 nacional.'
@@ -1687,10 +1702,9 @@ doc.add_paragraph('Importante: las respuestas vienen comprimidas con Brotli desd
                   'sin --compressed devuelve bytes binarios; usar:')
 add_code_block('curl --compressed https://main--asisa-pc--asisa-softtek.aem.live/sitemap-cuadro-medico-doctores.xml')
 doc.add_paragraph(
-    'Las cachés api/sitemap.js y api/sitemap-cuadro-medico.js en Vercel se conservan como vía '
-    'paralela útil para diagnóstico (accesibles directamente en https://<overlay-host>/sitemap.xml '
-    'y similares), pero EDS no las consume. En la migración a Azure pueden eliminarse o portarse '
-    'según se prefiera.'
+    'api/sitemap.js y api/sitemap-cuadro-medico.js en Vercel sirven los mismos XML directamente '
+    'en https://<overlay-host>/sitemap.xml y https://<overlay-host>/sitemap-cuadro-medico-*.xml, '
+    'útiles para debugging y verificación sin pasar por EDS.'
 )
 
 doc.add_heading('5.1 Repoblar índices tras cambios', level=2)
@@ -1722,7 +1736,7 @@ add_table(
          'Pre-descarga el detalle de cada (locCode, docNum) único desde /providers/details. '
          'Concurrencia 25 (bajar si 429). Salida: data/provider-details/.'),
         ('generate-cuadro-medico-specs.mjs',
-         'Agrega lo anterior y construye los índices doctores-index.json, centros-index.json, '
+         'Agrega los providers cacheados y construye los índices doctores-index.json, centros-index.json, '
          'especialidades/*.json y provincias/*.json.'),
         ('create-aem-pages.mjs',
          'Crea las páginas plantilla en AEM Author (copy + publish) y refresca EDS. Requiere '
@@ -1789,8 +1803,8 @@ add_numbered('Deduplica usando un Set por providerCode (si existe) o fallback (n
              'city).')
 add_numbered('Si el fichero destino existe y no hay FORCE → skip (lee caché del repo).')
 add_numbered('Escribe data/providers/<prov>/<spec>.json.')
-doc.add_paragraph('Concurrencia: 10. Sin retry automático para 429 (timeout 150 s ya es generoso). '
-                  'Errores tolerados: status != 200, NETWORK, TIMEOUT — log y continúa.')
+doc.add_paragraph('Concurrencia: 10. Sin retry automático para 429 (timeout 150 s da margen '
+                  'suficiente). Errores tolerados: status != 200, NETWORK, TIMEOUT — log y continúa.')
 doc.add_paragraph('Lanzador: manual (CLI) o GitHub Action workflow_dispatch (con cron diario '
                   'disponible pero comentado).')
 
@@ -1996,9 +2010,8 @@ add_table(
          'Empaquetados con cada function en cada deploy'),
         ('CORS automático en /api/*', 'Headers de respuesta',
          'Vercel inyecta CORS por defecto'),
-        ('Auto-deploy desde GitHub', '',
-         'Conector Vercel ↔ GitHub (actualmente DESCONECTADO; el deploy de las últimas semanas se '
-         'ha hecho manualmente con `vercel deploy --prod --archive=tgz`)'),
+        ('Despliegue del código', '',
+         'Manual con `vercel deploy --prod --archive=tgz`. El push a main no dispara deploy.'),
     ],
     widths=[Inches(2.2), Inches(2.5), Inches(2)],
 )
@@ -2055,7 +2068,7 @@ add_numbered('Portar el código de api/*.js: cambiar la firma a Azure Functions 
              'Storage (o seguir empaquetando si se prefiere simplicidad).')
 add_numbered('Provisionar Azure Front Door con un Origin Group apuntando a la Function App. '
              'Añadir reglas: (a) /etc.clientlibs/* → origin www.asisa.es, (b) /sitemap.xml y '
-             '/sitemap-cuadro-medico-*.xml → Function App (opcional, EDS ya los genera nativos), '
+             '/sitemap-cuadro-medico-*.xml → Function App (opcional, EDS los genera nativos), '
              '(c) /markup/* → Function App.')
 add_numbered('Configurar dominio custom en Front Door (ej. asisa-pc.azurefd.net).')
 add_numbered('Crear un workflow GitHub Actions que despliega a Azure Functions en cada push.')
@@ -2123,7 +2136,8 @@ add_numbered('`node refresh-eds-pages.mjs` para re-previewar todas las URLs din�
              're-fetcha del overlay.')
 
 doc.add_heading('9.4 Tras actualizar datos (data/*.json)', level=2)
-add_numbered('Commit + push (los workflows GH Actions ya lo hacen).')
+add_numbered('Commit + push a main (los workflows de GH Actions ejecutan los generate-* y '
+             'commitean los JSON resultantes en data/).')
 add_numbered('Vercel/Azure recoge los datos en el siguiente deploy. Si Blob Storage, los datos '
              'son visibles inmediatamente sin redeploy.')
 add_numbered('Los bloques fetchean datos en runtime, así que NO hace falta re-publicar páginas.')
@@ -2170,7 +2184,7 @@ add_table(
          'Usar el token de la cuenta técnica de Adobe'),
         ('/query-index.json devuelve 413',
          'Más de 6MB (límite de Lambda interno de EDS)',
-         'Reducir vía exclude en helix-query.yaml o split en varios índices (ya hecho en este proyecto)'),
+         'helix-query.yaml define 6 índices con excludes para mantener cada query-index.json bajo el límite.'),
         ('Vercel no auto-despliega tras push',
          'El conector GitHub-Vercel está desconectado',
          'Lanzar manualmente `vercel deploy --prod --archive=tgz`'),
@@ -2224,8 +2238,8 @@ add_table(
 )
 
 doc.add_heading('11.3 Docs internas del proyecto', level=2)
-add_bullet('docs/byom.md — explicación detallada del setup BYOM, los 3 POSTs originales, '
-           'troubleshooting histórico y permisos.')
+add_bullet('docs/byom.md — explicación detallada del setup BYOM, los 3 POSTs de configuración, '
+           'troubleshooting y permisos.')
 add_bullet('docs/estructura-proyecto.md — referencia fichero por fichero de todo el repo, con '
            'URLs en vivo donde inspeccionar cada pieza.')
 add_bullet('docs/traspaso-conocimiento.docx — este documento.')
