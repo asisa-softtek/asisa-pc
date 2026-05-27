@@ -164,7 +164,14 @@ export default function decorate(block) {
   const key = getKeyFromUrl();
   if (!key) { block.hidden = true; return; }
 
-  block.innerHTML = '<p>Cargando médico…</p>';
+  // Camino de HIDRATACIÓN: el overlay ya pintó título, intro y card principal en
+  // server-side. Hacemos un fetch en background para enriquecer con el resto de
+  // ubicaciones; cuando llega, sustituimos el contenido por la versión completa.
+  // Si el fetch falla, el SSR ya estaba en pantalla y el usuario no ve nada roto.
+  const isSsr = block.dataset.ssr === 'true';
+  if (!isSsr) {
+    block.innerHTML = '<p>Cargando médico…</p>';
+  }
 
   Promise.all([
     fetch(`${API_BASE}/api/doctor?key=${key}`).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
@@ -177,7 +184,10 @@ export default function decorate(block) {
       };
 
       const locs = d.locations || [];
-      if (!locs.length) { block.innerHTML = '<p>No se pudo cargar la ficha del médico.</p>'; return; }
+      if (!locs.length) {
+        if (!isSsr) block.innerHTML = '<p>No se pudo cargar la ficha del médico.</p>';
+        return;
+      }
 
       const parts = [renderDoctorHeader(d)];
       parts.push(renderLocationCard(d, locs[0], 0, provinciaDisplayName(locs[0])));
@@ -194,6 +204,6 @@ export default function decorate(block) {
       block.innerHTML = `<div class="cmp-medical-detail">${parts.join('')}</div>`;
     })
     .catch(() => {
-      block.innerHTML = '<p>No se pudo cargar la ficha del médico.</p>';
+      if (!isSsr) block.innerHTML = '<p>No se pudo cargar la ficha del médico.</p>';
     });
 }

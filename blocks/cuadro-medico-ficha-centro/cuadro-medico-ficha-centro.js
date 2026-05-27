@@ -252,7 +252,11 @@ export default function decorate(block) {
   const key = getKeyFromUrl();
   if (!key) { block.hidden = true; return; }
 
-  block.innerHTML = '<p>Cargando centro…</p>';
+  // El overlay pinta título, intro, card principal y resumen de especialidades
+  // en server-side. Cuando llega el fetch sustituimos por la versión completa
+  // (con acordeones, médicos y otros centros). Si falla, el SSR sigue visible.
+  const isSsr = block.dataset.ssr === 'true';
+  if (!isSsr) block.innerHTML = '<p>Cargando centro…</p>';
 
   Promise.all([
     fetch(`${API_BASE}/api/centro?key=${key}`).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
@@ -272,6 +276,6 @@ export default function decorate(block) {
       </div>`;
     })
     .catch(() => {
-      block.innerHTML = '<p>No se pudo cargar la ficha del centro.</p>';
+      if (!isSsr) block.innerHTML = '<p>No se pudo cargar la ficha del centro.</p>';
     });
 }
