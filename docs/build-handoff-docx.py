@@ -507,7 +507,6 @@ add_table(
                                        'Blocks incluyendo los 8 bloques de cuadro médico).'),
         ('component-filters.json', '¿Qué bloque puede ir dentro de qué contenedor?'),
         ('component-models.json', 'Esquema de campos editables por componente.'),
-        ('models/_*.json', 'Fragmentos modulares de las definiciones globales.'),
     ],
     widths=[Inches(2), Inches(4.5)],
 )

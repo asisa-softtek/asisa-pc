@@ -1,42 +1,38 @@
-# Your Project's Title...
-Your project's description...
+# asisa-pc — Cuadro Médico de ASISA
 
-## Environments
-- Preview: https://main--asisa-pc--asisa-softtek.aem.page/
-- Live: https://main--asisa-pc--asisa-softtek.aem.live/
+Sitio del cuadro médico de ASISA construido sobre **Adobe Edge Delivery Services (EDS) + Vercel** (overlay BYOM).
 
-## Documentation
+## Stack
+- **AEM Author** (`https://author-p133185-e1320482.adobeaemcloud.com`) — autoría de plantillas y contenido estático
+- **EDS / aem.live** — CDN y entrega
+- **Vercel** (`https://asisa-pc.vercel.app`) — overlay BYOM: genera el HTML de las URLs dinámicas + endpoints JSON
+- **GitHub** (`asisa-softtek/asisa-pc`) — fuente de verdad
 
-Before using the aem-boilerplate, we recommand you to go through the documentation on [www.aem.live](https://www.aem.live/docs/) and [experienceleague.adobe.com](https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/edge-delivery/wysiwyg-authoring/authoring), more specifically:
-1. [Getting Started](https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/edge-delivery/wysiwyg-authoring/edge-dev-getting-started), [Creating Blocks](https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/edge-delivery/wysiwyg-authoring/create-block), [Content Modelling](https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/edge-delivery/wysiwyg-authoring/content-modeling)
-2. [The Anatomy of a Project](https://www.aem.live/developer/anatomy-of-a-project)
-3. [Web Performance](https://www.aem.live/developer/keeping-it-100)
-4. [Markup, Sections, Blocks, and Auto Blocking](https://www.aem.live/developer/markup-sections-blocks)
+## Entornos
+- **Preview**: https://main--asisa-pc--asisa-softtek.aem.page
+- **Live**: https://main--asisa-pc--asisa-softtek.aem.live
 
-Furthremore, we encourage you to watch the recordings of any of our previous presentations or sessions:
-- [Getting started with AEM Authoring and Edge Delivery Services](https://experienceleague.adobe.com/en/docs/events/experience-manager-gems-recordings/gems2024/aem-authoring-and-edge-delivery)
+## Documentación
+- [docs/traspaso-conocimiento.docx](docs/traspaso-conocimiento.docx) — documento completo de handoff con arquitectura, ejemplos, plan de operación
+- [docs/estructura-proyecto.md](docs/estructura-proyecto.md) — referencia fichero a fichero
+- [docs/byom.md](docs/byom.md) — setup BYOM operativo (3 POSTs, troubleshooting, permisos)
 
-## Prerequisites
+## Operación rápida
+```bash
+# Refrescar todo en EDS (no necesita token, requireAuth: auto)
+node refresh-eds-pages.mjs
 
-- nodejs 18.3.x or newer
-- AEM Cloud Service release 2024.8 or newer (>= `17465`)
+# Solo un tipo
+node refresh-eds-pages.mjs --doctores
+node refresh-eds-pages.mjs --centros
+node refresh-eds-pages.mjs --sitemaps
 
-## Installation
+# Repoblar índices tras cambios en helix-query.yaml
+node refresh-eds-pages.mjs --reindex
 
-```sh
-npm i
+# Deploy a Vercel
+vercel deploy --prod --yes --archive=tgz
 ```
 
-## Linting
-
-```sh
-npm run lint
-```
-
-## Local development
-
-1. Create a new repository based on the `aem-boilerplate` template
-1. Add the [AEM Code Sync GitHub App](https://github.com/apps/aem-code-sync) to the repository
-1. Install the [AEM CLI](https://github.com/adobe/helix-cli): `npm install -g @adobe/aem-cli`
-1. Start AEM Proxy: `aem up` (opens your browser at `http://localhost:3000`)
-1. Open the `asisa-pc` directory in your favorite IDE and start coding :)
+## Licencia
+Apache License 2.0 — heredada del aem-boilerplate de Adobe.
