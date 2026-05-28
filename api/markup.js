@@ -42,6 +42,22 @@ function titleCase(s) {
     .join('');
 }
 
+function toSlug(s) {
+  return String(s || '')
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+function centroLink(parentDescription) {
+  if (!parentDescription) return '';
+  const slug = toSlug(parentDescription);
+  if (!slug) return esc(titleCase(parentDescription));
+  return `<a href="/cuadro-medico/c/${esc(slug)}">${esc(titleCase(parentDescription))}</a>`;
+}
+
 function formatPersonName(name) {
   if (!name) return '';
   const parts = name.split(',');
@@ -306,11 +322,11 @@ function ssrDoctor(key) {
     ${locSpec ? `<p class="cmp-medical-detail__title-block--speciality">${esc(locSpec)}</p>` : ''}
     ${isFirst
     ? `<div class="cmp-title"><h2 class="cmp-title__text">${esc(displayName)}</h2></div>`
-    : `<div class="cmp-title"><h3 class="cmp-title__text">${esc(titleCase(loc.parentDescription || ''))}</h3></div>`}
+    : `<div class="cmp-title"><h3 class="cmp-title__text">${centroLink(loc.parentDescription)}</h3></div>`}
     ${isFirst && data.collegiateCode ? `<p class="cmp-medical-detail__title-block--num-member">Núm. Colegiado – ${esc(data.collegiateCode)}</p>` : ''}
   </div>
   <div class="cmp-medical-detail__address-block">
-    ${loc.parentDescription && isFirst ? `<div class="cmp-medical-detail__address-block--center">${esc(titleCase(loc.parentDescription))}</div>` : ''}
+    ${loc.parentDescription && isFirst ? `<div class="cmp-medical-detail__address-block--center">${centroLink(loc.parentDescription)}</div>` : ''}
     ${locAddr ? `<div class="cmp-medical-detail__address-block--name"><i class="icon-marker-02"></i>${esc(locAddr)}</div>` : ''}
     ${mapsUrl ? `<div class="cmp-medical-detail__address-block__location"><a href="${esc(mapsUrl)}" target="_blank" rel="noopener">Cómo llegar</a></div>` : ''}
   </div>

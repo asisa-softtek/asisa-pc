@@ -91,11 +91,27 @@ function renderDoctorHeader(d) {
       </section>`;
 }
 
+function toCentroSlug(raw) {
+  return String(raw || '')
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+function renderCenterLink(parentDescription) {
+  if (!parentDescription) return '';
+  const slug = toCentroSlug(parentDescription);
+  const display = formatName(parentDescription);
+  return slug ? `<a href="/cuadro-medico/c/${slug}">${display}</a>` : display;
+}
+
 function renderLocationCard(d, loc, idx, provinciaDisplayName) {
   const mapsUrl = (loc.lat && loc.lon) ? `https://www.google.com/maps/dir/?api=1&destination=${loc.lat},${loc.lon}` : '';
   const addressLine = [loc.address, loc.postalCode, loc.city].filter(Boolean).join(', ');
   const shareUrl = buildShareUrl(d, loc, provinciaDisplayName);
-  const center = loc.parentDescription ? formatName(loc.parentDescription) : '';
+  const centerHtml = renderCenterLink(loc.parentDescription);
   const speciality = formatName(loc.speciality || '');
   const isFirst = idx === 0;
 
@@ -120,12 +136,12 @@ function renderLocationCard(d, loc, idx, provinciaDisplayName) {
         ${d.collegiateCode ? `<p class="cmp-medical-detail__title-block--num-member"><em>Núm. Colegiado – ${d.collegiateCode}</em></p>` : ''}
       ` : `
         <div class="cmp-title">
-          <h3 class="cmp-title__text">${center || speciality}</h3>
+          <h3 class="cmp-title__text">${centerHtml || speciality}</h3>
         </div>
       `}
     </div>
     <div class="cmp-medical-detail__address-block">
-      ${center && isFirst ? `<div class="cmp-medical-detail__address-block--center">${center}</div>` : ''}
+      ${centerHtml && isFirst ? `<div class="cmp-medical-detail__address-block--center">${centerHtml}</div>` : ''}
       ${addressLine ? `<div class="cmp-medical-detail__address-block--name"><i class="icon-marker-02"></i>${formatName(addressLine)}</div>` : ''}
       <div class="cmp-medical-detail__address-block__location">
         ${mapsUrl ? `<div class="cmp-medical-detail__address-block__location--reach"><div class="button-cmp"><a href="${mapsUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--link button-location"><i class="icon-map-04 icon-large"></i>Cómo llegar</a></div></div>` : ''}
