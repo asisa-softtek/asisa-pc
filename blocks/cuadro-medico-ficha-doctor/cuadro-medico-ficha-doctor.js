@@ -109,7 +109,7 @@ function renderLocationCard(d, loc, idx, provinciaDisplayName) {
         </div>
         ${loc.businessGroup ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Centro de ASISA</div></div>' : ''}
         <a class="cmp-medical-detail__title-block__tags--share" href="${shareUrl}" target="_blank" rel="noopener">
-          Compartir <i class="icon-share-01"></i>
+          Compartir <i class="icon-share-021"></i>
         </a>
       </div>
       ${isFirst ? `

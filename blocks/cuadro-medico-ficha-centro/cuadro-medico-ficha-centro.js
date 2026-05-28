@@ -108,7 +108,7 @@ function renderMainCard(c, provinciaDisplayName) {
       <div class="cmp-medical-detail__title-block__tags">
         ${renderTagRow(c)}
         <a class="cmp-medical-detail__title-block__tags--share" href="${shareUrl}" target="_blank" rel="noopener">
-          Compartir <i class="icon-share-01"></i>
+          Compartir <i class="icon-share-021"></i>
         </a>
       </div>
       <div class="cmp-title">
@@ -222,7 +222,7 @@ function renderOtherCentroCard(oc, provinciaDisplayName) {
         <div class="cmp-medical-detail__title-block__tags--item"><div class="cmp-tag-template cmp-tag-template--blue"><div class="cmp-tag-template__text">${tagLabel}</div></div></div>
         ${oc.businessGroup ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Centro de ASISA</div></div>' : ''}
         <a class="cmp-medical-detail__title-block__tags--share" href="${shareUrl}" target="_blank" rel="noopener">
-          Compartir <i class="icon-share-01"></i>
+          Compartir <i class="icon-share-021"></i>
         </a>
       </div>
       <div class="cmp-title">

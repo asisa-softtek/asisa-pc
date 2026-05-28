@@ -627,8 +627,14 @@ body .wasisa-max-width > div {
   .eds-mp-card__info--contact {
     width: auto;
   }
-  .eds-mp-card__info--contact .eds-mp-card__type--center {
+  .eds-mp-card__info--contact .eds-mp-card__type--center, .eds-mp-card__info--contact .eds-mp-card__type--address {
     margin: var(--spacing-xl) 0 var(--spacing-md) 0;
+  }
+  .eds-mp-card__info--contact .eds-mp-card__type--center + div, .eds-mp-card__info--contact .eds-mp-card__type--address + div {
+    margin: 0 0 var(--spacing-md) 0;
+  }
+  .eds-mp-card__info--location {
+    margin: var(--spacing-xl) 0 0 0;
   }
   .eds-mp-card__info--tags {
     width: var(--size-170);
@@ -900,6 +906,7 @@ body .wasisa-max-width > div {
   margin: 0 0 0.5rem 0;
 }
 .eds-mp-other-localities-block--professional {
+  font-weight: var(--font-weight-400);
   color: var(--color-grey-700);
 }
 .eds-mp-other-localities-link {
@@ -929,7 +936,7 @@ body .wasisa-max-width > div {
   .eds-mp-other-localities-item {
     gap: var(--gap-xl);
     width: calc(19% - 0.5rem);
-    padding: var(--spacing-3xl) var(--spacing-xl);
+    padding: var(--spacing-md) var(--spacing-xl);
   }
 }
 @media (width > 1280px) {
@@ -2264,8 +2271,14 @@ body .wasisa-max-width > div {
   .eds-mp-card__info--contact {
     width: auto;
   }
-  .eds-mp-card__info--contact .eds-mp-card__type--center {
+  .eds-mp-card__info--contact .eds-mp-card__type--center, .eds-mp-card__info--contact .eds-mp-card__type--address {
     margin: var(--spacing-xl) 0 var(--spacing-md) 0;
+  }
+  .eds-mp-card__info--contact .eds-mp-card__type--center + div, .eds-mp-card__info--contact .eds-mp-card__type--address + div {
+    margin: 0 0 var(--spacing-md) 0;
+  }
+  .eds-mp-card__info--location {
+    margin: var(--spacing-xl) 0 0 0;
   }
   .eds-mp-card__info--tags {
     width: var(--size-170);
@@ -2567,6 +2580,7 @@ body .wasisa-max-width > div {
   margin: 0 0 0.5rem 0;
 }
 .eds-mp-other-localities-block--professional {
+  font-weight: var(--font-weight-400);
   color: var(--color-grey-700);
 }
 .eds-mp-other-localities-link {
@@ -2596,7 +2610,7 @@ body .wasisa-max-width > div {
   .eds-mp-other-localities-item {
     gap: var(--gap-xl);
     width: calc(19% - 0.5rem);
-    padding: var(--spacing-3xl) var(--spacing-xl);
+    padding: var(--spacing-md) var(--spacing-xl);
   }
 }
 @media (width > 1280px) {
