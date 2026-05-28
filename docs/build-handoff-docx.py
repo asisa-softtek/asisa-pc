@@ -448,10 +448,8 @@ add_table(
         ('DELETE /preview, /live', 'No', 'Anónimo'),
         ('GET /status, /profile', 'No', 'Anónimo'),
         ('POST /bin/wcmcommand, /bin/replicate.json (AEM Author)', 'Sí',
-         'AEM_TOKEN (cookie login-token del Author)'),
-        ('GET /api/sync-aem (endpoint propio en Vercel)', 'Sí',
-         'SYNC_SECRET como query param'),
-        ('Cualquier otro /api/* (Vercel)', 'No', 'Públicos con CORS abierto'),
+         'Cookie login-token del Author'),
+        ('Cualquier /api/* (Vercel)', 'No', 'Públicos con CORS abierto'),
     ],
     widths=[Inches(2.5), Inches(0.8), Inches(3.2)],
 )
@@ -536,17 +534,10 @@ add_table(
          'Listado de provincias o detalle de una.'),
         ('api/especialidades.js', '/api/especialidades[?slug=]',
          'Master list de especialidades o detalle.'),
-        ('api/providers-detail.js', '/api/providers-detail?id=…',
-         'Detalle consolidado por código de localización.'),
-        ('api/specialities.js', '/api/specialities?provinceCode=…',
-         'PROXY en vivo al backend ASISA (ursaepre.asisa.es) — no usa caché local.'),
         ('api/sitemap.js', '/sitemap.xml (rewrite)',
          'Sitemap index "Vercel-only" (no usado por EDS). Apunta a www.asisa.es.'),
         ('api/sitemap-cuadro-medico.js', '/sitemap-cuadro-medico-*.xml (rewrite)',
          'Sitemap específico por tipo. EDS no lo usa, pero está accesible directo en Vercel.'),
-        ('api/sync-aem.js', '/api/sync-aem',
-         'Sincroniza URLs del sitemap remoto de www.asisa.es con preview+live de EDS. Requiere '
-         'SYNC_SECRET y HLX_ADMIN_API_TOKEN.'),
     ],
     widths=[Inches(1.8), Inches(1.8), Inches(2.9)],
 )
@@ -614,11 +605,8 @@ add_code_block(
     'api/centro.js              ← datos de un centro\n'
     'api/provincias.js          ← lista de provincias\n'
     'api/especialidades.js      ← lista de especialidades\n'
-    'api/providers-detail.js    ← detalle por código de localización\n'
-    'api/specialities.js        ← proxy en vivo al backend de ASISA\n'
     'api/sitemap.js             ← /sitemap.xml\n'
-    'api/sitemap-cuadro-medico.js   ← sitemaps por tipo\n'
-    'api/sync-aem.js            ← utilidad de sincronización'
+    'api/sitemap-cuadro-medico.js   ← sitemaps por tipo'
 )
 
 doc.add_heading('api/markup.js — el overlay BYOM, paso a paso', level=4)
@@ -826,18 +814,6 @@ add_code_block(
     '    ...\n'
     '  ]\n'
     '}'
-)
-
-doc.add_heading('api/specialities.js (con S, inglés — distinto del anterior)', level=4)
-doc.add_paragraph(
-    'Este es ESPECIAL: no lee del repo, es un PROXY que llama en vivo al backend de ASISA para '
-    'autocompletado de especialidades. Si el backend de ASISA cae, este endpoint cae también.'
-)
-add_code_block(
-    'curl "https://asisa-pc.vercel.app/api/specialities?provinceCode=28"\n\n'
-    '# Internamente Vercel hace:\n'
-    '#   GET https://ursaepre.asisa.es/.../autocomplete/specialities?provinceCode=28\n'
-    '# y devuelve lo que ASISA responda (passthrough).'
 )
 
 doc.add_heading('api/sitemap*.js — sitemaps XML', level=4)
@@ -1440,55 +1416,8 @@ add_code_block(
     '}'
 )
 
-# --- api/providers-detail.js ---
-doc.add_heading('Endpoint 7 · api/providers-detail.js (detalle por locCode)', level=4)
-doc.add_paragraph('Ruta: api/providers-detail.js · 78 líneas · HTTP: GET /api/providers-detail')
-doc.add_paragraph('Query: id (String, obligatorio) — providerLocalicationCode.')
-doc.add_paragraph('Lee data/provider-details/<id>.json. Sin caché in-memory.')
-doc.add_paragraph(
-    'Un mismo provider-details puede tener varios entries (mismo provider, distintas '
-    'especialidades). mapDetail() consolida: toma base del primer entry, deduplica y agrupa '
-    'specialities y languages de todos los entries.'
-)
-doc.add_paragraph('Consumido por: usado como fallback / enriquecimiento desde otros endpoints; '
-                  'también accesible directo desde el frontend si se necesita una sola ubicación.')
-doc.add_paragraph('Ejemplo:')
-add_code_block(
-    'curl "https://asisa-pc.vercel.app/api/providers-detail?id=1496101"\n\n'
-    '{\n'
-    '  "providerLocalicationCode": 1496101,\n'
-    '  "providerCode": 3839140,\n'
-    '  "name": "HOSPITAL UNIVERSITARIO HLA MONCLOA",\n'
-    '  "specialities": ["ALERGOLOGÍA", "CARDIOLOGÍA",\n'
-    '    "DERMATOLOGÍA MÉDICO-QUIRÚRGICA Y VENÉREO", ...],\n'
-    '  "address": "AVENIDA VALLADOLID 83",\n'
-    '  "city": "MADRID",\n'
-    '  "phone": "917581196",\n'
-    '  "languages": []\n'
-    '}'
-)
-
-# --- api/specialities.js ---
-doc.add_heading('Endpoint 8 · api/specialities.js (proxy autocomplete a ASISA)', level=4)
-doc.add_paragraph('Ruta: api/specialities.js · 32 líneas · HTTP: GET /api/specialities')
-doc.add_paragraph('Query: provinceCode (opcional, código numérico INE).')
-doc.add_paragraph('NO lee data/ ni tiene caché — es un PROXY EN VIVO al backend de ASISA:')
-add_code_block(
-    'GET https://ursaepre.asisa.es/ASISA/middlewasisa/public/v1/api/searchPortal/\n'
-    '    autocomplete/specialities\n'
-    '  ?specialityDescription=&networkCode=1[&provinceCode=<code>]\n'
-    '  &maxResultsNumber=500\n'
-    'Headers:\n'
-    '  Ocp-Apim-Subscription-Key: 0908b85b9d0e4a75b2eb33048bd9fe01\n'
-    '  Api-Version: 1'
-)
-doc.add_paragraph('Devuelve la respuesta tal cual (passthrough). Si el backend de ASISA cae, '
-                  'este endpoint cae también. Pensado para autocomplete de búsqueda.')
-doc.add_paragraph('Este endpoint es el único que sí depende del '
-                  'backend ASISA en runtime. La subscription key debe ir a Key Vault.')
-
 # --- api/sitemap.js + api/sitemap-cuadro-medico.js ---
-doc.add_heading('Endpoints 9 y 10 · sitemaps en Vercel', level=4)
+doc.add_heading('Endpoint 7 y 8 · sitemaps en Vercel', level=4)
 doc.add_paragraph(
     'api/sitemap.js (29 líneas) → /sitemap.xml: sitemap index estático que apunta a 5 '
     'sitemaps específicos en www.asisa.es. Exporta getSitemapIndexXml() para que api/markup.js '
@@ -1527,25 +1456,6 @@ doc.add_paragraph(
     'accesibles directamente en asisa-pc.vercel.app y útiles para debugging.'
 )
 
-# --- api/sync-aem.js ---
-doc.add_heading('Endpoint 11 · api/sync-aem.js (sincronizador de sitemap externo)', level=4)
-doc.add_paragraph('Ruta: api/sync-aem.js · 84 líneas · HTTP: GET /api/sync-aem (interno)')
-doc.add_paragraph('Query:')
-add_bullet('secret (String) — debe coincidir con env SYNC_SECRET, si no 401.')
-add_bullet('path (String, opcional) — sincroniza solo esa ruta.')
-add_bullet('limit (Number, default 50) — URLs por lote.')
-add_bullet('offset (Number, default 0) — offset para paginación.')
-doc.add_paragraph('Si no se pasa path, lee https://www.asisa.es/sitemap.xml, filtra URLs que '
-                  'contengan "/cuadro-medico/" y procesa por lotes. Para cada URL hace:')
-add_code_block(
-    'POST https://admin.hlx.page/preview/asisa-softtek/asisa-pc/main<path>\n'
-    'POST https://admin.hlx.page/live/asisa-softtek/asisa-pc/main<path>\n'
-    'Headers: x-auth-token: <HLX_ADMIN_API_TOKEN>'
-)
-doc.add_paragraph('Concurrencia 5 (Promise.all en lotes). Requiere env HLX_ADMIN_API_TOKEN o '
-                  'devuelve 500. Útil para automatizar sincronización masiva desde un sitemap '
-                  'externo (e.g. tras una republicación en www.asisa.es).')
-
 doc.add_heading('3.4.2 Resumen de cachés y TTLs', level=3)
 add_table(
     ['Endpoint', 'Cachés in-memory', 'Cache-Control'],
@@ -1563,14 +1473,9 @@ add_table(
          's-maxage=86400, stale-while-revalidate=604800'),
         ('api/especialidades.js', 'masterCache',
          's-maxage=86400, stale-while-revalidate=604800'),
-        ('api/providers-detail.js', '—',
-         's-maxage=3600, stale-while-revalidate=86400'),
-        ('api/specialities.js', '— (proxy en vivo)',
-         's-maxage=86400, stale-while-revalidate=604800'),
         ('api/sitemap.js', '—', 's-maxage=3600, stale-while-revalidate=86400'),
         ('api/sitemap-cuadro-medico.js', '—',
          's-maxage=86400, stale-while-revalidate=86400'),
-        ('api/sync-aem.js', '— (no cacheable)', '—'),
     ],
     widths=[Inches(2.2), Inches(2.5), Inches(2)],
 )
@@ -2147,12 +2052,6 @@ add_table(
                                 'loadLazy (header, footer, lazy-styles), loadDelayed (importa '
                                 'delayed.js a los 3s).'),
         ('scripts/delayed.js', 'Hueco para lógica no crítica (analytics, RUM). Actualmente vacío.'),
-        ('scripts/editor-support.js', 'Sólo activo dentro del Universal Editor de AEM. Escucha '
-                                       'eventos aue:content-* y re-decora bloques sin recargar.'),
-        ('scripts/editor-support-rte.js', 'Agrupa nodos rich-text consecutivos para edición '
-                                           'cómoda en el editor.'),
-        ('scripts/dompurify.min.js', 'Librería externa de sanitización XSS, usada por '
-                                      'editor-support.js.'),
     ],
     widths=[Inches(2), Inches(4.5)],
 )
@@ -2438,8 +2337,7 @@ add_code_block(
     ']'
 )
 doc.add_paragraph('Generador: generate-provider-details.mjs (~33k fetches a /providers/details). '
-                  'Consumido por: api/providers-detail.js + api/doctor.js (enriquece datos del '
-                  'representative location).')
+                  'Consumido por: api/doctor.js (enriquece datos del representative location).')
 
 doc.add_heading('4.1.9 Flujo de datos entre todos los ficheros', level=3)
 add_code_block(
@@ -2810,14 +2708,8 @@ add_table(
          'api/provincias.js'),
         ('API datos: especialidades', 'https://asisa-pc.vercel.app/api/especialidades',
          'api/especialidades.js'),
-        ('API datos: providers-detail', 'https://asisa-pc.vercel.app/api/providers-detail',
-         'api/providers-detail.js'),
-        ('Proxy autocomplete ASISA', 'https://asisa-pc.vercel.app/api/specialities',
-         'api/specialities.js (fetch en vivo a ursaepre.asisa.es)'),
-        ('Sync sitemap → EDS', 'https://asisa-pc.vercel.app/api/sync-aem',
-         'api/sync-aem.js'),
-        ('Proxy clientlibs CSS de ASISA', 'https://asisa-pc.vercel.app/etc.clientlibs/*',
-         'rewrite en vercel.json hacia www.asisa.es'),
+        ('Clientlibs CSS de ASISA (estáticos)', 'https://asisa-pc.vercel.app/etc.clientlibs/*',
+         'CSS y fuentes del design system descargados al repo en etc.clientlibs/'),
         ('Hosting de los JSON cacheados', '~3.700 + 33.000 ficheros en data/',
          'Empaquetados con cada function en cada deploy'),
         ('CORS automático en /api/*', 'Headers de respuesta',
@@ -2978,8 +2870,6 @@ add_table(
     [
         ('HLX_ADMIN_API_TOKEN', 'Token admin EDS para POST /preview, /live, /code, /index',
          'Local (export) o GitHub Secret'),
-        ('SYNC_SECRET', 'Shared secret para api/sync-aem.js',
-         'Vercel env'),
         ('FORCE', 'Flag para forzar regeneración en los generate-*.mjs',
          'CLI inline o input del workflow'),
         ('PROVINCE_CODE', 'Restringe el scrape a una provincia',
@@ -3114,10 +3004,7 @@ add_code_block(
     'https://asisa-pc.vercel.app/api/providers?specSlug=cardiologia&tab=professionals  # nacional\n\n'
     '# Fichas\n'
     'https://asisa-pc.vercel.app/api/doctor?key=werenitzky-jose-282874657\n'
-    'https://asisa-pc.vercel.app/api/centro?key=hospital-universitario-hla-moncloa\n'
-    'https://asisa-pc.vercel.app/api/providers-detail?id=12345\n\n'
-    '# Proxy en vivo a backend ASISA\n'
-    'https://asisa-pc.vercel.app/api/specialities?provinceCode=28'
+    'https://asisa-pc.vercel.app/api/centro?key=hospital-universitario-hla-moncloa'
 )
 
 doc.add_heading('12.5 Operación (admin.hlx.page, no necesita token gracias a requireAuth: auto)',
