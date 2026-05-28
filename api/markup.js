@@ -134,11 +134,11 @@ function ssrOtrasEspecialidades({ provSlug, specSlug, provDisplay }) {
 }
 
 function ssrOtrasProvincias({ provSlug, specSlug }) {
-  if (!specSlug) return '<div class="cuadro-medico-otras-provincias"></div>';
+  if (!specSlug) return '';
   const detail = fetchEspecialidad(specSlug);
-  if (!detail) return '<div class="cuadro-medico-otras-provincias"></div>';
+  if (!detail) return '';
   const provincias = (detail.provincias || []).filter((p) => p.slug !== provSlug);
-  if (!provincias.length) return '<div class="cuadro-medico-otras-provincias"></div>';
+  if (!provincias.length) return '';
   const specName = detail.name || specSlug;
   const specLower = specName.toLowerCase();
   const cards = provincias.map((p) => `<article class="cm-otras-prov-card">
@@ -231,6 +231,49 @@ function ssrListing({ provSlug, specSlug, nationalSpec }) {
   return { title, description, blocks: `${cuadroMedicoBlock}\n${otrasEspecs}\n${otrasProvs}` };
 }
 
+function ssrOtrosMedicos(doctorData) {
+  if (!doctorData?.provinceSlug || !doctorData?.specSlug) return '';
+  const list = fetchProviders({
+    provinceSlug: doctorData.provinceSlug,
+    specSlug: doctorData.specSlug,
+    tab: 'professionals',
+    page: 1,
+    limit: 50,
+  });
+  if (list?.error) return '';
+
+  const currentKey = doctorData.key;
+  const all = (list.results || [])
+    .filter((p) => String(p.doctorType) === '1')
+    .filter((p) => p.detailUrl !== `/cuadro-medico/d/${currentKey}`);
+  const specName = doctorData.specialities?.[0] || doctorData.specSlug;
+  const provs = fetchProvincias();
+  const provName = provs.find((p) => p.slug === doctorData.provinceSlug)?.displayName || doctorData.provinceSlug;
+  const centerName = doctorData.parentDescription || '';
+
+  const chip = (p) => `<a class="cmp-tag-template cmp-tag-template--blank" href="${esc(p.detailUrl)}">`
+    + `<span class="cmp-tag-template__text">${esc(formatPersonName(p.name))}</span></a>`;
+
+  const provChips = all.slice(0, 20).map(chip).join('');
+  const sameCenter = centerName ? all.filter((p) => (p.parentDescription || '') === centerName).slice(0, 10) : [];
+
+  const sections = [];
+  if (provChips) {
+    sections.push(`<section>
+  <h2 class="cmp-medical-detail__subtitle">Otros médicos de ${esc(titleCase(specName))} en ${esc(provName)}</h2>
+  <div class="cmp-medical-detail__other-specialities">${provChips}</div>
+</section>`);
+  }
+  if (sameCenter.length) {
+    sections.push(`<section>
+  <h2 class="cmp-medical-detail__subtitle">Otros médicos de ${esc(titleCase(specName))} en ${esc(titleCase(centerName))}</h2>
+  <div class="cmp-medical-detail__other-specialities">${sameCenter.map(chip).join('')}</div>
+</section>`);
+  }
+  if (!sections.length) return '';
+  return `<div class="cuadro-medico-otros-medicos">${sections.join('\n')}</div>`;
+}
+
 function ssrDoctor(key) {
   const data = fetchDoctor(key);
   if (data.error) return null;
@@ -246,7 +289,7 @@ function ssrDoctor(key) {
   const h1 = `${displayName}${mainSpec ? `, ${titleCase(mainSpec)}` : ''}`;
   const intro = `Ficha del cuadro médico de ASISA con la información de contacto, especialidades y centros donde pasa consulta ${displayName}.`;
 
-  const blocks = `<div class="cuadro-medico-ficha-doctor cmp-medical-detail" data-ssr="true" data-key="${esc(key)}">
+  const fichaBlock = `<div class="cuadro-medico-ficha-doctor cmp-medical-detail" data-ssr="true" data-key="${esc(key)}">
   <section class="eds-mp-box-head">
     <h1 class="eds-mp-box-head--title">${esc(h1)}</h1>
     <p class="eds-mp-box-head--text">${esc(intro)}</p>
@@ -270,10 +313,11 @@ function ssrDoctor(key) {
       ${data.phone ? `<div class="button-cmp"><a href="tel:${esc(data.phone)}" class="button-cmp__text button-cmp__text--link"><i class="icon-phone"></i>${esc(data.phone)}</a></div>` : ''}
     </div>
   </div>
-</div>
-<div class="cuadro-medico-otros-medicos"><div><div></div></div></div>`;
+</div>`;
 
-  return { title, description, blocks };
+  const otrosMedicos = ssrOtrosMedicos(data);
+
+  return { title, description, blocks: `${fichaBlock}\n${otrosMedicos}` };
 }
 
 function ssrCentro(key) {
