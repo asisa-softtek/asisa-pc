@@ -115,10 +115,7 @@ function renderLocationCard(d, loc, idx, provinciaDisplayName) {
   const speciality = formatName(loc.speciality || '');
   const isFirst = idx === 0;
 
-  return `
-  
-  
-  <article class="eds-mp-user">
+  return `<article class="eds-mp-user">
   <section class="eds-mp-user__content">
     <div class="eds-mp-card eds-mp-card--type-b eds-mp-card--blue">
      <div class="eds-mp-card__block">
@@ -158,8 +155,6 @@ function renderLocationCard(d, loc, idx, provinciaDisplayName) {
           </div>` : ''}
 
           </div>
-
-     
     </div>
   </section>`;
 }

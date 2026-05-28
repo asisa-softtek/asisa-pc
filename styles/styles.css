@@ -386,6 +386,7 @@ body .wasisa-max-width > div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  text-decoration: none;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -581,7 +582,8 @@ body .wasisa-max-width > div {
 .eds-mp-card--type-b .eds-mp-card__type--center {
   color: var(--color-brand-100);
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-500);
+  font-weight: var(--font-weight-700);
+  text-decoration: none;
 }
 .eds-mp-card--type-b .eds-mp-card__type--address i {
   font-size: var(--font-size-01);
@@ -2030,6 +2032,7 @@ body .wasisa-max-width > div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  text-decoration: none;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -2225,7 +2228,8 @@ body .wasisa-max-width > div {
 .eds-mp-card--type-b .eds-mp-card__type--center {
   color: var(--color-brand-100);
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-500);
+  font-weight: var(--font-weight-700);
+  text-decoration: none;
 }
 .eds-mp-card--type-b .eds-mp-card__type--address i {
   font-size: var(--font-size-01);
