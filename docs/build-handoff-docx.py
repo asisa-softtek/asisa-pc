@@ -325,7 +325,7 @@ doc.add_paragraph(
     'llamadas anónimas. Por tanto, todos los refrescos del día a día (POST /preview, /live, '
     '/code, /index; DELETE; GET /status) funcionan SIN token. Solo necesitan token los '
     'endpoints de configuración (POST /config/...) y los scripts que hablan directamente con '
-    'AEM Author (create-aem-pages.mjs requiere AEM_TOKEN).'
+    'AEM Author (los pocos scripts que tocan AEM directamente).'
 )
 
 doc.add_heading('2.1 Sitewide config (vincula GitHub, AEM y el overlay)', level=2)
@@ -478,7 +478,6 @@ add_table(
                              'produce un /query-index-*.json filtrado por glob patterns.'),
         ('helix-sitemap.yaml', '6 sitemaps, uno por índice, con origin: https://www.asisa.es '
                                'para que las URLs en el XML apunten a producción.'),
-        ('paths.json', 'Mapping interno: /content/site-pc/ → /.'),
         ('head.html', 'HTML inyectado en TODAS las páginas. Contiene CSP, scripts principales '
                       '(aem.js, scripts.js), styles.css local y las clientlibs CSS de ASISA '
                       'servidas por proxy vía Vercel /etc.clientlibs/*.'),
@@ -556,6 +555,426 @@ doc.add_paragraph(
     'para evitar releer los JSON en cada petición. Solo persisten mientras la instancia '
     'serverless esté caliente; en un arranque en frío se reconstruyen.'
 )
+
+doc.add_page_break()
+doc.add_page_break()
+doc.add_heading('3.4.0 Cómo funciona la capa Vercel — explicación sencilla con ejemplos', level=3)
+doc.add_paragraph(
+    'Esta sección está pensada para alguien que llega nuevo al proyecto y necesita entender qué '
+    'hace Vercel, por qué existe, y qué hay dentro de la carpeta api/. Si ya entiendes la '
+    'arquitectura, salta a 3.4.1.'
+)
+
+doc.add_heading('Por qué necesitamos Vercel', level=4)
+doc.add_paragraph(
+    'El cuadro médico tiene aproximadamente 36.000 URLs dinámicas: 52 provincias, ~3.250 '
+    'combinaciones provincia+especialidad, ~20.500 médicos, ~6.500 centros y ~181 especialidades '
+    'nacionales. Crearlas a mano en AEM Author es imposible.'
+)
+doc.add_paragraph(
+    'EDS (Adobe Edge Delivery Services) solo sabe servir HTML pre-procesado desde su content-bus. '
+    'Necesita que alguien le dé ese HTML. Ahí entra Vercel: es el "servidor que genera HTML bajo '
+    'demanda" cuando EDS lo pide para una URL que no existe a mano en AEM.'
+)
+add_code_block(
+    'Usuario → aem.live → EDS busca el HTML para esta URL en su bus\n'
+    '                       ¿no lo tiene? → pregunta a Vercel ("overlay BYOM")\n'
+    '                                       Vercel genera HTML → lo devuelve\n'
+    '                       EDS lo guarda y se lo sirve al usuario'
+)
+doc.add_paragraph('Vercel hace TRES trabajos distintos en este proyecto:')
+add_table(
+    ['Trabajo', 'Fichero responsable', 'URL de ejemplo'],
+    [
+        ('Generar el HTML de páginas dinámicas (overlay BYOM)',
+         'api/markup.js',
+         'https://asisa-pc.vercel.app/markup/cuadro-medico/p/madrid'),
+        ('Servir datos JSON a los bloques del navegador',
+         'api/providers.js, api/doctor.js, api/centro.js, …',
+         'https://asisa-pc.vercel.app/api/providers?provinceSlug=madrid'),
+        ('Servir assets estáticos (clientlibs CSS y fuentes de ASISA)',
+         'Vercel sirve directamente desde la carpeta etc.clientlibs/',
+         'https://asisa-pc.vercel.app/etc.clientlibs/wasisa/clientlibs/clientlib-site.min.css'),
+    ],
+    widths=[Inches(2.2), Inches(2.2), Inches(2.1)],
+)
+
+doc.add_heading('Qué es una "función serverless"', level=4)
+doc.add_paragraph(
+    'En Vercel, cualquier fichero api/<nombre>.js se convierte automáticamente en una "función '
+    'serverless". Cuando llega una petición HTTP a https://asisa-pc.vercel.app/api/<nombre>, '
+    'Vercel arranca esa función, le pasa la petición, y devuelve lo que escriba la función. '
+    'Cuando termina, se apaga. No hay servidor que mantener corriendo.'
+)
+doc.add_paragraph('La carpeta api/ del proyecto contiene 11 funciones serverless:')
+add_code_block(
+    'api/markup.js              ← genera HTML de las URLs dinámicas\n'
+    'api/providers.js           ← listado paginado de médicos/centros\n'
+    'api/doctor.js              ← datos de un médico\n'
+    'api/centro.js              ← datos de un centro\n'
+    'api/provincias.js          ← lista de provincias\n'
+    'api/especialidades.js      ← lista de especialidades\n'
+    'api/providers-detail.js    ← detalle por código de localización\n'
+    'api/specialities.js        ← proxy en vivo al backend de ASISA\n'
+    'api/sitemap.js             ← /sitemap.xml\n'
+    'api/sitemap-cuadro-medico.js   ← sitemaps por tipo\n'
+    'api/sync-aem.js            ← utilidad de sincronización'
+)
+
+doc.add_heading('api/markup.js — el overlay BYOM, paso a paso', level=4)
+doc.add_paragraph(
+    'Cuando el navegador del usuario (o EDS, o Googlebot) pide '
+    'https://asisa-pc.vercel.app/markup/cuadro-medico/p/madrid, Vercel ejecuta api/markup.js y '
+    'devuelve un HTML completo de la página de Madrid: title, meta description, h1, las primeras '
+    '10 tarjetas de médicos, los chips de otras especialidades, etc.'
+)
+doc.add_paragraph('Pruébalo ahora mismo:')
+add_code_block(
+    'curl -I "https://asisa-pc.vercel.app/markup/cuadro-medico/p/madrid"\n'
+    '# HTTP 200 · content-type: text/html · x-source: ssr:provincia\n\n'
+    '# El header x-source te dice qué rama del router se ejecutó:\n'
+    '#   ssr:provincia       → /cuadro-medico/p/<slug>\n'
+    '#   ssr:provincia-spec  → /cuadro-medico/p/<prov>/pe/<spec>\n'
+    '#   ssr:especialidad    → /cuadro-medico/e/<slug>\n'
+    '#   ssr:doctor          → /cuadro-medico/d/<key>\n'
+    '#   ssr:centro          → /cuadro-medico/c/<key>\n'
+    '#   sitemap:index       → /sitemap.xml\n'
+    '#   sitemap:<tipo>      → /sitemap-cuadro-medico-<tipo>.xml\n'
+    '#   overlay-pass        → 404 (EDS sigue su flujo de fallback)'
+)
+doc.add_paragraph('Estructura interna del router (pseudocódigo):')
+add_code_block(
+    'function handler(req, res) {\n'
+    '  const path = req.query.path;   // p.ej. "cuadro-medico/p/madrid"\n'
+    '\n'
+    '  if (path matches "/cuadro-medico/p/<slug>")\n'
+    '    return ssrListing({ provSlug: "madrid" });        // HTML provincia\n'
+    '  if (path matches "/cuadro-medico/p/<prov>/pe/<spec>")\n'
+    '    return ssrListing({ provSlug, specSlug });        // HTML provincia+spec\n'
+    '  if (path matches "/cuadro-medico/d/<key>")\n'
+    '    return ssrDoctor(key);                            // HTML ficha doctor\n'
+    '  if (path matches "/cuadro-medico/c/<key>")\n'
+    '    return ssrCentro(key);                            // HTML ficha centro\n'
+    '  if (path matches "/cuadro-medico/e/<slug>")\n'
+    '    return ssrListing({ specSlug, nationalSpec: true });\n'
+    '  if (path === "/sitemap.xml") return sitemap XML;\n'
+    '\n'
+    '  return 404;  // EDS lo interpreta como "sigo mi flujo"\n'
+    '}'
+)
+
+doc.add_paragraph('Ejemplo completo de ssrListing para /cuadro-medico/p/madrid:')
+add_code_block(
+    'function ssrListing({ provSlug: "madrid" }) {\n'
+    '  // 1. Lee la lista de provincias del repo (data/provincias.json)\n'
+    '  const prov = fetchProvincias().find(p => p.slug === "madrid");\n'
+    '  // → { name:"MADRID", displayName:"Madrid", slug:"madrid",\n'
+    '  //     provinceCode:"28" }\n'
+    '\n'
+    '  // 2. Pide la primera página de profesionales en Madrid\n'
+    '  const data = fetchProviders({\n'
+    '    provinceSlug: "madrid", tab: "professionals", page: 1\n'
+    '  });\n'
+    '  // → { total: 30, results: [{name:"FRAILE MALMIERCA, EMILIO", ...},\n'
+    '  //     ...10 médicos] }\n'
+    '\n'
+    '  // 3. Construye el HTML con esos datos reales\n'
+    '  const html = `\n'
+    '    <h1>Cuadro Médico de ASISA en Madrid</h1>\n'
+    '    <p>Consulta el cuadro médico de ASISA en Madrid...</p>\n'
+    '    <div class="eds-mp-card">\n'
+    '      <p>Dr. Fraile Malmierca</p>\n'
+    '      <p>Cardiología</p>\n'
+    '      <p>Avenida Valladolid 83, 28008, Madrid</p>\n'
+    '      <a href="tel:917581196">917581196</a>\n'
+    '      <a href="/cuadro-medico/d/fraile-malmierca-emilio-453706204">\n'
+    '        Ver detalle\n'
+    '      </a>\n'
+    '    </div>\n'
+    '    <div class="eds-mp-card">… 9 médicos más …</div>`;\n'
+    '\n'
+    '  return { title: "Cuadro Médico ASISA en Madrid",\n'
+    '           description: "...", blocks: html };\n'
+    '}'
+)
+doc.add_paragraph(
+    'Esto es SSR (Server-Side Rendering): el HTML llega ya con el contenido real renderizado. '
+    'Googlebot lo indexa al instante, el usuario lo ve sin esperar a JavaScript.'
+)
+
+doc.add_heading('Los endpoints de datos (NO devuelven HTML, devuelven JSON)', level=4)
+doc.add_paragraph(
+    'Estos endpoints los consumen los bloques cliente (el JavaScript que corre en el navegador) '
+    'para las interacciones: cambiar de tab, paginar, abrir un acordeón, etc. Los puedes probar '
+    'tú mismo con curl.'
+)
+
+doc.add_heading('api/providers.js — listado paginado', level=4)
+add_code_block(
+    'curl "https://asisa-pc.vercel.app/api/providers?\\\n'
+    '  provinceSlug=madrid&specSlug=cardiologia&\\\n'
+    '  tab=professionals&page=1&limit=2" | jq\n\n'
+    '{\n'
+    '  "provinceSlug": "madrid",\n'
+    '  "specSlug": "cardiologia",\n'
+    '  "tab": "professionals",\n'
+    '  "page": 1,\n'
+    '  "total": 30,                  // capado a 30 profesionales\n'
+    '  "totalProfessionals": 30,\n'
+    '  "totalCenters": 50,           // capado a 50 centros\n'
+    '  "results": [\n'
+    '    {\n'
+    '      "name": "FRAILE MALMIERCA, EMILIO",\n'
+    '      "speciality": "CARDIOLOGÍA",\n'
+    '      "phone": "917581196",\n'
+    '      "address": "AVENIDA VALLADOLID 83",\n'
+    '      "city": "MADRID",\n'
+    '      "detailUrl": "/cuadro-medico/d/fraile-malmierca-emilio-453706204"\n'
+    '    },\n'
+    '    { …segundo médico… }\n'
+    '  ]\n'
+    '}'
+)
+doc.add_paragraph(
+    'Internamente lee de data/providers/madrid/cardiologia.json (lista cruda del catálogo) y '
+    'aplica filtros: separa profesionales de centros, aplica el tope de negocio (30/50), '
+    'pagina, etc.'
+)
+
+doc.add_heading('api/doctor.js — ficha de un médico', level=4)
+add_code_block(
+    'curl "https://asisa-pc.vercel.app/api/doctor?key=werenitzky-jose-282874657" | jq\n\n'
+    '{\n'
+    '  "key": "werenitzky-jose-282874657",\n'
+    '  "name": "WERENITZKY, JOSE",\n'
+    '  "collegiateCode": 282874657,\n'
+    '  "specialities": ["CARDIOLOGÍA"],\n'
+    '  "provinceSlug": "madrid",\n'
+    '  "parentDescription": "HOSPITAL UNIVERSITARIO HLA MONCLOA",\n'
+    '  "address": "AVENIDA VALLADOLID 83",\n'
+    '  "city": "MADRID",\n'
+    '  "phone": "917581196",\n'
+    '  "locations": [   // todos los centros donde pasa consulta\n'
+    '    {"providerLocalicationCode": 1496101, ...},\n'
+    '    {...}\n'
+    '  ]\n'
+    '}'
+)
+doc.add_paragraph(
+    'Internamente: (1) busca el key en data/cuadro-medico/doctores-index.json, (2) para cada '
+    'ubicación lee data/provider-details/<locCode>.json, (3) combina los datos. Si el key '
+    'no existe exactamente, prueba con el slug del nombre como fallback (resuelve URLs viejas '
+    'cuando ASISA cambia el identificador numérico).'
+)
+
+doc.add_heading('api/centro.js — ficha de un centro', level=4)
+add_code_block(
+    'curl "https://asisa-pc.vercel.app/api/centro?key=hospital-universitario-hla-moncloa" | jq\n\n'
+    '{\n'
+    '  "key": "hospital-universitario-hla-moncloa",\n'
+    '  "name": "HOSPITAL UNIVERSITARIO HLA MONCLOA",\n'
+    '  "address": "AVENIDA VALLADOLID 83",\n'
+    '  "city": "MADRID",\n'
+    '  "phone": "917581196",\n'
+    '  "specialities": [   // 36 especialidades\n'
+    '    {\n'
+    '      "speciality": "ALERGOLOGÍA",\n'
+    '      "doctors": [{key, name, ...}]\n'
+    '    }, ...\n'
+    '  ],\n'
+    '  "doctors": [...215 médicos...],\n'
+    '  "otherCentros": [...4 centros con specialidades parecidas...],\n'
+    '  "description": "Centro médico del cuadro de ASISA en MADRID…"\n'
+    '}'
+)
+doc.add_paragraph(
+    'Internamente lee TODOS los JSON de data/providers/madrid/*.json y agrupa por centro. Es el '
+    'endpoint más pesado del proyecto (~90 KB de respuesta para un hospital grande).'
+)
+
+doc.add_heading('api/provincias.js', level=4)
+add_code_block(
+    'curl "https://asisa-pc.vercel.app/api/provincias" | jq ".[0:2]"\n\n'
+    '[\n'
+    '  { "name":"ÁLAVA", "displayName":"Álava", "slug":"alava",\n'
+    '    "provinceCode":"1" },\n'
+    '  { "name":"ALBACETE", "displayName":"Albacete", "slug":"albacete",\n'
+    '    "provinceCode":"2" }\n'
+    ']\n\n'
+    'curl "https://asisa-pc.vercel.app/api/provincias?slug=madrid" | jq\n\n'
+    '{\n'
+    '  "slug": "madrid",\n'
+    '  "displayName": "Madrid",\n'
+    '  "provinceCode": "28",\n'
+    '  "especialidades": [\n'
+    '    "alergologia", "alergologia-infantil",\n'
+    '    "analisis-clinicos", ...\n'
+    '  ]\n'
+    '}'
+)
+
+doc.add_heading('api/especialidades.js', level=4)
+add_code_block(
+    'curl "https://asisa-pc.vercel.app/api/especialidades?slug=cardiologia" | jq\n\n'
+    '{\n'
+    '  "slug": "cardiologia",\n'
+    '  "name": "Cardiología",\n'
+    '  "provincias": [\n'
+    '    { "slug":"madrid", "displayName":"Madrid", "count":381 },\n'
+    '    { "slug":"barcelona", "displayName":"Barcelona", "count":218 },\n'
+    '    { "slug":"valencia", "displayName":"Valencia", "count":102 },\n'
+    '    ...\n'
+    '  ]\n'
+    '}'
+)
+
+doc.add_heading('api/specialities.js (con S, inglés — distinto del anterior)', level=4)
+doc.add_paragraph(
+    'Este es ESPECIAL: no lee del repo, es un PROXY que llama en vivo al backend de ASISA para '
+    'autocompletado de especialidades. Si el backend de ASISA cae, este endpoint cae también.'
+)
+add_code_block(
+    'curl "https://asisa-pc.vercel.app/api/specialities?provinceCode=28"\n\n'
+    '# Internamente Vercel hace:\n'
+    '#   GET https://ursaepre.asisa.es/.../autocomplete/specialities?provinceCode=28\n'
+    '# y devuelve lo que ASISA responda (passthrough).'
+)
+
+doc.add_heading('api/sitemap*.js — sitemaps XML', level=4)
+add_code_block(
+    'curl "https://asisa-pc.vercel.app/sitemap.xml"\n'
+    '# → sitemap index que enlaza a los 5 sitemaps específicos\n\n'
+    'curl "https://asisa-pc.vercel.app/sitemap-cuadro-medico-doctores.xml" | head -20\n'
+    '# → <urlset>\n'
+    '#     <url><loc>https://www.asisa.es/cuadro-medico/d/...</loc></url>\n'
+    '#     ... ~20.500 URLs\n'
+    '#   </urlset>'
+)
+
+doc.add_heading('Flujo end-to-end con un ejemplo real', level=4)
+doc.add_paragraph(
+    'Vamos a seguir lo que pasa cuando un usuario pide /cuadro-medico/p/madrid/pe/cardiologia '
+    'en su navegador.'
+)
+add_code_block(
+    '1. Usuario teclea la URL en el navegador → aem.live\n'
+    '   └─ EDS busca en su content-bus si tiene el HTML procesado de esta URL.\n'
+    '      ¿No lo tiene? Entonces le pide al overlay configurado en su\n'
+    '      sitewide config:\n'
+    '      GET https://asisa-pc.vercel.app/markup/cuadro-medico/p/madrid/pe/cardiologia\n'
+    '\n'
+    '2. Vercel arranca la función api/markup.js\n'
+    '   └─ Detecta el patrón /cuadro-medico/p/<prov>/pe/<spec>\n'
+    '      └─ Llama ssrListing({provSlug:"madrid", specSlug:"cardiologia"})\n'
+    '         └─ Internamente:\n'
+    '            · fetchProvincias() para obtener displayName "Madrid"\n'
+    '            · fetchEspecialidad("cardiologia") para obtener name "Cardiología"\n'
+    '            · fetchProviders({...}) para los 10 primeros cardiólogos\n'
+    '         └─ Construye HTML con <title>, <h1>, 10 cards, chips,\n'
+    '            grid de otras provincias\n'
+    '      └─ Devuelve HTML completo (~25 KB)\n'
+    '   └─ EDS guarda ese HTML en su bus live y se lo sirve al navegador\n'
+    '\n'
+    '3. El navegador recibe el HTML\n'
+    '   · Ya tiene <title>, <h1>, 10 médicos visibles\n'
+    '   · Googlebot a este punto YA ha indexado todo el contenido\n'
+    '\n'
+    '4. El navegador ejecuta scripts/aem.js + scripts/scripts.js\n'
+    '   └─ Detecta <div class="cuadro-medico"> y ejecuta\n'
+    '      blocks/cuadro-medico/cuadro-medico.js\n'
+    '      └─ El bloque hace fetch al endpoint de datos:\n'
+    '         GET https://asisa-pc.vercel.app/api/providers?\\\n'
+    '             provinceSlug=madrid&specSlug=cardiologia&\\\n'
+    '             tab=professionals&page=1\n'
+    '      └─ Recibe los datos como JSON y los re-renderiza con todas las\n'
+    '         clases del design system de ASISA (para que el CSS aplique)\n'
+    '\n'
+    '5. Cuando el usuario hace clic en "Centros médicos" (cambio de tab):\n'
+    '   └─ El bloque hace otro fetch:\n'
+    '      GET https://asisa-pc.vercel.app/api/providers?...&tab=centers\n'
+    '   └─ Recibe los centros y los pinta en el mismo lugar.'
+)
+doc.add_paragraph(
+    'Lo importante: el HTML inicial (SSR) trae el contenido para Googlebot, y el JavaScript se '
+    'encarga de la interactividad (tabs, paginación, fichas) llamando a los endpoints de datos. '
+    'Es la misma información servida dos veces — la primera como HTML para SEO, la segunda como '
+    'JSON para que el bloque pueda manipularla y aplicar las clases del design system.'
+)
+
+doc.add_heading('vercel.json — las reglas de routing', level=4)
+doc.add_paragraph(
+    'Este fichero le dice a Vercel cómo redirigir URLs "bonitas" a las funciones serverless.'
+)
+add_code_block(
+    '{\n'
+    '  "headers": [\n'
+    '    {\n'
+    '      "source": "/etc.clientlibs/:path*",\n'
+    '      "headers": [\n'
+    '        { "key": "Access-Control-Allow-Origin", "value": "*" }\n'
+    '      ]\n'
+    '    }\n'
+    '  ],\n'
+    '  "rewrites": [\n'
+    '    { "source": "/markup",     "destination": "/api/markup" },\n'
+    '    { "source": "/markup/(.*)", "destination": "/api/markup?path=$1" },\n'
+    '    { "source": "/sitemap.xml", "destination": "/api/sitemap" },\n'
+    '    { "source": "/sitemap-cuadro-medico-provincias.xml",\n'
+    '      "destination": "/api/sitemap-cuadro-medico?type=provincias" },\n'
+    '    …\n'
+    '  ]\n'
+    '}'
+)
+doc.add_paragraph('Cómo se lee esto:')
+add_bullet('Una petición a /markup/cuadro-medico/p/madrid se traduce internamente a '
+           '/api/markup?path=cuadro-medico/p/madrid. Vercel ejecuta api/markup.js con '
+           'req.query.path = "cuadro-medico/p/madrid".')
+add_bullet('Una petición a /sitemap.xml se traduce a /api/sitemap → ejecuta api/sitemap.js.')
+add_bullet('El resto de paths (/etc.clientlibs/*, ficheros en /scripts/, /styles/, etc.) son '
+           'estáticos: Vercel los sirve directamente desde el repo sin ejecutar funciones.')
+
+doc.add_heading('Experimentos rápidos para entender el sistema', level=4)
+doc.add_paragraph('A) Pedir al overlay directamente (es lo que hace EDS en preview):')
+add_code_block(
+    'curl -s "https://asisa-pc.vercel.app/markup/cuadro-medico/p/madrid" | head -40\n'
+    '# Verás <title>, <h1>, 10 cards reales de médicos.\n'
+    '# Eso es lo que api/markup.js generó.'
+)
+doc.add_paragraph('B) Pedir solo los datos JSON (es lo que hace el bloque cliente):')
+add_code_block(
+    'curl -s "https://asisa-pc.vercel.app/api/providers?\\\n'
+    '  provinceSlug=madrid&specSlug=cardiologia&\\\n'
+    '  tab=professionals&page=1&limit=3" | jq\n'
+    '# Verás el JSON con 3 cardiólogos.'
+)
+doc.add_paragraph('C) Lo mismo desde aem.live (ya cacheado en EDS):')
+add_code_block(
+    'curl -s "https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/p/madrid" |\n'
+    '  grep -E "(title|h1)" | head -3\n'
+    '# Mismo título y H1 — EDS guardó lo que recibió de Vercel.'
+)
+doc.add_paragraph('D) Si modificas api/markup.js y haces deploy:')
+add_numbered('Vercel actualiza la función. https://asisa-pc.vercel.app/markup/... ya '
+             'devuelve la versión nueva (verifícalo con A).')
+add_numbered('PERO https://main--asisa-pc--asisa-softtek.aem.live/... sigue sirviendo lo '
+             'viejo, porque EDS tiene en su bus el HTML antiguo.')
+add_numbered('Para que EDS coja la nueva: POST /preview + POST /live (o `node '
+             'refresh-eds-pages.mjs`). En esa petición EDS vuelve a pedir al overlay y '
+             'guarda el HTML nuevo.')
+
+doc.add_heading('Resumen muy corto', level=4)
+add_bullet('api/markup.js = "fábrica de HTML" para URLs dinámicas. Genera la página con '
+           '<title>, <h1>, contenido real. Es lo que ven Googlebot y el usuario en su '
+           'primera pintada.')
+add_bullet('api/<endpoint>.js (providers, doctor, centro, provincias, especialidades) = '
+           'endpoints REST de datos. Devuelven JSON. Los consumen los bloques JS del '
+           'navegador para interactividad.')
+add_bullet('vercel.json = reglas de routing. Reescribe URLs bonitas a las funciones.')
+add_bullet('data/ (carpeta) = los JSON pre-generados desde la API de ASISA. Los endpoints '
+           'de Vercel los leen para no llamar a ASISA en cada request.')
+add_bullet('etc.clientlibs/ (carpeta) = los CSS y fuentes del design system de ASISA, '
+           'guardados localmente en el repo y servidos por Vercel como estáticos (el '
+           'WAF de ASISA bloqueaba el proxy).')
 
 doc.add_page_break()
 doc.add_heading('3.4.1 Detalle exhaustivo de cada endpoint API', level=3)
@@ -1690,9 +2109,6 @@ add_table(
          'refresh-eds-pages.mjs (CONCURRENCY)',
          'Requests paralelas a admin.hlx.page (preview/live/code/index). Subir podría disparar '
          'rate limits.'),
-        ('Concurrencia de copy AEM Author', '5',
-         'create-aem-pages.mjs (CONCURRENCY)',
-         'Copias paralelas vía /bin/wcmcommand. Más causa OakLock collisions; menos enlentece.'),
         ('Cache TTL CDN', 's-maxage=300, stale-while-revalidate=3600',
          'api/providers.js, api/doctor.js, api/centro.js (res.setHeader)',
          '5 min de cache fresh + 1h de stale en el edge. Tras un update de datos, los listados '
@@ -1847,8 +2263,9 @@ add_code_block(
     '}'
 )
 doc.add_paragraph('Generador: generate-cuadro-medico-specs.mjs (agrupa entradas por '
-                  'collegiateCode). Consumido por: api/doctor.js + create-aem-pages.mjs (un page '
-                  '/cuadro-medico/d/<key> por cada key) + refresh-eds-pages.mjs --doctores.')
+                  'collegiateCode). Consumido por: api/doctor.js + refresh-eds-pages.mjs '
+                  '--doctores. No hay páginas AEM dedicadas: las URLs /cuadro-medico/d/<key> '
+                  'las genera el overlay BYOM dinámicamente.')
 doc.add_paragraph('Ejemplo de entrada real:')
 add_code_block(
     'jq \'.["garcia-balda-ainhoa-152854071"]\' data/cuadro-medico/doctores-index.json\n\n'
@@ -1885,7 +2302,7 @@ add_code_block(
     '}'
 )
 doc.add_paragraph('Generador: generate-cuadro-medico-specs.mjs. Consumido por: api/centro.js + '
-                  'create-aem-pages.mjs + refresh-eds-pages.mjs --centros.')
+                  'refresh-eds-pages.mjs --centros.')
 doc.add_paragraph('Ejemplo de entrada real:')
 add_code_block(
     'jq \'.["hospital-universitario-hla-moncloa"]\' '
@@ -1913,7 +2330,7 @@ add_code_block(
 )
 doc.add_paragraph('Generador: generate-cuadro-medico-specs.mjs. Consumido por: '
                   'api/sitemap-cuadro-medico.js, refresh-eds-pages.mjs (genera todas las '
-                  'combinaciones /p/<prov>/pe/<spec>), create-aem-pages.mjs.')
+                  'combinaciones /p/<prov>/pe/<spec>).')
 
 doc.add_heading('4.1.6 data/cuadro-medico/especialidades/<slug>.json', level=3)
 doc.add_paragraph('~183 ficheros. Uno por especialidad. Indica EN QUÉ provincias está '
@@ -2119,9 +2536,6 @@ add_table(
         ('generate-cuadro-medico-specs.mjs',
          'Agrega los providers cacheados y construye los índices doctores-index.json, centros-index.json, '
          'especialidades/*.json y provincias/*.json.'),
-        ('create-aem-pages.mjs',
-         'Crea las páginas plantilla en AEM Author (copy + publish) y refresca EDS. Requiere '
-         'AEM_TOKEN. Flags: --provincias, --especialidades, --doctores, --centros, --all.'),
         ('refresh-eds-pages.mjs',
          'Refresca preview+live (y opcionalmente reindex) en EDS sin tocar AEM. Flags: --code, '
          '--provincias, --specs, --doctores, --centros, --especialidades, --sitemaps, --reindex, '
@@ -2137,11 +2551,9 @@ add_code_block(
     'node generate-provider-details.mjs\n\n'
     '# 3. Construir índices\n'
     'node generate-cuadro-medico-specs.mjs\n\n'
-    '# 4. (Solo la primera vez) crear páginas plantilla en AEM — necesita AEM_TOKEN\n'
-    'AEM_TOKEN=… node create-aem-pages.mjs --all\n\n'
-    '# 5. Refrescar todo en EDS (anónimo, no necesita token)\n'
+    '# 4. Refrescar todo en EDS (anónimo, no necesita token)\n'
     'node refresh-eds-pages.mjs\n\n'
-    '# 6. Repoblar índices si se cambió helix-query.yaml\n'
+    '# 5. Repoblar índices si se cambió helix-query.yaml\n'
     'node refresh-eds-pages.mjs --reindex'
 )
 
@@ -2268,61 +2680,8 @@ add_code_block(
     '#   ✓ centros-index.json: 6505 entries'
 )
 
-# create-aem-pages.mjs
-doc.add_heading('Script 4 · create-aem-pages.mjs (~183 líneas)', level=3)
-doc.add_paragraph(
-    'Propósito: crea en AEM Author la página AEM correspondiente a cada URL dinámica (copy desde '
-    'plantilla), la activa (publish), y refresca preview+live en EDS. Es el único script que '
-    'toca AEM directamente.'
-)
-doc.add_paragraph('Inputs:')
-add_bullet('Env: AEM_TOKEN="login:eyJ..." (REQUERIDO; cookie login-token del Author).')
-add_bullet('Flags: --provincias, --especialidades, --doctores, --centros, --all.')
-add_bullet('Lee: provincias.json + provincias/<slug>.json + especialidades/ + doctores-index '
-           '+ centros-index según los flags.')
-doc.add_paragraph('APIs externas:')
-add_code_block(
-    'AEM Author (https://author-p133185-e1320482.adobeaemcloud.com)\n'
-    '  GET  {path}.infinity.json          → comprueba si la página existe\n'
-    '  POST /bin/wcmcommand               → cmd=copyPage&srcPath=…&destParentPath=…&pageName=…\n'
-    '                                      &shallow=false&replaceExistingPages=false\n'
-    '  POST /bin/replicate.json           → cmd=activate&path=…\n'
-    '  Headers: Cookie: login-token=<AEM_TOKEN>\n'
-    '           Content-Type: application/x-www-form-urlencoded\n\n'
-    'EDS admin (https://admin.hlx.page)\n'
-    '  POST /preview/asisa-softtek/asisa-pc/main<edsPath>\n'
-    '  POST /live/asisa-softtek/asisa-pc/main<edsPath>'
-)
-doc.add_paragraph('Plantillas AEM de las que copia:')
-add_bullet('/content/site-pc/cuadro-medico/provincia → /cuadro-medico/p/<slug>')
-add_bullet('/content/site-pc/cuadro-medico/provincia → /cuadro-medico/p/<prov>/pe/<spec>')
-add_bullet('/content/site-pc/cuadro-medico/doctor → /cuadro-medico/d/<key>')
-add_bullet('/content/site-pc/cuadro-medico/centro → /cuadro-medico/c/<key>')
-add_bullet('/content/site-pc/cuadro-medico/especialidad → /cuadro-medico/e/<slug>')
-doc.add_paragraph('Concurrencia 5 con delay 200 ms entre batches (concurrencia más alta puede '
-                  'generar locks OAK en AEM). Errores tolerados: FAIL copy → log y continúa. '
-                  'Fatal: sin AEM_TOKEN → exit(1).')
-doc.add_paragraph('Este script es independiente de Vercel. '
-                  'Funciona igual sea cual sea el overlay. No requiere cambios.')
-
-doc.add_paragraph('Ejemplos:')
-add_code_block(
-    'export AEM_TOKEN="login:eyJhbGciOi..."  # obtener desde devtools/cookies\n\n'
-    '# Crear/publicar TODAS las páginas (provincias + specs + doctores +\n'
-    '# centros + especialidades). Tarda ~6-8 horas con concurrencia 5.\n'
-    'node create-aem-pages.mjs --all\n\n'
-    '# Solo provincias + provincia+spec (52 + ~3.250 páginas)\n'
-    'node create-aem-pages.mjs --provincias\n\n'
-    '# Solo doctores (~20.500 páginas)\n'
-    'node create-aem-pages.mjs --doctores\n\n'
-    '# Output:\n'
-    '#   OK /cuadro-medico/p/madrid\n'
-    '#   OK /cuadro-medico/p/barcelona\n'
-    '#   FAIL copy /content/site-pc/cuadro-medico/d/<slug> (OAK lock)'
-)
-
 # refresh-eds-pages.mjs
-doc.add_heading('Script 5 · refresh-eds-pages.mjs (~254 líneas)', level=3)
+doc.add_heading('Script 4 · refresh-eds-pages.mjs (~254 líneas)', level=3)
 doc.add_paragraph(
     'Propósito: refresca preview/live y opcionalmente repuebla los query-indexes en EDS, sin '
     'tocar AEM. Es el "Swiss army knife" del día a día.'
@@ -2619,8 +2978,6 @@ add_table(
     [
         ('HLX_ADMIN_API_TOKEN', 'Token admin EDS para POST /preview, /live, /code, /index',
          'Local (export) o GitHub Secret'),
-        ('AEM_TOKEN', 'Token de AEM Author para create-aem-pages.mjs',
-         'Local (export)'),
         ('SYNC_SECRET', 'Shared secret para api/sync-aem.js',
          'Vercel env'),
         ('FORCE', 'Flag para forzar regeneración en los generate-*.mjs',
