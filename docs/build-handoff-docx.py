@@ -661,6 +661,18 @@ doc.add_paragraph('Tolerancia a URLs obsoletas: fetchDoctor() y fetchCentro() im
                   'cambió en la última regen), se busca un key que coincida en el prefijo del '
                   'slug ("carbonell-martinez-antonio-*") y se sirve la entrada actual. Esto evita '
                   'que URLs publicadas en EDS hace tiempo den 404 si el catálogo se ha regenerado.')
+doc.add_paragraph('Ejemplos de petición:')
+add_code_block(
+    '# Provincia listing\n'
+    'curl "https://asisa-pc.vercel.app/markup/cuadro-medico/p/madrid" -I\n'
+    '#   → HTTP 200, content-type: text/html, x-source: ssr:provincia\n\n'
+    '# Ficha doctor con key obsoleto (se resuelve por fallback)\n'
+    'curl "https://asisa-pc.vercel.app/markup/cuadro-medico/d/carbonell-martinez-antonio-2399368" -I\n'
+    '#   → HTTP 200, x-source: ssr:doctor\n\n'
+    '# Path no reconocido → 404 que EDS interpreta como "pasa al source de AEM"\n'
+    'curl "https://asisa-pc.vercel.app/markup/no-existe" -I\n'
+    '#   → HTTP 404, x-source: overlay-pass'
+)
 doc.add_paragraph('Consumido por: EDS preview/live al hacer fetch al overlay configurado en sitewide config.')
 
 # --- api/providers.js ---
@@ -742,6 +754,46 @@ add_bullet('Modo "nacional" (sin provinceSlug): escanea todas las carpetas data/
            'buscando el spec.')
 add_bullet('Consumido por bloques: cuadro-medico (motor búsqueda) y cuadro-medico-otros-medicos '
            '(con limit=50).')
+doc.add_paragraph('Ejemplo de petición y respuesta real:')
+add_code_block(
+    'curl "https://asisa-pc.vercel.app/api/providers?provinceSlug=madrid'
+    '&specSlug=cardiologia&tab=professionals&page=1&limit=1"\n\n'
+    '{\n'
+    '  "provinceSlug": "madrid",\n'
+    '  "specSlug": "cardiologia",\n'
+    '  "tab": "professionals",\n'
+    '  "page": 1,\n'
+    '  "limit": 1,\n'
+    '  "total": 30,\n'
+    '  "totalPages": 30,\n'
+    '  "totalProfessionals": 30,\n'
+    '  "totalCenters": 50,\n'
+    '  "results": [\n'
+    '    {\n'
+    '      "name": "FRAILE MALMIERCA, EMILIO",\n'
+    '      "speciality": "CARDIOLOGÍA",\n'
+    '      "providerType": 1,\n'
+    '      "doctorType": 1,\n'
+    '      "businessGroup": true,\n'
+    '      "parentDescription": "HOSPITAL UNIVERSITARIO HLA MONCLOA",\n'
+    '      "address": "AVENIDA VALLADOLID 83",\n'
+    '      "postalCode": "28008",\n'
+    '      "city": "MADRID",\n'
+    '      "phone": "917581196",\n'
+    '      "lat": 40.433166,\n'
+    '      "lon": -3.7337846,\n'
+    '      "onlineAppointment": true,\n'
+    '      "videoConsultation": false,\n'
+    '      "ePrescription": true,\n'
+    '      "languages": [],\n'
+    '      "collegiateCode": 453706204,\n'
+    '      "providerLocalicationCode": 1496101,\n'
+    '      "providerCode": 3839140,\n'
+    '      "detailUrl": "/cuadro-medico/d/fraile-malmierca-emilio-453706204"\n'
+    '    }\n'
+    '  ]\n'
+    '}'
+)
 
 # --- api/doctor.js ---
 doc.add_heading('Endpoint 3 · api/doctor.js (ficha de profesional)', level=4)
@@ -788,6 +840,36 @@ add_bullet('mergeAddress(): combina address de detail y de la lista, priorizando
 add_bullet('Una persona puede tener varias entradas (cada ubicación + especialidad genera una); '
            'se agrupa por collegiateCode en el índice.')
 add_bullet('Consumido por: cuadro-medico-ficha-doctor y cuadro-medico-otros-medicos.')
+doc.add_paragraph('Ejemplo:')
+add_code_block(
+    'curl "https://asisa-pc.vercel.app/api/doctor?key=werenitzky-jose-282874657"\n\n'
+    '{\n'
+    '  "key": "werenitzky-jose-282874657",\n'
+    '  "name": "WERENITZKY , JOSE",\n'
+    '  "collegiateCode": 282874657,\n'
+    '  "languages": [],\n'
+    '  "specialities": ["CARDIOLOGÍA"],\n'
+    '  "specSlug": "cardiologia",\n'
+    '  "provinceSlug": "madrid",\n'
+    '  "parentDescription": "HOSPITAL UNIVERSITARIO HLA MONCLOA",\n'
+    '  "address": "AVENIDA VALLADOLID 83",\n'
+    '  "postalCode": "28008",\n'
+    '  "city": "MADRID",\n'
+    '  "provinceCode": "28",\n'
+    '  "phone": "917581196",\n'
+    '  "lat": 40.433166,\n'
+    '  "lon": -3.7337846,\n'
+    '  "onlineAppointment": true,\n'
+    '  "videoConsultation": false,\n'
+    '  "ePrescription": true,\n'
+    '  "businessGroup": true,\n'
+    '  "tuotempo": { "presential": true, "online": true, ... },\n'
+    '  "locations": [\n'
+    '    { "providerCode": 3839140, "providerLocalicationCode": 1496101,\n'
+    '      "speciality": "CARDIOLOGÍA", ... }\n'
+    '  ]\n'
+    '}'
+)
 
 # --- api/centro.js ---
 doc.add_heading('Endpoint 4 · api/centro.js (ficha de centro)', level=4)
@@ -833,6 +915,51 @@ add_bullet('Vincula doctors al centro vía parentCode → providerLocalicationCo
 add_bullet('otherCentros: top 4 centros con MAYOR overlap de especialidades (orden: overlap '
            'desc, nombre asc).')
 add_bullet('Consumido por: cuadro-medico-ficha-centro.')
+doc.add_paragraph('Ejemplo (resumido — la respuesta real son ~90 KB de JSON):')
+add_code_block(
+    'curl "https://asisa-pc.vercel.app/api/centro?key=hospital-universitario-hla-moncloa"\n\n'
+    '{\n'
+    '  "key": "hospital-universitario-hla-moncloa",\n'
+    '  "providerLocalicationCode": 1496101,\n'
+    '  "name": "HOSPITAL UNIVERSITARIO HLA MONCLOA",\n'
+    '  "address": "AVENIDA VALLADOLID 83",\n'
+    '  "postalCode": "28008",\n'
+    '  "city": "MADRID",\n'
+    '  "provinceCode": "28",\n'
+    '  "provinceSlug": "madrid",\n'
+    '  "phone": "917581196",\n'
+    '  "lat": 40.433166,\n'
+    '  "lon": -3.7337846,\n'
+    '  "businessGroup": true,\n'
+    '  "specialities": [          // 36 entradas\n'
+    '    {\n'
+    '      "speciality": "ALERGOLOGÍA",\n'
+    '      "specSlug": "alergologia",\n'
+    '      "phone": "917581196",\n'
+    '      "onlineAppointment": true,\n'
+    '      "subSpecialities": [],\n'
+    '      "doctors": [\n'
+    '        { "key": "delgado-gonzalez-almudena-282875256",\n'
+    '          "name": "DELGADO GONZALEZ, ALMUDENA", "subSpeciality": "" }\n'
+    '      ]\n'
+    '    },\n'
+    '    ...\n'
+    '  ],\n'
+    '  "doctors": [               // 215 entradas\n'
+    '    { "key": "alaez-uson-concepcion-282852412",\n'
+    '      "name": "ALAEZ USON, CONCEPCION",\n'
+    '      "speciality": "HEMATOLOGÍA Y HEMOTERAPIA", "gender": "H" },\n'
+    '    ...\n'
+    '  ],\n'
+    '  "otherCentros": [          // 4 entradas\n'
+    '    { "key": "hospital-quiron-san-camilo",\n'
+    '      "name": "HOSPITAL QUIRON SAN CAMILO",\n'
+    '      "specialities": ["CARDIOLOGÍA","..."], "specialitiesMore": 12 },\n'
+    '    ...\n'
+    '  ],\n'
+    '  "description": "Centro médico del cuadro de ASISA en MADRID..."\n'
+    '}'
+)
 
 # --- api/provincias.js ---
 doc.add_heading('Endpoint 5 · api/provincias.js (listado / detalle de provincia)', level=4)
@@ -840,13 +967,23 @@ doc.add_paragraph('Ruta: api/provincias.js · 20 líneas · HTTP: GET /api/provi
 doc.add_paragraph('Query: slug (opcional). Sin slug → array de provincias. Con slug → detalle.')
 doc.add_paragraph('Sin caché in-memory (passthrough de fichero). Cache-Control: s-maxage=86400, '
                   'stale-while-revalidate=604800 (24h + 7d stale).')
-doc.add_paragraph('Shape sin slug:')
+doc.add_paragraph('Ejemplos:')
 add_code_block(
-    '[\n'
-    '  { "name": "MADRID", "displayName": "Madrid", "slug": "madrid",\n'
-    '    "provinceCode": "28" },\n'
-    '  …\n'
-    ']'
+    'curl "https://asisa-pc.vercel.app/api/provincias" | jq ".[0]"\n\n'
+    '{\n'
+    '  "name": "ÁLAVA",\n'
+    '  "displayName": "Álava",\n'
+    '  "slug": "alava",\n'
+    '  "provinceCode": "1"\n'
+    '}\n\n'
+    'curl "https://asisa-pc.vercel.app/api/provincias?slug=madrid"\n\n'
+    '{\n'
+    '  "slug": "madrid",\n'
+    '  "displayName": "Madrid",\n'
+    '  "provinceCode": "28",\n'
+    '  "especialidades": ["alergologia", "alergologia-infantil",\n'
+    '    "analisis-clinicos", "anatomia-patologica", ...]\n'
+    '}'
 )
 doc.add_paragraph('Shape con slug: objeto de data/cuadro-medico/provincias/<slug>.json — '
                   '{ slug, displayName, provinceCode, especialidades: [<spec-slugs>] }.')
@@ -857,25 +994,29 @@ doc.add_paragraph('Ruta: api/especialidades.js · 36 líneas · HTTP: GET /api/e
 doc.add_paragraph('Query: slug (opcional).')
 doc.add_paragraph('Cachés: masterCache.')
 doc.add_paragraph('Errores: 404 "Especialidad no encontrada", 404 "Sin datos para".')
-doc.add_paragraph('Shape sin slug:')
+doc.add_paragraph('Ejemplos:')
 add_code_block(
-    '[\n'
-    '  { "slug": "cardiologia", "name": "Cardiología",\n'
-    '    "nameApi": "CARDIOLOGÍA",\n'
-    '    "professionalPlural": "Cardiólogos",\n'
-    '    "professionalPluralLower": "cardiólogos",\n'
-    '    "kind": "specialty" | "service" | "technique",\n'
-    '    "specialityCode": 9 },\n'
-    '  …\n'
-    ']'
-)
-doc.add_paragraph('Shape con slug: meta + array provincias[]:')
-add_code_block(
+    'curl "https://asisa-pc.vercel.app/api/especialidades" | jq ".[0]"\n\n'
     '{\n'
-    '  "slug": "cardiologia", "name": "Cardiología", "kind": "specialty",\n'
+    '  "slug": "alergologia",\n'
+    '  "name": "Alergología",\n'
+    '  "nameApi": "ALERGOLOGÍA",\n'
+    '  "professionalPlural": "Alergólogos",\n'
+    '  "professionalPluralLower": "alergólogos",\n'
+    '  "kind": "specialty",\n'
+    '  "specialityCode": 1\n'
+    '}\n\n'
+    'curl "https://asisa-pc.vercel.app/api/especialidades?slug=cardiologia"\n\n'
+    '{\n'
+    '  "slug": "cardiologia",\n'
+    '  "name": "Cardiología",\n'
+    '  "nameApi": "CARDIOLOGÍA",\n'
+    '  "kind": "specialty",\n'
     '  "provincias": [\n'
     '    { "slug": "madrid", "displayName": "Madrid", "count": 381 },\n'
-    '    …  // ordenado por count desc\n'
+    '    { "slug": "barcelona", "displayName": "Barcelona", "count": 218 },\n'
+    '    { "slug": "valencia", "displayName": "Valencia", "count": 102 },\n'
+    '    …  // ordenado por count desc, hasta 50 provincias\n'
     '  ]\n'
     '}'
 )
@@ -892,6 +1033,21 @@ doc.add_paragraph(
 )
 doc.add_paragraph('Consumido por: usado como fallback / enriquecimiento desde otros endpoints; '
                   'también accesible directo desde el frontend si se necesita una sola ubicación.')
+doc.add_paragraph('Ejemplo:')
+add_code_block(
+    'curl "https://asisa-pc.vercel.app/api/providers-detail?id=1496101"\n\n'
+    '{\n'
+    '  "providerLocalicationCode": 1496101,\n'
+    '  "providerCode": 3839140,\n'
+    '  "name": "HOSPITAL UNIVERSITARIO HLA MONCLOA",\n'
+    '  "specialities": ["ALERGOLOGÍA", "CARDIOLOGÍA",\n'
+    '    "DERMATOLOGÍA MÉDICO-QUIRÚRGICA Y VENÉREO", ...],\n'
+    '  "address": "AVENIDA VALLADOLID 83",\n'
+    '  "city": "MADRID",\n'
+    '  "phone": "917581196",\n'
+    '  "languages": []\n'
+    '}'
+)
 
 # --- api/specialities.js ---
 doc.add_heading('Endpoint 8 · api/specialities.js (proxy autocomplete a ASISA)', level=4)
@@ -1693,6 +1849,28 @@ add_code_block(
 doc.add_paragraph('Generador: generate-cuadro-medico-specs.mjs (agrupa entradas por '
                   'collegiateCode). Consumido por: api/doctor.js + create-aem-pages.mjs (un page '
                   '/cuadro-medico/d/<key> por cada key) + refresh-eds-pages.mjs --doctores.')
+doc.add_paragraph('Ejemplo de entrada real:')
+add_code_block(
+    'jq \'.["garcia-balda-ainhoa-152854071"]\' data/cuadro-medico/doctores-index.json\n\n'
+    '{\n'
+    '  "collegiateCode": 152854071,\n'
+    '  "name": "GARCIA BALDA, AINHOA",\n'
+    '  "locations": [\n'
+    '    {\n'
+    '      "providerCode": 3822571,\n'
+    '      "providerLocalicationCode": 1480942,\n'
+    '      "specSlug": "alergologia-infantil",\n'
+    '      "provinceSlug": "a-coruna"\n'
+    '    },\n'
+    '    {\n'
+    '      "providerCode": 3822571,\n'
+    '      "providerLocalicationCode": 1480942,\n'
+    '      "specSlug": "alergologia",\n'
+    '      "provinceSlug": "a-coruna"\n'
+    '    }\n'
+    '  ]\n'
+    '}'
+)
 
 doc.add_heading('4.1.4 data/cuadro-medico/centros-index.json', level=3)
 doc.add_paragraph('1 fichero. Object con ~6.500 keys. Cada key es el slug del centro.')
@@ -1708,6 +1886,16 @@ add_code_block(
 )
 doc.add_paragraph('Generador: generate-cuadro-medico-specs.mjs. Consumido por: api/centro.js + '
                   'create-aem-pages.mjs + refresh-eds-pages.mjs --centros.')
+doc.add_paragraph('Ejemplo de entrada real:')
+add_code_block(
+    'jq \'.["hospital-universitario-hla-moncloa"]\' '
+    'data/cuadro-medico/centros-index.json\n\n'
+    '{\n'
+    '  "providerLocalicationCode": 1496101,\n'
+    '  "name": "HOSPITAL UNIVERSITARIO HLA MONCLOA",\n'
+    '  "provinceSlug": "madrid"\n'
+    '}'
+)
 
 doc.add_heading('4.1.5 data/cuadro-medico/provincias/<slug>.json', level=3)
 doc.add_paragraph('50 ficheros (uno por provincia que tiene catálogo). 1 por provincia. Indica '
@@ -2000,6 +2188,19 @@ doc.add_paragraph('Concurrencia: 10. Sin retry automático para 429 (timeout 150
                   'suficiente). Errores tolerados: status != 200, NETWORK, TIMEOUT — log y continúa.')
 doc.add_paragraph('Lanzador: manual (CLI) o GitHub Action workflow_dispatch (con cron diario '
                   'disponible pero comentado).')
+doc.add_paragraph('Ejemplos de invocación:')
+add_code_block(
+    '# Regeneración completa (~50 min, respeta caché del repo)\n'
+    'node generate-providers-data.mjs\n\n'
+    '# Forzar redownload aunque exista caché en repo\n'
+    'FORCE=true node generate-providers-data.mjs\n\n'
+    '# Solo Madrid (debug rápido, ~3 min)\n'
+    'PROVINCE_CODE=28 node generate-providers-data.mjs\n\n'
+    '# Output típico:\n'
+    '#   ✓ madrid · alergologia: 47 providers\n'
+    '#   ✓ madrid · cardiologia: 381 providers\n'
+    '#   ✗ [TIMEOUT] barcelona · psicologia (continúa)'
+)
 
 # generate-provider-details.mjs
 doc.add_heading('Script 2 · generate-provider-details.mjs (~158 líneas)', level=3)
@@ -2020,6 +2221,17 @@ doc.add_paragraph('Concurrencia: 25 (bajar a 10 si la API empieza a devolver 429
                   'request falla, escribe "null" en el fichero (no propaga el error).')
 doc.add_paragraph('Lanzador: manual o workflow_dispatch (timeout configurado a 360 min, '
                   '~33k peticiones).')
+doc.add_paragraph('Ejemplos:')
+add_code_block(
+    '# Modo normal (respeta caché de provider-details/)\n'
+    'node generate-provider-details.mjs\n'
+    '#   → reutiliza 30.000+ ficheros existentes; descarga solo los nuevos\n\n'
+    '# Forzar redownload completo (~3 horas, ~33k requests)\n'
+    'FORCE=true node generate-provider-details.mjs\n\n'
+    '# Output típico:\n'
+    '#   procesando (10/33058): 1234567 [werenitzky-jose-282874657]\n'
+    '#   ✓ cached: 28145 · descargados: 4500 · errores: 413'
+)
 
 # generate-cuadro-medico-specs.mjs
 doc.add_heading('Script 3 · generate-cuadro-medico-specs.mjs (~236 líneas)', level=3)
@@ -2043,6 +2255,18 @@ add_numbered('Al final escribe los 4 ficheros / 2 carpetas con los agregados.')
 doc.add_paragraph('Errores tolerados: ficheros vacíos o corruptos → skip silencioso. Fatales: '
                   'sin provincias.json o sin especialidades.json → exit(1).')
 doc.add_paragraph('Lanzador: manual tras los dos generate-*.mjs anteriores.')
+doc.add_paragraph('Ejemplos:')
+add_code_block(
+    '# Genera todos los índices (~2 min, sin red)\n'
+    'node generate-cuadro-medico-specs.mjs\n\n'
+    '# Solo para una provincia\n'
+    'PROVINCE_SLUG=madrid node generate-cuadro-medico-specs.mjs\n\n'
+    '# Output:\n'
+    '#   ✓ provincia: 52 procesadas\n'
+    '#   ✓ especialidades: 181 procesadas\n'
+    '#   ✓ doctores-index.json: 20567 entries\n'
+    '#   ✓ centros-index.json: 6505 entries'
+)
 
 # create-aem-pages.mjs
 doc.add_heading('Script 4 · create-aem-pages.mjs (~183 líneas)', level=3)
@@ -2081,6 +2305,22 @@ doc.add_paragraph('Concurrencia 5 con delay 200 ms entre batches (concurrencia m
 doc.add_paragraph('Este script es independiente de Vercel. '
                   'Funciona igual sea cual sea el overlay. No requiere cambios.')
 
+doc.add_paragraph('Ejemplos:')
+add_code_block(
+    'export AEM_TOKEN="login:eyJhbGciOi..."  # obtener desde devtools/cookies\n\n'
+    '# Crear/publicar TODAS las páginas (provincias + specs + doctores +\n'
+    '# centros + especialidades). Tarda ~6-8 horas con concurrencia 5.\n'
+    'node create-aem-pages.mjs --all\n\n'
+    '# Solo provincias + provincia+spec (52 + ~3.250 páginas)\n'
+    'node create-aem-pages.mjs --provincias\n\n'
+    '# Solo doctores (~20.500 páginas)\n'
+    'node create-aem-pages.mjs --doctores\n\n'
+    '# Output:\n'
+    '#   OK /cuadro-medico/p/madrid\n'
+    '#   OK /cuadro-medico/p/barcelona\n'
+    '#   FAIL copy /content/site-pc/cuadro-medico/d/<slug> (OAK lock)'
+)
+
 # refresh-eds-pages.mjs
 doc.add_heading('Script 5 · refresh-eds-pages.mjs (~254 líneas)', level=3)
 doc.add_paragraph(
@@ -2118,6 +2358,27 @@ add_bullet('--centros: 10-15 min.')
 add_bullet('--especialidades: < 1 min.')
 add_bullet('--sitemaps: < 1 min.')
 add_bullet('--reindex (todo): ~40 min.')
+
+doc.add_paragraph('Ejemplos:')
+add_code_block(
+    '# Refresco completo (todos los tipos + code + sitemaps), ~40-45 min\n'
+    'node refresh-eds-pages.mjs\n\n'
+    '# Solo el bus de código (tras commitear cambios en blocks/, scripts/,\n'
+    '# styles/, head.html, helix-*.yaml)\n'
+    'node refresh-eds-pages.mjs --code\n\n'
+    '# Solo una provincia + sus combos provincia+especialidad\n'
+    'node refresh-eds-pages.mjs --province=madrid\n\n'
+    '# Solo los 6 sitemaps\n'
+    'node refresh-eds-pages.mjs --sitemaps\n\n'
+    '# Repoblar query-indexes tras cambiar helix-query.yaml\n'
+    'node refresh-eds-pages.mjs --reindex\n\n'
+    '# Output:\n'
+    '#   refresh code: 200\n'
+    '#   refreshing 52 provincias...\n'
+    '#   preview /cuadro-medico/p/a-coruna: 200, live: 200\n'
+    '#   preview /cuadro-medico/p/alava: 200, live: 200\n'
+    '#   ...'
+)
 
 doc.add_heading('6.2 Comandos sueltos clave', level=2)
 doc.add_paragraph(
