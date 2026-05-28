@@ -584,42 +584,51 @@ add_table(
       '.plain.html — el handler los normaliza.')],
     widths=[Inches(0.8), Inches(0.8), Inches(0.8), Inches(4.1)],
 )
-doc.add_paragraph('Patrones de path reconocidos y qué genera cada uno:')
+doc.add_paragraph('Patrones de path reconocidos, ejemplo real y qué genera:')
 add_table(
-    ['Patrón', 'Función SSR', 'Lo que emite en el HTML'],
+    ['Patrón', 'Ejemplo real', 'Función SSR', 'Lo que emite'],
     [
         ('/cuadro-medico/p/<slug>',
+         '/cuadro-medico/p/madrid',
          'ssrListing + ssrOtrasEspecialidades',
          '<title>, meta description, canonical, og tags, H1 "Cuadro Médico de ASISA en X", '
-         'intro SEO, primeras 10 tarjetas de profesionales (eds-mp-card) con nombre real, '
-         'especialidad, dirección, teléfono y link a la ficha. Bajo el listado: chips '
-         '(eds-mp-other-specs) con las otras especialidades disponibles en la provincia.'),
+         'intro SEO, primeras 10 tarjetas (eds-mp-card) con nombre real, especialidad, '
+         'dirección, teléfono y link a la ficha. Chips de otras especialidades en la '
+         'provincia.'),
         ('/cuadro-medico/p/<prov>/pe/<spec>',
+         '/cuadro-medico/p/madrid/pe/cardiologia',
          'ssrListing + ssrOtrasEspecialidades + ssrOtrasProvincias',
-         'Mismo que arriba pero filtrado por especialidad: H1 "<Spec> en <Provincia>", '
-         '10 cards, chips de otras especialidades en la provincia y grid de otras provincias '
-         'con esa especialidad (cm-otras-prov-card) con count de profesionales.'),
+         'Mismo que arriba filtrado por especialidad. H1 "<Spec> en <Provincia>", 10 cards, '
+         'chips y grid de otras provincias con esa especialidad (cm-otras-prov-card).'),
         ('/cuadro-medico/e/<slug>',
+         '/cuadro-medico/e/cardiologia',
          'ssrListing + ssrOtrasEspecialidades + ssrOtrasProvincias',
          'Búsqueda nacional. H1 "Especialistas en X con ASISA", 10 cards mezclando provincias, '
          'top 15 chips de otras especialidades y grid de todas las provincias.'),
         ('/cuadro-medico/d/<key>',
+         '/cuadro-medico/d/werenitzky-jose-282874657',
          'ssrDoctor + ssrOtrosMedicos',
-         'H1 "<Nombre del médico>, <Especialidad>", intro, una card detallada por cada '
-         'ubicación donde el médico pasa consulta (con link al centro padre), y 2 secciones '
-         'de chips: otros médicos en la misma provincia + en el mismo centro.'),
+         'H1 "<Nombre>, <Especialidad>", intro, una card por cada ubicación donde el médico '
+         'pasa consulta (con link al centro padre), y chips de otros médicos en la provincia '
+         '+ en el mismo centro.'),
         ('/cuadro-medico/c/<key>',
+         '/cuadro-medico/c/hospital-universitario-hla-moncloa',
          'ssrCentro',
-         'Breadcrumb, H1 "<Centro> en <Provincia>", intro, card principal del centro, sección '
-         'con TODAS las especialidades y sus doctores asociados, grid completo de médicos del '
-         'centro y sección de otros centros similares.'),
-        ('/sitemap.xml', '—',
+         'Breadcrumb, H1 "<Centro> en <Provincia>", intro, card principal, sección con TODAS '
+         'las especialidades y sus doctores, grid completo de médicos y sección de otros '
+         'centros similares.'),
+        ('/sitemap.xml', '/sitemap.xml',
+         '—',
          'Delega en getSitemapIndexXml() de api/sitemap.js.'),
-        ('/sitemap-cuadro-medico-{tipo}.xml', '—',
-         'Delega en getCuadroMedicoSitemapXml(tipo) de api/sitemap-cuadro-medico.js.'),
-        ('Cualquier otro', '—', '404 con header x-source: overlay-pass (EDS hace fallback a AEM).'),
+        ('/sitemap-cuadro-medico-{tipo}.xml',
+         '/sitemap-cuadro-medico-doctores.xml',
+         '—',
+         'Delega en getCuadroMedicoSitemapXml(tipo) de api/sitemap-cuadro-medico.js. '
+         'Tipos: provincias, provincia-specs, doctores, centros, especialidades.'),
+        ('Cualquier otro', '/foo, /bar', '—',
+         '404 con header x-source: overlay-pass (EDS hace fallback a AEM).'),
     ],
-    widths=[Inches(1.8), Inches(1.8), Inches(2.9)],
+    widths=[Inches(1.6), Inches(1.8), Inches(1.4), Inches(1.7)],
 )
 doc.add_paragraph('Headers de respuesta:')
 add_bullet('Content-Type: text/html; charset=utf-8 (templates) o application/xml; charset=utf-8 (sitemaps)')
@@ -2387,6 +2396,161 @@ add_table(
         ('Query index', 'JSON con los paths indexados de páginas (origen de los sitemaps).'),
     ],
     widths=[Inches(2), Inches(4.5)],
+)
+
+# =============================================================================
+# 12. Batería de URLs reales para probar
+# =============================================================================
+doc.add_page_break()
+doc.add_heading('12. URLs de ejemplo para probar', level=1)
+doc.add_paragraph(
+    'Batería de URLs reales con datos confirmados en el catálogo. Útil para QA y para '
+    'verificación rápida tras cualquier despliegue.'
+)
+
+doc.add_heading('12.1 Páginas dinámicas en aem.live (lo que ve el usuario)', level=2)
+doc.add_paragraph('Listado por provincia /cuadro-medico/p/<slug>:')
+add_code_block(
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/p/madrid\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/p/barcelona\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/p/malaga\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/p/valencia\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/p/sevilla'
+)
+doc.add_paragraph('Provincia + especialidad /cuadro-medico/p/<prov>/pe/<spec>:')
+add_code_block(
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/p/madrid/pe/cardiologia\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/p/madrid/pe/dermatologia-medico-quirurgica-y-venereo\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/p/madrid/pe/pediatria\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/p/barcelona/pe/oftalmologia\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/p/malaga/pe/ginecologia-y-obstetricia'
+)
+doc.add_paragraph('Especialidad nacional /cuadro-medico/e/<slug>:')
+add_code_block(
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/e/cardiologia\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/e/dermatologia-medico-quirurgica-y-venereo\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/e/oftalmologia\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/e/pediatria\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/e/traumatologia-y-cirugia-ortopedica'
+)
+doc.add_paragraph('Ficha de centro /cuadro-medico/c/<key>:')
+add_code_block(
+    '# Madrid\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/c/hospital-quiron-san-jose\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/c/hospital-universitario-hla-moncloa\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/c/centro-medico-asisa-caracas\n\n'
+    '# Barcelona\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/c/hospital-hm-nens\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/c/creu-groga\n\n'
+    '# Málaga\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/c/hospital-hla-el-angel\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/c/clinica-sanisalud\n\n'
+    '# Valencia\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/c/clinica-manises'
+)
+doc.add_paragraph('Ficha de profesional /cuadro-medico/d/<key>:')
+add_code_block(
+    '# Key correcto del índice doctores-index.json\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/d/werenitzky-jose-282874657\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/d/carbonell-martinez-antonio-303003327\n\n'
+    '# Key con ID obsoleto — el fallback por slug del nombre lo resuelve\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/d/carbonell-martinez-antonio-2399368'
+)
+
+doc.add_heading('12.2 Sitemaps en aem.live', level=2)
+add_code_block(
+    'https://main--asisa-pc--asisa-softtek.aem.live/sitemap.xml\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/sitemap-cuadro-medico-provincias.xml\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/sitemap-cuadro-medico-provincia-specs.xml\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/sitemap-cuadro-medico-doctores.xml\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/sitemap-cuadro-medico-centros.xml\n'
+    'https://main--asisa-pc--asisa-softtek.aem.live/sitemap-cuadro-medico-especialidades.xml'
+)
+doc.add_paragraph('Vienen comprimidos en Brotli. Usar curl --compressed para verlos en texto.')
+
+doc.add_heading('12.3 Overlay Vercel directo (debug rápido sin caché EDS)', level=2)
+doc.add_paragraph('Saltarse EDS para ver exactamente qué devuelve el overlay:')
+add_code_block(
+    'https://asisa-pc.vercel.app/markup/cuadro-medico/p/madrid\n'
+    'https://asisa-pc.vercel.app/markup/cuadro-medico/p/madrid/pe/cardiologia\n'
+    'https://asisa-pc.vercel.app/markup/cuadro-medico/e/cardiologia\n'
+    'https://asisa-pc.vercel.app/markup/cuadro-medico/d/werenitzky-jose-282874657\n'
+    'https://asisa-pc.vercel.app/markup/cuadro-medico/c/hospital-universitario-hla-moncloa\n'
+    'https://asisa-pc.vercel.app/markup/sitemap.xml\n'
+    'https://asisa-pc.vercel.app/markup/sitemap-cuadro-medico-doctores.xml'
+)
+doc.add_paragraph('El header x-source identifica qué rama del router del overlay procesó la '
+                  'petición: ssr:provincia, ssr:provincia-spec, ssr:especialidad, ssr:doctor, '
+                  'ssr:centro, sitemap:index, sitemap:<tipo>, overlay-pass.')
+
+doc.add_heading('12.4 APIs JSON directas (lo que consumen los bloques cliente)', level=2)
+add_code_block(
+    '# Listados\n'
+    'https://asisa-pc.vercel.app/api/provincias\n'
+    'https://asisa-pc.vercel.app/api/provincias?slug=madrid\n'
+    'https://asisa-pc.vercel.app/api/especialidades\n'
+    'https://asisa-pc.vercel.app/api/especialidades?slug=cardiologia\n\n'
+    '# Búsqueda paginada\n'
+    'https://asisa-pc.vercel.app/api/providers?provinceSlug=madrid&specSlug=cardiologia&tab=professionals&page=1&limit=10\n'
+    'https://asisa-pc.vercel.app/api/providers?provinceSlug=madrid&tab=centers&page=1\n'
+    'https://asisa-pc.vercel.app/api/providers?specSlug=cardiologia&tab=professionals  # nacional\n\n'
+    '# Fichas\n'
+    'https://asisa-pc.vercel.app/api/doctor?key=werenitzky-jose-282874657\n'
+    'https://asisa-pc.vercel.app/api/centro?key=hospital-universitario-hla-moncloa\n'
+    'https://asisa-pc.vercel.app/api/providers-detail?id=12345\n\n'
+    '# Proxy en vivo a backend ASISA\n'
+    'https://asisa-pc.vercel.app/api/specialities?provinceCode=28'
+)
+
+doc.add_heading('12.5 Operación (admin.hlx.page, no necesita token gracias a requireAuth: auto)',
+                level=2)
+add_code_block(
+    '# Estado de una URL en EDS\n'
+    'curl https://admin.hlx.page/status/asisa-softtek/asisa-pc/main/cuadro-medico/p/madrid\n\n'
+    '# Repreviewar y publicar manualmente\n'
+    'curl -X POST https://admin.hlx.page/preview/asisa-softtek/asisa-pc/main/cuadro-medico/p/madrid\n'
+    'curl -X POST https://admin.hlx.page/live/asisa-softtek/asisa-pc/main/cuadro-medico/p/madrid\n\n'
+    '# Refrescar code bus (tras tocar JS, CSS, head.html, YAMLs)\n'
+    'curl -X POST https://admin.hlx.page/code/asisa-softtek/asisa-pc/main\n\n'
+    '# Repoblar query indexes tras cambiar helix-query.yaml\n'
+    'curl -X POST https://admin.hlx.page/index/asisa-softtek/asisa-pc/main/cuadro-medico/p/madrid\n\n'
+    '# Refresco masivo del catálogo\n'
+    'node refresh-eds-pages.mjs                       # todo\n'
+    'node refresh-eds-pages.mjs --province=madrid     # solo una provincia + sus specs\n'
+    'node refresh-eds-pages.mjs --centros             # solo /c/*\n'
+    'node refresh-eds-pages.mjs --doctores            # solo /d/*\n'
+    'node refresh-eds-pages.mjs --sitemaps            # 6 sitemaps\n'
+    'node refresh-eds-pages.mjs --reindex             # repuebla query-index-*.json'
+)
+
+doc.add_heading('12.6 GitHub y Vercel', level=2)
+add_code_block(
+    '# Repo\n'
+    'https://github.com/asisa-softtek/asisa-pc\n\n'
+    '# Workflows (Actions)\n'
+    'https://github.com/asisa-softtek/asisa-pc/actions\n\n'
+    '# Vercel deploy manual\n'
+    'vercel deploy --prod --yes --archive=tgz'
+)
+
+doc.add_heading('12.7 AEM Author', level=2)
+add_code_block(
+    '# Editor\n'
+    'https://author-p133185-e1320482.adobeaemcloud.com/editor.html/content/site-pc/cuadro-medico/provincia.html\n\n'
+    '# Path raíz del proyecto en AEM\n'
+    '/content/site-pc/'
+)
+
+doc.add_heading('12.8 Verificación rápida "todo funciona" (4 checks)', level=2)
+add_code_block(
+    '1) curl https://asisa-pc.vercel.app/api/provincias | jq length\n'
+    '   → 52\n\n'
+    '2) curl https://asisa-pc.vercel.app/markup/cuadro-medico/p/madrid -I\n'
+    '   → HTTP 200, x-source: ssr:provincia\n\n'
+    '3) curl https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/p/madrid -I\n'
+    '   → HTTP 200, content-type: text/html\n\n'
+    '4) curl https://admin.hlx.page/status/asisa-softtek/asisa-pc/main/cuadro-medico/p/madrid\n'
+    '   → preview/live status 200, sourceLocation con markup:.../api/markup...'
 )
 
 # =============================================================================
