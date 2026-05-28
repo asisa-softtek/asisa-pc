@@ -180,14 +180,13 @@ export default function decorate(block) {
   const key = getKeyFromUrl();
   if (!key) { block.hidden = true; return; }
 
-  // El overlay (api/markup.js · ssrDoctor) pinta header SEO + primera ubicación
-  // dentro de este bloque, y las ubicaciones adicionales + otros-medicos como
-  // bloques HERMANOS al mismo nivel (de lo contrario el auto-blocking de EDS
-  // descarta secciones extra). Si llegamos aquí con SSR, no re-renderizamos.
-  if (block.children.length > 0) return;
-
-  // Camino CSR puro (previsualización en AEM Author, etc.).
-  block.innerHTML = '<p>Cargando médico…</p>';
+  // El overlay (api/markup.js · ssrDoctor) emite SSR para Googlebot, pero EDS
+  // hace auto-blocking y descarta las clases CSS internas, por lo que ese SSR
+  // no respeta el design system. Aquí renderizamos siempre la versión
+  // estilada y quitamos el sibling de ubicaciones adicionales que el overlay
+  // emitió por SEO (sino se vería duplicado).
+  const silent = block.children.length > 0;
+  if (!silent) block.innerHTML = '<p>Cargando médico…</p>';
 
   Promise.all([
     fetch(`${API_BASE}/api/doctor?key=${key}`).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
@@ -218,8 +217,15 @@ export default function decorate(block) {
       }
 
       block.innerHTML = `<div class="cmp-medical-detail">${parts.join('')}</div>`;
+      // Limpiar el sibling de SEO con ubicaciones adicionales (ya renderizamos
+      // todas las ubicaciones aquí, estiladas).
+      const locsSibling = document.querySelector('.cuadro-medico-ficha-doctor-locations');
+      if (locsSibling) {
+        const wrapper = locsSibling.closest('.section') || locsSibling;
+        wrapper.remove();
+      }
     })
     .catch(() => {
-      block.innerHTML = '<p>No se pudo cargar la ficha del médico.</p>';
+      if (!silent) block.innerHTML = '<p>No se pudo cargar la ficha del médico.</p>';
     });
 }

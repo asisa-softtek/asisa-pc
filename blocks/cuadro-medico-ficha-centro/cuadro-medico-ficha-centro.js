@@ -248,22 +248,36 @@ function renderOtherCentrosSection(c, provinciaDisplayName) {
   </section>`;
 }
 
+/**
+ * Elimina los siblings que el overlay emitió por SEO. Los siblings llevan el
+ * mismo texto que renderizamos ahora estilado dentro del bloque, así que sin
+ * limpieza se mostraría duplicado.
+ */
+function removeSsrSiblings() {
+  ['cuadro-medico-ficha-centro-specs',
+    'cuadro-medico-ficha-centro-doctors',
+    'cuadro-medico-ficha-centro-others']
+    .forEach((cls) => {
+      const section = document.querySelector(`.${cls}`);
+      if (section) {
+        const wrapper = section.closest('.section') || section;
+        wrapper.remove();
+      }
+    });
+}
+
 export default function decorate(block) {
   const key = getKeyFromUrl();
   if (!key) { block.hidden = true; return; }
 
-  // Cuando el overlay (api/markup.js · ssrCentro) pinta el SSR, emite la ficha
-  // del centro principal DENTRO de este bloque y las secciones extra (specs,
-  // doctores, otros centros) como divs HERMANOS al mismo nivel — porque el
-  // auto-blocking de EDS descartaría las secciones extra si estuvieran nested.
-  // Si llegamos aquí con SSR, NO re-renderizamos: el contenido ya está
-  // completo, y re-pintar reemplazaría la card principal por una versión
-  // equivalente (visual flicker innecesario) y dejaría los siblings sin tocar
-  // produciendo contenido visualmente duplicado.
-  if (block.children.length > 0) return;
-
-  // Camino CSR puro (sin SSR), p.ej. previsualización en AEM Author.
-  block.innerHTML = '<p>Cargando centro…</p>';
+  // El overlay (api/markup.js · ssrCentro) pinta SSR para que Googlebot lo
+  // indexe — pero EDS hace auto-blocking y descarta las clases CSS internas,
+  // así que ese SSR sin clases no respeta el design system de ASISA. Aquí
+  // renderizamos siempre la versión COMPLETA estilada y quitamos los siblings
+  // de SEO. Como block ya tiene contenido SSR, NO mostramos "Cargando..."
+  // para no parpadear; reemplazamos en silencio cuando llega la respuesta.
+  const silent = block.children.length > 0;
+  if (!silent) block.innerHTML = '<p>Cargando centro…</p>';
 
   Promise.all([
     fetch(`${API_BASE}/api/centro?key=${key}`).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
@@ -281,8 +295,9 @@ export default function decorate(block) {
         ${renderDoctorsSection(c)}
         ${renderOtherCentrosSection(c, provinciaDisplayName)}
       </div>`;
+      removeSsrSiblings();
     })
     .catch(() => {
-      block.innerHTML = '<p>No se pudo cargar la ficha del centro.</p>';
+      if (!silent) block.innerHTML = '<p>No se pudo cargar la ficha del centro.</p>';
     });
 }
