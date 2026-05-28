@@ -254,15 +254,15 @@ function renderOtherCentrosSection(c, provinciaDisplayName) {
  * limpieza se mostraría duplicado.
  */
 function removeSsrSiblings() {
+  // Solo removemos el div del sibling — NUNCA su .section padre, que
+  // puede contener también el bloque principal (todos los siblings van
+  // en la misma section, así que borrar la section los llevaría a todos
+  // incluyendo el bloque que acabamos de re-renderizar).
   ['cuadro-medico-ficha-centro-specs',
     'cuadro-medico-ficha-centro-doctors',
     'cuadro-medico-ficha-centro-others']
     .forEach((cls) => {
-      const section = document.querySelector(`.${cls}`);
-      if (section) {
-        const wrapper = section.closest('.section') || section;
-        wrapper.remove();
-      }
+      document.querySelectorAll(`.${cls}`).forEach((el) => el.remove());
     });
 }
 
