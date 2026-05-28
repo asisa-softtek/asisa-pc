@@ -217,13 +217,12 @@ export default function decorate(block) {
       }
 
       block.innerHTML = `<div class="cmp-medical-detail">${parts.join('')}</div>`;
-      // Limpiar el sibling de SEO con ubicaciones adicionales (ya renderizamos
-      // todas las ubicaciones aquí, estiladas).
-      const locsSibling = document.querySelector('.cuadro-medico-ficha-doctor-locations');
-      if (locsSibling) {
-        const wrapper = locsSibling.closest('.section') || locsSibling;
-        wrapper.remove();
-      }
+      // Limpiar el sibling de SEO con ubicaciones adicionales (ya
+      // renderizamos todas las ubicaciones aquí, estiladas). Solo el div,
+      // NO la .section padre — la section también contiene el bloque
+      // principal y otros bloques (otros-medicos), y borrarla los lleva
+      // a todos.
+      document.querySelectorAll('.cuadro-medico-ficha-doctor-locations').forEach((el) => el.remove());
     })
     .catch(() => {
       if (!silent) block.innerHTML = '<p>No se pudo cargar la ficha del médico.</p>';
