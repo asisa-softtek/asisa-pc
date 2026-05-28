@@ -340,19 +340,31 @@ function ssrDoctor(key) {
   const moreLocationsHeading = locations.length > 1
     ? `<h2 class="cmp-medical-detail__subtitle">${esc(displayName)} también pasa consulta en estos centros</h2>` : '';
 
+  // El bloque principal lleva el header SEO + la primera ubicación.
+  // Las ubicaciones adicionales van como bloque sibling para que EDS
+  // no las descarte (auto-blocking sólo conserva el primer "first-block"
+  // anidado en un bloque).
   const fichaBlock = `<div class="cuadro-medico-ficha-doctor cmp-medical-detail" data-ssr="true" data-key="${esc(key)}">
   <section class="eds-mp-box-head">
     <h1 class="eds-mp-box-head--title">${esc(h1)}</h1>
     <p class="eds-mp-box-head--text">${esc(intro)}</p>
   </section>
   ${locations[0] ? locationCard(locations[0], true) : ''}
+</div>`;
+
+  const moreLocationsBlock = locations.length > 1
+    ? `<div class="cuadro-medico-ficha-doctor-locations">
   ${moreLocationsHeading}
   ${locations.slice(1).map((l) => locationCard(l, false)).join('')}
-</div>`;
+</div>` : '';
 
   const otrosMedicos = ssrOtrosMedicos(data);
 
-  return { title, description, blocks: `${fichaBlock}\n${otrosMedicos}` };
+  return {
+    title,
+    description,
+    blocks: [fichaBlock, moreLocationsBlock, otrosMedicos].filter(Boolean).join('\n'),
+  };
 }
 
 function ssrCentro(key) {
@@ -411,7 +423,12 @@ function ssrCentro(key) {
 </article>`;
   }).join('');
 
-  const blocks = `<div class="cuadro-medico-ficha-centro cmp-medical-detail" data-ssr="true" data-key="${esc(key)}">
+  // EDS auto-blockea cada div hijo de <main> y solo procesa el primer "first-block"
+  // dentro de cada bloque. Para que TODAS las secciones (specs, doctores, otros) se
+  // preserven en el bus live, las emitimos como divs HERMANOS en lugar de anidados.
+  // El bloque cliente cuadro-medico-ficha-centro detecta SSR (children > 0) y NO
+  // re-renderiza, así no se duplica el contenido.
+  const fichaCentroBlock = `<div class="cuadro-medico-ficha-centro cmp-medical-detail" data-ssr="true" data-key="${esc(key)}">
   <nav class="cmp-breadcrumb"><ol class="cmp-breadcrumb__list">
     <li><a href="/">Inicio</a></li>
     <li><a href="/cuadro-medico">Cuadro médico</a></li>
@@ -439,21 +456,31 @@ function ssrCentro(key) {
       ${data.phone ? `<div class="button-cmp"><a href="tel:${esc(data.phone)}" class="button-cmp__text button-cmp__text--link"><i class="icon-phone"></i>${esc(data.phone)}</a></div>` : ''}
     </div>
   </div>
-  ${specsSection ? `<section class="cm-fcentro__specs-section">
-    <h2 class="cmp-medical-detail__subtitle">Especialidades médicas del centro (${specCount})</h2>
-    ${specsSection}
-  </section>` : ''}
-  ${docsGrid ? `<section class="cm-fcentro__doctors-section">
-    <h2 class="cmp-medical-detail__subtitle">Médicos en ${esc(centerName)} (${docCount})</h2>
-    <div class="cm-fcentro__doctors-grid">${docsGrid}</div>
-  </section>` : ''}
-  ${otherCentros ? `<section class="cm-fcentro__other-section">
-    <h2 class="cmp-medical-detail__subtitle">Otros centros ASISA en ${esc(provDisplay)}</h2>
-    <div class="cm-fcentro__other-grid">${otherCentros}</div>
-  </section>` : ''}
 </div>`;
 
-  return { title, description, blocks };
+  const specsBlock = specsSection
+    ? `<div class="cuadro-medico-ficha-centro-specs">
+  <h2 class="cmp-medical-detail__subtitle">Especialidades médicas del centro (${specCount})</h2>
+  ${specsSection}
+</div>` : '';
+
+  const docsBlock = docsGrid
+    ? `<div class="cuadro-medico-ficha-centro-doctors">
+  <h2 class="cmp-medical-detail__subtitle">Médicos en ${esc(centerName)} (${docCount})</h2>
+  <div class="cm-fcentro__doctors-grid">${docsGrid}</div>
+</div>` : '';
+
+  const othersBlock = otherCentros
+    ? `<div class="cuadro-medico-ficha-centro-others">
+  <h2 class="cmp-medical-detail__subtitle">Otros centros ASISA en ${esc(provDisplay)}</h2>
+  <div class="cm-fcentro__other-grid">${otherCentros}</div>
+</div>` : '';
+
+  return {
+    title,
+    description,
+    blocks: [fichaCentroBlock, specsBlock, docsBlock, othersBlock].filter(Boolean).join('\n'),
+  };
 }
 
 // ---------------- response builder ----------------

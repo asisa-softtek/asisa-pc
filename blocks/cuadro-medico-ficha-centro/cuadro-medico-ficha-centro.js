@@ -252,11 +252,18 @@ export default function decorate(block) {
   const key = getKeyFromUrl();
   if (!key) { block.hidden = true; return; }
 
-  // El overlay pinta título, intro, card principal y resumen de especialidades
-  // en server-side. Cuando llega el fetch sustituimos por la versión completa
-  // (con acordeones, médicos y otros centros). Si falla, el SSR sigue visible.
-  const isSsr = block.dataset.ssr === 'true';
-  if (!isSsr) block.innerHTML = '<p>Cargando centro…</p>';
+  // Cuando el overlay (api/markup.js · ssrCentro) pinta el SSR, emite la ficha
+  // del centro principal DENTRO de este bloque y las secciones extra (specs,
+  // doctores, otros centros) como divs HERMANOS al mismo nivel — porque el
+  // auto-blocking de EDS descartaría las secciones extra si estuvieran nested.
+  // Si llegamos aquí con SSR, NO re-renderizamos: el contenido ya está
+  // completo, y re-pintar reemplazaría la card principal por una versión
+  // equivalente (visual flicker innecesario) y dejaría los siblings sin tocar
+  // produciendo contenido visualmente duplicado.
+  if (block.children.length > 0) return;
+
+  // Camino CSR puro (sin SSR), p.ej. previsualización en AEM Author.
+  block.innerHTML = '<p>Cargando centro…</p>';
 
   Promise.all([
     fetch(`${API_BASE}/api/centro?key=${key}`).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
@@ -276,6 +283,6 @@ export default function decorate(block) {
       </div>`;
     })
     .catch(() => {
-      if (!isSsr) block.innerHTML = '<p>No se pudo cargar la ficha del centro.</p>';
+      block.innerHTML = '<p>No se pudo cargar la ficha del centro.</p>';
     });
 }

@@ -180,14 +180,14 @@ export default function decorate(block) {
   const key = getKeyFromUrl();
   if (!key) { block.hidden = true; return; }
 
-  // Camino de HIDRATACIÓN: el overlay ya pintó título, intro y card principal en
-  // server-side. Hacemos un fetch en background para enriquecer con el resto de
-  // ubicaciones; cuando llega, sustituimos el contenido por la versión completa.
-  // Si el fetch falla, el SSR ya estaba en pantalla y el usuario no ve nada roto.
-  const isSsr = block.dataset.ssr === 'true';
-  if (!isSsr) {
-    block.innerHTML = '<p>Cargando médico…</p>';
-  }
+  // El overlay (api/markup.js · ssrDoctor) pinta header SEO + primera ubicación
+  // dentro de este bloque, y las ubicaciones adicionales + otros-medicos como
+  // bloques HERMANOS al mismo nivel (de lo contrario el auto-blocking de EDS
+  // descarta secciones extra). Si llegamos aquí con SSR, no re-renderizamos.
+  if (block.children.length > 0) return;
+
+  // Camino CSR puro (previsualización en AEM Author, etc.).
+  block.innerHTML = '<p>Cargando médico…</p>';
 
   Promise.all([
     fetch(`${API_BASE}/api/doctor?key=${key}`).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
@@ -201,7 +201,7 @@ export default function decorate(block) {
 
       const locs = d.locations || [];
       if (!locs.length) {
-        if (!isSsr) block.innerHTML = '<p>No se pudo cargar la ficha del médico.</p>';
+        block.innerHTML = '<p>No se pudo cargar la ficha del médico.</p>';
         return;
       }
 
@@ -220,6 +220,6 @@ export default function decorate(block) {
       block.innerHTML = `<div class="cmp-medical-detail">${parts.join('')}</div>`;
     })
     .catch(() => {
-      if (!isSsr) block.innerHTML = '<p>No se pudo cargar la ficha del médico.</p>';
+      block.innerHTML = '<p>No se pudo cargar la ficha del médico.</p>';
     });
 }

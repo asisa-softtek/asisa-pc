@@ -139,14 +139,18 @@ doc.add_heading('1. Arquitectura general', level=1)
 doc.add_paragraph('Flujo de una petición de usuario a una URL dinámica '
                   '(ej. /cuadro-medico/p/madrid/pe/cardiologia):')
 add_code_block(
-    'Usuario\n'
+    'Usuario / Googlebot\n'
     '   │  GET https://main--asisa-pc--asisa-softtek.aem.live/cuadro-medico/p/madrid/pe/cardiologia\n'
     '   ▼\n'
     'CDN de Edge Delivery Services\n'
-    '   │  Sirve HTML ya procesado (si está en el bus live).\n'
+    '   │  Sirve el HTML ya procesado del bus live (preview/live cacheado).\n'
+    '   │  Ese HTML YA TRAE <title>, <meta description>, <h1>, intro y los\n'
+    '   │  primeros resultados renderizados (SSR del overlay).\n'
     '   ▼\n'
     'Navegador ejecuta scripts/aem.js + scripts/scripts.js\n'
-    '   │  Detecta bloques <div class="cuadro-medico"> y los hidrata.\n'
+    '   │  Detecta bloques <div class="cuadro-medico">, ficha-doctor, etc.\n'
+    '   │  Cada bloque hidrata: si ya hay contenido SSR, NO pinta\n'
+    '   │  "Cargando..." y reemplaza solo cuando llega la respuesta de la API.\n'
     '   ▼\n'
     'Bloque JS lee window.location.pathname → llama a la API de datos\n'
     '   │  fetch("https://asisa-pc.vercel.app/api/providers?provinceSlug=madrid&specSlug=cardiologia&...")\n'
@@ -154,18 +158,156 @@ add_code_block(
     'Función serverless en Vercel\n'
     '   │  Lee JSON cacheados de data/providers/madrid/cardiologia.json.\n'
     '   ▼\n'
-    'Devuelve el listado paginado al navegador, que renderiza tarjetas.'
+    'Devuelve el listado paginado al navegador, que sustituye el DOM SSR\n'
+    'con la versión interactiva (tabs, paginación).'
 )
 doc.add_paragraph('¿Y cómo entró ese HTML en la CDN de EDS la primera vez?')
 add_numbered('Alguien hizo POST /preview/.../cuadro-medico/p/madrid/pe/cardiologia.')
 add_numbered('EDS, al ver que es una URL dinámica, consultó al overlay en Vercel: '
              'GET https://asisa-pc.vercel.app/markup/cuadro-medico/p/madrid/pe/cardiologia.')
-add_numbered('Vercel respondió con una plantilla HTML mínima que tiene los <div class="..."> '
-             'de los bloques (cuadro-medico, otras-especialidades, otras-provincias) vacíos.')
+add_numbered('Vercel (api/markup.js) llamó internamente a sus propios fetchProviders, '
+             'fetchProvincia, fetchEspecialidad, etc. y construyó un HTML COMPLETO: title, meta '
+             'description, canonical, og tags, H1, intro SEO, las primeras 10 tarjetas de '
+             'profesionales reales, chips de otras especialidades en Madrid y grid de otras '
+             'provincias con cardiología. El bloque cuadro-medico se marca con data-ssr="true".')
 add_numbered('EDS guardó ese HTML en su bus preview, lo procesó (extracción de secciones y '
              'bloques) y lo dejó listo para servir.')
 add_numbered('Un POST /live posterior promocionó el HTML de preview al bus live para que sea '
              'público.')
+
+doc.add_heading('1.1 SSR + hidratación silenciosa: por qué el render aparece "dos veces"', level=2)
+doc.add_paragraph(
+    'Esto es lo más importante que tiene que entender quien herede el proyecto. El render del '
+    'mismo contenido vive en DOS sitios y ambos están sincronizados a mano. No hay una herramienta '
+    'que mantenga la coherencia: si tocas uno, te toca tocar el otro.'
+)
+add_table(
+    ['Capa', 'Fichero', 'Cuándo se ejecuta', 'Quién lo ve'],
+    [
+        ('SSR (overlay BYOM)',
+         'api/markup.js · funciones ssrListing, ssrDoctor, ssrCentro, '
+         'ssrOtrasEspecialidades, ssrOtrasProvincias, ssrOtrosMedicos',
+         'Cuando EDS preview/live consulta el overlay (una sola vez por URL hasta el '
+         'siguiente POST /preview).',
+         'Googlebot, otros crawlers, lectores RSS, navegadores antes de que cargue JS, '
+         'y la primera pintada en navegadores normales.'),
+        ('Cliente (bloque EDS)',
+         'blocks/<nombre>/<nombre>.js · función decorate(block)',
+         'En cada visita, después de que aem.js + scripts.js detectan el '
+         '<div class="<nombre>">.',
+         'El usuario interactivo: tabs, paginación, clicks en chips.'),
+    ],
+    widths=[Inches(1.5), Inches(2.2), Inches(1.5), Inches(1.3)],
+)
+doc.add_paragraph('Cada bloque tiene por tanto un par de implementaciones que deben coincidir '
+                  'en estructura visible:')
+add_table(
+    ['Bloque', 'Render SSR en api/markup.js', 'Render cliente en blocks/'],
+    [
+        ('cuadro-medico (listado)', 'ssrListing → primeras 10 cards + tabs',
+         'cuadro-medico/cuadro-medico.js → renderShell + renderCard'),
+        ('cuadro-medico-otras-especialidades', 'ssrOtrasEspecialidades',
+         'cuadro-medico-otras-especialidades/...js → renderProvincialChips / renderNationalChips'),
+        ('cuadro-medico-otras-provincias', 'ssrOtrasProvincias',
+         'cuadro-medico-otras-provincias/...js'),
+        ('cuadro-medico-ficha-doctor', 'ssrDoctor → header + una card por ubicación',
+         'cuadro-medico-ficha-doctor/...js → renderDoctorHeader + renderLocationCard'),
+        ('cuadro-medico-otros-medicos', 'ssrOtrosMedicos → 2 secciones de chips',
+         'cuadro-medico-otros-medicos/...js → chip + chipList'),
+        ('cuadro-medico-ficha-centro', 'ssrCentro → breadcrumb + specs + médicos + otros',
+         'cuadro-medico-ficha-centro/...js → renderHeader + renderMainCard + '
+         'renderSpecialitiesSection + renderDoctorsSection + renderOtherCentrosSection'),
+    ],
+    widths=[Inches(2), Inches(2.4), Inches(2.4)],
+)
+
+doc.add_heading('Mecanismo de hidratación silenciosa', level=3)
+doc.add_paragraph(
+    'El SSR del overlay coloca el contenido completo dentro del div del bloque. Cuando EDS '
+    'procesa ese HTML, lo "auto-blockea" — convierte la estructura interna en párrafos y headings '
+    'planos, conserva las clases del div raíz y elimina los atributos data-*. Esto significa dos '
+    'cosas para los bloques cliente:'
+)
+add_bullet('NO se puede confiar en data-ssr="true" tras pasar por EDS — se pierde durante el '
+           'auto-block. Por eso los bloques detectan la presencia de SSR por content '
+           '(`block.children.length > 0`) y no por un atributo.')
+add_bullet('Cuando hay SSR, el bloque omite el spinner "Cargando…" inicial: deja el DOM como '
+           'está, dispara su fetch en background y SUSTITUYE el contenido cuando llega la '
+           'respuesta. El usuario nunca ve un parpadeo a "Cargando…", solo un cambio sutil del '
+           'contenido SSR al CSR (mismas tarjetas, misma información). Es lo que llamamos '
+           '"hidratación silenciosa".')
+add_bullet('La sustitución sucede para que el bloque cliente añada interactividad: listeners en '
+           'tabs, paginación, acordeones. El SSR no incluye esa interactividad — es solo '
+           'esqueleto navegable.')
+
+doc.add_paragraph('Patrón a copiar al añadir un bloque nuevo:')
+add_code_block(
+    'export default async function decorate(block) {\n'
+    '  // ...detección de URL / contexto...\n'
+    '\n'
+    '  // ¿Llegó SSR? (Cualquier hijo presente = sí.)\n'
+    '  let silentFirst = block.children.length > 0;\n'
+    '\n'
+    '  async function refresh(next) {\n'
+    '    if (silentFirst) {\n'
+    '      silentFirst = false;            // pintamos en silencio la primera vez\n'
+    '    } else {\n'
+    '      block.innerHTML = loadingShell; // siguientes interacciones SÍ muestran loading\n'
+    '    }\n'
+    '    const data = await fetchData();\n'
+    '    block.innerHTML = renderShell(data);\n'
+    '  }\n'
+    '\n'
+    '  refresh(initialState);\n'
+    '}'
+)
+
+doc.add_heading('Reglas para mantener la coherencia SSR ↔ cliente', level=3)
+add_numbered('Si cambias el HTML que produce un bloque cliente, actualiza el HTML equivalente en '
+             'api/markup.js. Lo mismo a la inversa.')
+add_numbered('Mismas clases CSS: ambos lados deben emitir las clases del design system de ASISA '
+             '(.cmp-medical-detail__*, .eds-mp-card, .cm-fcentro__*…). Sin eso el CSS no '
+             'aplica.')
+add_numbered('Mismas URLs internas: si el bloque enlaza a /cuadro-medico/d/<key>, el SSR debe '
+             'hacer lo mismo (los slugs se construyen igual con toSlug).')
+add_numbered('Cualquier dato que se muestre solo en SSR (porque el cliente no lo pinta) puede '
+             'desaparecer al primer interactor del usuario. Inverso: cualquier dato que se '
+             'muestre solo en CSR no es indexable por Google.')
+add_numbered('Tras tocar api/markup.js, hay que repreviewar las URLs afectadas '
+             '(POST /preview + POST /live) para que EDS recoja el SSR nuevo. Cambios solo en '
+             'blocks/*.js no requieren repreview, solo refresh del code bus.')
+
+doc.add_heading('1.2 Funciones puras compartidas: api/<endpoint>.js exporta fetch*()', level=2)
+doc.add_paragraph(
+    'Para que api/markup.js pueda hacer SSR sin duplicar la lógica de los endpoints, cada uno '
+    'expone una función de fetch pura (sin acoplar a Express) ADEMÁS del handler HTTP. El handler '
+    'es ahora un wrapper trivial que llama a la función y la serializa como JSON.'
+)
+add_table(
+    ['Fichero', 'Función pura exportada', 'Lo usan'],
+    [
+        ('api/provincias.js', 'fetchProvincias(), fetchProvincia(slug)',
+         'handler /api/provincias, api/markup.js'),
+        ('api/especialidades.js', 'fetchEspecialidadesMaster(), fetchEspecialidad(slug)',
+         'handler /api/especialidades, api/markup.js'),
+        ('api/providers.js', 'fetchProviders({provinceSlug, specSlug, tab, page, limit})',
+         'handler /api/providers, api/markup.js (ssrListing, ssrOtrosMedicos)'),
+        ('api/doctor.js', 'fetchDoctor(key)',
+         'handler /api/doctor, api/markup.js (ssrDoctor)'),
+        ('api/centro.js', 'fetchCentro(key)',
+         'handler /api/centro, api/markup.js (ssrCentro)'),
+        ('api/sitemap.js', 'getSitemapIndexXml()',
+         'handler /api/sitemap, api/markup.js'),
+        ('api/sitemap-cuadro-medico.js', 'getCuadroMedicoSitemapXml(type)',
+         'handler /api/sitemap-cuadro-medico, api/markup.js'),
+    ],
+    widths=[Inches(2), Inches(2.5), Inches(2.3)],
+)
+doc.add_paragraph(
+    'Convención de la función pura: devuelve el objeto de datos directamente si todo va bien, o '
+    'un objeto con { error: "...", status: <httpCode> } si la validación falla. El handler HTTP '
+    'inspecciona esa forma y mapea a res.status(status).json(...).'
+)
 
 # =============================================================================
 # 2. Setup inicial EDS — los comandos críticos
@@ -424,8 +566,10 @@ doc.add_paragraph(
 )
 
 # --- api/markup.js ---
-doc.add_heading('Endpoint 1 · api/markup.js (overlay BYOM)', level=4)
-doc.add_paragraph('Ruta: api/markup.js · 135 líneas')
+doc.add_heading('Endpoint 1 · api/markup.js (overlay BYOM con SSR completo)', level=4)
+doc.add_paragraph('Ruta: api/markup.js · ~580 líneas. Es el endpoint más grande del proyecto: '
+                  'aglutina el router del overlay, las funciones de Server-Side Rendering para '
+                  'los 5 patrones de URL del cuadro médico y la generación de sitemaps.')
 doc.add_paragraph(
     'HTTP: GET. Vercel reescribe /markup y /markup/(.*) → /api/markup?path=$1. '
     'Devuelve HTML (text/html) para URLs dinámicas o XML (text/xml) para sitemaps. 404 con '
@@ -440,32 +584,74 @@ add_table(
       '.plain.html — el handler los normaliza.')],
     widths=[Inches(0.8), Inches(0.8), Inches(0.8), Inches(4.1)],
 )
-doc.add_paragraph('Patrones de path reconocidos:')
-add_bullet('/cuadro-medico/p/<slug> → template provincia (3 bloques)')
-add_bullet('/cuadro-medico/p/<prov>/pe/<spec> → mismo template (los bloques leen el path)')
-add_bullet('/cuadro-medico/d/<key> → template doctor (2 bloques)')
-add_bullet('/cuadro-medico/c/<key> → template centro (1 bloque)')
-add_bullet('/cuadro-medico/e/<slug> → template especialidad (3 bloques)')
-add_bullet('/sitemap.xml → sitemap index (delega en api/sitemap.js)')
-add_bullet('/sitemap-cuadro-medico-{provincias|provincia-specs|doctores|centros|especialidades}.xml '
-           '→ delega en api/sitemap-cuadro-medico.js')
-add_bullet('Cualquier otro → 404 overlay-pass')
+doc.add_paragraph('Patrones de path reconocidos y qué genera cada uno:')
+add_table(
+    ['Patrón', 'Función SSR', 'Lo que emite en el HTML'],
+    [
+        ('/cuadro-medico/p/<slug>',
+         'ssrListing + ssrOtrasEspecialidades',
+         '<title>, meta description, canonical, og tags, H1 "Cuadro Médico de ASISA en X", '
+         'intro SEO, primeras 10 tarjetas de profesionales (eds-mp-card) con nombre real, '
+         'especialidad, dirección, teléfono y link a la ficha. Bajo el listado: chips '
+         '(eds-mp-other-specs) con las otras especialidades disponibles en la provincia.'),
+        ('/cuadro-medico/p/<prov>/pe/<spec>',
+         'ssrListing + ssrOtrasEspecialidades + ssrOtrasProvincias',
+         'Mismo que arriba pero filtrado por especialidad: H1 "<Spec> en <Provincia>", '
+         '10 cards, chips de otras especialidades en la provincia y grid de otras provincias '
+         'con esa especialidad (cm-otras-prov-card) con count de profesionales.'),
+        ('/cuadro-medico/e/<slug>',
+         'ssrListing + ssrOtrasEspecialidades + ssrOtrasProvincias',
+         'Búsqueda nacional. H1 "Especialistas en X con ASISA", 10 cards mezclando provincias, '
+         'top 15 chips de otras especialidades y grid de todas las provincias.'),
+        ('/cuadro-medico/d/<key>',
+         'ssrDoctor + ssrOtrosMedicos',
+         'H1 "<Nombre del médico>, <Especialidad>", intro, una card detallada por cada '
+         'ubicación donde el médico pasa consulta (con link al centro padre), y 2 secciones '
+         'de chips: otros médicos en la misma provincia + en el mismo centro.'),
+        ('/cuadro-medico/c/<key>',
+         'ssrCentro',
+         'Breadcrumb, H1 "<Centro> en <Provincia>", intro, card principal del centro, sección '
+         'con TODAS las especialidades y sus doctores asociados, grid completo de médicos del '
+         'centro y sección de otros centros similares.'),
+        ('/sitemap.xml', '—',
+         'Delega en getSitemapIndexXml() de api/sitemap.js.'),
+        ('/sitemap-cuadro-medico-{tipo}.xml', '—',
+         'Delega en getCuadroMedicoSitemapXml(tipo) de api/sitemap-cuadro-medico.js.'),
+        ('Cualquier otro', '—', '404 con header x-source: overlay-pass (EDS hace fallback a AEM).'),
+    ],
+    widths=[Inches(1.8), Inches(1.8), Inches(2.9)],
+)
 doc.add_paragraph('Headers de respuesta:')
 add_bullet('Content-Type: text/html; charset=utf-8 (templates) o application/xml; charset=utf-8 (sitemaps)')
 add_bullet('Cache-Control: public, max-age=60 (EDS lo cachea aparte; este TTL es para Vercel CDN)')
-add_bullet('x-source: template:provincia | template:doctor | template:centro | '
-           'template:especialidad | sitemap:index | sitemap:<type> | overlay-pass')
+add_bullet('x-source: ssr:provincia | ssr:provincia-spec | ssr:especialidad | ssr:doctor | '
+           'ssr:centro | sitemap:index | sitemap:<type> | overlay-pass')
 doc.add_paragraph(
-    'No lee data/ directamente. Importa las funciones getSitemapIndexXml() de api/sitemap.js y '
-    'getCuadroMedicoSitemapXml(type) de api/sitemap-cuadro-medico.js para servir los sitemaps. '
-    'Helpers: extractPath() (normaliza el query param), isProvinciaPath/isDoctorPath/'
-    'isCentroPath/isEspecialidadPath (regex matchers).'
+    'Imports clave: fetchProvincias / fetchProvincia / fetchEspecialidadesMaster / '
+    'fetchEspecialidad / fetchProviders / fetchDoctor / fetchCentro (las funciones puras de cada '
+    'endpoint) y getSitemapIndexXml / getCuadroMedicoSitemapXml.'
 )
+doc.add_paragraph('Helpers internos relevantes:')
+add_bullet('extractPath() normaliza el query param (quita .html, .plain.html).')
+add_bullet('esc() escapa caracteres especiales para HTML.')
+add_bullet('titleCase() formatea "HOSPITAL HM" → "Hospital Hm".')
+add_bullet('toSlug() y centroLink() construyen el href /cuadro-medico/c/<slug> a partir '
+           'del parentDescription de una ubicación de médico.')
+add_bullet('formatPersonName() reordena "APELLIDOS, NOMBRE" → "Dr./Dra. Nombre Apellidos".')
+add_bullet('getProviderTag() mapea doctorType/providerType al texto de la etiqueta principal.')
+add_bullet('renderCard() emite la <div class="eds-mp-card"> que la versión cliente también pinta.')
+add_bullet('locationCard() emite la card de cada ubicación en la ficha de doctor.')
 doc.add_paragraph(
     'Inyecta un <script> con history.replaceState() en el HTML para que, al abrir el overlay '
     'directamente desde Vercel (/markup/cuadro-medico/p/madrid), los bloques JS vean el path real '
     'cuando leen window.location.pathname.'
 )
+doc.add_paragraph('Tolerancia a URLs obsoletas: fetchDoctor() y fetchCentro() implementan un '
+                  'fallback por slug del nombre. Si llega un key como '
+                  '"carbonell-martinez-antonio-2399368" que no existe en el índice (porque el ID '
+                  'cambió en la última regen), se busca un key que coincida en el prefijo del '
+                  'slug ("carbonell-martinez-antonio-*") y se sirve la entrada actual. Esto evita '
+                  'que URLs publicadas en EDS hace tiempo den 404 si el catálogo se ha regenerado.')
 doc.add_paragraph('Consumido por: EDS preview/live al hacer fetch al overlay configurado en sitewide config.')
 
 # --- api/providers.js ---
@@ -1354,13 +1540,20 @@ add_table(
     widths=[Inches(1.6), Inches(0.9), Inches(2), Inches(2)],
 )
 
-doc.add_heading('Regla de oro común a todos los bloques', level=4)
-doc.add_paragraph(
-    'TODAS las llamadas a /api/* DEBEN usar URL ABSOLUTA "https://<overlay-host>/api/…". Una '
-    'llamada relativa fetch("/api/…") apunta al dominio de aem.live, que no tiene los endpoints '
-    'y devuelve 404. Si en algún momento cambia el dominio del overlay: hay que reemplazar "API_BASE = '
-    "'https://asisa-pc.vercel.app'\" por el nuevo dominio en cada bloque (.js) y en api/markup.js."
-)
+doc.add_heading('Reglas de oro comunes a todos los bloques', level=4)
+add_numbered('TODAS las llamadas a /api/* DEBEN usar URL ABSOLUTA "https://<overlay-host>/api/…". '
+             'Una llamada relativa fetch("/api/…") apunta al dominio de aem.live, que no tiene '
+             'los endpoints y devuelve 404. Si cambia el dominio del overlay, reemplazar '
+             "API_BASE = 'https://asisa-pc.vercel.app' en cada bloque y en api/markup.js.")
+add_numbered('Si el bloque hace SSR en el overlay, su decorate() debe SOPORTAR HIDRATACIÓN '
+             'SILENCIOSA. Detección típica: const silentFirst = block.children.length > 0. Si '
+             'silentFirst, omitir el spinner inicial. Patrón completo en §1.1.')
+add_numbered('Si se modifica el HTML que produce el bloque cliente (renderCard, renderShell, '
+             'etc.) hay que actualizar el HTML equivalente en api/markup.js. Lo mismo a la '
+             'inversa. Sin coherencia, Google ve un contenido y el usuario interactivo otro.')
+add_numbered('Tras editar api/markup.js no basta con redeploy de Vercel: EDS cachea el HTML '
+             'procesado en el bus live. Hay que repreviewar todas las URLs del patrón afectado '
+             'con POST /preview + POST /live (o `node refresh-eds-pages.mjs`).')
 
 doc.add_heading('3.6 Scripts del frontend EDS (carpeta scripts/)', level=2)
 add_table(
@@ -2025,24 +2218,49 @@ add_numbered('POST /preview y /live para CADA URL afectada — head.html se inli
              'procesado, no se sirve dinámicamente. Para masivo: '
              '`node refresh-eds-pages.mjs` (sin flags = todo).')
 
-doc.add_heading('9.3 Tras cambiar la plantilla en api/markup.js', level=2)
-add_numbered('Commit + push.')
-add_numbered('Deploy a Vercel.')
-add_numbered('`node refresh-eds-pages.mjs` para re-previewar todas las URLs dinámicas — EDS '
-             're-fetcha del overlay.')
+doc.add_heading('9.3 Tras cambiar el HTML que renderiza un bloque', level=2)
+doc.add_paragraph(
+    'Recordatorio (§1.1): cada bloque del cuadro médico tiene render en DOS sitios. Si tocas uno, '
+    'piensa si toca el otro.'
+)
+add_table(
+    ['Qué tocas', 'Pasos'],
+    [
+        ('Solo el bloque cliente (blocks/<name>/<name>.js)',
+         '1) commit + push  2) POST /code refresh (o auto-sync de la GitHub App)  3) Probar en '
+         'aem.live — los nuevos visitantes ven el cambio. NO necesita repreviewar URLs '
+         'porque el HTML SSR ya cacheado no contiene el bloque cliente, solo el contenido SSR '
+         'que se hidrata.'),
+        ('Solo la función SSR (api/markup.js: ssrListing, ssrDoctor, ssrCentro, '
+         'ssrOtrasEspecialidades, ssrOtrasProvincias, ssrOtrosMedicos)',
+         '1) commit + push  2) `vercel deploy --prod --archive=tgz`  3) `node '
+         'refresh-eds-pages.mjs` (sin flags) — porque cada URL dinámica ya cacheada en EDS '
+         'tiene el SSR antiguo en su bus live.'),
+        ('Bloque cliente Y SSR (cambio coordinado)',
+         '1) commit + push  2) refresh code bus  3) `vercel deploy`  4) `node '
+         'refresh-eds-pages.mjs` para repreviewar.'),
+        ('Una función fetch* compartida (api/<endpoint>.js)',
+         '1) commit + push  2) `vercel deploy` (las API responden con la lógica nueva al '
+         'instante)  3) Si el cambio afecta la SHAPE del JSON, las URLs ya servidas pueden '
+         'tener HTML inconsistente — repreviewar con refresh-eds-pages.mjs.'),
+    ],
+    widths=[Inches(2.5), Inches(4)],
+)
 
 doc.add_heading('9.4 Tras actualizar datos (data/*.json)', level=2)
 add_numbered('Commit + push a main (los workflows de GH Actions ejecutan los generate-* y '
              'commitean los JSON resultantes en data/).')
-add_numbered('Vercel recoge los datos en el siguiente deploy. Si Blob Storage, los datos '
-             'son visibles inmediatamente sin redeploy.')
-add_numbered('Los bloques fetchean datos en runtime, así que NO hace falta re-publicar páginas.')
+add_numbered('Lanzar `vercel deploy --prod --archive=tgz`. Las funciones recogen los JSON nuevos.')
+add_numbered('Los bloques cliente fetchean datos en runtime así que en cuanto Vercel está '
+             'desplegado los nuevos datos se ven. PERO el HTML SSR cacheado en EDS sigue '
+             'usando datos del momento en que se previewó esa URL. Para refrescar el SSR de '
+             'todo el catálogo: `node refresh-eds-pages.mjs`.')
 
 doc.add_heading('9.5 Verificación rápida del estado del sistema', level=2)
 add_code_block(
-    '# Health check del overlay\n'
+    '# Health check del overlay (SSR)\n'
     'curl -sI https://asisa-pc.vercel.app/markup/cuadro-medico/p/madrid\n'
-    '# → HTTP 200, x-source: template:provincia\n\n'
+    '# → HTTP 200, x-source: ssr:provincia\n\n'
     '# Health check de una API\n'
     'curl -s "https://asisa-pc.vercel.app/api/provincias" | jq "length"\n'
     '# → 52\n\n'
@@ -2074,7 +2292,17 @@ add_table(
          'apunta correctamente'),
         ('Cambio en api/markup.js no se ve',
          'EDS cachea el HTML procesado',
-         'POST /preview + POST /live para cada URL'),
+         'POST /preview + POST /live para cada URL afectada (node refresh-eds-pages.mjs)'),
+        ('view-source de una URL dinámica muestra <div></div> vacíos o solo el spinner',
+         'EDS sirve un HTML antiguo previo al SSR, o api/markup.js sigue devolviendo plantilla '
+         'vacía para ese path',
+         '1) Comprobar `curl https://<overlay>/markup/<path>` que devuelve HTML real con H1, '
+         'cards, etc. 2) Si sí, hacer POST /preview + POST /live de la URL. 3) Si el overlay '
+         'devuelve vacío, hay un fallo en la función ssr* correspondiente (revisar logs Vercel).'),
+        ('SEO: Googlebot indexa <title>"Cuadro Médico - Provincia"',
+         'El HTML procesado en EDS es de cuando el overlay devolvía plantilla vacía',
+         'Repreviewar todas las URLs del patrón. Cada repreview obliga a EDS a refetchear el '
+         'overlay y coger el SSR nuevo.'),
         ('POST /config devuelve 401',
          'Usuario no está en config_admin',
          'Usar el token de la cuenta técnica de Adobe'),
