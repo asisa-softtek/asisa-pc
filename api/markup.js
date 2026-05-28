@@ -289,30 +289,49 @@ function ssrDoctor(key) {
   const h1 = `${displayName}${mainSpec ? `, ${titleCase(mainSpec)}` : ''}`;
   const intro = `Ficha del cuadro médico de ASISA con la información de contacto, especialidades y centros donde pasa consulta ${displayName}.`;
 
+  // Render una "card de ubicación" por cada centro donde trabaja
+  const locationCard = (loc, isFirst) => {
+    const locAddr = titleCase([loc.address, loc.postalCode, loc.city].filter(Boolean).join(', '));
+    const locSpec = loc.speciality ? titleCase(loc.speciality) : titleCase(mainSpec);
+    const mapsUrl = (loc.lat && loc.lon)
+      ? `https://www.google.com/maps/dir/?api=1&destination=${loc.lat},${loc.lon}` : '';
+    return `<div class="cmp-medical-detail__first-block">
+  <div class="cmp-medical-detail__title-block">
+    <div class="cmp-medical-detail__title-block__tags">
+      ${isFirst ? '<div class="cmp-tag-template cmp-tag-template--blue"><div class="cmp-tag-template__text">MÉDICO / PROFESIONAL</div></div>' : ''}
+      ${loc.businessGroup ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Centro de ASISA</div></div>' : ''}
+      ${loc.ePrescription ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Receta electrónica</div></div>' : ''}
+      ${loc.onlineAppointment ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Cita online</div></div>' : ''}
+    </div>
+    ${locSpec ? `<p class="cmp-medical-detail__title-block--speciality">${esc(locSpec)}</p>` : ''}
+    ${isFirst
+    ? `<div class="cmp-title"><h2 class="cmp-title__text">${esc(displayName)}</h2></div>`
+    : `<div class="cmp-title"><h3 class="cmp-title__text">${esc(titleCase(loc.parentDescription || ''))}</h3></div>`}
+    ${isFirst && data.collegiateCode ? `<p class="cmp-medical-detail__title-block--num-member">Núm. Colegiado – ${esc(data.collegiateCode)}</p>` : ''}
+  </div>
+  <div class="cmp-medical-detail__address-block">
+    ${loc.parentDescription && isFirst ? `<div class="cmp-medical-detail__address-block--center">${esc(titleCase(loc.parentDescription))}</div>` : ''}
+    ${locAddr ? `<div class="cmp-medical-detail__address-block--name"><i class="icon-marker-02"></i>${esc(locAddr)}</div>` : ''}
+    ${mapsUrl ? `<div class="cmp-medical-detail__address-block__location"><a href="${esc(mapsUrl)}" target="_blank" rel="noopener">Cómo llegar</a></div>` : ''}
+  </div>
+  <div class="cmp-medical-detail__buttons-block">
+    ${loc.phone ? `<div class="button-cmp"><a href="tel:${esc(loc.phone)}" class="button-cmp__text button-cmp__text--link"><i class="icon-phone"></i>${esc(loc.phone)}</a></div>` : ''}
+  </div>
+</div>`;
+  };
+
+  const locations = data.locations || [];
+  const moreLocationsHeading = locations.length > 1
+    ? `<h2 class="cmp-medical-detail__subtitle">${esc(displayName)} también pasa consulta en estos centros</h2>` : '';
+
   const fichaBlock = `<div class="cuadro-medico-ficha-doctor cmp-medical-detail" data-ssr="true" data-key="${esc(key)}">
   <section class="eds-mp-box-head">
     <h1 class="eds-mp-box-head--title">${esc(h1)}</h1>
     <p class="eds-mp-box-head--text">${esc(intro)}</p>
   </section>
-  <div class="cmp-medical-detail__first-block">
-    <div class="cmp-medical-detail__title-block">
-      <div class="cmp-medical-detail__title-block__tags">
-        <div class="cmp-tag-template cmp-tag-template--blue"><div class="cmp-tag-template__text">MÉDICO / PROFESIONAL</div></div>
-        ${data.businessGroup ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Centro de ASISA</div></div>' : ''}
-        ${data.ePrescription ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Receta electrónica</div></div>' : ''}
-      </div>
-      ${mainSpec ? `<p class="cmp-medical-detail__title-block--speciality">${esc(titleCase(mainSpec))}</p>` : ''}
-      <div class="cmp-title"><h2 class="cmp-title__text">${esc(displayName)}</h2></div>
-      ${data.collegiateCode ? `<p class="cmp-medical-detail__title-block--num-member">Núm. Colegiado – ${esc(data.collegiateCode)}</p>` : ''}
-    </div>
-    <div class="cmp-medical-detail__address-block">
-      ${data.parentDescription ? `<div class="cmp-medical-detail__address-block--center">${esc(titleCase(data.parentDescription))}</div>` : ''}
-      ${data.address ? `<div class="cmp-medical-detail__address-block--name"><i class="icon-marker-02"></i>${esc(titleCase([data.address, data.postalCode, data.city].filter(Boolean).join(', ')))}</div>` : ''}
-    </div>
-    <div class="cmp-medical-detail__buttons-block">
-      ${data.phone ? `<div class="button-cmp"><a href="tel:${esc(data.phone)}" class="button-cmp__text button-cmp__text--link"><i class="icon-phone"></i>${esc(data.phone)}</a></div>` : ''}
-    </div>
-  </div>
+  ${locations[0] ? locationCard(locations[0], true) : ''}
+  ${moreLocationsHeading}
+  ${locations.slice(1).map((l) => locationCard(l, false)).join('')}
 </div>`;
 
   const otrosMedicos = ssrOtrosMedicos(data);
@@ -330,17 +349,59 @@ function ssrCentro(key) {
   const centerName = titleCase(data.name);
   const specCount = (data.specialities || []).length;
   const docCount = (data.doctors || []).length;
+  const fullAddress = titleCase([data.address, data.postalCode, data.city].filter(Boolean).join(', '));
+  const mapsUrl = (data.lat && data.lon)
+    ? `https://www.google.com/maps/dir/?api=1&destination=${data.lat},${data.lon}` : '';
 
   const h1 = `${centerName} en ${provDisplay}`;
   const title = `${centerName} - Cuadro Médico ASISA`;
   const description = data.description
     || `${centerName} en ${provDisplay}. Centro del cuadro médico ASISA con ${specCount} especialidades y ${docCount} profesionales.`;
-  const intro = `Centro del cuadro médico de ASISA en ${provDisplay}. Consulta especialidades, médicos, dirección y teléfono.`;
+  const intro = `Centro del cuadro médico de ASISA en ${provDisplay}. Atiende en ${specCount} especialidades con ${docCount} profesionales. Consulta dirección, teléfono y pide cita online.`;
 
-  // Pre-renderizamos las primeras 5 especialidades como lista plana para SEO
-  const specsList = (data.specialities || []).slice(0, 5).map((s) => `<li>${esc(titleCase(s.speciality))}</li>`).join('');
+  // --- Especialidades (todas), con sus médicos asociados ---
+  const specsSection = (data.specialities || []).map((s) => {
+    const specTitle = esc(titleCase(s.speciality));
+    const docsList = (s.doctors || []).map((d) => `<li><a href="/cuadro-medico/d/${esc(d.key)}">${esc(formatPersonName(d.name))}</a>${d.subSpeciality ? ` <span class="cm-fcentro__spec-sub">— ${esc(titleCase(d.subSpeciality))}</span>` : ''}</li>`).join('');
+    const subs = (s.subSpecialities || []).filter(Boolean).map((sub) => `<li>${esc(titleCase(sub))}</li>`).join('');
+    const phone = s.phone || data.phone || '';
+    return `<div class="cm-fcentro__spec">
+  <div class="cm-fcentro__spec-header">
+    <h3 class="cm-fcentro__spec-title">${specTitle}</h3>
+    ${phone ? `<a href="tel:${esc(phone)}" class="button-cmp__text">${esc(phone)}</a>` : ''}
+  </div>
+  ${docsList ? `<div class="cm-fcentro__spec-col"><h4>Cuadro de especialistas</h4><ul class="cm-fcentro__spec-list">${docsList}</ul></div>` : ''}
+  ${subs ? `<div class="cm-fcentro__spec-col"><h4>Subespecialidades</h4><ul class="cm-fcentro__spec-list">${subs}</ul></div>` : ''}
+</div>`;
+  }).join('');
+
+  // --- Grid de médicos del centro ---
+  const docsGrid = (data.doctors || []).map((d) => `<article class="cm-fcentro__doctor-card">
+  <h3 class="cm-fcentro__doctor-name"><a href="/cuadro-medico/d/${esc(d.key)}">${esc(formatPersonName(d.name))}</a></h3>
+  <p class="cm-fcentro__doctor-spec">${esc(titleCase(d.speciality || ''))}</p>
+</article>`).join('');
+
+  // --- Otros centros similares ---
+  const otherCentros = (data.otherCentros || []).map((c) => {
+    const cName = titleCase(c.name);
+    const cAddr = titleCase([c.address, c.postalCode, c.city].filter(Boolean).join(', '));
+    const cSpecs = (c.specialities || []).map((s) => `<span class="cmp-tag-template cmp-tag-template--blank"><span class="cmp-tag-template__text">${esc(titleCase(s))}</span></span>`).join('');
+    const more = c.specialitiesMore ? `<span class="cm-fcentro__other-more">+${c.specialitiesMore} más</span>` : '';
+    return `<article class="cm-fcentro__other-card">
+  <h3 class="cm-fcentro__other-name"><a href="/cuadro-medico/c/${esc(c.key)}">${esc(cName)}</a></h3>
+  ${cAddr ? `<p class="cm-fcentro__other-address">${esc(cAddr)}</p>` : ''}
+  ${c.phone ? `<p class="cm-fcentro__other-phone"><a href="tel:${esc(c.phone)}">${esc(c.phone)}</a></p>` : ''}
+  ${cSpecs ? `<div class="cm-fcentro__other-specs">${cSpecs}${more}</div>` : ''}
+</article>`;
+  }).join('');
 
   const blocks = `<div class="cuadro-medico-ficha-centro cmp-medical-detail" data-ssr="true" data-key="${esc(key)}">
+  <nav class="cmp-breadcrumb"><ol class="cmp-breadcrumb__list">
+    <li><a href="/">Inicio</a></li>
+    <li><a href="/cuadro-medico">Cuadro médico</a></li>
+    <li><a href="/cuadro-medico/p/${esc(data.provinceSlug)}">${esc(provDisplay)}</a></li>
+    <li class="cmp-breadcrumb__item--active">${esc(centerName)}</li>
+  </ol></nav>
   <section class="eds-mp-box-head">
     <h1 class="eds-mp-box-head--title">${esc(h1)}</h1>
     <p class="eds-mp-box-head--text">${esc(intro)}</p>
@@ -350,19 +411,29 @@ function ssrCentro(key) {
       <div class="cmp-medical-detail__title-block__tags">
         <div class="cmp-tag-template cmp-tag-template--blue"><div class="cmp-tag-template__text">CENTRO MÉDICO</div></div>
         ${data.businessGroup ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Centro de ASISA</div></div>' : ''}
+        ${data.ePrescription ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Receta electrónica</div></div>' : ''}
       </div>
       <div class="cmp-title"><h2 class="cmp-title__text">${esc(centerName)}</h2></div>
     </div>
     <div class="cmp-medical-detail__address-block">
-      ${data.address ? `<div class="cmp-medical-detail__address-block--name"><i class="icon-marker-02"></i>${esc(titleCase([data.address, data.postalCode, data.city].filter(Boolean).join(', ')))}</div>` : ''}
+      ${fullAddress ? `<div class="cmp-medical-detail__address-block--name"><i class="icon-marker-02"></i>${esc(fullAddress)}</div>` : ''}
+      ${mapsUrl ? `<div class="cmp-medical-detail__address-block__location"><a href="${esc(mapsUrl)}" target="_blank" rel="noopener">Cómo llegar</a></div>` : ''}
     </div>
     <div class="cmp-medical-detail__buttons-block">
       ${data.phone ? `<div class="button-cmp"><a href="tel:${esc(data.phone)}" class="button-cmp__text button-cmp__text--link"><i class="icon-phone"></i>${esc(data.phone)}</a></div>` : ''}
     </div>
   </div>
-  ${specsList ? `<section class="cm-fcentro__specs-section">
-    <h2 class="cmp-medical-detail__subtitle">Especialidades médicas del centro</h2>
-    <ul class="cm-fcentro__specs-summary">${specsList}</ul>
+  ${specsSection ? `<section class="cm-fcentro__specs-section">
+    <h2 class="cmp-medical-detail__subtitle">Especialidades médicas del centro (${specCount})</h2>
+    ${specsSection}
+  </section>` : ''}
+  ${docsGrid ? `<section class="cm-fcentro__doctors-section">
+    <h2 class="cmp-medical-detail__subtitle">Médicos en ${esc(centerName)} (${docCount})</h2>
+    <div class="cm-fcentro__doctors-grid">${docsGrid}</div>
+  </section>` : ''}
+  ${otherCentros ? `<section class="cm-fcentro__other-section">
+    <h2 class="cmp-medical-detail__subtitle">Otros centros ASISA en ${esc(provDisplay)}</h2>
+    <div class="cm-fcentro__other-grid">${otherCentros}</div>
   </section>` : ''}
 </div>`;
 
