@@ -252,6 +252,17 @@ export default function decorate(block) {
   const key = getKeyFromUrl();
   if (!key) { block.hidden = true; return; }
 
+  // Cuando el overlay (api/markup.js · ssrCentro) pinta el SSR, emite la ficha
+  // del centro principal DENTRO de este bloque y las secciones extra (specs,
+  // doctores, otros centros) como divs HERMANOS al mismo nivel — porque el
+  // auto-blocking de EDS descartaría las secciones extra si estuvieran nested.
+  // Si llegamos aquí con SSR, NO re-renderizamos: el contenido ya está
+  // completo, y re-pintar reemplazaría la card principal por una versión
+  // equivalente (visual flicker innecesario) y dejaría los siblings sin tocar
+  // produciendo contenido visualmente duplicado.
+  if (block.children.length > 0) return;
+
+  // Camino CSR puro (sin SSR), p.ej. previsualización en AEM Author.
   block.innerHTML = '<p>Cargando centro…</p>';
 
   Promise.all([

@@ -23,7 +23,8 @@ export default function decorate(block) {
   const { provSlug, specSlug } = getSlugsFromUrl();
   if (!specSlug) { block.hidden = true; return; }
 
-  block.innerHTML = '<div class="loading"><div class="spinner"></div> <p>Cargando provincias…</p></div>';
+  const hasSsr = block.children.length > 0;
+  if (!hasSsr) block.innerHTML = '<div class="loading"><div class="spinner"></div> <p>Cargando provincias…</p></div>';
 
   fetch(`https://asisa-pc.vercel.app/api/especialidades?slug=${specSlug}`)
     .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
@@ -33,20 +34,15 @@ export default function decorate(block) {
       const specLower = (data.name || specSlug).toLowerCase();
 
       block.innerHTML = `
-      <div class="eds-mp-other-localities">
-        <h2 class="eds-mp-other-localities-title">Otras provincias con ${specLower} ASISA</h2>
-        <ul class="eds-mp-other-localities-container">
+        <h2 class="cm-otras-prov-title">Otras provincias con ${specLower} ASISA</h2>
+        <div class="cm-otras-prov-list">
           ${provincias.map((p) => `
-            <li class="eds-mp-other-localities-item">
-              <div class="eds-mp-other-localities-block">
-                <p class="eds-mp-other-localities-block--locate">${data.name} ${p.displayName}</p>
-                <p class="eds-mp-other-localities-block--professional">${p.count} profesionales</p>
-              </div>
-              <div class="eds-mp-other-localities-link"><a href="/cuadro-medico/p/${p.slug}/pe/${specSlug}" aria-label="Ver ${data.name} en ${p.displayName}"><i class="icon-arrow-right"></i></a></div>
-            
-            </li>`).join('')}
-        </ul>
-      </div>`;
+            <article class="cm-otras-prov-card">
+              <h3 class="cm-otras-prov-card__name">${data.name} ${p.displayName}</h3>
+              <p class="cm-otras-prov-card__count">${p.count} profesionales</p>
+              <a class="cm-otras-prov-card__arrow" href="/cuadro-medico/p/${p.slug}/pe/${specSlug}" aria-label="Ver ${data.name} en ${p.displayName}">→</a>
+            </article>`).join('')}
+        </div>`;
     })
-    .catch(() => { block.innerHTML = ''; });
+    .catch(() => { if (!hasSsr) block.innerHTML = ''; });
 }

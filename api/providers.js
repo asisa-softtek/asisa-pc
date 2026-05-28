@@ -98,96 +98,78 @@ function loadAllProvincePro(provinceSlug) {
   return list;
 }
 
-export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Content-Type', 'application/json');
-
-  const {
-    provinceSlug,
-    specSlug,
-    tab = 'professionals',
-    page = '1',
-    limit: limitParam,
-  } = req.query;
-
+export function fetchProviders({
+  provinceSlug, specSlug, tab = 'professionals', page = 1, limit: limitParam,
+}) {
   if (!provinceSlug && !specSlug) {
-    return res.status(400).json({ error: 'provinceSlug or specSlug is required' });
+    return { error: 'provinceSlug or specSlug is required', status: 400 };
   }
-
   if (!['professionals', 'centers'].includes(tab)) {
-    return res.status(400).json({ error: 'tab must be professionals or centers' });
+    return { error: 'tab must be professionals or centers', status: 400 };
   }
-
-  // Resolve province (optional when scanning nationally by spec)
-  if (provinceSlug) {
-    const provincia = getProvincias().find((p) => p.slug === provinceSlug);
-    if (!provincia) return res.status(404).json({ error: `Province not found: ${provinceSlug}` });
+  if (provinceSlug && !getProvincias().find((p) => p.slug === provinceSlug)) {
+    return { error: `Province not found: ${provinceSlug}`, status: 404 };
   }
-
-  // Resolve speciality (optional)
-  if (specSlug) {
-    const especialidad = getEspecialidades().find((e) => e.slug === specSlug);
-    if (!especialidad) return res.status(404).json({ error: `Speciality not found: ${specSlug}` });
+  if (specSlug && !getEspecialidades().find((e) => e.slug === specSlug)) {
+    return { error: `Speciality not found: ${specSlug}`, status: 404 };
   }
 
   const limit = Math.min(parseInt(limitParam, 10) || DEFAULT_LIMIT, MAX_LIMIT);
   const pageNum = Math.max(1, parseInt(page, 10) || 1);
 
-  try {
-    let raw;
-    if (provinceSlug && specSlug) {
-      const cachePath = join(process.cwd(), `data/providers/${provinceSlug}/${specSlug}.json`);
-      if (!existsSync(cachePath)) {
-        return res.status(404).json({ error: `No data for ${provinceSlug}/${specSlug}` });
-      }
-      raw = JSON.parse(readFileSync(cachePath, 'utf8'));
-    } else if (provinceSlug) {
-      raw = loadAllProvincePro(provinceSlug);
-      if (!raw) return res.status(404).json({ error: `No data for ${provinceSlug}` });
-    } else {
-      // National mode: aggregate this spec across all provinces
-      const provincesDir = join(process.cwd(), 'data/providers');
-      if (!existsSync(provincesDir)) return res.status(404).json({ error: 'No providers data' });
-      const provSlugs = readdirSync(provincesDir);
-      const acc = [];
-      for (const slug of provSlugs) {
-        const f = join(provincesDir, slug, `${specSlug}.json`);
-        if (!existsSync(f)) continue;
-        try { acc.push(...JSON.parse(readFileSync(f, 'utf8'))); } catch { /* skip */ }
-      }
-      raw = acc;
+  let raw;
+  if (provinceSlug && specSlug) {
+    const cachePath = join(process.cwd(), `data/providers/${provinceSlug}/${specSlug}.json`);
+    if (!existsSync(cachePath)) return { error: `No data for ${provinceSlug}/${specSlug}`, status: 404 };
+    raw = JSON.parse(readFileSync(cachePath, 'utf8'));
+  } else if (provinceSlug) {
+    raw = loadAllProvincePro(provinceSlug);
+    if (!raw) return { error: `No data for ${provinceSlug}`, status: 404 };
+  } else {
+    const provincesDir = join(process.cwd(), 'data/providers');
+    if (!existsSync(provincesDir)) return { error: 'No providers data', status: 404 };
+    const acc = [];
+    for (const slug of readdirSync(provincesDir)) {
+      const f = join(provincesDir, slug, `${specSlug}.json`);
+      if (!existsSync(f)) continue;
+      try { acc.push(...JSON.parse(readFileSync(f, 'utf8'))); } catch { /* skip */ }
     }
-
-    // Filter by tab, then cap the displayable list per business rule
-    // (profesionales muestra hasta 30, centros hasta 50)
-    const filteredAll = raw.filter((p) => (tab === 'professionals' ? isProfessional(p) : isCenter(p)));
-    const cap = MAX_TOTAL_BY_TAB[tab];
-    const filtered = filteredAll.slice(0, cap);
-
-    // Counts per tab (capped, so the tab label refleja lo navegable)
-    const totalProfessionals = Math.min(raw.filter(isProfessional).length, MAX_TOTAL_BY_TAB.professionals);
-    const totalCenters = Math.min(raw.filter(isCenter).length, MAX_TOTAL_BY_TAB.centers);
-
-    // Paginate
-    const total = filtered.length;
-    const totalPages = Math.ceil(total / limit);
-    const offset = (pageNum - 1) * limit;
-    const results = filtered.slice(offset, offset + limit).map(mapProvider);
-
-    res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=3600');
-    return res.status(200).json({
-      provinceSlug,
-      specSlug: specSlug || null,
-      tab,
-      page: pageNum,
-      limit,
-      total,
-      totalPages,
-      totalProfessionals,
-      totalCenters,
-      results,
-    });
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
+    raw = acc;
   }
+
+  const filteredAll = raw.filter((p) => (tab === 'professionals' ? isProfessional(p) : isCenter(p)));
+  const cap = MAX_TOTAL_BY_TAB[tab];
+  const filtered = filteredAll.slice(0, cap);
+
+  const totalProfessionals = Math.min(raw.filter(isProfessional).length, MAX_TOTAL_BY_TAB.professionals);
+  const totalCenters = Math.min(raw.filter(isCenter).length, MAX_TOTAL_BY_TAB.centers);
+
+  const total = filtered.length;
+  const totalPages = Math.ceil(total / limit);
+  const offset = (pageNum - 1) * limit;
+  const results = filtered.slice(offset, offset + limit).map(mapProvider);
+
+  return {
+    provinceSlug: provinceSlug || null,
+    specSlug: specSlug || null,
+    tab,
+    page: pageNum,
+    limit,
+    total,
+    totalPages,
+    totalProfessionals,
+    totalCenters,
+    results,
+  };
+}
+
+export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Content-Type', 'application/json');
+
+  const data = fetchProviders(req.query || {});
+  if (data.error) return res.status(data.status).json({ error: data.error });
+
+  res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=3600');
+  return res.status(200).json(data);
 }

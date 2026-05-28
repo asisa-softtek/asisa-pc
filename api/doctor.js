@@ -85,75 +85,90 @@ function pickRepresentative(locations) {
   return locations[0];
 }
 
+export function fetchDoctor(rawKey) {
+  if (!rawKey) return { error: 'key is required', status: 400 };
+  const index = getIndex();
+  let key = rawKey;
+  let entry = index[key];
+  // Fallback por slug: si el id numérico cambió tras regenerar el índice (URLs
+  // antiguas con providerCode vs nuevas con collegiateCode), buscamos por el
+  // prefijo del slug del nombre.
+  if (!entry) {
+    const slug = key.replace(/-\d+$/, '');
+    const match = Object.keys(index).find((k) => k.replace(/-\d+$/, '') === slug);
+    if (match) {
+      key = match;
+      entry = index[match];
+    }
+  }
+  if (!entry) return { error: `Doctor not found: ${rawKey}`, status: 404 };
+
+  const locations = [];
+  let collegiateCode = entry.collegiateCode || '';
+  let languages = [];
+
+  for (const loc of entry.locations) {
+    const detailPath = join(process.cwd(), `data/provider-details/${loc.providerLocalicationCode}.json`);
+    const detailEntries = existsSync(detailPath) ? readJson(detailPath) : null;
+    const detailBase = Array.isArray(detailEntries) && detailEntries.length ? detailEntries[0] : null;
+    const listEntry = findInProvidersList(loc.provinceSlug, loc.specSlug, loc.providerCode, loc.providerLocalicationCode);
+
+    const built = buildLocation(loc, listEntry, detailBase);
+    built._hasDetail = !!detailBase;
+    locations.push(built);
+
+    if (!collegiateCode) {
+      collegiateCode = listEntry?.professional?.collegiateCode
+        || detailBase?.collegiateCode
+        || '';
+    }
+    if (!languages.length) {
+      const src = listEntry?.languages?.length ? listEntry.languages : (detailBase?.languages || []);
+      languages = [...new Set(src.map((l) => l.languageDescription).filter(Boolean))];
+    }
+  }
+
+  if (!locations.length) return { error: `No locations for: ${key}`, status: 404 };
+
+  const rep = pickRepresentative(locations);
+  const specialities = [...new Set(locations.map((l) => l.speciality).filter(Boolean))].sort();
+
+  locations.forEach((l) => { delete l._hasDetail; });
+
+  return {
+    key,
+    name: entry.name,
+    collegiateCode,
+    languages,
+    specialities,
+    specSlug: rep.specSlug,
+    provinceSlug: rep.provinceSlug,
+    parentDescription: rep.parentDescription,
+    address: rep.address,
+    postalCode: rep.postalCode,
+    city: rep.city,
+    provinceCode: rep.provinceCode,
+    phone: rep.phone,
+    lat: rep.lat,
+    lon: rep.lon,
+    onlineAppointment: rep.onlineAppointment,
+    videoConsultation: rep.videoConsultation,
+    ePrescription: rep.ePrescription,
+    businessGroup: rep.businessGroup,
+    tuotempo: rep.tuotempo,
+    locations,
+  };
+}
+
 export default function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Content-Type', 'application/json');
 
-  const { key } = req.query;
-  if (!key) return res.status(400).json({ error: 'key is required' });
-
-  const entry = getIndex()[key];
-  if (!entry) return res.status(404).json({ error: `Doctor not found: ${key}` });
-
   try {
-    const locations = [];
-    let collegiateCode = entry.collegiateCode || '';
-    let languages = [];
-
-    for (const loc of entry.locations) {
-      const detailPath = join(process.cwd(), `data/provider-details/${loc.providerLocalicationCode}.json`);
-      const detailEntries = existsSync(detailPath) ? readJson(detailPath) : null;
-      const detailBase = Array.isArray(detailEntries) && detailEntries.length ? detailEntries[0] : null;
-      const listEntry = findInProvidersList(loc.provinceSlug, loc.specSlug, loc.providerCode, loc.providerLocalicationCode);
-
-      const built = buildLocation(loc, listEntry, detailBase);
-      built._hasDetail = !!detailBase;
-      locations.push(built);
-
-      if (!collegiateCode) {
-        collegiateCode = listEntry?.professional?.collegiateCode
-          || detailBase?.collegiateCode
-          || '';
-      }
-      if (!languages.length) {
-        const src = listEntry?.languages?.length ? listEntry.languages : (detailBase?.languages || []);
-        languages = [...new Set(src.map((l) => l.languageDescription).filter(Boolean))];
-      }
-    }
-
-    if (!locations.length) return res.status(404).json({ error: `No locations for: ${key}` });
-
-    const rep = pickRepresentative(locations);
-    const specialities = [...new Set(locations.map((l) => l.speciality).filter(Boolean))].sort();
-
-    // Strip internal flag
-    locations.forEach((l) => { delete l._hasDetail; });
-
+    const data = fetchDoctor(req.query?.key);
+    if (data.error) return res.status(data.status).json({ error: data.error });
     res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
-    return res.status(200).json({
-      key,
-      name: entry.name,
-      collegiateCode,
-      languages,
-      specialities,
-      // Representative fields kept at top-level for the otros-medicos block
-      specSlug: rep.specSlug,
-      provinceSlug: rep.provinceSlug,
-      parentDescription: rep.parentDescription,
-      address: rep.address,
-      postalCode: rep.postalCode,
-      city: rep.city,
-      provinceCode: rep.provinceCode,
-      phone: rep.phone,
-      lat: rep.lat,
-      lon: rep.lon,
-      onlineAppointment: rep.onlineAppointment,
-      videoConsultation: rep.videoConsultation,
-      ePrescription: rep.ePrescription,
-      businessGroup: rep.businessGroup,
-      tuotempo: rep.tuotempo,
-      locations,
-    });
+    return res.status(200).json(data);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

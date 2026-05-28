@@ -169,18 +169,24 @@ function buildDescription(specCount, city, provDisplayName) {
   return `Centro médico del cuadro de ASISA${where}. Atiende en ${n} especialidad${n === 1 ? '' : 'es'} con acceso directo a especialistas sin necesidad de derivación. Solicita cita online o llama al centro.`;
 }
 
-export default function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Content-Type', 'application/json');
-
-  const { key } = req.query;
-  if (!key) return res.status(400).json({ error: 'key is required' });
-
-  const indexEntry = getCentrosIndex()[key];
-  if (!indexEntry) return res.status(404).json({ error: `Centro not found: ${key}` });
+export function fetchCentro(rawKey) {
+  if (!rawKey) return { error: 'key is required', status: 400 };
+  const idx = getCentrosIndex();
+  let key = rawKey;
+  let indexEntry = idx[key];
+  // Fallback por slug: tolera URLs obsoletas cuyo slug del nombre coincide
+  // con un centro presente pero con un sufijo distinto (raro, pero ocurre
+  // cuando el centro cambia de localización canónica).
+  if (!indexEntry) {
+    const match = Object.keys(idx).find((k) => k === rawKey || k.startsWith(`${rawKey}-`));
+    if (match) {
+      key = match;
+      indexEntry = idx[match];
+    }
+  }
+  if (!indexEntry) return { error: `Centro not found: ${rawKey}`, status: 404 };
 
   const { providerLocalicationCode, name, provinceSlug } = indexEntry;
-
   try {
     const provinceData = scanProvince(provinceSlug);
     const centroData = provinceData.centros.get(providerLocalicationCode);
@@ -250,9 +256,19 @@ export default function handler(req, res) {
       description: buildDescription(specsArray.length, addr.cityDescription, provinceSlug),
     };
 
-    res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
-    return res.status(200).json(detail);
+    return detail;
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    return { error: err.message, status: 500 };
   }
+}
+
+export default function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Content-Type', 'application/json');
+
+  const data = fetchCentro(req.query?.key);
+  if (data && data.error) return res.status(data.status).json({ error: data.error });
+
+  res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
+  return res.status(200).json(data);
 }

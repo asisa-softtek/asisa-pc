@@ -1,6 +1,6 @@
 sitemaps:
   # Páginas estáticas — home, landings, plantillas cuadro médico.
-  default:
+  pages-static:
     source: /query-index.json
     destination: /sitemap.xml
     lastmod: YYYY-MM-DD

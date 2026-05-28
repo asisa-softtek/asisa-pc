@@ -98,7 +98,7 @@ function renderCard(p, isProfessional, provinceCode, locationName) {
         </div>
          <div class="eds-mp-card__info">
               <div class="eds-mp-card__info--contact">
-                  <p class="eds-mp-card__type--speciality">Dermatología</p>
+                  ${speciality ? `<p class="eds-mp-card__type--speciality">${speciality}</p>` : ''}
                   <p class="eds-mp-card__type--name">${displayName}</p>
                   ${(isProfessional && p.collegiateCode) ? `<p class="eds-mp-card__type--num-member">Núm. Colegiado – ${p.collegiateCode}</p>` : ''}
                   ${p.parentDescription ? `<p class="eds-mp-card__type--center">${formatName(p.parentDescription)}</p>` : ''}
@@ -235,11 +235,19 @@ async function decorate(block) {
   block.classList.add('cmp-medical-picture-result');
 
   let state = { tab: 'professionals', page: 1, loading: true, results: [] };
-  block.innerHTML = '<div class="cmp-medical-picture-result__loading">Cargando médicos…</div>';
+  // Si el overlay ya pintó contenido (SSR), saltamos el spinner inicial para no
+  // hacer flicker. La primera llamada a refresh() entonces no toca el DOM hasta
+  // que llega la respuesta del API. EDS puede haber reescrito el HTML del SSR
+  // por su auto-blocking, así que detectamos por presencia de hijos.
+  let silentFirst = block.children.length > 0;
 
   async function refresh(next) {
     state = { ...state, ...next, loading: true };
-    block.innerHTML = renderShell(state);
+    if (silentFirst) {
+      silentFirst = false; // siguientes interacciones SÍ muestran loading
+    } else {
+      block.innerHTML = renderShell(state);
+    }
     try {
       const { provincia, providersResp, especialidad } = await fetchPage(provSlug, specSlug, state.tab, state.page);
       const fallbackSpec = specSlug ? specSlug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) : '';
@@ -268,6 +276,32 @@ async function decorate(block) {
     }
   }
 
+  // Camino de HIDRATACIÓN: el overlay ya pintó el HTML real. Leemos el estado
+  // del DOM y solo enganchamos listeners. Cualquier interacción (tab o página)
+  // dispara un refresh() normal que reemplaza el contenido.
+  if (block.dataset.ssr === 'true') {
+    const tabsEl = block.querySelector('.eds-mp-tabs');
+    const fallbackSpec = specSlug ? specSlug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) : '';
+    state = {
+      tab: tabsEl?.dataset.tab || 'professionals',
+      page: parseInt(tabsEl?.dataset.page, 10) || 1,
+      loading: false,
+      nationalSpec,
+      locationName: tabsEl?.dataset.locationName || provSlug || '',
+      provinceCode: tabsEl?.dataset.provinceCode || '',
+      specName: tabsEl?.dataset.specName || fallbackSpec,
+      totalProfessionals: parseInt(tabsEl?.dataset.totalProf, 10) || 0,
+      totalCenters: parseInt(tabsEl?.dataset.totalCenters, 10) || 0,
+      totalPages: parseInt(tabsEl?.dataset.totalPages, 10) || 1,
+      total: 0,
+      results: [],
+    };
+    attachListeners(block, state, refresh);
+    return;
+  }
+
+  // Camino sin SSR: render completo desde cliente.
+  block.innerHTML = '<div class="cmp-medical-picture-result__loading">Cargando médicos…</div>';
   refresh(state);
 }
 

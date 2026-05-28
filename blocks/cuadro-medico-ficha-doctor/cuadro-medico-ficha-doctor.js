@@ -91,11 +91,27 @@ function renderDoctorHeader(d) {
       </section>`;
 }
 
+function toCentroSlug(raw) {
+  return String(raw || '')
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+function renderCenterLink(parentDescription) {
+  if (!parentDescription) return '';
+  const slug = toCentroSlug(parentDescription);
+  const display = formatName(parentDescription);
+  return slug ? `<a href="/cuadro-medico/c/${slug}">${display}</a>` : display;
+}
+
 function renderLocationCard(d, loc, idx, provinciaDisplayName) {
   const mapsUrl = (loc.lat && loc.lon) ? `https://www.google.com/maps/dir/?api=1&destination=${loc.lat},${loc.lon}` : '';
   const addressLine = [loc.address, loc.postalCode, loc.city].filter(Boolean).join(', ');
   const shareUrl = buildShareUrl(d, loc, provinciaDisplayName);
-  const center = loc.parentDescription ? formatName(loc.parentDescription) : '';
+  const centerHtml = renderCenterLink(loc.parentDescription);
   const speciality = formatName(loc.speciality || '');
   const isFirst = idx === 0;
 
@@ -120,12 +136,12 @@ function renderLocationCard(d, loc, idx, provinciaDisplayName) {
         ${d.collegiateCode ? `<p class="cmp-medical-detail__title-block--num-member"><em>Núm. Colegiado – ${d.collegiateCode}</em></p>` : ''}
       ` : `
         <div class="cmp-title">
-          <h3 class="cmp-title__text">${center || speciality}</h3>
+          <h3 class="cmp-title__text">${centerHtml || speciality}</h3>
         </div>
       `}
     </div>
     <div class="cmp-medical-detail__address-block">
-      ${center && isFirst ? `<div class="cmp-medical-detail__address-block--center">${center}</div>` : ''}
+      ${centerHtml && isFirst ? `<div class="cmp-medical-detail__address-block--center">${centerHtml}</div>` : ''}
       ${addressLine ? `<div class="cmp-medical-detail__address-block--name"><i class="icon-marker-02"></i>${formatName(addressLine)}</div>` : ''}
       <div class="cmp-medical-detail__address-block__location">
         ${mapsUrl ? `<div class="cmp-medical-detail__address-block__location--reach"><div class="button-cmp"><a href="${mapsUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--link button-location"><i class="icon-map-04 icon-large"></i>Cómo llegar</a></div></div>` : ''}
@@ -164,6 +180,13 @@ export default function decorate(block) {
   const key = getKeyFromUrl();
   if (!key) { block.hidden = true; return; }
 
+  // El overlay (api/markup.js · ssrDoctor) pinta header SEO + primera ubicación
+  // dentro de este bloque, y las ubicaciones adicionales + otros-medicos como
+  // bloques HERMANOS al mismo nivel (de lo contrario el auto-blocking de EDS
+  // descarta secciones extra). Si llegamos aquí con SSR, no re-renderizamos.
+  if (block.children.length > 0) return;
+
+  // Camino CSR puro (previsualización en AEM Author, etc.).
   block.innerHTML = '<p>Cargando médico…</p>';
 
   Promise.all([
@@ -177,7 +200,10 @@ export default function decorate(block) {
       };
 
       const locs = d.locations || [];
-      if (!locs.length) { block.innerHTML = '<p>No se pudo cargar la ficha del médico.</p>'; return; }
+      if (!locs.length) {
+        block.innerHTML = '<p>No se pudo cargar la ficha del médico.</p>';
+        return;
+      }
 
       const parts = [renderDoctorHeader(d)];
       parts.push(renderLocationCard(d, locs[0], 0, provinciaDisplayName(locs[0])));
