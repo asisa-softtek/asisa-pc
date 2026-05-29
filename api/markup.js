@@ -26,6 +26,21 @@ import { getCuadroMedicoSitemapXml } from './sitemap-cuadro-medico.js';
 const ASISA_HOST = 'https://www.asisa.es';
 
 // ---------------- helpers ----------------
+// Envuelve cualquier HTML en el patrón bloque-fila-celda que EDS
+// auto-blocking conserva como bloque. Resultado en DOM:
+//   <div class="<name>-wrapper">
+//     <div class="<name> block" data-block-name="<name>" data-block-status="loaded">
+//       <div><div>...innerHTML...</div></div>
+//     </div>
+//   </div>
+// Así el front puede atacar .<name>-wrapper y .<name> con CSS estable.
+function asBlock(blockName, innerHTML, attrs = {}) {
+  const attrStr = Object.entries(attrs)
+    .map(([k, v]) => ` ${k}="${esc(v)}"`)
+    .join('');
+  return `<div class="${blockName}"${attrStr}><div><div>${innerHTML}</div></div></div>`;
+}
+
 function esc(s) {
   return String(s ?? '')
     .replace(/&/g, '&amp;')
@@ -129,12 +144,10 @@ function ssrOtrasEspecialidades({ provSlug, specSlug, provDisplay }) {
     const specs = allEspec.filter((e) => provSpecsSet.has(e.slug));
     if (!specs.length) return '';
     const items = specs.map((e) => `<li><a class="cmp-tag-template cmp-tag-template--blue-100" href="/cuadro-medico/p/${esc(provSlug)}/pe/${esc(e.slug)}"><span class="cmp-tag-template__text">${esc(e.name)}</span></a></li>`).join('');
-    return `<div class="cuadro-medico-otras-especialidades">
-  <div class="eds-mp-other-specs">
+    return asBlock('cuadro-medico-otras-especialidades', `<div class="eds-mp-other-specs">
     <h2 class="eds-mp-other-specs__title">Otras especialidades en ${esc(provDisplay)}</h2>
     <ul class="eds-mp-other-specs__container">${items}</ul>
-  </div>
-</div>`;
+  </div>`);
   }
   // National mode
   const top = allEspec.filter((e) => e.kind !== 'service').slice(0, 15);
@@ -143,10 +156,8 @@ function ssrOtrasEspecialidades({ provSlug, specSlug, provDisplay }) {
     const variant = e.slug === specSlug ? 'cmp-tag-template--blue' : 'cmp-tag-template--blank';
     return `<a class="cmp-tag-template ${variant}" href="/cuadro-medico/e/${esc(e.slug)}"><span class="cmp-tag-template__text">${esc(e.name)}</span></a>`;
   }).join('');
-  return `<div class="cuadro-medico-otras-especialidades">
-  <h2 class="cmp-medical-detail__subtitle">Otras especialidades del Cuadro médico ASISA</h2>
-  <div class="cmp-medical-detail__other-specialities">${chips}</div>
-</div>`;
+  return asBlock('cuadro-medico-otras-especialidades', `<h2 class="cmp-medical-detail__subtitle">Otras especialidades del Cuadro médico ASISA</h2>
+  <div class="cmp-medical-detail__other-specialities">${chips}</div>`);
 }
 
 function ssrOtrasProvincias({ provSlug, specSlug }) {
@@ -162,10 +173,8 @@ function ssrOtrasProvincias({ provSlug, specSlug }) {
   <p class="cm-otras-prov-card__count">${p.count} profesionales</p>
   <a class="cm-otras-prov-card__arrow" href="/cuadro-medico/p/${esc(p.slug)}/pe/${esc(specSlug)}" aria-label="Ver ${esc(specName)} en ${esc(p.displayName)}">→</a>
 </article>`).join('');
-  return `<div class="cuadro-medico-otras-provincias">
-  <h2 class="cm-otras-prov-title">Otras provincias con ${esc(specLower)} ASISA</h2>
-  <div class="cm-otras-prov-list">${cards}</div>
-</div>`;
+  return asBlock('cuadro-medico-otras-provincias', `<h2 class="cm-otras-prov-title">Otras provincias con ${esc(specLower)} ASISA</h2>
+  <div class="cm-otras-prov-list">${cards}</div>`);
 }
 
 function ssrListing({ provSlug, specSlug, nationalSpec }) {
@@ -225,7 +234,7 @@ function ssrListing({ provSlug, specSlug, nationalSpec }) {
     `data-spec-name="${esc(specName)}"`,
   ].join(' ');
 
-  const cuadroMedicoBlock = `<div class="cuadro-medico cmp-medical-picture-result" data-ssr="true">
+  const cuadroMedicoBlock = asBlock('cuadro-medico', `<div class="cmp-medical-picture-result">
   <section class="eds-mp-box-head">
     <h1 class="eds-mp-box-head--title">${esc(h1)}</h1>
     <p class="eds-mp-box-head--text">${esc(intro)}</p>
@@ -239,7 +248,7 @@ function ssrListing({ provSlug, specSlug, nationalSpec }) {
       <div class="eds-mp-tabs__content">${cards}</div>
     </div>
   </div>
-</div>`;
+</div>`, { 'data-ssr': 'true' });
 
   const otrasEspecs = ssrOtrasEspecialidades({ provSlug, specSlug, provDisplay: locationName });
   const otrasProvs = ssrOtrasProvincias({ provSlug, specSlug });
@@ -287,7 +296,7 @@ function ssrOtrosMedicos(doctorData) {
 </section>`);
   }
   if (!sections.length) return '';
-  return `<div class="cuadro-medico-otros-medicos">${sections.join('\n')}</div>`;
+  return asBlock('cuadro-medico-otros-medicos', sections.join('\n'));
 }
 
 function ssrDoctor(key) {
@@ -344,19 +353,17 @@ function ssrDoctor(key) {
   // Las ubicaciones adicionales van como bloque sibling para que EDS
   // no las descarte (auto-blocking sólo conserva el primer "first-block"
   // anidado en un bloque).
-  const fichaBlock = `<div class="cuadro-medico-ficha-doctor cmp-medical-detail" data-ssr="true" data-key="${esc(key)}">
+  const fichaBlock = asBlock('cuadro-medico-ficha-doctor', `<div class="cmp-medical-detail" data-ssr="true" data-key="${esc(key)}">
   <section class="eds-mp-box-head">
     <h1 class="eds-mp-box-head--title">${esc(h1)}</h1>
     <p class="eds-mp-box-head--text">${esc(intro)}</p>
   </section>
   ${locations[0] ? locationCard(locations[0], true) : ''}
-</div>`;
+</div>`);
 
   const moreLocationsBlock = locations.length > 1
-    ? `<div class="cuadro-medico-ficha-doctor-locations">
-  ${moreLocationsHeading}
-  ${locations.slice(1).map((l) => locationCard(l, false)).join('')}
-</div>` : '';
+    ? asBlock('cuadro-medico-ficha-doctor-locations', `${moreLocationsHeading}
+  ${locations.slice(1).map((l) => locationCard(l, false)).join('')}`) : '';
 
   const otrosMedicos = ssrOtrosMedicos(data);
 
@@ -428,7 +435,7 @@ function ssrCentro(key) {
   // preserven en el bus live, las emitimos como divs HERMANOS en lugar de anidados.
   // El bloque cliente cuadro-medico-ficha-centro detecta SSR (children > 0) y NO
   // re-renderiza, así no se duplica el contenido.
-  const fichaCentroBlock = `<div class="cuadro-medico-ficha-centro cmp-medical-detail" data-ssr="true" data-key="${esc(key)}">
+  const fichaCentroBlock = asBlock('cuadro-medico-ficha-centro', `<div class="cmp-medical-detail" data-ssr="true" data-key="${esc(key)}">
   <nav class="cmp-breadcrumb"><ol class="cmp-breadcrumb__list">
     <li><a href="/">Inicio</a></li>
     <li><a href="/cuadro-medico">Cuadro médico</a></li>
@@ -456,25 +463,19 @@ function ssrCentro(key) {
       ${data.phone ? `<div class="button-cmp"><a href="tel:${esc(data.phone)}" class="button-cmp__text button-cmp__text--link"><i class="icon-phone"></i>${esc(data.phone)}</a></div>` : ''}
     </div>
   </div>
-</div>`;
+</div>`);
 
   const specsBlock = specsSection
-    ? `<div class="cuadro-medico-ficha-centro-specs">
-  <h2 class="cmp-medical-detail__subtitle">Especialidades médicas del centro (${specCount})</h2>
-  ${specsSection}
-</div>` : '';
+    ? asBlock('cuadro-medico-ficha-centro-specs', `<h2 class="cmp-medical-detail__subtitle">Especialidades médicas del centro (${specCount})</h2>
+  ${specsSection}`) : '';
 
   const docsBlock = docsGrid
-    ? `<div class="cuadro-medico-ficha-centro-doctors">
-  <h2 class="cmp-medical-detail__subtitle">Médicos en ${esc(centerName)} (${docCount})</h2>
-  <div class="cm-fcentro__doctors-grid">${docsGrid}</div>
-</div>` : '';
+    ? asBlock('cuadro-medico-ficha-centro-doctors', `<h2 class="cmp-medical-detail__subtitle">Médicos en ${esc(centerName)} (${docCount})</h2>
+  <div class="cm-fcentro__doctors-grid">${docsGrid}</div>`) : '';
 
   const othersBlock = otherCentros
-    ? `<div class="cuadro-medico-ficha-centro-others">
-  <h2 class="cmp-medical-detail__subtitle">Otros centros ASISA en ${esc(provDisplay)}</h2>
-  <div class="cm-fcentro__other-grid">${otherCentros}</div>
-</div>` : '';
+    ? asBlock('cuadro-medico-ficha-centro-others', `<h2 class="cmp-medical-detail__subtitle">Otros centros ASISA en ${esc(provDisplay)}</h2>
+  <div class="cm-fcentro__other-grid">${otherCentros}</div>`) : '';
 
   return {
     title,
