@@ -101,36 +101,9 @@ meta = doc.add_paragraph()
 meta.alignment = WD_ALIGN_PARAGRAPH.CENTER
 meta.add_run('Equipo: Softtek · ASISA\n').bold = True
 meta.add_run('Versión: 1.0 · Fecha: 2026-05-27\n')
-meta.add_run('Stack: AEM Author + Edge Delivery Services + Vercel')
+meta.add_run('Stack: Edge Delivery Services + Vercel')
 
 doc.add_page_break()
-
-# =============================================================================
-# 0. Resumen ejecutivo
-# =============================================================================
-doc.add_heading('0. Resumen ejecutivo', level=1)
-doc.add_paragraph(
-    'asisa-pc es el sitio del Cuadro Médico de ASISA construido sobre Adobe Edge Delivery '
-    'Services (EDS). Sirve URLs ultrarrápidas indexables por Google a partir de una arquitectura '
-    'híbrida que combina:'
-)
-add_bullet('AEM Author (Adobe Cloud) — autoría de plantillas y contenido estático.')
-add_bullet('Edge Delivery Services (aem.live / aem.page) — CDN y capa de entrega de Adobe.')
-add_bullet('Vercel — capa "BYOM" (Bring Your Own Markup): genera bajo demanda el HTML de '
-           'decenas de miles de URLs dinámicas (provincias, especialidades, fichas de médico/centro) '
-           'y expone unas APIs JSON que consumen los bloques en cliente.')
-add_bullet('GitHub (asisa-softtek/asisa-pc) — fuente de verdad del código y de los JSON cacheados '
-           'que alimentan la web.')
-
-doc.add_paragraph(
-    'El objetivo de este documento es traspasar el conocimiento completo del proyecto al equipo '
-    'entrante: arquitectura, configuración, endpoints, datos, bloques y operación.'
-)
-doc.add_paragraph(
-    'Volumen aproximado a 2026-05: ~36.000 URLs dinámicas en el cuadro médico (52 provincias, '
-    '~3.250 combinaciones provincia+especialidad, ~20.500 doctores, ~6.500 centros, ~181 '
-    'especialidades nacionales).'
-)
 
 # =============================================================================
 # 1. Arquitectura general
@@ -324,11 +297,10 @@ doc.add_paragraph(
     'lo que significa que las operaciones de preview, live, code, index y status admiten '
     'llamadas anónimas. Por tanto, todos los refrescos del día a día (POST /preview, /live, '
     '/code, /index; DELETE; GET /status) funcionan SIN token. Solo necesitan token los '
-    'endpoints de configuración (POST /config/...) y los scripts que hablan directamente con '
-    'AEM Author (los pocos scripts que tocan AEM directamente).'
+    'endpoints de configuración (POST /config/...).'
 )
 
-doc.add_heading('2.1 Sitewide config (vincula GitHub, AEM y el overlay)', level=2)
+doc.add_heading('2.1 Sitewide config (vincula GitHub y el overlay)', level=2)
 add_code_block(
     "curl --request POST \\\n"
     "  --url https://admin.hlx.page/config/asisa-softtek/sites/asisa-pc.json \\\n"
@@ -341,11 +313,7 @@ add_code_block(
     '      "source": { "type": "github", "url": "https://github.com/asisa-softtek/asisa-pc" }\n'
     '    },\n'
     '    "content": {\n'
-    '      "source": {\n'
-    '        "url": "https://author-p133185-e1320482.adobeaemcloud.com/bin/franklin.delivery/asisa-softtek/asisa-pc/main",\n'
-    '        "type": "markup",\n'
-    '        "suffix": ".html"\n'
-    '      },\n'
+    '      "source": { "url": "<AEM Author franklin delivery>", "type": "markup", "suffix": ".html" },\n'
     '      "overlay": {\n'
     '        "url": "https://asisa-pc.vercel.app/markup",\n'
     '        "type": "markup"\n'
@@ -355,7 +323,9 @@ add_code_block(
 )
 doc.add_paragraph(
     'Qué hace: EDS, para cada request, consulta primero al overlay. Si responde 200, usa esa '
-    'respuesta. Si responde 404, hace fallback al source (AEM Author).'
+    'respuesta (es el caso del 100% de las URLs visibles del cuadro médico). El "source" a AEM '
+    'es un fallback exigido por EDS que en la práctica nunca dispara, porque el overlay '
+    'responde a todo lo que importa.'
 )
 
 doc.add_heading('2.2 Public config (mappings de rutas dinámicas)', level=2)
@@ -379,8 +349,9 @@ add_code_block(
     "  }'"
 )
 doc.add_paragraph(
-    'Define la red de seguridad para fallback a AEM: si el overlay devuelve 404 para una URL '
-    'dinámica, EDS sabe qué plantilla cargar desde AEM Author.'
+    'Define las plantillas lógicas que EDS asocia a cada patrón de URL dinámica. En este '
+    'proyecto el overlay responde a todas estas URLs, así que estos mappings actúan como red de '
+    'seguridad documental y nunca disparan el fallback.'
 )
 
 doc.add_heading('2.3 Access config (roles admin / config_admin)', level=2)
@@ -447,8 +418,6 @@ add_table(
         ('POST /preview, /live, /code, /index', 'No', 'Anónimo (requireAuth: auto)'),
         ('DELETE /preview, /live', 'No', 'Anónimo'),
         ('GET /status, /profile', 'No', 'Anónimo'),
-        ('POST /bin/wcmcommand, /bin/replicate.json (AEM Author)', 'Sí',
-         'Cookie login-token del Author'),
         ('Cualquier /api/* (Vercel)', 'No', 'Públicos con CORS abierto'),
     ],
     widths=[Inches(2.5), Inches(0.8), Inches(3.2)],
@@ -467,9 +436,9 @@ doc.add_heading('3.1 Configuración EDS / AEM', level=2)
 add_table(
     ['Fichero', 'Función'],
     [
-        ('fstab.yaml', 'Mountpoints. Monta "/" desde AEM Author '
-                       '(/bin/franklin.delivery/asisa-softtek/asisa-pc/main, sufijo .html). Los '
-                       'sitemaps se generan nativamente vía helix-sitemap.yaml.'),
+        ('fstab.yaml', 'Mountpoint formal de "/" exigido por EDS (apunta a la entrega franklin '
+                       'de AEM Author, .html). En la práctica no se usa: el overlay sirve todo. '
+                       'Los sitemaps se generan vía helix-sitemap.yaml.'),
         ('helix-query.yaml', '6 índices de pages: pages (estáticas), cuadro-medico-provincias, '
                              'cuadro-medico-provincia-specs, cuadro-medico-doctores, '
                              'cuadro-medico-centros, cuadro-medico-especialidades. Cada uno '
@@ -499,19 +468,7 @@ add_table(
     widths=[Inches(2), Inches(4.5)],
 )
 
-doc.add_heading('3.3 Universal Editor — modelos de bloques (AEM Author)', level=2)
-add_table(
-    ['Fichero', 'Función'],
-    [
-        ('component-definition.json', 'Catálogo de componentes (Default Content, Sections, '
-                                       'Blocks incluyendo los 8 bloques de cuadro médico).'),
-        ('component-filters.json', '¿Qué bloque puede ir dentro de qué contenedor?'),
-        ('component-models.json', 'Esquema de campos editables por componente.'),
-    ],
-    widths=[Inches(2), Inches(4.5)],
-)
-
-doc.add_heading('3.4 Endpoints API (carpeta api/) — funciones serverless en Vercel', level=2)
+doc.add_heading('3.3 Endpoints API (carpeta api/) — funciones serverless en Vercel', level=2)
 doc.add_paragraph(
     'Todos los ficheros api/*.js son funciones serverless Node.js (ESM puro, sin dependencias en '
     'runtime). En Vercel, cada uno se expone como una function en /api/<nombre>. Algunos están '
@@ -548,7 +505,7 @@ doc.add_paragraph(
 
 doc.add_page_break()
 doc.add_page_break()
-doc.add_heading('3.4.0 Cómo funciona la capa Vercel — explicación sencilla con ejemplos', level=3)
+doc.add_heading('3.3.0 Cómo funciona la capa Vercel — explicación sencilla con ejemplos', level=3)
 doc.add_paragraph(
     'Esta sección está pensada para alguien que llega nuevo al proyecto y necesita entender qué '
     'hace Vercel, por qué existe, y qué hay dentro de la carpeta api/. Si ya entiendes la '
@@ -559,7 +516,7 @@ doc.add_heading('Por qué necesitamos Vercel', level=4)
 doc.add_paragraph(
     'El cuadro médico tiene aproximadamente 36.000 URLs dinámicas: 52 provincias, ~3.250 '
     'combinaciones provincia+especialidad, ~20.500 médicos, ~6.500 centros y ~181 especialidades '
-    'nacionales. Crearlas a mano en AEM Author es imposible.'
+    'nacionales. Crearlas a mano es inviable.'
 )
 doc.add_paragraph(
     'EDS (Adobe Edge Delivery Services) solo sabe servir HTML pre-procesado desde su content-bus. '
@@ -952,7 +909,7 @@ add_bullet('etc.clientlibs/ (carpeta) = los CSS y fuentes del design system de A
            'WAF de ASISA bloqueaba el proxy).')
 
 doc.add_page_break()
-doc.add_heading('3.4.1 Detalle exhaustivo de cada endpoint API', level=3)
+doc.add_heading('3.3.1 Detalle exhaustivo de cada endpoint API', level=3)
 doc.add_paragraph(
     'A continuación se documenta cada uno de los 11 endpoints de la carpeta api/: fichero, '
     'método, query params con tipo y validaciones, ficheros de data/ que lee, cachés in-memory, '
@@ -1455,7 +1412,7 @@ doc.add_paragraph(
     'accesibles directamente en asisa-pc.vercel.app y útiles para debugging.'
 )
 
-doc.add_heading('3.4.2 Resumen de cachés y TTLs', level=3)
+doc.add_heading('3.3.2 Resumen de cachés y TTLs', level=3)
 add_table(
     ['Endpoint', 'Cachés in-memory', 'Cache-Control'],
     [
@@ -1484,7 +1441,7 @@ doc.add_paragraph(
     'arrancada paga el coste de leer los JSON; las siguientes son sub-milisegundo.'
 )
 
-doc.add_heading('3.5 Bloques EDS (carpeta blocks/)', level=2)
+doc.add_heading('3.4 Bloques EDS (carpeta blocks/)', level=2)
 doc.add_paragraph(
     'Cada bloque vive en blocks/<nombre>/<nombre>.{js,css}. EDS los instancia automáticamente '
     'cuando detecta <div class="<nombre>"> en el HTML. Los CSS son casi todos vacíos: los estilos '
@@ -1528,7 +1485,7 @@ doc.add_paragraph(
 )
 
 doc.add_page_break()
-doc.add_heading('3.5.1 Detalle exhaustivo de cada bloque del cuadro médico', level=3)
+doc.add_heading('3.4.1 Detalle exhaustivo de cada bloque del cuadro médico', level=3)
 doc.add_paragraph(
     'A continuación se documenta cada bloque del cuadro médico fichero por fichero: ruta, '
     'propósito, URLs donde aparece, cómo lee el contexto (URL o filas del DOM), endpoints API '
@@ -2040,7 +1997,200 @@ add_numbered('Tras editar api/markup.js no basta con redeploy de Vercel: EDS cac
              'procesado en el bus live. Hay que repreviewar todas las URLs del patrón afectado '
              'con POST /preview + POST /live (o `node refresh-eds-pages.mjs`).')
 
-doc.add_heading('3.6 Scripts del frontend EDS (carpeta scripts/)', level=2)
+doc.add_page_break()
+doc.add_heading('3.4.2 Cómo crear, modificar e incluir bloques en una página', level=3)
+doc.add_paragraph(
+    'Esta sección explica el ciclo de vida operativo de un bloque EDS: cómo se crea uno nuevo, '
+    'cómo se modifica uno existente, y cómo se inserta en una página real para que se renderice.'
+)
+
+# --- A. Anatomía mínima de un bloque ---
+doc.add_heading('A. Anatomía mínima de un bloque', level=4)
+doc.add_paragraph(
+    'Un bloque EDS es una carpeta en blocks/<nombre>/ con dos ficheros (CSS opcional):'
+)
+add_code_block(
+    'blocks/\n'
+    '  mi-bloque/\n'
+    '    mi-bloque.js   # decorate(block) — obligatorio\n'
+    '    mi-bloque.css  # estilos del bloque (opcional)'
+)
+doc.add_paragraph(
+    'EDS instancia el bloque automáticamente cuando encuentra <div class="mi-bloque"> en el HTML '
+    'de la página, importa mi-bloque.js, carga mi-bloque.css y llama a la función exportada por '
+    'defecto pasándole el <div> como argumento.'
+)
+
+# --- B. Crear un bloque nuevo desde cero ---
+doc.add_heading('B. Crear un bloque nuevo desde cero', level=4)
+doc.add_paragraph(
+    'Ejemplo completo: un bloque "cuadro-medico-aviso" que muestra una banda informativa en la '
+    'cabecera de las páginas de cuadro médico, leyendo el texto desde una API.'
+)
+doc.add_paragraph('Paso 1 — Crear el fichero JS:')
+add_code_block(
+    '// blocks/cuadro-medico-aviso/cuadro-medico-aviso.js\n'
+    "const API_BASE = 'https://asisa-pc.vercel.app';\n\n"
+    'export default function decorate(block) {\n'
+    "  // 1. Hidratación silenciosa: si el overlay ya emitió SSR, no pintar 'Cargando…'\n"
+    '  const silent = block.children.length > 0;\n'
+    "  if (!silent) block.innerHTML = '<p>Cargando aviso…</p>';\n\n"
+    '  // 2. Llamada a la API (URL absoluta — corre en aem.live)\n'
+    "  fetch(`${API_BASE}/api/avisos?context=cuadro-medico`)\n"
+    '    .then((r) => r.json())\n'
+    '    .then((data) => {\n'
+    '      if (!data?.mensaje) { block.hidden = true; return; }\n'
+    '      block.innerHTML = `\n'
+    '        <div class="cmp-banner cmp-banner--info">\n'
+    '          <i class="icon-info-02"></i>\n'
+    '          <p>${data.mensaje}</p>\n'
+    '        </div>`;\n'
+    '    })\n'
+    '    .catch(() => { block.hidden = true; });\n'
+    '}'
+)
+doc.add_paragraph('Paso 2 — Crear el CSS (opcional):')
+add_code_block(
+    '/* blocks/cuadro-medico-aviso/cuadro-medico-aviso.css */\n'
+    '.cuadro-medico-aviso .cmp-banner {\n'
+    '  display: flex;\n'
+    '  gap: 0.5rem;\n'
+    '  padding: 1rem;\n'
+    '  background: #eaf4ff;\n'
+    '  border-left: 4px solid #003c71;\n'
+    '}'
+)
+doc.add_paragraph(
+    'Paso 3 (opcional) — si el bloque debe ser indexable por Google, añadir SSR en api/markup.js. '
+    'Crear una función ssrAviso() que devuelva el HTML inicial y concatenarla en el bloque devuelto '
+    'por ssrProvincia / ssrDoctor / etc. según corresponda.'
+)
+doc.add_paragraph('Paso 4 — Commit, push y refresh:')
+add_code_block(
+    'git add blocks/cuadro-medico-aviso/\n'
+    "git commit -m 'feat(blocks): add cuadro-medico-aviso'\n"
+    'git push\n\n'
+    '# EDS detecta el push automáticamente y republica /code en segundos.\n'
+    '# Si el bloque SOLO existe en cliente, no hace falta repreviewar las páginas.\n'
+    '# Si añadiste SSR en api/markup.js, hay que repreviewar las URLs afectadas:\n'
+    'node refresh-eds-pages.mjs --provincia=madrid'
+)
+
+# --- C. Modificar un bloque existente ---
+doc.add_heading('C. Modificar un bloque existente', level=4)
+doc.add_paragraph(
+    'Ejemplo: cambiar el chip "MÉDICO / PROFESIONAL" de la ficha de doctor para que diga '
+    '"PROFESIONAL SANITARIO".'
+)
+add_code_block(
+    '# 1. Localiza dónde se renderiza ese texto:\n'
+    "grep -rn 'MÉDICO / PROFESIONAL' blocks/ api/\n\n"
+    '# Resultado:\n'
+    '# blocks/cuadro-medico-ficha-doctor/cuadro-medico-ficha-doctor.js:124\n'
+    '# api/markup.js:317\n\n'
+    '# 2. Edita AMBOS sitios (cliente + SSR) para mantener coherencia SEO:\n'
+    "sed -i 's/MÉDICO \\/ PROFESIONAL/PROFESIONAL SANITARIO/g' \\\n"
+    '  blocks/cuadro-medico-ficha-doctor/cuadro-medico-ficha-doctor.js \\\n'
+    '  api/markup.js\n\n'
+    '# 3. Commit + push\n'
+    "git commit -am 'fix(ficha-doctor): renombrar chip a Profesional Sanitario'\n"
+    'git push\n\n'
+    '# 4. EDS auto-publica /code (JS+CSS) al instante.\n'
+    '# 5. El HTML procesado en el bus live sigue cacheado con el texto viejo.\n'
+    '#    Hay que repreviewar las URLs que renderizan SSR de ese bloque:\n'
+    'node refresh-eds-pages.mjs --pattern=doctores'
+)
+doc.add_paragraph(
+    'Reglas para modificar un bloque:'
+)
+add_numbered('Si modificas SOLO estilo (CSS) o lógica del cliente (JS sin afectar al HTML inicial '
+             'SSR): basta con push. No hace falta repreviewar páginas. EDS sirve el JS/CSS nuevo en '
+             'segundos.')
+add_numbered('Si modificas el HTML que produce el cliente Y existe SSR equivalente en '
+             'api/markup.js: editar AMBOS y repreviewar páginas afectadas. Si no, Google verá una '
+             'versión vieja durante días.')
+add_numbered('Si añades una clase CSS nueva al JSX del cliente y depende del CSS local, asegúrate '
+             'de declararla en mi-bloque.css (los estilos de bloque solo se cargan cuando el bloque '
+             'aparece en la página).')
+add_numbered('Si tu cambio toca también data/*.json (ej. nuevos campos en doctores-index): hay '
+             'que regenerar los índices con los scripts generate-* y luego repreviewar.')
+
+# --- D. Incluir un bloque en una página ---
+doc.add_heading('D. Cómo incluir un bloque en una página', level=4)
+doc.add_paragraph(
+    'EDS reconoce un bloque por su clase CSS: cualquier <div class="<nombre>"> dentro del DOM de '
+    'una página dispara la instanciación del bloque blocks/<nombre>/<nombre>.js. Cómo aparezca ese '
+    '<div> en la página depende del origen del HTML. En este proyecto hay 2 escenarios:'
+)
+
+doc.add_heading('D.1 Página dinámica servida por el overlay (caso común)', level=4)
+doc.add_paragraph(
+    'Las URLs /cuadro-medico/p/*, /d/*, /c/*, /e/* las pinta api/markup.js. Para incluir un bloque '
+    'nuevo en, por ejemplo, las páginas de provincia, edita la función ssrProvincia() y añade el '
+    '<div> dentro del HTML devuelto:'
+)
+add_code_block(
+    '// api/markup.js — dentro de ssrProvincia(...)\n'
+    'const cuadroMedicoBlock = `<div class="cuadro-medico">…</div>`;\n'
+    'const avisoBlock = `<div class="cuadro-medico-aviso"></div>`;  // ← bloque nuevo\n'
+    'return {\n'
+    '  title,\n'
+    '  description,\n'
+    "  blocks: `${avisoBlock}\\n${cuadroMedicoBlock}\\n${otrasEspecs}\\n${otrasProvs}`,\n"
+    '};'
+)
+doc.add_paragraph(
+    'El <div class="cuadro-medico-aviso"> llega como sibling top-level del bloque principal '
+    '(necesario porque el auto-blocking de EDS solo conserva como bloques los <div> directamente '
+    'hijos del contenedor de sección, no los anidados dentro de otro bloque).'
+)
+doc.add_paragraph(
+    'Tras editar markup.js: redeploy Vercel automático + repreviewar las URLs del patrón:'
+)
+add_code_block(
+    'git commit -am "feat(markup): emit cuadro-medico-aviso en provincias"\n'
+    'git push\n'
+    'node refresh-eds-pages.mjs --pattern=provincias'
+)
+
+doc.add_heading('D.2 Página estática autorada en GitHub o AEM', level=4)
+doc.add_paragraph(
+    'Si en el futuro se añadieran páginas editoriales (no las hay hoy), el bloque se incluye '
+    'editando el documento fuente. En markdown (estilo EDS clásico) basta con una tabla cuyo '
+    'primer cell sea el nombre del bloque:'
+)
+add_code_block(
+    '| cuadro-medico-aviso |\n'
+    '| ------------------- |\n'
+    '|                     |'
+)
+doc.add_paragraph(
+    'EDS convierte esa tabla en <div class="cuadro-medico-aviso block">. El bloque se instancia '
+    'igual. Tras editar y publicar la página, basta con un POST /preview + POST /live a su URL.'
+)
+
+# --- E. Checklist resumida ---
+doc.add_heading('E. Checklist resumida', level=4)
+add_table(
+    ['Cambio', 'Editar', 'Refresh necesario'],
+    [
+        ('Solo CSS/JS cliente (no SSR)', 'blocks/<nombre>/*.{js,css}',
+         'Push. Listo en segundos.'),
+        ('HTML cliente + tiene SSR', 'blocks/<nombre>/*.js + api/markup.js (mismas plantillas)',
+         'Push + refresh-eds-pages.mjs sobre URLs afectadas.'),
+        ('Bloque nuevo, solo cliente', 'crear blocks/<nombre>/ + emitir <div> en SSR o markdown',
+         'Push + repreview URLs nuevas.'),
+        ('Bloque nuevo, también SSR', 'blocks/<nombre>/ + api/markup.js (función ssrXxx)',
+         'Push + repreview URLs.'),
+        ('Renombrar un bloque', 'blocks/<nombre>/ (renombrar carpeta+archivos) + ssr emit + clases',
+         'Push + repreview. La clase vieja queda sin handler — limpia referencias.'),
+        ('Cambios en data/*.json', 'scripts generate-* + bloque/SSR si consume',
+         'Generate + push + repreview.'),
+    ],
+    widths=[Inches(2), Inches(2.5), Inches(2)],
+)
+
+doc.add_heading('3.5 Scripts del frontend EDS (carpeta scripts/)', level=2)
 add_table(
     ['Fichero', 'Función'],
     [
@@ -2055,7 +2205,7 @@ add_table(
     widths=[Inches(2), Inches(4.5)],
 )
 
-doc.add_heading('3.7 Estilos y assets', level=2)
+doc.add_heading('3.6 Estilos y assets', level=2)
 add_table(
     ['Path', 'Función'],
     [
@@ -2855,7 +3005,6 @@ add_table(
         ('EDS Live (público)', 'https://main--asisa-pc--asisa-softtek.aem.live'),
         ('EDS Preview (autenticado)', 'https://main--asisa-pc--asisa-softtek.aem.page'),
         ('Vercel (overlay + APIs)', 'https://asisa-pc.vercel.app'),
-        ('AEM Author', 'https://author-p133185-e1320482.adobeaemcloud.com'),
         ('Admin HLX API', 'https://admin.hlx.page'),
         ('GitHub repo', 'https://github.com/asisa-softtek/asisa-pc'),
         ('Producción final (target)', 'https://www.asisa.es'),
@@ -2895,7 +3044,6 @@ add_table(
         ('Content bus', 'Almacenamiento interno de EDS para los HTML procesados (preview y live).'),
         ('Code bus', 'Almacenamiento interno de EDS para el código del repo (.js, .css, .yaml).'),
         ('Sidekick', 'Toolbar de edición integrada en el navegador para autores.'),
-        ('Universal Editor', 'Editor visual de AEM Author donde se autora el contenido estático.'),
         ('Clientlib', 'Librería compilada de CSS/JS publicada por AEM. En este proyecto, las del '
                        'design system de ASISA viven en www.asisa.es/etc.clientlibs/wasisa/.'),
         ('Bloque', 'Componente EDS instanciado a partir de <div class="<nombre>">. Vive en '
@@ -3037,15 +3185,7 @@ add_code_block(
     'vercel deploy --prod --yes --archive=tgz'
 )
 
-doc.add_heading('12.7 AEM Author', level=2)
-add_code_block(
-    '# Editor\n'
-    'https://author-p133185-e1320482.adobeaemcloud.com/editor.html/content/site-pc/cuadro-medico/provincia.html\n\n'
-    '# Path raíz del proyecto en AEM\n'
-    '/content/site-pc/'
-)
-
-doc.add_heading('12.8 Verificación rápida "todo funciona" (4 checks)', level=2)
+doc.add_heading('12.7 Verificación rápida "todo funciona" (4 checks)', level=2)
 add_code_block(
     '1) curl https://asisa-pc.vercel.app/api/provincias | jq length\n'
     '   → 52\n\n'
