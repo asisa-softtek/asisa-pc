@@ -560,6 +560,7 @@ const SITEMAP_TYPE_RE = /^\/sitemap-cuadro-medico-(provincias|provincia-specs|do
 
 export default function handler(req, res) {
   const path = extractPath(req);
+  console.log('markup request', path);
 
   try {
     let m;
