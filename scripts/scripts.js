@@ -141,6 +141,7 @@ function loadDelayed() {
 }
 
 async function loadPage() {
+  console.log("Test init");
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();
