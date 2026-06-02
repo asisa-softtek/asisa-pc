@@ -54,7 +54,10 @@ export default function decorate(block) {
   const key = getKeyFromUrl();
   if (!key) { block.hidden = true; return; }
 
-  block.innerHTML = '<p>Cargando…</p>';
+  // Si el overlay ya pintó SSR, no mostramos spinner: reemplazamos en silencio
+  // cuando llegan los datos (con las clases del design system aplicadas).
+  const silent = block.children.length > 0;
+  if (!silent) block.innerHTML = '<p>Cargando…</p>';
 
   fetch(`${API_BASE}/api/doctor?key=${key}`)
     .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })

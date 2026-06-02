@@ -23,7 +23,8 @@ export default function decorate(block) {
   const { provSlug, specSlug } = getSlugsFromUrl();
   if (!specSlug) { block.hidden = true; return; }
 
-  block.innerHTML = '<p class="cm-otras-prov-loading">Cargando provincias…</p>';
+  const hasSsr = block.children.length > 0;
+  if (!hasSsr) block.innerHTML = '<div class="loading"><div class="spinner"></div> <p>Cargando provincias…</p></div>';
 
   fetch(`https://asisa-pc.vercel.app/api/especialidades?slug=${specSlug}`)
     .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
@@ -43,5 +44,5 @@ export default function decorate(block) {
             </article>`).join('')}
         </div>`;
     })
-    .catch(() => { block.innerHTML = ''; });
+    .catch(() => { if (!hasSsr) block.innerHTML = ''; });
 }

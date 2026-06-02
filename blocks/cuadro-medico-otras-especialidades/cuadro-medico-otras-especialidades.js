@@ -25,7 +25,7 @@ function getSlugsFromUrl() {
   };
 }
 
-function renderProvincialChips(provincia, specs, provSlug, specSlug) {
+function renderProvincialChips(provincia, specs, provSlug) {
   return `
   <div class="eds-mp-other-specs">
     <h2 class="eds-mp-other-specs__title">Otras especialidades en ${provincia.displayName}</h2>
@@ -53,7 +53,10 @@ export default function decorate(block) {
   const { provSlug, specSlug } = getSlugsFromUrl();
   if (!provSlug && !specSlug) { block.hidden = true; return; }
 
-  block.innerHTML = '<p>Cargando especialidades…</p>';
+  // Si el overlay ya pintó contenido (SSR), no mostramos el spinner — esperamos
+  // en silencio al fetch para reemplazar con la versión completa.
+  const hasSsr = block.children.length > 0;
+  if (!hasSsr) block.innerHTML = '<p>Cargando especialidades…</p>';
 
   if (provSlug) {
     Promise.all([
@@ -64,9 +67,9 @@ export default function decorate(block) {
         const provSpecs = new Set(provincia.especialidades || []);
         const specs = allEspec.filter((e) => provSpecs.has(e.slug));
         if (!specs.length) { block.hidden = true; return; }
-        block.innerHTML = renderProvincialChips(provincia, specs, provSlug, specSlug);
+        block.innerHTML = renderProvincialChips(provincia, specs, provSlug);
       })
-      .catch(() => { block.innerHTML = ''; });
+      .catch(() => { if (!hasSsr) block.innerHTML = ''; });
   } else {
     fetch(`${API_BASE}/api/especialidades`)
       .then((r) => r.json())
@@ -75,6 +78,6 @@ export default function decorate(block) {
         if (!specs.length) { block.hidden = true; return; }
         block.innerHTML = renderNationalChips(specs, specSlug);
       })
-      .catch(() => { block.innerHTML = ''; });
+      .catch(() => { if (!hasSsr) block.innerHTML = ''; });
   }
 }

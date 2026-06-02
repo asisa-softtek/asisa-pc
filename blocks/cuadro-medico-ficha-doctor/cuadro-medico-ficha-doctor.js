@@ -91,51 +91,72 @@ function renderDoctorHeader(d) {
       </section>`;
 }
 
+function toCentroSlug(raw) {
+  return String(raw || '')
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+function renderCenterLink(parentDescription) {
+  if (!parentDescription) return '';
+  const slug = toCentroSlug(parentDescription);
+  const display = formatName(parentDescription);
+  return slug ? `<a href="/cuadro-medico/c/${slug}">${display}</a>` : display;
+}
+
 function renderLocationCard(d, loc, idx, provinciaDisplayName) {
   const mapsUrl = (loc.lat && loc.lon) ? `https://www.google.com/maps/dir/?api=1&destination=${loc.lat},${loc.lon}` : '';
   const addressLine = [loc.address, loc.postalCode, loc.city].filter(Boolean).join(', ');
   const shareUrl = buildShareUrl(d, loc, provinciaDisplayName);
-  const center = loc.parentDescription ? formatName(loc.parentDescription) : '';
+  const centerHtml = renderCenterLink(loc.parentDescription);
   const speciality = formatName(loc.speciality || '');
   const isFirst = idx === 0;
 
-  return `<div class="cmp-medical-detail__first-block">
-    <div class="cmp-medical-detail__title-block">
-      <div class="cmp-medical-detail__title-block__tags">
-        <div class="cmp-medical-detail__title-block__tags--item">
-          <div class="cmp-tag-template cmp-tag-template--blue">
-            <div class="cmp-tag-template__text">${isFirst ? 'MÉDICO / PROFESIONAL' : 'CENTRO MÉDICO'}</div>
+  return `<article class="eds-mp-user">
+  <section class="eds-mp-user__content">
+    <div class="eds-mp-card eds-mp-card--type-b eds-mp-card--blue">
+     <div class="eds-mp-card__block">
+        <div class="eds-mp-card__principal-tag">
+             <div class="cmp-tag-template cmp-tag-template--blue">
+              <div class="cmp-tag-template__text">${isFirst ? 'MÉDICO / PROFESIONAL' : 'CENTRO MÉDICO'}</div>
+            </div>
+             ${loc.businessGroup ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Centro de ASISA</div></div>' : ''}
+            <a class="eds-mp-card__principal-tag--share" href="${shareUrl}" target="_blank" rel="noopener">
+              Compartir
+              <i class="icon-share-021"></i>
+            </a>
+        </div>
+
+         ${isFirst ? `
+          <p class="eds-mp-card__type--speciality"><a href="">${speciality}</a></p>
+          <p class="eds-mp-card__type--name">${formatPersonName(d.name)}</p>
+          ${d.collegiateCode ? `<p class="eds-mp-card__type--num-member">Núm. Colegiado – ${d.collegiateCode}</p>` : ''}
+        ` : `
+          <p class="eds-mp-card__type--name">${centerHtml || speciality}</p>
+        ` }
+        </div>
+        <div class="eds-mp-card__block">
+        ${centerHtml && isFirst ? `<p class="eds-mp-card__type--center">${centerHtml}</p>` : ''}
+        ${addressLine ? ` <div class="eds-mp-card__type--address"><i class="icon-marker-02"></i>${formatName(addressLine)}</div>` : ''}
+        <div class="eds-mp-card__type--location">
+          ${mapsUrl ? `<div class="button-cmp"><a href="${mapsUrl}" target="_blank" rel="noopener" class="button-cmp__text button-cmp__text--link button-location"><i class="icon-map-04 icon-large"></i>Cómo llegar</a></div>` : ''}
+        </div>
+
+        <div class="eds-mp-card__info--tags">
+          ${renderServiceTags(loc)}
+        </div>
+      </div>
+       <div class="eds-mp-card__info--buttons">
+          ${loc.phone ? `<div class="eds-mp-card__info--buttons-detail">
+            <div class="button-cmp"><a href="tel:${loc.phone}" class="button-cmp__text button-cmp__text--tertiary"></i>${loc.phone}</a></div>
+          </div>` : ''}
+
           </div>
-        </div>
-        ${loc.businessGroup ? '<div class="cmp-tag-template cmp-tag-template--blank"><div class="cmp-tag-template__text">Centro de ASISA</div></div>' : ''}
-        <a class="cmp-medical-detail__title-block__tags--share" href="${shareUrl}" target="_blank" rel="noopener">
-          Compartir <i class="icon-share-01"></i>
-        </a>
-      </div>
-      ${isFirst ? `
-        <p class="cmp-medical-detail__title-block--speciality">${speciality}</p>
-        <div class="cmp-title">
-          <h1 class="cmp-title__text">${formatPersonName(d.name)}</h1>
-        </div>
-        ${d.collegiateCode ? `<p class="cmp-medical-detail__title-block--num-member"><em>Núm. Colegiado – ${d.collegiateCode}</em></p>` : ''}
-      ` : `
-        <div class="cmp-title">
-          <h3 class="cmp-title__text">${center || speciality}</h3>
-        </div>
-      `}
     </div>
-    <div class="cmp-medical-detail__address-block">
-      ${center && isFirst ? `<div class="cmp-medical-detail__address-block--center">${center}</div>` : ''}
-      ${addressLine ? `<div class="cmp-medical-detail__address-block--name"><i class="icon-marker-02"></i>${formatName(addressLine)}</div>` : ''}
-      <div class="cmp-medical-detail__address-block__location">
-        ${mapsUrl ? `<div class="cmp-medical-detail__address-block__location--reach"><div class="button-cmp"><a href="${mapsUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--link button-location"><i class="icon-map-04 icon-large"></i>Cómo llegar</a></div></div>` : ''}
-      </div>
-      <div class="cmp-medical-detail__address-block__tags">${renderServiceTags(loc)}</div>
-    </div>
-    ${loc.phone ? `<div class="cmp-medical-detail__buttons-block">
-      <div class="button-cmp"><a href="tel:${loc.phone}" class="btn button-cmp__text button-cmp__text--link"><i class="icon-phone"></i>${loc.phone}</a></div>
-    </div>` : ''}
-  </div>`;
+  </section>`;
 }
 
 function renderSpecCard(d, loc, provinciaDisplayName) {
@@ -143,28 +164,35 @@ function renderSpecCard(d, loc, provinciaDisplayName) {
   const ctaLabel = loc.onlineAppointment ? 'Pedir cita online' : 'Pedir cita';
   const title = formatName(loc.speciality || d.specialities?.[0] || '');
 
-  return `<div class="cmp-medical-detail__first-block cmp-medical-detail--blue">
-    <div class="cmp-medical-detail__title-block">
-      <div class="cmp-title">
-        <h2 class="cmp-title__text">${title}</h2>
-      </div>
-    </div>
-    <div class="cmp-medical-detail__buttons-block">
-      ${loc.phone ? `<div class="button-cmp"><a href="tel:${loc.phone}" class="btn button-cmp__text button-cmp__text--link"><i class="icon-phone"></i>${loc.phone}</a></div>` : ''}
-      <div class="button-cmp"><a href="${citaUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--primary">${ctaLabel}</a></div>
-    </div>
-  </div>`;
+  return `
+   <section class="eds-mp-user__content">
+    <div class="eds-mp-spec-center">
+        <div class="eds-mp-spec-center__header">
+            <h3 class="eds-mp-spec-center__header--title">${title}</h3>
+            <div class="eds-mp-spec-center__header--actions">
+            ${loc.phone ? `<div class="button-cmp"><a href="tel:${loc.phone}" class="button-cmp__text button-cmp__text--tertiary">${loc.phone}</a></div>` : ''}
+            <div class="button-cmp"><a href="${citaUrl}" target="_blank" rel="noopener" class="btn button-cmp__text button-cmp__text--primary">${ctaLabel}</a></div>
+        </div>
+     </div>
+   </section>
+  </article>`;
 }
 
 function renderOtherLocationsHeading(d) {
-  return `<h2 class="cmp-medical-detail__subtitle">${formatPersonName(d.name)} también trabaja en estos centros</h2>`;
+  return `<h2 class="eds-mp-user__subtitle"">${formatPersonName(d.name)} también trabaja en estos centros</h2>`;
 }
 
 export default function decorate(block) {
   const key = getKeyFromUrl();
   if (!key) { block.hidden = true; return; }
 
-  block.innerHTML = '<p>Cargando médico…</p>';
+  // El overlay (api/markup.js · ssrDoctor) emite SSR para Googlebot, pero EDS
+  // hace auto-blocking y descarta las clases CSS internas, por lo que ese SSR
+  // no respeta el design system. Aquí renderizamos siempre la versión
+  // estilada y quitamos el sibling de ubicaciones adicionales que el overlay
+  // emitió por SEO (sino se vería duplicado).
+  const silent = block.children.length > 0;
+  if (!silent) block.innerHTML = '<p>Cargando médico…</p>';
 
   Promise.all([
     fetch(`${API_BASE}/api/doctor?key=${key}`).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
@@ -177,7 +205,10 @@ export default function decorate(block) {
       };
 
       const locs = d.locations || [];
-      if (!locs.length) { block.innerHTML = '<p>No se pudo cargar la ficha del médico.</p>'; return; }
+      if (!locs.length) {
+        block.innerHTML = '<p>No se pudo cargar la ficha del médico.</p>';
+        return;
+      }
 
       const parts = [renderDoctorHeader(d)];
       parts.push(renderLocationCard(d, locs[0], 0, provinciaDisplayName(locs[0])));
@@ -192,8 +223,14 @@ export default function decorate(block) {
       }
 
       block.innerHTML = `<div class="cmp-medical-detail">${parts.join('')}</div>`;
+      // Limpiar el sibling de SEO con ubicaciones adicionales (ya
+      // renderizamos todas las ubicaciones aquí, estiladas). Solo el div,
+      // NO la .section padre — la section también contiene el bloque
+      // principal y otros bloques (otros-medicos), y borrarla los lleva
+      // a todos.
+      document.querySelectorAll('.cuadro-medico-ficha-doctor-locations').forEach((el) => el.remove());
     })
     .catch(() => {
-      block.innerHTML = '<p>No se pudo cargar la ficha del médico.</p>';
+      if (!silent) block.innerHTML = '<p>No se pudo cargar la ficha del médico.</p>';
     });
 }

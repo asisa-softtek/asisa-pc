@@ -1,0 +1,37 @@
+sitemaps:
+  # Páginas estáticas — home, landings, plantillas cuadro médico.
+  pages-static:
+    source: /query-index.json
+    destination: /sitemap.xml
+    lastmod: YYYY-MM-DD
+    origin: https://www.asisa.es
+
+  cuadro-medico-provincias:
+    source: /query-index-cuadro-medico-provincias.json
+    destination: /sitemap-cuadro-medico-provincias.xml
+    lastmod: YYYY-MM-DD
+    origin: https://www.asisa.es
+
+  cuadro-medico-provincia-specs:
+    source: /query-index-cuadro-medico-provincia-specs.json
+    destination: /sitemap-cuadro-medico-provincia-specs.xml
+    lastmod: YYYY-MM-DD
+    origin: https://www.asisa.es
+
+  cuadro-medico-doctores:
+    source: /query-index-cuadro-medico-doctores.json
+    destination: /sitemap-cuadro-medico-doctores.xml
+    lastmod: YYYY-MM-DD
+    origin: https://www.asisa.es
+
+  cuadro-medico-centros:
+    source: /query-index-cuadro-medico-centros.json
+    destination: /sitemap-cuadro-medico-centros.xml
+    lastmod: YYYY-MM-DD
+    origin: https://www.asisa.es
+
+  cuadro-medico-especialidades:
+    source: /query-index-cuadro-medico-especialidades.json
+    destination: /sitemap-cuadro-medico-especialidades.xml
+    lastmod: YYYY-MM-DD
+    origin: https://www.asisa.es

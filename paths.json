@@ -1,8 +1,0 @@
-{
-  "mappings": [
-    "/content/site-pc/:/"
-  ],
-  "includes": [
-    "/content/site-pc/"
-  ]
-}
