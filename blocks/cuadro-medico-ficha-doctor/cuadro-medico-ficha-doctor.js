@@ -136,7 +136,7 @@ function renderLocationCard(d, loc, idx, provinciaDisplayName) {
           ${d.collegiateCode ? `<p class="eds-mp-card__type--num-member">Núm. Colegiado – ${d.collegiateCode}</p>` : ''}
         ` : `
           <p class="eds-mp-card__type--name">${centerHtml || speciality}</p>
-        ` }
+        `}
         </div>
         <div class="eds-mp-card__block">
         ${centerHtml && isFirst ? `<p class="eds-mp-card__type--center">${centerHtml}</p>` : ''}

@@ -129,11 +129,11 @@ export function fetchProviders({
     const provincesDir = join(process.cwd(), 'data/providers');
     if (!existsSync(provincesDir)) return { error: 'No providers data', status: 404 };
     const acc = [];
-    for (const slug of readdirSync(provincesDir)) {
+    readdirSync(provincesDir).forEach((slug) => {
       const f = join(provincesDir, slug, `${specSlug}.json`);
-      if (!existsSync(f)) continue;
+      if (!existsSync(f)) return;
       try { acc.push(...JSON.parse(readFileSync(f, 'utf8'))); } catch { /* skip */ }
-    }
+    });
     raw = acc;
   }
 
@@ -141,7 +141,10 @@ export function fetchProviders({
   const cap = MAX_TOTAL_BY_TAB[tab];
   const filtered = filteredAll.slice(0, cap);
 
-  const totalProfessionals = Math.min(raw.filter(isProfessional).length, MAX_TOTAL_BY_TAB.professionals);
+  const totalProfessionals = Math.min(
+    raw.filter(isProfessional).length,
+    MAX_TOTAL_BY_TAB.professionals,
+  );
   const totalCenters = Math.min(raw.filter(isCenter).length, MAX_TOTAL_BY_TAB.centers);
 
   const total = filtered.length;

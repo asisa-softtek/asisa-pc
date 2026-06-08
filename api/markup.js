@@ -197,10 +197,14 @@ function ssrListing({ provSlug, specSlug, nationalSpec }) {
   });
   if (data.error) return null;
 
-  const totalProf = data.totalProfessionals;
-  const totalCenters = data.totalCenters;
-  const results = data.results || [];
-  const totalPages = data.totalPages || 1;
+  const {
+    totalProfessionals: totalProf,
+    totalCenters,
+    results: dataResults,
+    totalPages: dataTotalPages,
+  } = data;
+  const results = dataResults || [];
+  const totalPages = dataTotalPages || 1;
   const cards = results.map((p) => renderCard(p, true)).join('');
 
   // Title + intro
@@ -223,9 +227,9 @@ function ssrListing({ provSlug, specSlug, nationalSpec }) {
   }
 
   const dataAttrs = [
-    `data-ssr="true"`,
-    `data-tab="professionals"`,
-    `data-page="1"`,
+    'data-ssr="true"',
+    'data-tab="professionals"',
+    'data-page="1"',
     `data-total-prof="${totalProf}"`,
     `data-total-centers="${totalCenters}"`,
     `data-total-pages="${totalPages}"`,
@@ -273,7 +277,8 @@ function ssrOtrosMedicos(doctorData) {
     .filter((p) => p.detailUrl !== `/cuadro-medico/d/${currentKey}`);
   const specName = doctorData.specialities?.[0] || doctorData.specSlug;
   const provs = fetchProvincias();
-  const provName = provs.find((p) => p.slug === doctorData.provinceSlug)?.displayName || doctorData.provinceSlug;
+  const provName = provs.find((p) => p.slug === doctorData.provinceSlug)
+    ?.displayName || doctorData.provinceSlug;
   const centerName = doctorData.parentDescription || '';
 
   const chip = (p) => `<a class="cmp-tag-template cmp-tag-template--blank" href="${esc(p.detailUrl)}">`

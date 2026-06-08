@@ -15,7 +15,9 @@ export default function decorate(block) {
     .then((data) => {
       const list = block.querySelector('.eds-md-esp-top-list');
       const titleEl = block.querySelector('.eds-md-esp-top-title');
-      const specs = data.map((s) => ({ name: s.name, slug: s.slug })).sort((a, b) => a.name.localeCompare(b.name));
+      const specs = data
+        .map((s) => ({ name: s.name, slug: s.slug }))
+        .sort((a, b) => a.name.localeCompare(b.name));
       titleEl.textContent = `Especialidades más buscadas (${specs.length})`;
       list.innerHTML = specs
         .map((s) => `<li class="eds-md-esp-top-item"><a href="/cuadro-medico/e/${s.slug}"><span><i class="icon-ventajas"></i></span><p>${s.name}</p></a></li>`)

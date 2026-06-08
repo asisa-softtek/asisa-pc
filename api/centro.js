@@ -265,7 +265,7 @@ export function fetchCentro(rawKey) {
     const centroData = provinceData.centros.get(providerLocalicationCode);
     if (!centroData) return { error: `Centro has no data: ${key}`, status: 404 };
 
-      const { entry } = centroData;
+    const { entry } = centroData;
     const addr = entry.address || {};
     const docIndex = getDoctoresIndex();
 

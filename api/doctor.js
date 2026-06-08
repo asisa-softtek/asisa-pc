@@ -147,7 +147,9 @@ export function fetchDoctor(rawKey) {
         || '';
     }
     if (!languages.length) {
-      const src = listEntry?.languages?.length ? listEntry.languages : (detailBase?.languages || []);
+      const src = listEntry?.languages?.length
+        ? listEntry.languages
+        : (detailBase?.languages || []);
       languages = [...new Set(src.map((l) => l.languageDescription).filter(Boolean))];
     }
   });

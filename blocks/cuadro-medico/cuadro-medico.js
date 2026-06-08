@@ -32,11 +32,14 @@ function getSlugsFromUrl() {
 
 function buildCitaUrl(provinceCode, locationName, speciality, lat, lon, concept) {
   const params = new URLSearchParams({
-    networkId: '1', networkName: 'Salud',
-    ordination: 'Relevance', ordinationName: 'Relevancia',
+    networkId: '1',
+    networkName: 'Salud',
+    ordination: 'Relevance',
+    ordinationName: 'Relevancia',
     address: `${locationName}, España`,
     provinceId: provinceCode,
-    speciality, specialityName: speciality,
+    speciality,
+    specialityName: speciality,
     specialityType: '1',
     fromPublicArea: 'true',
     concept,
@@ -133,7 +136,9 @@ function renderPagination(currentPage, totalPages) {
   items.push(`<li class="${prev ? '' : 'disabled'}" title="${prev || ''}" data-page="${prev || ''}">⟨</li>`);
 
   const pages = new Set([1, totalPages, currentPage]);
-  for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i += 1) pages.add(i);
+  for (let i = Math.max(1, currentPage - 2);
+    i <= Math.min(totalPages, currentPage + 2);
+    i += 1) pages.add(i);
   const sorted = [...pages].sort((a, b) => a - b);
   let prevNum = 0;
   sorted.forEach((n) => {
@@ -174,8 +179,6 @@ function renderShell(state) {
         <p class="eds-mp-box-head--text">${introBody}</p>
       </section>`
     : '';
-
-
   const tabs = `
   
   <div class="eds-mp-tabs">
@@ -234,7 +237,12 @@ async function decorate(block) {
   if (!provSlug && !nationalSpec) { block.hidden = true; return; }
   block.classList.add('cmp-medical-picture-result');
 
-  let state = { tab: 'professionals', page: 1, loading: true, results: [] };
+  let state = {
+    tab: 'professionals',
+    page: 1,
+    loading: true,
+    results: [],
+  };
   // Si el overlay ya pintó contenido (SSR), saltamos el spinner inicial para no
   // hacer flicker. La primera llamada a refresh() entonces no toca el DOM hasta
   // que llega la respuesta del API. EDS puede haber reescrito el HTML del SSR
@@ -249,7 +257,12 @@ async function decorate(block) {
       block.innerHTML = renderShell(state);
     }
     try {
-      const { provincia, providersResp, especialidad } = await fetchPage(provSlug, specSlug, state.tab, state.page);
+      const { provincia, providersResp, especialidad } = await fetchPage(
+        provSlug,
+        specSlug,
+        state.tab,
+        state.page,
+      );
       const fallbackSpec = specSlug ? specSlug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) : '';
       state = {
         ...state,
