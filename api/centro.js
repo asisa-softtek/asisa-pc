@@ -21,8 +21,13 @@ function getDoctoresIndex() {
 }
 
 function toSlug(str) {
-  return (str || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+  return (str || '')
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
 }
 
 function buildAddress(addr = {}) {
@@ -31,7 +36,10 @@ function buildAddress(addr = {}) {
 
 /**
  * Scans data/providers/{provinceSlug}/*.json once and returns:
- *  - centros: Map<locCode, { entry, specialities:Map<spec,{ specSlug, subSpecialities:Set, doctors:[], onlineAppointment, videoConsultation, ePrescription, phone }> }>
+ *  - centros: Map<locCode, { entry, specialities:Map<spec,{
+ *      specSlug, subSpecialities:Set, doctors:[], onlineAppointment,
+ *      videoConsultation, ePrescription, phone
+ *    }> }>
  *  - doctorsByParent: Map<parentLocCode, [{ name, key, specSlug, speciality, subSpeciality }]>
  */
 function scanProvince(provinceSlug) {
@@ -48,17 +56,17 @@ function scanProvince(provinceSlug) {
   }
 
   const files = readdirSync(provDir).filter((f) => f.endsWith('.json'));
-  for (const file of files) {
+  files.forEach((file) => {
     const specSlug = file.replace(/\.json$/, '');
     let arr;
     try {
       arr = JSON.parse(readFileSync(join(provDir, file), 'utf8'));
     } catch {
-      continue;
+      return;
     }
-    if (!Array.isArray(arr)) continue;
+    if (!Array.isArray(arr)) return;
 
-    for (const p of arr) {
+    arr.forEach((p) => {
       const isProfessional = String(p.providerType) === '1';
       const spec = p.specialityInfo?.specialityDescription || '';
       const subSpec = p.specialityInfo?.subSpecialityDescription || '';
@@ -66,7 +74,7 @@ function scanProvince(provinceSlug) {
       if (!isProfessional) {
         // Centro entry
         const loc = p.providerLocalicationCode;
-        if (!loc) continue;
+        if (!loc) return;
         if (!centros.has(loc)) {
           centros.set(loc, { entry: p, specialities: new Map() });
         }
@@ -104,23 +112,23 @@ function scanProvince(provinceSlug) {
         if (!doctorsByParent.has(p.parentCode)) doctorsByParent.set(p.parentCode, []);
         doctorsByParent.get(p.parentCode).push(doc);
       }
-    }
-  }
+    });
+  });
 
   // Attach doctors to their centro/speciality
-  for (const [loc, c] of centros) {
+  Array.from(centros.entries()).forEach(([loc, c]) => {
     const docs = doctorsByParent.get(loc) || [];
     const seenInSpec = new Map(); // spec → Set<docKey>
-    for (const d of docs) {
-      if (!d.speciality || !c.specialities.has(d.speciality)) continue;
+    docs.forEach((d) => {
+      if (!d.speciality || !c.specialities.has(d.speciality)) return;
       const set = seenInSpec.get(d.speciality) || new Set();
-      if (set.has(d.key)) continue;
+      if (set.has(d.key)) return;
       set.add(d.key);
       seenInSpec.set(d.speciality, set);
       c.specialities.get(d.speciality).doctors.push(d);
       if (d.subSpeciality) c.specialities.get(d.speciality).subSpecialities.add(d.subSpeciality);
-    }
-  }
+    });
+  });
 
   const result = { centros, doctorsByParent };
   provinceScanCache.set(provinceSlug, result);
@@ -128,15 +136,15 @@ function scanProvince(provinceSlug) {
 }
 
 function buildOtherCentros(provinceData, currentLocCode, currentSpecs, limit = 4) {
-  const overlaps = [];
-  for (const [loc, c] of provinceData.centros) {
-    if (loc === currentLocCode) continue;
-    if (c.specialities.size === 0) continue;
-    let overlap = 0;
-    for (const spec of c.specialities.keys()) if (currentSpecs.has(spec)) overlap += 1;
-    if (overlap === 0) continue;
-    overlaps.push({ loc, c, overlap });
-  }
+  const overlaps = Array.from(provinceData.centros.entries())
+    .map(([loc, c]) => {
+      if (loc === currentLocCode || c.specialities.size === 0) return null;
+      const overlap = Array.from(c.specialities.keys())
+        .reduce((acc, spec) => acc + (currentSpecs.has(spec) ? 1 : 0), 0);
+      return overlap > 0 ? { loc, c, overlap } : null;
+    })
+    .filter(Boolean);
+
   overlaps.sort((a, b) => b.overlap - a.overlap || a.c.entry.providerName.localeCompare(b.c.entry.providerName));
 
   return overlaps.slice(0, limit).map(({ loc, c }) => {
@@ -252,14 +260,14 @@ export function fetchCentro(rawKey) {
   try {
     const provinceData = scanProvince(provinceSlug);
     const centroData = provinceData.centros.get(providerLocalicationCode);
-    if (!centroData) return res.status(404).json({ error: `Centro has no data: ${key}` });
+    if (!centroData) return { error: `Centro has no data: ${key}`, status: 404 };
 
     const entry = centroData.entry;
     const addr = entry.address || {};
     const docIndex = getDoctoresIndex();
 
     const specsArray = [];
-    for (const [specName, meta] of centroData.specialities) {
+    Array.from(centroData.specialities.entries()).forEach(([specName, meta]) => {
       const docs = meta.doctors
         .filter((d) => docIndex[d.key]) // only doctors with published page
         .sort((a, b) => a.name.localeCompare(b.name))
@@ -276,20 +284,23 @@ export function fetchCentro(rawKey) {
         doctors: docs,
         observations: '',
       });
-    }
+    });
     specsArray.sort((a, b) => a.speciality.localeCompare(b.speciality));
 
-    const flatDoctors = [];
     const seenDocs = new Set();
-    for (const meta of centroData.specialities.values()) {
-      for (const d of meta.doctors) {
-        if (!docIndex[d.key] || seenDocs.has(d.key)) continue;
+    const flatDoctors = Array.from(centroData.specialities.values())
+      .flatMap((meta) => meta.doctors)
+      .filter((d) => {
+        if (!docIndex[d.key] || seenDocs.has(d.key)) return false;
         seenDocs.add(d.key);
-        flatDoctors.push({
-          key: d.key, name: d.name, speciality: d.speciality, gender: d.gender || '',
-        });
-      }
-    }
+        return true;
+      })
+      .map((d) => ({
+        key: d.key,
+        name: d.name,
+        speciality: d.speciality,
+        gender: d.gender || '',
+      }));
     flatDoctors.sort((a, b) => a.name.localeCompare(b.name));
 
     const currentSpecsSet = new Set([...centroData.specialities.keys()]);
