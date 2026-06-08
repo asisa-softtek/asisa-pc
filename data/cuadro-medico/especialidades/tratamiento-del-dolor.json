@@ -1,0 +1,190 @@
+{
+  "slug": "tratamiento-del-dolor",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 34
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 21
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 12
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 7
+    },
+    {
+      "slug": "alava",
+      "displayName": "Álava",
+      "count": 6
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 6
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 5
+    },
+    {
+      "slug": "toledo",
+      "displayName": "Toledo",
+      "count": 5
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 4
+    },
+    {
+      "slug": "cantabria",
+      "displayName": "Cantabria",
+      "count": 4
+    },
+    {
+      "slug": "gerona",
+      "displayName": "Gerona",
+      "count": 4
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 4
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 4
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 3
+    },
+    {
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 3
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 3
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 3
+    },
+    {
+      "slug": "guadalajara",
+      "displayName": "Guadalajara",
+      "count": 3
+    },
+    {
+      "slug": "guipuzcoa",
+      "displayName": "Guipúzcoa",
+      "count": 3
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 3
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 3
+    },
+    {
+      "slug": "ourense",
+      "displayName": "Ourense",
+      "count": 3
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 3
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 3
+    },
+    {
+      "slug": "vizcaya",
+      "displayName": "Vizcaya",
+      "count": 3
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 2
+    },
+    {
+      "slug": "lugo",
+      "displayName": "Lugo",
+      "count": 2
+    },
+    {
+      "slug": "melilla",
+      "displayName": "Melilla",
+      "count": 2
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 2
+    },
+    {
+      "slug": "salamanca",
+      "displayName": "Salamanca",
+      "count": 2
+    },
+    {
+      "slug": "tenerife",
+      "displayName": "Tenerife",
+      "count": 2
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 1
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 1
+    },
+    {
+      "slug": "caceres",
+      "displayName": "Cáceres",
+      "count": 1
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 1
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 1
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 1
+    }
+  ]
+}

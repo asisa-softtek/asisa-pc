@@ -1,0 +1,40 @@
+{
+  "slug": "electrofisiologia-cardiaca",
+  "provincias": [
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 4
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 3
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 1
+    },
+    {
+      "slug": "cantabria",
+      "displayName": "Cantabria",
+      "count": 1
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 1
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 1
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 1
+    }
+  ]
+}

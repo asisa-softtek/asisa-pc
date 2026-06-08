@@ -4,6 +4,7 @@ import { join } from 'path';
 let centrosIndexCache = null;
 let doctoresIndexCache = null;
 const provinceScanCache = new Map();
+const ASISA_HOST = 'https://www.asisa.es';
 
 function getCentrosIndex() {
   if (!centrosIndexCache) {
@@ -169,6 +170,67 @@ function buildDescription(specCount, city, provDisplayName) {
   return `Centro médico del cuadro de ASISA${where}. Atiende en ${n} especialidad${n === 1 ? '' : 'es'} con acceso directo a especialistas sin necesidad de derivación. Solicita cita online o llama al centro.`;
 }
 
+function toSchemaSpecialty(specName) {
+  const normalized = toSlug(specName);
+  if (normalized.includes('anest')) return 'https://schema.org/Anesthesia';
+  if (normalized.includes('cardio')) return 'https://schema.org/Cardiovascular';
+  if (normalized.includes('dermat')) return 'https://schema.org/Dermatologic';
+  if (normalized.includes('endo')) return 'https://schema.org/Endocrine';
+  if (normalized.includes('gine') || normalized.includes('obstet')) return 'https://schema.org/Gynecologic';
+  if (normalized.includes('neuro')) return 'https://schema.org/Neurologic';
+  if (normalized.includes('onco')) return 'https://schema.org/Oncologic';
+  if (normalized.includes('pedia')) return 'https://schema.org/Pediatric';
+  if (normalized.includes('psiqu')) return 'https://schema.org/Psychiatric';
+  if (normalized.includes('radio')) return 'https://schema.org/Radiography';
+  if (normalized.includes('urolog')) return 'https://schema.org/Urologic';
+  return null;
+}
+
+function buildCentroSchema(detail) {
+  const specialtyUrls = [...new Set((detail.specialities || [])
+    .map((s) => toSchemaSpecialty(s.speciality))
+    .filter(Boolean))];
+
+  const phones = [...new Set([
+    detail.phone,
+    ...(detail.specialities || []).map((s) => s.phone),
+  ].filter(Boolean))];
+
+  const contactPoint = phones.map((phone, idx) => ({
+    '@type': 'ContactPoint',
+    telephone: phone.startsWith('+') ? phone : `+34 ${phone}`,
+    contactType: idx === 0 ? 'Atencion del centro' : 'Consultas externas y especialistas',
+  }));
+
+  const employee = (detail.doctors || []).slice(0, 100).map((d) => ({
+    '@type': 'Person',
+    name: d.name,
+  }));
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': String(detail.providerType) === '3' ? 'Hospital' : 'MedicalClinic',
+    '@id': `${ASISA_HOST}/cuadro-medico/c/${detail.key}`,
+    name: detail.name,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: detail.address,
+      addressLocality: detail.city,
+      addressRegion: detail.provinceSlug,
+      postalCode: detail.postalCode,
+      addressCountry: 'ES',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: detail.lat,
+      longitude: detail.lon,
+    },
+    medicalSpecialty: specialtyUrls,
+    contactPoint,
+    employee,
+  };
+}
+
 export function fetchCentro(rawKey) {
   if (!rawKey) return { error: 'key is required', status: 400 };
   const idx = getCentrosIndex();
@@ -255,6 +317,8 @@ export function fetchCentro(rawKey) {
       otherCentros,
       description: buildDescription(specsArray.length, addr.cityDescription, provinceSlug),
     };
+
+    detail.schema = buildCentroSchema(detail);
 
     return detail;
   } catch (err) {

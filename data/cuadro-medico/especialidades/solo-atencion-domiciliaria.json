@@ -1,0 +1,20 @@
+{
+  "slug": "solo-atencion-domiciliaria",
+  "provincias": [
+    {
+      "slug": "guipuzcoa",
+      "displayName": "Guipúzcoa",
+      "count": 2
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 1
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 1
+    }
+  ]
+}

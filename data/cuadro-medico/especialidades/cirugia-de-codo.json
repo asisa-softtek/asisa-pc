@@ -1,0 +1,40 @@
+{
+  "slug": "cirugia-de-codo",
+  "provincias": [
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 8
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 6
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 6
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 5
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 2
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 1
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 1
+    }
+  ]
+}

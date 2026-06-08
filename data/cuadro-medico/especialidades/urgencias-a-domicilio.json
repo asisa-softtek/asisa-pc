@@ -1,0 +1,105 @@
+{
+  "slug": "urgencias-a-domicilio",
+  "provincias": [
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 9
+    },
+    {
+      "slug": "caceres",
+      "displayName": "Cáceres",
+      "count": 2
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 2
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 2
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 2
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 1
+    },
+    {
+      "slug": "avila",
+      "displayName": "Ávila",
+      "count": 1
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 1
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 1
+    },
+    {
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 1
+    },
+    {
+      "slug": "cantabria",
+      "displayName": "Cantabria",
+      "count": 1
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 1
+    },
+    {
+      "slug": "gerona",
+      "displayName": "Gerona",
+      "count": 1
+    },
+    {
+      "slug": "guadalajara",
+      "displayName": "Guadalajara",
+      "count": 1
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 1
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 1
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 1
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 1
+    },
+    {
+      "slug": "teruel",
+      "displayName": "Teruel",
+      "count": 1
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 1
+    }
+  ]
+}

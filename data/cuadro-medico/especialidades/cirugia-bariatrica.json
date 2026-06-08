@@ -1,0 +1,15 @@
+{
+  "slug": "cirugia-bariatrica",
+  "provincias": [
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 4
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 1
+    }
+  ]
+}

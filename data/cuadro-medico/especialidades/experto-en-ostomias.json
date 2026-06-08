@@ -1,0 +1,10 @@
+{
+  "slug": "experto-en-ostomias",
+  "provincias": [
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 1
+    }
+  ]
+}

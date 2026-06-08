@@ -1,0 +1,10 @@
+{
+  "slug": "urgencias-ambulatorias-oftalmologia",
+  "provincias": [
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 1
+    }
+  ]
+}

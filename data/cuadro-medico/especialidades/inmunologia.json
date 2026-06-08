@@ -1,0 +1,10 @@
+{
+  "slug": "inmunologia",
+  "provincias": [
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 2
+    }
+  ]
+}

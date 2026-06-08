@@ -1,0 +1,25 @@
+{
+  "slug": "hospital-de-dia",
+  "provincias": [
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 3
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 3
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 1
+    },
+    {
+      "slug": "soria",
+      "displayName": "Soria",
+      "count": 1
+    }
+  ]
+}

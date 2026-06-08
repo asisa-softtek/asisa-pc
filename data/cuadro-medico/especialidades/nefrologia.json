@@ -1,0 +1,165 @@
+{
+  "slug": "nefrologia",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 45
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 23
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 12
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 11
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 11
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 9
+    },
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 6
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 6
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 6
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 5
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 5
+    },
+    {
+      "slug": "vizcaya",
+      "displayName": "Vizcaya",
+      "count": 5
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 4
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 4
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 4
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 4
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 3
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 3
+    },
+    {
+      "slug": "guipuzcoa",
+      "displayName": "Guipúzcoa",
+      "count": 3
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 3
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 3
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 2
+    },
+    {
+      "slug": "salamanca",
+      "displayName": "Salamanca",
+      "count": 2
+    },
+    {
+      "slug": "segovia",
+      "displayName": "Segovia",
+      "count": 2
+    },
+    {
+      "slug": "tenerife",
+      "displayName": "Tenerife",
+      "count": 2
+    },
+    {
+      "slug": "toledo",
+      "displayName": "Toledo",
+      "count": 2
+    },
+    {
+      "slug": "zamora",
+      "displayName": "Zamora",
+      "count": 2
+    },
+    {
+      "slug": "cantabria",
+      "displayName": "Cantabria",
+      "count": 1
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 1
+    },
+    {
+      "slug": "jaen",
+      "displayName": "Jaén",
+      "count": 1
+    },
+    {
+      "slug": "la-rioja",
+      "displayName": "La Rioja",
+      "count": 1
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "slug": "cirugia-pediatrica",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 43
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 35
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 22
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 16
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 12
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 8
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 7
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 6
+    },
+    {
+      "slug": "toledo",
+      "displayName": "Toledo",
+      "count": 5
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 5
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 4
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 3
+    },
+    {
+      "slug": "guipuzcoa",
+      "displayName": "Guipúzcoa",
+      "count": 3
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 3
+    },
+    {
+      "slug": "tenerife",
+      "displayName": "Tenerife",
+      "count": 3
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 2
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 2
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 2
+    },
+    {
+      "slug": "gerona",
+      "displayName": "Gerona",
+      "count": 2
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 2
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 2
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 2
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 2
+    },
+    {
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 1
+    },
+    {
+      "slug": "caceres",
+      "displayName": "Cáceres",
+      "count": 1
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 1
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "slug": "cirugia-ortognatica",
+  "provincias": [
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 1
+    }
+  ]
+}

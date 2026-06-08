@@ -1,0 +1,15 @@
+{
+  "slug": "cardiologia-deportiva",
+  "provincias": [
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 3
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 2
+    }
+  ]
+}

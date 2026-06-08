@@ -1,0 +1,10 @@
+{
+  "slug": "urgencias-neurocirugia",
+  "provincias": [
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 1
+    }
+  ]
+}

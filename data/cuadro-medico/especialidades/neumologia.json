@@ -1,0 +1,230 @@
+{
+  "slug": "neumologia",
+  "provincias": [
+    {
+      "slug": "madrid",
+      "displayName": "Madrid",
+      "count": 157
+    },
+    {
+      "slug": "barcelona",
+      "displayName": "Barcelona",
+      "count": 90
+    },
+    {
+      "slug": "malaga",
+      "displayName": "Málaga",
+      "count": 46
+    },
+    {
+      "slug": "valencia",
+      "displayName": "Valencia",
+      "count": 39
+    },
+    {
+      "slug": "sevilla",
+      "displayName": "Sevilla",
+      "count": 35
+    },
+    {
+      "slug": "cadiz",
+      "displayName": "Cádiz",
+      "count": 30
+    },
+    {
+      "slug": "alicante",
+      "displayName": "Alicante",
+      "count": 29
+    },
+    {
+      "slug": "baleares",
+      "displayName": "Baleares",
+      "count": 28
+    },
+    {
+      "slug": "cordoba",
+      "displayName": "Córdoba",
+      "count": 24
+    },
+    {
+      "slug": "tenerife",
+      "displayName": "Tenerife",
+      "count": 23
+    },
+    {
+      "slug": "tarragona",
+      "displayName": "Tarragona",
+      "count": 17
+    },
+    {
+      "slug": "las-palmas",
+      "displayName": "Las Palmas",
+      "count": 14
+    },
+    {
+      "slug": "a-coruna",
+      "displayName": "A Coruña",
+      "count": 12
+    },
+    {
+      "slug": "granada",
+      "displayName": "Granada",
+      "count": 12
+    },
+    {
+      "slug": "pontevedra",
+      "displayName": "Pontevedra",
+      "count": 12
+    },
+    {
+      "slug": "gerona",
+      "displayName": "Gerona",
+      "count": 11
+    },
+    {
+      "slug": "murcia",
+      "displayName": "Murcia",
+      "count": 11
+    },
+    {
+      "slug": "valladolid",
+      "displayName": "Valladolid",
+      "count": 11
+    },
+    {
+      "slug": "lerida",
+      "displayName": "Lérida",
+      "count": 10
+    },
+    {
+      "slug": "badajoz",
+      "displayName": "Badajoz",
+      "count": 8
+    },
+    {
+      "slug": "castellon",
+      "displayName": "Castellón",
+      "count": 8
+    },
+    {
+      "slug": "ciudad-real",
+      "displayName": "Ciudad Real",
+      "count": 8
+    },
+    {
+      "slug": "vizcaya",
+      "displayName": "Vizcaya",
+      "count": 8
+    },
+    {
+      "slug": "toledo",
+      "displayName": "Toledo",
+      "count": 7
+    },
+    {
+      "slug": "zaragoza",
+      "displayName": "Zaragoza",
+      "count": 6
+    },
+    {
+      "slug": "albacete",
+      "displayName": "Albacete",
+      "count": 5
+    },
+    {
+      "slug": "burgos",
+      "displayName": "Burgos",
+      "count": 5
+    },
+    {
+      "slug": "guipuzcoa",
+      "displayName": "Guipúzcoa",
+      "count": 5
+    },
+    {
+      "slug": "huelva",
+      "displayName": "Huelva",
+      "count": 5
+    },
+    {
+      "slug": "leon",
+      "displayName": "León",
+      "count": 5
+    },
+    {
+      "slug": "segovia",
+      "displayName": "Segovia",
+      "count": 4
+    },
+    {
+      "slug": "alava",
+      "displayName": "Álava",
+      "count": 3
+    },
+    {
+      "slug": "almeria",
+      "displayName": "Almería",
+      "count": 3
+    },
+    {
+      "slug": "cantabria",
+      "displayName": "Cantabria",
+      "count": 3
+    },
+    {
+      "slug": "guadalajara",
+      "displayName": "Guadalajara",
+      "count": 3
+    },
+    {
+      "slug": "palencia",
+      "displayName": "Palencia",
+      "count": 3
+    },
+    {
+      "slug": "caceres",
+      "displayName": "Cáceres",
+      "count": 2
+    },
+    {
+      "slug": "ceuta",
+      "displayName": "Ceuta",
+      "count": 2
+    },
+    {
+      "slug": "cuenca",
+      "displayName": "Cuenca",
+      "count": 2
+    },
+    {
+      "slug": "lugo",
+      "displayName": "Lugo",
+      "count": 2
+    },
+    {
+      "slug": "melilla",
+      "displayName": "Melilla",
+      "count": 2
+    },
+    {
+      "slug": "salamanca",
+      "displayName": "Salamanca",
+      "count": 2
+    },
+    {
+      "slug": "huesca",
+      "displayName": "Huesca",
+      "count": 1
+    },
+    {
+      "slug": "la-rioja",
+      "displayName": "La Rioja",
+      "count": 1
+    },
+    {
+      "slug": "ourense",
+      "displayName": "Ourense",
+      "count": 1
+    }
+  ]
+}
