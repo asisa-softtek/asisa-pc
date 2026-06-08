@@ -145,7 +145,10 @@ function buildOtherCentros(provinceData, currentLocCode, currentSpecs, limit = 4
     })
     .filter(Boolean);
 
-  overlaps.sort((a, b) => b.overlap - a.overlap || a.c.entry.providerName.localeCompare(b.c.entry.providerName));
+  overlaps.sort(
+    (a, b) => b.overlap - a.overlap
+      || a.c.entry.providerName.localeCompare(b.c.entry.providerName),
+  );
 
   return overlaps.slice(0, limit).map(({ loc, c }) => {
     const e = c.entry;
@@ -262,7 +265,7 @@ export function fetchCentro(rawKey) {
     const centroData = provinceData.centros.get(providerLocalicationCode);
     if (!centroData) return { error: `Centro has no data: ${key}`, status: 404 };
 
-    const entry = centroData.entry;
+      const { entry } = centroData;
     const addr = entry.address || {};
     const docIndex = getDoctoresIndex();
 

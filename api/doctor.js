@@ -31,15 +31,29 @@ function findInProvidersList(provinceSlug, specSlug, providerCode, providerLocal
 }
 
 function mergeAddress(detailAddr, listAddr) {
-  const out = {};
-  const fields = ['addressType', 'addressDescription', 'addressNumber', 'postalCode', 'provinceCode', 'cityDescription', 'latitude', 'longitude'];
+  const fields = [
+    'addressType',
+    'addressDescription',
+    'addressNumber',
+    'postalCode',
+    'provinceCode',
+    'cityDescription',
+    'latitude',
+    'longitude',
+  ];
   const isMeaningful = (v) => v !== undefined && v !== null && v !== '' && v !== 0;
-  for (const f of fields) {
-    const d = detailAddr?.[f];
-    const l = listAddr?.[f];
-    out[f] = isMeaningful(d) ? d : (isMeaningful(l) ? l : (d ?? ''));
-  }
-  return out;
+  return fields.reduce((acc, field) => {
+    const detailValue = detailAddr?.[field];
+    const listValue = listAddr?.[field];
+    if (isMeaningful(detailValue)) {
+      acc[field] = detailValue;
+    } else if (isMeaningful(listValue)) {
+      acc[field] = listValue;
+    } else {
+      acc[field] = detailValue ?? '';
+    }
+    return acc;
+  }, {});
 }
 
 function buildLocation(loc, listEntry, detailBase) {
@@ -64,7 +78,11 @@ function buildLocation(loc, listEntry, detailBase) {
     phone: detailBase?.contact?.phone || listEntry?.contact?.phone || '',
     lat: addr.latitude || 0,
     lon: addr.longitude || 0,
-    onlineAppointment: !!(detailBase?.onlineAppointment || listEntry?.onlineAppointment || tuotempo.onlineAppointment),
+    onlineAppointment: !!(
+      detailBase?.onlineAppointment
+      || listEntry?.onlineAppointment
+      || tuotempo.onlineAppointment
+    ),
     videoConsultation: !!(detailBase?.videoConsultation || listEntry?.videoConsultation),
     ePrescription: !!(detailBase?.electronicPrescription || listEntry?.electronicPrescription),
     tuotempo: {
@@ -79,10 +97,7 @@ function buildLocation(loc, listEntry, detailBase) {
 
 function pickRepresentative(locations) {
   // Prefer a location whose detail file exists & has data; otherwise first.
-  for (const l of locations) {
-    if (l._hasDetail) return l;
-  }
-  return locations[0];
+  return locations.find((location) => location.hasDetail) || locations[0];
 }
 
 export function fetchDoctor(rawKey) {
@@ -107,14 +122,23 @@ export function fetchDoctor(rawKey) {
   let collegiateCode = entry.collegiateCode || '';
   let languages = [];
 
-  for (const loc of entry.locations) {
-    const detailPath = join(process.cwd(), `data/provider-details/${loc.providerLocalicationCode}.json`);
+  entry.locations.forEach((loc) => {
+    const detailPath = join(
+      process.cwd(),
+      `data/provider-details/${loc.providerLocalicationCode}.json`,
+    );
     const detailEntries = existsSync(detailPath) ? readJson(detailPath) : null;
-    const detailBase = Array.isArray(detailEntries) && detailEntries.length ? detailEntries[0] : null;
-    const listEntry = findInProvidersList(loc.provinceSlug, loc.specSlug, loc.providerCode, loc.providerLocalicationCode);
+    const detailBase = Array.isArray(detailEntries)
+      && detailEntries.length ? detailEntries[0] : null;
+    const listEntry = findInProvidersList(
+      loc.provinceSlug,
+      loc.specSlug,
+      loc.providerCode,
+      loc.providerLocalicationCode,
+    );
 
     const built = buildLocation(loc, listEntry, detailBase);
-    built._hasDetail = !!detailBase;
+    built.hasDetail = !!detailBase;
     locations.push(built);
 
     if (!collegiateCode) {
@@ -126,14 +150,14 @@ export function fetchDoctor(rawKey) {
       const src = listEntry?.languages?.length ? listEntry.languages : (detailBase?.languages || []);
       languages = [...new Set(src.map((l) => l.languageDescription).filter(Boolean))];
     }
-  }
+  });
 
   if (!locations.length) return { error: `No locations for: ${key}`, status: 404 };
 
   const rep = pickRepresentative(locations);
   const specialities = [...new Set(locations.map((l) => l.speciality).filter(Boolean))].sort();
 
-  locations.forEach((l) => { delete l._hasDetail; });
+  locations.forEach((location) => { delete location.hasDetail; });
 
   return {
     key,
