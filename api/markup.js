@@ -485,14 +485,17 @@ function ssrCentro(key) {
   return {
     title,
     description,
+    schema: data.schema || null,
     blocks: [fichaCentroBlock, specsBlock, docsBlock, othersBlock].filter(Boolean).join('\n'),
   };
 }
 
 // ---------------- response builder ----------------
 function buildPage({
-  path, title, description, blocks,
+  path, title, description, blocks, schema,
 }) {
+  const schemaTag = schema
+    ? `<script type="application/ld+json">${JSON.stringify(schema)}</script>` : '';
   return `<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -505,6 +508,7 @@ ${description ? `<meta name="description" content="${esc(description)}">` : ''}
 ${description ? `<meta property="og:description" content="${esc(description)}">` : ''}
 <meta property="og:url" content="${ASISA_HOST}${esc(path)}">
 <meta property="og:type" content="website">
+${schemaTag}
 <script>
   try { history.replaceState({}, '', ${JSON.stringify(path)}); } catch (e) {}
 </script>
