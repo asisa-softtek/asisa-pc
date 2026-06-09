@@ -184,25 +184,9 @@ function buildDescription(specCount, city, provDisplayName) {
   return `Centro médico del cuadro de ASISA${where}. Atiende en ${n} especialidad${n === 1 ? '' : 'es'} con acceso directo a especialistas sin necesidad de derivación. Solicita cita online o llama al centro.`;
 }
 
-function toSchemaSpecialty(specName) {
-  const normalized = toSlug(specName);
-  if (normalized.includes('anest')) return 'https://schema.org/Anesthesia';
-  if (normalized.includes('cardio')) return 'https://schema.org/Cardiovascular';
-  if (normalized.includes('dermat')) return 'https://schema.org/Dermatologic';
-  if (normalized.includes('endo')) return 'https://schema.org/Endocrine';
-  if (normalized.includes('gine') || normalized.includes('obstet')) return 'https://schema.org/Gynecologic';
-  if (normalized.includes('neuro')) return 'https://schema.org/Neurologic';
-  if (normalized.includes('onco')) return 'https://schema.org/Oncologic';
-  if (normalized.includes('pedia')) return 'https://schema.org/Pediatric';
-  if (normalized.includes('psiqu')) return 'https://schema.org/Psychiatric';
-  if (normalized.includes('radio')) return 'https://schema.org/Radiography';
-  if (normalized.includes('urolog')) return 'https://schema.org/Urologic';
-  return null;
-}
-
 function buildCentroSchema(detail) {
-  const specialtyUrls = [...new Set((detail.specialities || [])
-    .map((s) => toSchemaSpecialty(s.speciality))
+  const medicalSpecialty = [...new Set((detail.specialities || [])
+    .map((s) => (s.specialityDescription || '').trim())
     .filter(Boolean))];
 
   const contactPoint = [];
@@ -213,7 +197,7 @@ function buildCentroSchema(detail) {
     contactPoint.push({
       '@type': 'ContactPoint',
       telephone: phone,
-      contactType: s.specialityDescription || s.speciality,
+      contactType: s.specialityDescription,
     });
   });
 
@@ -240,7 +224,7 @@ function buildCentroSchema(detail) {
       latitude: detail.lat,
       longitude: detail.lon,
     },
-    medicalSpecialty: specialtyUrls,
+    medicalSpecialty,
     contactPoint,
     employee,
   };
