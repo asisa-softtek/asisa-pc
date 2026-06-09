@@ -95,6 +95,8 @@ function scanProvince(provinceSlug) {
           meta.onlineAppointment = meta.onlineAppointment || !!p.onlineAppointment;
           meta.videoConsultation = meta.videoConsultation || !!p.videoConsultation;
           meta.ePrescription = meta.ePrescription || !!p.electronicPrescription;
+          meta.phone = meta.phone || p.contact?.phone || '';
+          meta.mobilePhone = meta.mobilePhone || p.contact?.mobilePhone || '';
         }
         if (subSpec && spec) c.specialities.get(spec).subSpecialities.add(subSpec);
       } else if (p.parentCode && p.providerCode) {
@@ -203,17 +205,15 @@ function buildCentroSchema(detail) {
     .map((s) => toSchemaSpecialty(s.speciality))
     .filter(Boolean))];
 
-  const seenPhones = new Set();
   const contactPoint = [];
 
-
   (detail.specialities || []).forEach((s) => {
-    if (!s.phone || seenPhones.has(s.phone)) return;
-    seenPhones.add(s.phone);
+    const phone = s.phone || s.mobilePhone;
+    if (!phone) return;
     contactPoint.push({
       '@type': 'ContactPoint',
-      telephone: s.phone,
-      contactType: s.speciality,
+      telephone: phone,
+      contactType: s.specialityDescription || s.speciality,
     });
   });
 
@@ -282,8 +282,10 @@ export function fetchCentro(rawKey) {
 
       specsArray.push({
         speciality: specName,
+        specialityDescription: specName,
         specSlug: meta.specSlug,
-        phone: meta.phone || meta.mobilePhone || entry.contact?.phone || entry.contact?.mobilePhone || '',
+        phone: meta.phone || entry.contact?.phone || '',
+        mobilePhone: meta.mobilePhone || entry.contact?.mobilePhone || '',
         onlineAppointment: !!meta.onlineAppointment,
         videoConsultation: !!meta.videoConsultation,
         ePrescription: !!meta.ePrescription,
