@@ -206,14 +206,6 @@ function buildCentroSchema(detail) {
   const seenPhones = new Set();
   const contactPoint = [];
 
-  if (detail.phone) {
-    seenPhones.add(detail.phone);
-    contactPoint.push({
-      '@type': 'ContactPoint',
-      telephone: detail.phone,
-      contactType: 'Atencion del centro',
-    });
-  }
 
   (detail.specialities || []).forEach((s) => {
     if (!s.phone || seenPhones.has(s.phone)) return;
