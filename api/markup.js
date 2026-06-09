@@ -50,6 +50,13 @@ function esc(s) {
     .replace(/'/g, '&#39;');
 }
 
+function serializeJsonLd(value) {
+  return JSON.stringify(value)
+    .replace(/<\//g, '<\\/')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029');
+}
+
 function titleCase(s) {
   if (!s) return '';
   return s.toLowerCase().split(/(\s+)/)
@@ -495,7 +502,7 @@ function buildPage({
   path, title, description, blocks, schema,
 }) {
   const schemaTag = schema
-    ? `<script type="application/ld+json">${JSON.stringify(schema)}</script>` : '';
+    ? `<script type="application/ld+json">${serializeJsonLd(schema)}</script>` : '';
   return `<!DOCTYPE html>
 <html lang="es">
 <head>
