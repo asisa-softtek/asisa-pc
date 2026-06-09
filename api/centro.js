@@ -187,7 +187,8 @@ function buildDescription(specCount, city, provDisplayName) {
 function buildCentroSchema(detail) {
   const medicalSpecialty = [...new Set((detail.specialities || [])
     .map((s) => (s.specialityDescription || '').trim())
-    .filter(Boolean))];
+    .filter(Boolean)
+    .map((specialityDescription) => `https://schema.org/${specialityDescription}`))];
 
   const contactPoint = [];
 
