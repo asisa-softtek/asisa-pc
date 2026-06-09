@@ -184,11 +184,78 @@ function buildDescription(specCount, city, provDisplayName) {
   return `Centro médico del cuadro de ASISA${where}. Atiende en ${n} especialidad${n === 1 ? '' : 'es'} con acceso directo a especialistas sin necesidad de derivación. Solicita cita online o llama al centro.`;
 }
 
+function toSchemaSpecialty(specialtySeoValue) {
+  const key = toSlug(specialtySeoValue);
+
+  const seoToMedicalSpecialty = {
+    'alergologia': 'RespiratoryTherapy',
+    'analisis-de-sangre': 'LaboratoryScience',
+    'cirugia-vascular': 'Cardiovascular',
+    'gastroenterologia': 'Gastroenterologic',
+    cardiologos: 'Cardiovascular',
+    'cirugia-maxilofacial': 'Surgical',
+    'cirugia-plastica': 'PlasticSurgery',
+    'cirujanos-toracicos': 'Surgical',
+    dermatologos: 'Dermatology',
+    endocrinos: 'Endocrine',
+    fisioterapia: 'Physiotherapy',
+    geriatria: 'Geriatric',
+    obstetricia: 'Obstetric',
+    hematologia: 'Hematologic',
+    logopedas: 'SpeechPathology',
+    rehabilitacion: 'Physiotherapy',
+    'medicos-de-cabecera': 'PrimaryCare',
+    'medicina-interna': 'PrimaryCare',
+    'medicina-nuclear': 'Radiography',
+    nefrologia: 'Renal',
+    neumologia: 'Pulmonary',
+    neurocirujanos: 'Neurologic',
+    neurologos: 'Neurologic',
+    oftalmologos: 'Optometric',
+    oncologia: 'Oncologic',
+    'oncologia-radioterapica': 'Oncologic',
+    electromiograma: 'Neurologic',
+    otorrinolaringologos: 'Otolaryngologic',
+    pediatras: 'Pediatric',
+    podologia: 'Podiatric',
+    psicologia: 'Psychiatric',
+    psiquiatra: 'Psychiatric',
+    'reproduccion-asistida': 'Gynecologic',
+    reumatologia: 'Rheumatologic',
+    traumatologos: 'Musculoskeletal',
+    urologos: 'Urologic',
+    'gastroenterologos-infantiles': 'Pediatric',
+    'cardiologia-pediatrica': 'Pediatric',
+    'cirugia-de-mohs': 'Dermatology',
+    proctologo: 'Surgical',
+    'dermatologos-infantiles': 'Pediatric',
+    dermatoscopia: 'Dermatology',
+    ecografia: 'Radiography',
+    'endocrino-pediatrico': 'Pediatric',
+    endoscopia: 'Gastroenterologic',
+    mamografia: 'Radiography',
+    'neurologo-infantil': 'Pediatric',
+    'oftalmologia-infantil': 'Pediatric',
+    ortopantomografia: 'Radiography',
+    'pet-tac': 'Radiography',
+    'preparacion-al-parto': 'Midwifery',
+    'resonancia-magnetica': 'Radiography',
+    'traumatologo-infantil': 'Pediatric',
+    endodoncia: 'Dentistry',
+    'estetica-dental': 'Dentistry',
+    'implantes-dentales': 'Dentistry',
+    dentistas: 'Dentistry',
+    odontopediatra: 'Dentistry',
+  };
+
+  return seoToMedicalSpecialty[key] || null;
+}
+
 function buildCentroSchema(detail) {
   const medicalSpecialty = [...new Set((detail.specialities || [])
-    .map((s) => (s.specialityDescription || '').trim())
+    .map((s) => toSchemaSpecialty(s.specSlug || s.specialityDescription || s.speciality))
     .filter(Boolean)
-    .map((specialityDescription) => `https://schema.org/${specialityDescription}`))];
+    .map((specialty) => `https://schema.org/${specialty}`))];
 
   const contactPoint = [];
 
