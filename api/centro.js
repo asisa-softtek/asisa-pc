@@ -87,6 +87,7 @@ function scanProvince(provinceSlug) {
             videoConsultation: !!p.videoConsultation,
             ePrescription: !!p.electronicPrescription,
             phone: p.contact?.phone || '',
+            mobilePhone: p.contact?.mobilePhone || '',
             doctors: [],
           });
         } else if (spec) {
@@ -202,16 +203,27 @@ function buildCentroSchema(detail) {
     .map((s) => toSchemaSpecialty(s.speciality))
     .filter(Boolean))];
 
-  const phones = [...new Set([
-    detail.phone,
-    ...(detail.specialities || []).map((s) => s.phone),
-  ].filter(Boolean))];
+  const seenPhones = new Set();
+  const contactPoint = [];
 
-  const contactPoint = phones.map((phone, idx) => ({
-    '@type': 'ContactPoint',
-    telephone: phone.startsWith('+') ? phone : `+34 ${phone}`,
-    contactType: idx === 0 ? 'Atencion del centro' : 'Consultas externas y especialistas',
-  }));
+  if (detail.phone) {
+    seenPhones.add(detail.phone);
+    contactPoint.push({
+      '@type': 'ContactPoint',
+      telephone: detail.phone,
+      contactType: 'Atencion del centro',
+    });
+  }
+
+  (detail.specialities || []).forEach((s) => {
+    if (!s.phone || seenPhones.has(s.phone)) return;
+    seenPhones.add(s.phone);
+    contactPoint.push({
+      '@type': 'ContactPoint',
+      telephone: s.phone,
+      contactType: s.speciality,
+    });
+  });
 
   const employee = (detail.doctors || []).slice(0, 100).map((d) => ({
     '@type': 'Person',
@@ -279,7 +291,7 @@ export function fetchCentro(rawKey) {
       specsArray.push({
         speciality: specName,
         specSlug: meta.specSlug,
-        phone: meta.phone || entry.contact?.phone || '',
+        phone: meta.phone || meta.mobilePhone || entry.contact?.phone || entry.contact?.mobilePhone || '',
         onlineAppointment: !!meta.onlineAppointment,
         videoConsultation: !!meta.videoConsultation,
         ePrescription: !!meta.ePrescription,
@@ -320,7 +332,7 @@ export function fetchCentro(rawKey) {
       city: addr.cityDescription || '',
       provinceCode: addr.provinceCode || '',
       provinceSlug,
-      phone: entry.contact?.phone || '',
+      phone: entry.contact?.phone || entry.contact?.mobilePhone || '',
       lat: addr.latitude || 0,
       lon: addr.longitude || 0,
       onlineAppointment: !!entry.onlineAppointment,
