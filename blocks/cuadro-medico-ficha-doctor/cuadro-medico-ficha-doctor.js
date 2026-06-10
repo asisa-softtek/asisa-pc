@@ -91,6 +91,14 @@ function renderDoctorHeader(d) {
       </section>`;
 }
 
+function renderBreadcrumb(d) {
+  return `<nav class="cmp-breadcrumb"><ol class="cmp-breadcrumb__list">
+    <li><a href="/">Inicio</a></li>
+    <li><a href="/cuadro-medico">Cuadro médico</a></li>
+    <li class="cmp-breadcrumb__item--active">${formatPersonName(d.name)}</li>
+  </ol></nav>`;
+}
+
 function toCentroSlug(raw) {
   return String(raw || '')
     .normalize('NFD').replace(/[̀-ͯ]/g, '')
@@ -211,6 +219,7 @@ export default function decorate(block) {
       }
 
       const parts = [renderDoctorHeader(d)];
+      parts.unshift(renderBreadcrumb(d));
       parts.push(renderLocationCard(d, locs[0], 0, provinciaDisplayName(locs[0])));
       parts.push(renderSpecCard(d, locs[0], provinciaDisplayName(locs[0])));
 
