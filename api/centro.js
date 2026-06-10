@@ -320,7 +320,7 @@ function toSchemaSpecialty(specialtySeoValue) {
 
 function buildCentroSchema(detail) {
   const medicalSpecialty = [...new Set((detail.specialities || [])
-    .map((s) => toSchemaSpecialty(s.specSlug || s.specialityDescription || s.speciality))
+    .map((s) => toSchemaSpecialty(s.specSlug || s.specialityDescription))
     .filter(Boolean)
     .map((specialty) => `https://schema.org/${specialty}`))];
 
@@ -329,10 +329,13 @@ function buildCentroSchema(detail) {
   (detail.specialities || []).forEach((s) => {
     const phone = s.phone || s.mobilePhone;
     if (!phone) return;
+    const seoName = toSeoName(s.specialityDescription);
+    const contactType = seoName || s.specialityDescription;
+    if (!contactType) return;
     contactPoint.push({
       '@type': 'ContactPoint',
       telephone: phone,
-      contactType: toSeoName(s.specialityDescription || s.speciality) || s.specSlug || s.specialityDescription,
+      contactType,
     });
   });
 
