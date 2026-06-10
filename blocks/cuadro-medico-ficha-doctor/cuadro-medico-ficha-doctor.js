@@ -92,11 +92,13 @@ function renderDoctorHeader(d) {
 }
 
 function renderBreadcrumb(d) {
-  return `<nav class="cmp-breadcrumb"><ol class="cmp-breadcrumb__list">
-    <li><a href="/">Inicio</a></li>
-    <li><a href="/cuadro-medico">Cuadro médico</a></li>
-    <li class="cmp-breadcrumb__item--active">${formatPersonName(d.name)}</li>
-  </ol></nav>`;
+  return `<nav class="cmp-breadcrumb" aria-label="Breadcrumb">
+    <ol class="cmp-breadcrumb__list">
+      <li class="cmp-breadcrumb__item"><a class="cmp-breadcrumb__item-link" href="/">Inicio</a></li>
+      <li class="cmp-breadcrumb__item"><a class="cmp-breadcrumb__item-link" href="/cuadro-medico">Cuadro médico</a></li>
+      <li class="cmp-breadcrumb__item cmp-breadcrumb__item--active">${formatPersonName(d.name)}</li>
+    </ol>
+  </nav>`;
 }
 
 function toCentroSlug(raw) {
