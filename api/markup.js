@@ -90,6 +90,61 @@ function formatPersonName(name) {
   return `${prefix} ${formatted}`;
 }
 
+function formatDoctorBreadcrumbName(name) {
+  if (!name) return '';
+  const parts = String(name).split(',').map((p) => p.trim());
+  const ordered = parts.length === 2 ? `${parts[1]} ${parts[0]}` : String(name);
+  return titleCase(ordered);
+}
+
+function withBreadcrumbSchema(primarySchema, breadcrumbSchema) {
+  if (!breadcrumbSchema) return primarySchema || null;
+  const graph = [primarySchema, breadcrumbSchema].filter(Boolean);
+  return {
+    '@context': 'https://schema.org',
+    '@graph': graph.map((schema) => {
+      if (!schema || typeof schema !== 'object') return schema;
+      const copy = { ...schema };
+      delete copy['@context'];
+      return copy;
+    }),
+  };
+}
+
+function buildBreadcrumbSchema({ provinceSlug, provinceName, leafName, leafSlug }) {
+  if (!provinceSlug || !leafName || !leafSlug) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'ASISA',
+        item: ASISA_HOST,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Cuadro médico',
+        item: `${ASISA_HOST}/cuadro-medico`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: provinceName,
+        item: `${ASISA_HOST}/cuadro-medico/${provinceSlug}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: leafName,
+        item: `${ASISA_HOST}/cuadro-medico/${provinceSlug}/${leafSlug}`,
+      },
+    ],
+  };
+}
+
 function getProviderTag(p) {
   if (String(p.doctorType) === '1') return 'MÉDICO / PROFESIONAL';
   if (String(p.providerType) === '3') return 'HOSPITAL';
@@ -385,11 +440,17 @@ function ssrDoctor(key) {
   ${locations.slice(1).map((l) => locationCard(l, false)).join('')}`) : '';
 
   const otrosMedicos = ssrOtrosMedicos(data);
+  const breadcrumbSchema = buildBreadcrumbSchema({
+    provinceSlug: data.provinceSlug,
+    provinceName: provDisplay || titleCase(data.provinceSlug || ''),
+    leafName: formatDoctorBreadcrumbName(data.name),
+    leafSlug: key,
+  });
 
   return {
     title,
     description,
-    schema: data.schema || null,
+    schema: withBreadcrumbSchema(data.schema || null, breadcrumbSchema),
     blocks: [fichaBlock, moreLocationsBlock, otrosMedicos].filter(Boolean).join('\n'),
   };
 }
@@ -497,10 +558,17 @@ function ssrCentro(key) {
     ? asBlock('cuadro-medico-ficha-centro-others', `<h2 class="cmp-medical-detail__subtitle">Otros centros ASISA en ${esc(provDisplay)}</h2>
   <div class="cm-fcentro__other-grid">${otherCentros}</div>`) : '';
 
+  const breadcrumbSchema = buildBreadcrumbSchema({
+    provinceSlug: data.provinceSlug,
+    provinceName: provDisplay || titleCase(data.provinceSlug || ''),
+    leafName: centerName,
+    leafSlug: key,
+  });
+
   return {
     title,
     description,
-    schema: data.schema || null,
+    schema: withBreadcrumbSchema(data.schema || null, breadcrumbSchema),
     blocks: [fichaCentroBlock, specsBlock, docsBlock, othersBlock].filter(Boolean).join('\n'),
   };
 }
