@@ -146,10 +146,7 @@ function buildLocation(loc, listEntry, detailBase) {
     speciality,
     parentDescription: listEntry?.parentDescription || '',
     businessGroup: !!(listEntry?.businessGroup),
-    address: [addr.addressType, addr.addressDescription, addr.addressNumber]
-      .filter(Boolean)
-      .join(' ')
-      .trim(),
+    address: [addr.addressType, addr.addressDescription, addr.addressNumber].filter(Boolean).join(' ').trim(),
     postalCode: addr.postalCode || '',
     city: addr.cityDescription || '',
     provinceCode: addr.provinceCode || '',
@@ -349,7 +346,7 @@ export function fetchDoctor(rawKey) {
 
   locations.forEach((location) => { delete location.hasDetail; });
 
-  const response = {
+  return {
     key,
     name: entry.name,
     collegiateCode,
@@ -371,10 +368,8 @@ export function fetchDoctor(rawKey) {
     businessGroup: rep.businessGroup,
     tuotempo: rep.tuotempo,
     locations,
+    schema: buildDoctorSchema(response)
   };
-
-  response.schema = buildDoctorSchema(response);
-  return response;
 }
 
 export default function handler(req, res) {
