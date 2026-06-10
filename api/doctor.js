@@ -3,81 +3,6 @@ import { join } from 'path';
 
 let indexCache = null;
 const providersListCache = new Map();
-const ASISA_HOST = 'https://www.asisa.es';
-
-const SEO_TO_MEDICAL_SPECIALTY = {
-  alergologia: 'RespiratoryTherapy',
-  'analisis-de-sangre': 'LaboratoryScience',
-  'cirugia-vascular': 'Cardiovascular',
-  gastroenterologia: 'Gastroenterologic',
-  cardiologos: 'Cardiovascular',
-  'cirugia-maxilofacial': 'Surgical',
-  'cirugia-plastica': 'PlasticSurgery',
-  'cirujanos-toracicos': 'Surgical',
-  dermatologos: 'Dermatology',
-  endocrinos: 'Endocrine',
-  fisioterapia: 'Physiotherapy',
-  geriatria: 'Geriatric',
-  obstetricia: 'Obstetric',
-  hematologia: 'Hematologic',
-  logopedas: 'SpeechPathology',
-  rehabilitacion: 'Physiotherapy',
-  'medicos-de-cabecera': 'PrimaryCare',
-  'medicina-interna': 'PrimaryCare',
-  'medicina-nuclear': 'Radiography',
-  nefrologia: 'Renal',
-  neumologia: 'Pulmonary',
-  neurocirujanos: 'Neurologic',
-  neurologos: 'Neurologic',
-  oftalmologos: 'Optometric',
-  oncologia: 'Oncologic',
-  'oncologia-radioterapica': 'Oncologic',
-  electromiograma: 'Neurologic',
-  otorrinolaringologos: 'Otolaryngologic',
-  pediatras: 'Pediatric',
-  podologia: 'Podiatric',
-  psicologia: 'Psychiatric',
-  psiquiatra: 'Psychiatric',
-  'reproduccion-asistida': 'Gynecologic',
-  reumatologia: 'Rheumatologic',
-  traumatologos: 'Musculoskeletal',
-  urologos: 'Urologic',
-  'gastroenterologos-infantiles': 'Pediatric',
-  'cardiologia-pediatrica': 'Pediatric',
-  'cirugia-de-mohs': 'Dermatology',
-  proctologo: 'Surgical',
-  'dermatologos-infantiles': 'Pediatric',
-  dermatoscopia: 'Dermatology',
-  ecografia: 'Radiography',
-  'endocrino-pediatrico': 'Pediatric',
-  endoscopia: 'Gastroenterologic',
-  mamografia: 'Radiography',
-  'neurologo-infantil': 'Pediatric',
-  'oftalmologia-infantil': 'Pediatric',
-  ortopantomografia: 'Radiography',
-  'pet-tac': 'Radiography',
-  'preparacion-al-parto': 'Midwifery',
-  'resonancia-magnetica': 'Radiography',
-  'traumatologo-infantil': 'Pediatric',
-  endodoncia: 'Dentistry',
-  'estetica-dental': 'Dentistry',
-  'implantes-dentales': 'Dentistry',
-  dentistas: 'Dentistry',
-  odontopediatra: 'Dentistry',
-};
-
-const LANGUAGE_CODE_MAP = {
-  espanol: 'es',
-  castellano: 'es',
-  ingles: 'en',
-  frances: 'fr',
-  aleman: 'de',
-  italiano: 'it',
-  portugues: 'pt',
-  catalan: 'ca',
-  euskera: 'eu',
-  gallego: 'gl',
-};
 
 function getIndex() {
   if (!indexCache) {
@@ -170,116 +95,6 @@ function buildLocation(loc, listEntry, detailBase) {
   };
 }
 
-function toSlug(str) {
-  return String(str || '')
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '');
-}
-
-function toMedicalSpecialty(specSlug, speciality) {
-  const fromSlug = SEO_TO_MEDICAL_SPECIALTY[toSlug(specSlug)];
-  const fromName = SEO_TO_MEDICAL_SPECIALTY[toSlug(speciality)];
-  const value = fromSlug || fromName;
-  return value ? `https://schema.org/${value}` : null;
-}
-
-function formatDoctorName(name) {
-  const raw = String(name || '').trim();
-  if (!raw) return '';
-  const parts = raw.split(',').map((p) => p.trim()).filter(Boolean);
-  const ordered = parts.length === 2 ? `${parts[0]}, ${parts[1]}` : raw;
-  return ordered
-    .toLowerCase()
-    .split(/(\s+|-)/)
-    .map((token) => {
-      if (!token || /^\s+$/.test(token) || token === '-') return token;
-      return token.charAt(0).toUpperCase() + token.slice(1);
-    })
-    .join('');
-}
-
-function mapLanguageToCode(language) {
-  const key = toSlug(language);
-  return LANGUAGE_CODE_MAP[key] || key || null;
-}
-
-function buildDoctorSchema(data) {
-  const medicalSpecialty = toMedicalSpecialty(data.specSlug, data.specialities?.[0]);
-  const additionalProperty = [
-    { name: 'electronicPrescription', value: !!data.ePrescription },
-    { name: 'appointmentRequired', value: !!data.onlineAppointment },
-    { name: 'onlineAppointment', value: !!data.onlineAppointment },
-    { name: 'videoConsultation', value: !!data.videoConsultation },
-  ].map((p) => ({
-    '@type': 'PropertyValue',
-    name: p.name,
-    value: p.value,
-  }));
-
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'Physician',
-    '@id': `${ASISA_HOST}/cuadro-medico/d/${data.key}`,
-    name: formatDoctorName(data.name),
-    additionalProperty,
-  };
-
-  if (data.collegiateCode) {
-    schema.identifier = {
-      '@type': 'PropertyValue',
-      name: 'collegiateCode',
-      value: String(data.collegiateCode),
-    };
-  }
-
-  if (medicalSpecialty) schema.medicalSpecialty = medicalSpecialty;
-
-  if (data.parentDescription) {
-    schema.hospitalAffiliation = {
-      '@type': 'Hospital',
-      name: data.parentDescription,
-    };
-  }
-
-  if (data.phone) {
-    schema.contactPoint = {
-      '@type': 'ContactPoint',
-      telephone: data.phone,
-      contactType: 'Consultas medicas',
-    };
-  }
-
-  if (data.address || data.postalCode || data.city || data.provinceCode) {
-    schema.address = {
-      '@type': 'PostalAddress',
-      streetAddress: data.address || '',
-      postalCode: data.postalCode || '',
-      addressLocality: data.city || '',
-      addressRegion: data.provinceCode || '',
-      addressCountry: 'ES',
-    };
-  }
-
-  if (data.lat && data.lon) {
-    schema.geo = {
-      '@type': 'GeoCoordinates',
-      latitude: data.lat,
-      longitude: data.lon,
-    };
-  }
-
-  const knowsLanguage = [...new Set((data.languages || [])
-    .map(mapLanguageToCode)
-    .filter(Boolean))];
-  if (knowsLanguage.length) schema.knowsLanguage = knowsLanguage;
-
-  return schema;
-}
-
 function pickRepresentative(locations) {
   // Prefer a location whose detail file exists & has data; otherwise first.
   return locations.find((location) => location.hasDetail) || locations[0];
@@ -368,7 +183,6 @@ export function fetchDoctor(rawKey) {
     businessGroup: rep.businessGroup,
     tuotempo: rep.tuotempo,
     locations,
-    schema: buildDoctorSchema(response)
   };
 }
 
