@@ -184,6 +184,73 @@ function buildDescription(specCount, city, provDisplayName) {
   return `Centro médico del cuadro de ASISA${where}. Atiende en ${n} especialidad${n === 1 ? '' : 'es'} con acceso directo a especialistas sin necesidad de derivación. Solicita cita online o llama al centro.`;
 }
 
+function toSeoName(specName) {
+  const normalized = (specName || '').trim().toUpperCase();
+  const seoNameMap = {
+    'ALERGOLOGÍA': 'Alergología',
+    'ANÁLISIS CLÍNICOS': 'Análisis de sangre',
+    'ANGIOLOGÍA Y CIRUGÍA VASCULAR': 'Cirugía vascular',
+    'APARATO DIGESTIVO': 'Gastroenterologia',
+    'CARDIOLOGÍA': 'Cardiólogos',
+    'CIRUGÍA ORAL Y MAXILOFACIAL': 'Cirugía maxilofacial',
+    'CIRUGÍA PLÁSTICA, ESTÉTICA Y REPARADORA': 'Cirugía plástica',
+    'CIRUGÍA TORÁCICA': 'Cirujanos torácicos',
+    'DERMATOLOGÍA MÉDICO-QUIRÚRGICA Y VENEREO': 'Dermatólogos',
+    'ENDOCRINOLOGÍA Y NUTRICIÓN': 'Endocrinos',
+    'FISIOTERAPIA': 'Fisioterapia',
+    'GERIATRÍA': 'Geriatría',
+    'GINECOLOGÍA Y OBSTETRICIA': 'Obstetricia',
+    'HEMATOLOGÍA Y HEMOTERAPIA': 'Hematología',
+    'LOGOPEDIA Y FONIATRIA': 'Logopedas',
+    'MEDICINA FÍSICA Y REHABILITACIÓN': 'Rehabilitación',
+    'MEDICINA GENERAL': 'Médicos de cabecera',
+    'MEDICINA INTERNA': 'Medicina interna',
+    'MEDICINA NUCLEAR': 'Medicina nuclear',
+    'NEFROLOGÍA': 'Nefrología',
+    'NEUMOLOGÍA': 'Neumología',
+    'NEUROCIRUGÍA': 'Neurocirujanos',
+    'NEUROLOGÍA': 'Neurólogos',
+    'OFTALMOLOGÍA': 'Oftalmólogos',
+    'ONCOLOGÍA MÉDICA': 'Oncología',
+    'ONCOLOGÍA RADIOTERÁPICA': 'Oncología radioterápica',
+    'ELECTROMIOGRAMA': 'Electromiograma',
+    'OTORRINOLARINGOLOGÍA': 'Otorrinolaringólogos',
+    'PEDIATRÍA': 'Pediatras',
+    'PODOLOGÍA': 'Podología',
+    'PSICOLOGÍA': 'Psicología',
+    'PSIQUIATRÍA': 'Psiquiatra',
+    'REPRODUCCIÓN ASISTIDA': 'Reproducción asistida',
+    'REUMATOLOGÍA': 'Reumatología',
+    'TRAUMATOLOGÍA Y CIRUGÍA ORTOPÉDICA': 'Traumatólogos',
+    'UROLOGÍA': 'Urólogos',
+    'APARATO DIGESTIVO INFANTIL': 'Gastroenterólogos infantiles',
+    'CARDIOLOGÍA INFANTIL': 'Cardiología pediátrica',
+    'CIRUGÍA DE MOHS': 'Cirugía de Mohs',
+    'CIRUGÍA PROCTOLÓGICA': 'Proctólogo',
+    'DERMATOLOGÍA INFANTIL': 'Dermatólogos infantiles',
+    'DERMATOSCOPIA DIGITAL': 'Dermatoscopia',
+    'ECOGRAFÍA': 'Ecografía',
+    'ENDOCRINOLOGÍA Y NUTRICIÓN INFANTIL': 'Endocrino pediátrico',
+    'ENDOSCOPIA DIGESTIVA': 'Endoscopia',
+    'MAMOGRAFÍA': 'Mamografía',
+    'NEUROLOGÍA INFANTIL': 'Neurólogo infantil',
+    'OBSTETRICIA': 'Obstetricia',
+    'OFTALMOLOGÍA INFANTIL Y ESTRABISMO': 'Oftalmología infantil',
+    'ORTOPANTOMOGRAFÍAS': 'Ortopantomografía',
+    'P.E.T. - T.A.C.': 'PET TAC',
+    'PREPARACIÓN AL PARTO': 'Preparación al parto',
+    'RESONANCIA MAGNÉTICA': 'Resonancia magnética',
+    'TRAUMATOLOGÍA INFANTIL': 'Traumatólogo infantil',
+    'ENDODONCIA': 'Endodoncia',
+    'ESTETICA DENTAL': 'Estética dental',
+    'IMPLANTOLOGIA': 'Implantes dentales',
+    'ODONTOLOGIA': 'Dentistas',
+    'ODONTOPEDIATRIA': 'Odontopediatra',
+    'ORTODONCIA': 'Ortodoncia',
+  };
+  return seoNameMap[normalized] || null;
+}
+
 function toSchemaSpecialty(specialtySeoValue) {
   const key = toSlug(specialtySeoValue);
 
@@ -265,7 +332,7 @@ function buildCentroSchema(detail) {
     contactPoint.push({
       '@type': 'ContactPoint',
       telephone: phone,
-      contactType: s.specialityDescription,
+      contactType: toSeoName(s.specialityDescription || s.speciality) || s.specSlug || s.specialityDescription,
     });
   });
 
