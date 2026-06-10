@@ -366,6 +366,13 @@ function ssrDoctor(key) {
   // no las descarte (auto-blocking sólo conserva el primer "first-block"
   // anidado en un bloque).
   const fichaBlock = asBlock('cuadro-medico-ficha-doctor', `<div class="cmp-medical-detail" data-ssr="true" data-key="${esc(key)}">
+  <nav class="cmp-breadcrumb">
+    <ol class="cmp-breadcrumb__list">
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/cuadro-medico">Cuadro médico</a></li>
+      <li class="cmp-breadcrumb__item--active">${esc(displayName)}</li>
+    </ol>
+  </nav>
   <section class="eds-mp-box-head">
     <h1 class="eds-mp-box-head--title">${esc(h1)}</h1>
     <p class="eds-mp-box-head--text">${esc(intro)}</p>
