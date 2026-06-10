@@ -3,6 +3,81 @@ import { join } from 'path';
 
 let indexCache = null;
 const providersListCache = new Map();
+const ASISA_HOST = 'https://www.asisa.es';
+
+const SEO_TO_MEDICAL_SPECIALTY = {
+  alergologia: 'RespiratoryTherapy',
+  'analisis-de-sangre': 'LaboratoryScience',
+  'cirugia-vascular': 'Cardiovascular',
+  gastroenterologia: 'Gastroenterologic',
+  cardiologos: 'Cardiovascular',
+  'cirugia-maxilofacial': 'Surgical',
+  'cirugia-plastica': 'PlasticSurgery',
+  'cirujanos-toracicos': 'Surgical',
+  dermatologos: 'Dermatology',
+  endocrinos: 'Endocrine',
+  fisioterapia: 'Physiotherapy',
+  geriatria: 'Geriatric',
+  obstetricia: 'Obstetric',
+  hematologia: 'Hematologic',
+  logopedas: 'SpeechPathology',
+  rehabilitacion: 'Physiotherapy',
+  'medicos-de-cabecera': 'PrimaryCare',
+  'medicina-interna': 'PrimaryCare',
+  'medicina-nuclear': 'Radiography',
+  nefrologia: 'Renal',
+  neumologia: 'Pulmonary',
+  neurocirujanos: 'Neurologic',
+  neurologos: 'Neurologic',
+  oftalmologos: 'Optometric',
+  oncologia: 'Oncologic',
+  'oncologia-radioterapica': 'Oncologic',
+  electromiograma: 'Neurologic',
+  otorrinolaringologos: 'Otolaryngologic',
+  pediatras: 'Pediatric',
+  podologia: 'Podiatric',
+  psicologia: 'Psychiatric',
+  psiquiatra: 'Psychiatric',
+  'reproduccion-asistida': 'Gynecologic',
+  reumatologia: 'Rheumatologic',
+  traumatologos: 'Musculoskeletal',
+  urologos: 'Urologic',
+  'gastroenterologos-infantiles': 'Pediatric',
+  'cardiologia-pediatrica': 'Pediatric',
+  'cirugia-de-mohs': 'Dermatology',
+  proctologo: 'Surgical',
+  'dermatologos-infantiles': 'Pediatric',
+  dermatoscopia: 'Dermatology',
+  ecografia: 'Radiography',
+  'endocrino-pediatrico': 'Pediatric',
+  endoscopia: 'Gastroenterologic',
+  mamografia: 'Radiography',
+  'neurologo-infantil': 'Pediatric',
+  'oftalmologia-infantil': 'Pediatric',
+  ortopantomografia: 'Radiography',
+  'pet-tac': 'Radiography',
+  'preparacion-al-parto': 'Midwifery',
+  'resonancia-magnetica': 'Radiography',
+  'traumatologo-infantil': 'Pediatric',
+  endodoncia: 'Dentistry',
+  'estetica-dental': 'Dentistry',
+  'implantes-dentales': 'Dentistry',
+  dentistas: 'Dentistry',
+  odontopediatra: 'Dentistry',
+};
+
+const LANGUAGE_CODE_MAP = {
+  espanol: 'es',
+  castellano: 'es',
+  ingles: 'en',
+  frances: 'fr',
+  aleman: 'de',
+  italiano: 'it',
+  portugues: 'pt',
+  catalan: 'ca',
+  euskera: 'eu',
+  gallego: 'gl',
+};
 
 function getIndex() {
   if (!indexCache) {
@@ -54,6 +129,137 @@ function mergeAddress(detailAddr, listAddr) {
     }
     return acc;
   }, {});
+}
+
+function toSlug(str) {
+  return String(str || '')
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+function titleCase(value) {
+  return String(value || '')
+    .toLowerCase()
+    .split(/(\s+|-)/)
+    .map((token) => {
+      if (!token || /^\s+$/.test(token) || token === '-') return token;
+      return token.charAt(0).toUpperCase() + token.slice(1);
+    })
+    .join('');
+}
+
+function formatDoctorSchemaName(name) {
+  const raw = String(name || '').trim();
+  if (!raw) return '';
+  const parts = raw.split(',').map((part) => part.trim()).filter(Boolean);
+  if (parts.length === 2) {
+    return `${titleCase(parts[0])}, ${titleCase(parts[1])}`;
+  }
+  return titleCase(raw);
+}
+
+function toMedicalSpecialty(specSlug, speciality) {
+  const value = SEO_TO_MEDICAL_SPECIALTY[toSlug(specSlug)]
+    || SEO_TO_MEDICAL_SPECIALTY[toSlug(speciality)];
+  return value ? `https://schema.org/${value}` : null;
+}
+
+function mapLanguageToCode(language) {
+  const key = toSlug(language);
+  return LANGUAGE_CODE_MAP[key] || key || null;
+}
+
+function formatAddressRegion(provinceSlug, provinceCode) {
+  if (provinceSlug) return titleCase(String(provinceSlug).replace(/-/g, ' '));
+  return provinceCode || '';
+}
+
+function buildDoctorSchema(data) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Physician',
+    '@id': `${ASISA_HOST}/cuadro-medico/d/${data.key}`,
+    name: formatDoctorSchemaName(data.name),
+  };
+
+  if (data.collegiateCode) {
+    schema.identifier = {
+      '@type': 'PropertyValue',
+      name: 'collegiateCode',
+      value: String(data.collegiateCode),
+    };
+  }
+
+  const medicalSpecialty = toMedicalSpecialty(data.specSlug, data.specialities?.[0]);
+  if (medicalSpecialty) schema.medicalSpecialty = medicalSpecialty;
+
+  if (data.parentDescription) {
+    schema.hospitalAffiliation = {
+      '@type': 'Hospital',
+      name: titleCase(data.parentDescription),
+    };
+  }
+
+  if (data.phone) {
+    schema.contactPoint = {
+      '@type': 'ContactPoint',
+      telephone: data.phone,
+      contactType: 'Consultas médicas',
+    };
+  }
+
+  if (data.address || data.postalCode || data.city || data.provinceSlug || data.provinceCode) {
+    schema.address = {
+      '@type': 'PostalAddress',
+      streetAddress: data.address || '',
+      postalCode: data.postalCode || '',
+      addressLocality: data.city || '',
+      addressRegion: formatAddressRegion(data.provinceSlug, data.provinceCode),
+      addressCountry: 'ES',
+    };
+  }
+
+  if (data.lat && data.lon) {
+    schema.geo = {
+      '@type': 'GeoCoordinates',
+      latitude: data.lat,
+      longitude: data.lon,
+    };
+  }
+
+  const knowsLanguage = [...new Set((data.languages || [])
+    .map(mapLanguageToCode)
+    .filter(Boolean))];
+  if (knowsLanguage.length) schema.knowsLanguage = knowsLanguage;
+
+  schema.additionalProperty = [
+    {
+      '@type': 'PropertyValue',
+      name: 'electronicPrescription',
+      value: !!data.ePrescription,
+    },
+    {
+      '@type': 'PropertyValue',
+      name: 'appointmentRequired',
+      value: !!(data.onlineAppointment || data.phone),
+    },
+    {
+      '@type': 'PropertyValue',
+      name: 'onlineAppointment',
+      value: !!data.onlineAppointment,
+    },
+    {
+      '@type': 'PropertyValue',
+      name: 'videoConsultation',
+      value: !!data.videoConsultation,
+    },
+  ];
+
+  return schema;
 }
 
 function buildLocation(loc, listEntry, detailBase) {
@@ -161,7 +367,7 @@ export function fetchDoctor(rawKey) {
 
   locations.forEach((location) => { delete location.hasDetail; });
 
-  return {
+  const response = {
     key,
     name: entry.name,
     collegiateCode,
@@ -184,6 +390,9 @@ export function fetchDoctor(rawKey) {
     tuotempo: rep.tuotempo,
     locations,
   };
+
+  response.schema = buildDoctorSchema(response);
+  return response;
 }
 
 export default function handler(req, res) {

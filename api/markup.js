@@ -382,6 +382,7 @@ function ssrDoctor(key) {
   return {
     title,
     description,
+    schema: data.schema || null,
     blocks: [fichaBlock, moreLocationsBlock, otrosMedicos].filter(Boolean).join('\n'),
   };
 }
