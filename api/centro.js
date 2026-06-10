@@ -34,6 +34,17 @@ function buildAddress(addr = {}) {
   return [addr.addressType, addr.addressDescription, addr.addressNumber].filter(Boolean).join(' ').trim();
 }
 
+function formatPersonName(name) {
+  return String(name || '')
+    .toLowerCase()
+    .split(/(\s+|-)/)
+    .map((token) => {
+      if (!token || /^\s+$/.test(token) || token === '-') return token;
+      return token.charAt(0).toUpperCase() + token.slice(1);
+    })
+    .join('');
+}
+
 /**
  * Scans data/providers/{provinceSlug}/*.json once and returns:
  *  - centros: Map<locCode, { entry, specialities:Map<spec,{
@@ -341,7 +352,7 @@ function buildCentroSchema(detail) {
 
   const employee = (detail.doctors || []).slice(0, 100).map((d) => ({
     '@type': 'Person',
-    name: d.name,
+    name: formatPersonName(d.name),
   }));
 
   return {
