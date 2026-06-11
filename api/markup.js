@@ -97,51 +97,28 @@ function formatDoctorBreadcrumbName(name) {
   return titleCase(ordered);
 }
 
-function withBreadcrumbSchema(primarySchema, breadcrumbSchema) {
-  if (!breadcrumbSchema) return primarySchema || null;
-  const graph = [primarySchema, breadcrumbSchema].filter(Boolean);
-  return {
-    '@context': 'https://schema.org',
-    '@graph': graph.map((schema) => {
-      if (!schema || typeof schema !== 'object') return schema;
-      const copy = { ...schema };
-      delete copy['@context'];
-      return copy;
-    }),
-  };
+function renderBreadcrumbNav(items) {
+  if (!Array.isArray(items) || !items.length) return '';
+  const lis = items.map((item, idx) => {
+    const cls = idx === items.length - 1 ? ' class="cmp-breadcrumb__item--active"' : '';
+    return `<li${cls}><a href="${esc(item.href)}">${esc(item.name)}</a></li>`;
+  }).join('');
+  return `<nav class="cmp-breadcrumb"><ol class="cmp-breadcrumb__list">${lis}</ol></nav>`;
 }
 
-function buildBreadcrumbSchema({ provinceSlug, provinceName, leafName, leafSlug }) {
-  if (!provinceSlug || !leafName || !leafSlug) return null;
+function buildBreadcrumbSchema(items) {
+  if (!Array.isArray(items) || !items.length) return null;
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
+    itemListElement: items
+      .filter((item) => item?.name && item?.href)
+      .map((item, idx) => ({
         '@type': 'ListItem',
-        position: 1,
-        name: 'ASISA',
-        item: ASISA_HOST,
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Cuadro médico',
-        item: `${ASISA_HOST}/cuadro-medico`,
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: provinceName,
-        item: `${ASISA_HOST}/cuadro-medico/${provinceSlug}`,
-      },
-      {
-        '@type': 'ListItem',
-        position: 4,
-        name: leafName,
-        item: `${ASISA_HOST}/cuadro-medico/${provinceSlug}/${leafSlug}`,
-      },
-    ],
+        position: idx + 1,
+        name: item.name,
+        item: `${ASISA_HOST}${item.href}`,
+      })),
   };
 }
 
@@ -416,18 +393,19 @@ function ssrDoctor(key) {
   const moreLocationsHeading = locations.length > 1
     ? `<h2 class="cmp-medical-detail__subtitle">${esc(displayName)} también pasa consulta en estos centros</h2>` : '';
 
+  const breadcrumbItems = [
+    { name: 'ASISA', href: '/' },
+    { name: 'Cuadro médico', href: '/cuadro-medico' },
+    { name: provDisplay || titleCase(data.provinceSlug || ''), href: `/cuadro-medico/p/${data.provinceSlug}` },
+    { name: formatDoctorBreadcrumbName(data.name), href: `/cuadro-medico/d/${key}` },
+  ];
+
   // El bloque principal lleva el header SEO + la primera ubicación.
   // Las ubicaciones adicionales van como bloque sibling para que EDS
   // no las descarte (auto-blocking sólo conserva el primer "first-block"
   // anidado en un bloque).
   const fichaBlock = asBlock('cuadro-medico-ficha-doctor', `<div class="cmp-medical-detail" data-ssr="true" data-key="${esc(key)}">
-  <nav class="cmp-breadcrumb">
-    <ol class="cmp-breadcrumb__list">
-      <li><a href="/">Inicio</a></li>
-      <li><a href="/cuadro-medico">Cuadro médico</a></li>
-      <li class="cmp-breadcrumb__item--active">${esc(displayName)}</li>
-    </ol>
-  </nav>
+  ${renderBreadcrumbNav(breadcrumbItems)}
   <section class="eds-mp-box-head">
     <h1 class="eds-mp-box-head--title">${esc(h1)}</h1>
     <p class="eds-mp-box-head--text">${esc(intro)}</p>
@@ -440,17 +418,13 @@ function ssrDoctor(key) {
   ${locations.slice(1).map((l) => locationCard(l, false)).join('')}`) : '';
 
   const otrosMedicos = ssrOtrosMedicos(data);
-  const breadcrumbSchema = buildBreadcrumbSchema({
-    provinceSlug: data.provinceSlug,
-    provinceName: provDisplay || titleCase(data.provinceSlug || ''),
-    leafName: formatDoctorBreadcrumbName(data.name),
-    leafSlug: key,
-  });
+  const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbItems);
 
   return {
     title,
     description,
-    schema: withBreadcrumbSchema(data.schema || null, breadcrumbSchema),
+    schema: data.schema || null,
+    breadcrumbSchema,
     blocks: [fichaBlock, moreLocationsBlock, otrosMedicos].filter(Boolean).join('\n'),
   };
 }
@@ -474,6 +448,13 @@ function ssrCentro(key) {
   const description = data.description
     || `${centerName} en ${provDisplay}. Centro del cuadro médico ASISA con ${specCount} especialidades y ${docCount} profesionales.`;
   const intro = `Centro del cuadro médico de ASISA en ${provDisplay}. Atiende en ${specCount} especialidades con ${docCount} profesionales. Consulta dirección, teléfono y pide cita online.`;
+
+  const breadcrumbItems = [
+    { name: 'ASISA', href: '/' },
+    { name: 'Cuadro médico', href: '/cuadro-medico' },
+    { name: provDisplay || titleCase(data.provinceSlug || ''), href: `/cuadro-medico/p/${data.provinceSlug}` },
+    { name: centerName, href: `/cuadro-medico/c/${key}` },
+  ];
 
   // --- Especialidades (todas), con sus médicos asociados ---
   const specsSection = (data.specialities || []).map((s) => {
@@ -517,12 +498,7 @@ function ssrCentro(key) {
   // El bloque cliente cuadro-medico-ficha-centro detecta SSR (children > 0) y NO
   // re-renderiza, así no se duplica el contenido.
   const fichaCentroBlock = asBlock('cuadro-medico-ficha-centro', `<div class="cmp-medical-detail" data-ssr="true" data-key="${esc(key)}">
-  <nav class="cmp-breadcrumb"><ol class="cmp-breadcrumb__list">
-    <li><a href="/">Inicio</a></li>
-    <li><a href="/cuadro-medico">Cuadro médico</a></li>
-    <li><a href="/cuadro-medico/p/${esc(data.provinceSlug)}">${esc(provDisplay)}</a></li>
-    <li class="cmp-breadcrumb__item--active">${esc(centerName)}</li>
-  </ol></nav>
+  ${renderBreadcrumbNav(breadcrumbItems)}
   <section class="eds-mp-box-head">
     <h1 class="eds-mp-box-head--title">${esc(h1)}</h1>
     <p class="eds-mp-box-head--text">${esc(intro)}</p>
@@ -558,27 +534,25 @@ function ssrCentro(key) {
     ? asBlock('cuadro-medico-ficha-centro-others', `<h2 class="cmp-medical-detail__subtitle">Otros centros ASISA en ${esc(provDisplay)}</h2>
   <div class="cm-fcentro__other-grid">${otherCentros}</div>`) : '';
 
-  const breadcrumbSchema = buildBreadcrumbSchema({
-    provinceSlug: data.provinceSlug,
-    provinceName: provDisplay || titleCase(data.provinceSlug || ''),
-    leafName: centerName,
-    leafSlug: key,
-  });
+  const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbItems);
 
   return {
     title,
     description,
-    schema: withBreadcrumbSchema(data.schema || null, breadcrumbSchema),
+    schema: data.schema || null,
+    breadcrumbSchema,
     blocks: [fichaCentroBlock, specsBlock, docsBlock, othersBlock].filter(Boolean).join('\n'),
   };
 }
 
 // ---------------- response builder ----------------
 function buildPage({
-  path, title, description, blocks, schema,
+  path, title, description, blocks, schema, breadcrumbSchema,
 }) {
   const schemaTag = schema
     ? `<script type="application/ld+json">${serializeJsonLd(schema)}</script>` : '';
+  const breadcrumbSchemaTag = breadcrumbSchema
+    ? `<script type="application/ld+json">${serializeJsonLd(breadcrumbSchema)}</script>` : '';
   return `<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -592,6 +566,7 @@ ${description ? `<meta property="og:description" content="${esc(description)}">`
 <meta property="og:url" content="${ASISA_HOST}${esc(path)}">
 <meta property="og:type" content="website">
 ${schemaTag}
+${breadcrumbSchemaTag}
 <script>
   try { history.replaceState({}, '', ${JSON.stringify(path)}); } catch (e) {}
 </script>
