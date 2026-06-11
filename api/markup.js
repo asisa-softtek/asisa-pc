@@ -397,12 +397,6 @@ function ssrDoctor(key) {
     { name: 'ASISA', href: '/' },
     { name: 'Cuadro médico', href: '/cuadro-medico' },
   ];
-  if (data.provinceSlug) {
-    breadcrumbItems.push({
-      name: provDisplay || titleCase(data.provinceSlug),
-      href: `/cuadro-medico/p/${data.provinceSlug}`,
-    });
-  }
   breadcrumbItems.push({ name: formatDoctorBreadcrumbName(data.name), href: `/cuadro-medico/d/${key}` });
 
   // El bloque principal lleva el header SEO + la primera ubicación.
