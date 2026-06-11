@@ -227,6 +227,25 @@ function ssrListing({ provSlug, specSlug, nationalSpec }) {
   const specName = espec?.name || '';
   const provinceCode = prov?.provinceCode || '';
 
+  const breadcrumbItems = [
+    { name: 'ASISA', href: '/' },
+    { name: 'Cuadro médico', href: '/cuadro-medico' },
+  ];
+  if (provSlug) {
+    breadcrumbItems.push({
+      name: locationName || titleCase(provSlug),
+      href: `/cuadro-medico/p/${provSlug}`,
+    });
+  }
+  if (specSlug) {
+    breadcrumbItems.push({
+      name: specName || titleCase(specSlug),
+      href: provSlug
+        ? `/cuadro-medico/p/${provSlug}/pe/${specSlug}`
+        : `/cuadro-medico/e/${specSlug}`,
+    });
+  }
+
   // Fetch first page of professionals SSR
   const data = fetchProviders({
     provinceSlug: provSlug || undefined,
@@ -278,6 +297,7 @@ function ssrListing({ provSlug, specSlug, nationalSpec }) {
   ].join(' ');
 
   const cuadroMedicoBlock = asBlock('cuadro-medico', `<div class="cmp-medical-picture-result">
+  ${renderBreadcrumbNav(breadcrumbItems)}
   <section class="eds-mp-box-head">
     <h1 class="eds-mp-box-head--title">${esc(h1)}</h1>
     <p class="eds-mp-box-head--text">${esc(intro)}</p>
@@ -295,8 +315,14 @@ function ssrListing({ provSlug, specSlug, nationalSpec }) {
 
   const otrasEspecs = ssrOtrasEspecialidades({ provSlug, specSlug, provDisplay: locationName });
   const otrasProvs = ssrOtrasProvincias({ provSlug, specSlug });
+  const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbItems);
 
-  return { title, description, blocks: `${cuadroMedicoBlock}\n${otrasEspecs}\n${otrasProvs}` };
+  return {
+    title,
+    description,
+    breadcrumbSchema,
+    blocks: `${cuadroMedicoBlock}\n${otrasEspecs}\n${otrasProvs}`,
+  };
 }
 
 function ssrOtrosMedicos(doctorData) {
