@@ -379,8 +379,8 @@ function ssrDoctor(key) {
   const specialities = data.specialities || [];
   const mainSpec = specialities[0] || '';
 
-  const title = `${displayName}${mainSpec ? `, ${titleCase(mainSpec)}` : ''} - Cuadro Médico ASISA`;
-  const description = `${displayName}, ${titleCase(mainSpec)} en ${provDisplay} del cuadro médico ASISA. Consulta dirección, teléfono y pide cita.`;
+  const title = `${displayName}${mainSpec ? `, ${titleCase(mainSpec)}` : ''} | ASISA`;
+  const description = `Consulta la ficha de ${displayName}, especialista en ${titleCase(mainSpec)} dentro del cuadro médico de ASISA.`;
   const h1 = `${displayName}${mainSpec ? `, ${titleCase(mainSpec)}` : ''}`;
   const intro = `Ficha del cuadro médico de ASISA con la información de contacto, especialidades y centros donde pasa consulta ${displayName}.`;
 
@@ -469,10 +469,8 @@ function ssrCentro(key) {
     ? `https://www.google.com/maps/dir/?api=1&destination=${data.lat},${data.lon}` : '';
 
   const h1 = `${centerName} en ${provDisplay}`;
-  const title = `${centerName} - Cuadro Médico ASISA`;
-  const description = data.description
-    || `${centerName} en ${provDisplay}. Centro del cuadro médico ASISA con ${specCount} especialidades y ${docCount} profesionales.`;
-  const intro = `Centro del cuadro médico de ASISA en ${provDisplay}. Atiende en ${specCount} especialidades con ${docCount} profesionales. Consulta dirección, teléfono y pide cita online.`;
+  const title = `${centerName} en ${provDisplay} | ASISA`;
+  const description = `Consulta información sobre ${centerName}: especialidades, servicios médicos, ubicación y profesionales disponibles con ASISA.`;
 
   const breadcrumbItems = [
     { name: 'ASISA', href: '/' },

@@ -188,13 +188,6 @@ function buildOtherCentros(provinceData, currentLocCode, currentSpecs, limit = 4
   });
 }
 
-function buildDescription(specCount, city, provDisplayName) {
-  const place = city ? `${city}` : provDisplayName;
-  const where = place ? ` en ${place}` : '';
-  const n = specCount || 0;
-  return `Centro médico del cuadro de ASISA${where}. Atiende en ${n} especialidad${n === 1 ? '' : 'es'} con acceso directo a especialistas sin necesidad de derivación. Solicita cita online o llama al centro.`;
-}
-
 function toSchemaSpecialty(specialtySeoValue) {
   const key = toSlug(specialtySeoValue);
 
@@ -400,7 +393,6 @@ export function fetchCentro(rawKey) {
       specialities: specsArray,
       doctors: flatDoctors,
       otherCentros,
-      description: buildDescription(specsArray.length, addr.cityDescription, provinceSlug),
     };
 
     detail.schema = buildCentroSchema(detail);
