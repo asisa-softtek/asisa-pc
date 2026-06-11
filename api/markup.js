@@ -100,8 +100,8 @@ function formatDoctorBreadcrumbName(name) {
 function renderBreadcrumbNav(items) {
   if (!Array.isArray(items) || !items.length) return '';
   const lis = items.map((item, idx) => {
-    const cls = idx === items.length - 1 ? ' class="cmp-breadcrumb__item--active"' : '';
-    return `<li${cls}><a href="${esc(item.href)}">${esc(item.name)}</a></li>`;
+    const cls = idx === items.length - 1 ? ' class="cmp-breadcrumb__item cmp-breadcrumb__item--active"' : ' class="cmp-breadcrumb__item"';
+    return `<li${cls}><a class="cmp-breadcrumb__item-link" href="${esc(item.href)}">${esc(item.name)}</a></li>`;
   }).join('');
   return `<nav class="cmp-breadcrumb"><ol class="cmp-breadcrumb__list">${lis}</ol></nav>`;
 }
