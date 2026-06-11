@@ -396,9 +396,14 @@ function ssrDoctor(key) {
   const breadcrumbItems = [
     { name: 'ASISA', href: '/' },
     { name: 'Cuadro médico', href: '/cuadro-medico' },
-    { name: provDisplay || titleCase(data.provinceSlug || ''), href: `/cuadro-medico/p/${data.provinceSlug}` },
-    { name: formatDoctorBreadcrumbName(data.name), href: `/cuadro-medico/d/${key}` },
   ];
+  if (data.provinceSlug) {
+    breadcrumbItems.push({
+      name: provDisplay || titleCase(data.provinceSlug),
+      href: `/cuadro-medico/p/${data.provinceSlug}`,
+    });
+  }
+  breadcrumbItems.push({ name: formatDoctorBreadcrumbName(data.name), href: `/cuadro-medico/d/${key}` });
 
   // El bloque principal lleva el header SEO + la primera ubicación.
   // Las ubicaciones adicionales van como bloque sibling para que EDS
@@ -452,9 +457,14 @@ function ssrCentro(key) {
   const breadcrumbItems = [
     { name: 'ASISA', href: '/' },
     { name: 'Cuadro médico', href: '/cuadro-medico' },
-    { name: provDisplay || titleCase(data.provinceSlug || ''), href: `/cuadro-medico/p/${data.provinceSlug}` },
-    { name: centerName, href: `/cuadro-medico/c/${key}` },
   ];
+  if (data.provinceSlug) {
+    breadcrumbItems.push({
+      name: provDisplay || titleCase(data.provinceSlug),
+      href: `/cuadro-medico/p/${data.provinceSlug}`,
+    });
+  }
+  breadcrumbItems.push({ name: centerName, href: `/cuadro-medico/c/${key}` });
 
   // --- Especialidades (todas), con sus médicos asociados ---
   const specsSection = (data.specialities || []).map((s) => {
