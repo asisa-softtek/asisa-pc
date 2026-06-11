@@ -270,18 +270,18 @@ function ssrListing({ provSlug, specSlug, nationalSpec }) {
   if (nationalSpec) {
     h1 = `Especialistas en ${specName} con ASISA`;
     intro = `Encuentra especialistas en ${specName} dentro del cuadro médico de ASISA. Consulta médicos, clínicas y hospitales disponibles y accede fácilmente a atención sanitaria especializada cerca de ti.`;
-    title = `${specName} - Cuadro Médico ASISA`;
-    description = `${totalProf} ${(espec?.professionalPluralLower || specName).toLowerCase()} del cuadro médico ASISA. Encuentra el especialista que necesitas en toda España.`;
+    title = `${specName} con ASISA | ASISA`;
+    description = `Encuentra especialistas en ${specName}. Consulta el cuadro médico de ASISA, nuestros centros disponibles y accede a atención sanitaria cercana.`;
   } else if (specSlug) {
     h1 = `${specName} en ${locationName}`;
     intro = `Encuentra especialistas en ${specName} en ${locationName} dentro del cuadro médico de ASISA. Consulta médicos, hospitales y clínicas donde recibir atención especializada y accede a la información de cada profesional de forma rápida y sencilla.`;
-    title = `${specName} en ${locationName} - Cuadro Médico ASISA`;
-    description = `${totalProf} ${(espec?.professionalPluralLower || specName).toLowerCase()} del cuadro médico ASISA en ${locationName}. Encuentra tu especialista y pide cita.`;
+    title = `${specName} en ${locationName} | ASISA`;
+    description = `Encuentra especialistas en ${specName} en ${locationName} con ASISA. Consulta médicos, centros disponibles y pide cita de forma sencilla.`;
   } else {
     h1 = `Cuadro Médico de ASISA en ${locationName}`;
     intro = `Consulta el cuadro médico de ASISA en ${locationName} y encuentra hospitales, clínicas y especialistas cerca de ti. Localiza médicos por especialidad, consulta información de los centros y accede fácilmente a los servicios disponibles. Encuentra el profesional que necesitas y pide cita con ASISA de forma rápida y sencilla.`;
-    title = `Cuadro Médico ASISA en ${locationName}`;
-    description = `Cuadro médico ASISA en ${locationName}: ${totalProf} profesionales y ${totalCenters} centros disponibles. Encuentra tu médico y pide cita.`;
+    title = `Cuadro Médico ASISA en ${locationName} | ASISA`;
+    description = `Consulta el cuadro médico de ASISA en ${locationName}: hospitales, centros médicos y especialistas. Encuentra tu médico y pide cita fácilmente.`;
   }
 
   const dataAttrs = [
